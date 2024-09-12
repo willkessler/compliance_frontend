@@ -1,20 +1,20 @@
-<!-- http://svelte0.dev/ui/66e1d2bbc8a8ce12e8276942 -->
 <script lang="ts">
  import { Button } from "$lib/components/ui/button";
  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
  import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
  import { Separator } from "$lib/components/ui/separator";
- import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
+ import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";
  import { Input } from "$lib/components/ui/input";
- import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "$lib/components/ui/select";
+ import * as Select from "$lib/components/ui/select";
  import { Label } from "$lib/components/ui/label";
  import * as z from "zod";
+ import { usStates } from "./usStates";
 
- const usStates = [
-   { name: "Alabama", abbreviation: "AL" },
-   { name: "Alaska", abbreviation: "AK" },
-   { name: "Wyoming", abbreviation: "WY" },
- ];
+ interface StateOption {
+   value: string;
+   label: string;
+   disabled: boolean;
+ }
 
  let isEditing = false;
  let companyInfo = {
@@ -27,6 +27,8 @@
    email: "info@truckingco.com",
    dotNumber: "1234567",
  };
+
+ let editingInfo: typeof companyInfo & { state: StateOption | string } = { ...companyInfo };
 
  let errors = {
    name: "",
@@ -42,7 +44,7 @@
    phone: z.string().min(1, "Phone number is required"),
  });
 
- $: isFormValid = !errors.name && !errors.zipcode && !errors.phone && companyInfo.name && companyInfo.zipcode && companyInfo.phone;
+ $: isFormValid = !errors.name && !errors.zipcode && !errors.phone && editingInfo.name && editingInfo.zipcode && editingInfo.phone;
 
  function validateField(field: string, value: string) {
    try {
@@ -55,24 +57,35 @@
    }
  }
 
- function handleEdit() {
+function handleEdit() {
+   const stateOption = usStates.find(s => s.abbreviation === companyInfo.state);
+   editingInfo = { 
+     ...companyInfo, 
+     state: stateOption ? { value: stateOption.abbreviation, label: stateOption.name, disabled: false } : companyInfo.state
+   };
    isEditing = true;
  }
 
  function handleSave() {
    if (isFormValid) {
+     companyInfo = { 
+       ...editingInfo, 
+     };
+     if (typeof editingInfo.state === 'object') {
+       companyInfo.state = editingInfo.state.value.value;
+     } else {
+       companyInfo.state = editingInfo.state;
+     }
      isEditing = false;
-     // Here you would typically save the updated info to a backend
    }
  }
 
  function handleCancel() {
    isEditing = false;
-   // Reset any changes made during editing
- }
-
- function handleStateChange(event: CustomEvent<string>) {
-   companyInfo.state = event.detail;
+   editingInfo = { 
+     ...companyInfo, 
+     state: usStates.find(s => s.abbreviation === companyInfo.state) || companyInfo.state
+   };
  }
 </script>
 
@@ -96,7 +109,7 @@
 	    <form class="space-y-4">
 	      <div class="space-y-2">
 		<Label for="name">Company Name *</Label>
-		<Input id="name" bind:value={companyInfo.name} placeholder="Company Name" 
+		<Input id="name" bind:value={editingInfo.name} placeholder="Company Name" 
                   on:input={() => validateField("name", companyInfo.name)} class={errors.name ? "border-red-500" : ""} />
 		{#if errors.name}
 		  <p class="text-red-500 text-sm">{errors.name}</p>
@@ -105,31 +118,33 @@
 
 	      <div class="space-y-2">
 		<Label for="address">Address</Label>
-		<Input id="address" bind:value={companyInfo.address} placeholder="Address" />
+		<Input id="address" bind:value={editingInfo.address} placeholder="Address" />
 	      </div>
 
 	      <div class="space-y-2">
 		<Label for="city">City</Label>
-		<Input id="city" bind:value={companyInfo.city} placeholder="City" />
+		<Input id="city" bind:value={editingInfo.city} placeholder="City" />
 	      </div>
 
 	      <div class="space-y-2">
 		<Label for="state">State</Label>
-		<Select on:change={handleStateChange} value={companyInfo.state}>
-		  <SelectTrigger id="state" class="w-full">
-		    <SelectValue placeholder="Select a state" />
-		  </SelectTrigger>
-		  <SelectContent>
-		    {#each usStates as state}
-		      <SelectItem value={state.abbreviation}>{state.name}</SelectItem>
-		    {/each}
-		  </SelectContent>
-		</Select>
+                <Select.Root bind:selected={editingInfo.state}>
+                  <Select.Trigger class="w-full">
+                    <Select.Value placeholder="Select a state" />
+                  </Select.Trigger>
+                  <Select.Content>
+                    {#each usStates as state}
+                      <Select.Item value={{value: state.abbreviation, label: state.name, disabled: false}}>
+                        {state.name}
+                      </Select.Item>
+                    {/each}
+                  </Select.Content>
+                </Select.Root>
 	      </div>
 
 	      <div class="space-y-2">
 		<Label for="zipcode">Zipcode *</Label>
-		<Input id="zipcode" bind:value={companyInfo.zipcode} placeholder="Zipcode" maxlength="5" pattern="\d{5}" 
+		<Input id="zipcode" bind:value={editingInfo.zipcode} placeholder="Zipcode" maxlength="5" pattern="\d{5}" 
                   on:input={() => validateField("zipcode", companyInfo.zipcode)} class={errors.zipcode ? "border-red-500" : ""} />
 		{#if errors.zipcode}
 		  <p class="text-red-500 text-sm">{errors.zipcode}</p>
@@ -138,7 +153,7 @@
 
 	      <div class="space-y-2">
 		<Label for="phone">Phone Number *</Label>
-		<Input id="phone" bind:value={companyInfo.phone} placeholder="Phone Number" 
+		<Input id="phone" bind:value={editingInfo.phone} placeholder="Phone Number" 
                   on:input={() => validateField("phone", companyInfo.phone)} class={errors.phone ? "border-red-500" : ""} />
 		{#if errors.phone}
 		  <p class="text-red-500 text-sm">{errors.phone}</p>
@@ -147,12 +162,12 @@
 
 	      <div class="space-y-2">
 		<Label for="email">Email Address</Label>
-		<Input id="email" bind:value={companyInfo.email} type="email" placeholder="Email Address" />
+		<Input id="email" bind:value={editingInfo.email} type="email" placeholder="Email Address" />
 	      </div>
 
 	      <div class="space-y-2">
 		<Label for="dotNumber">DOT Number</Label>
-		<Input id="dotNumber" bind:value={companyInfo.dotNumber} placeholder="DOT Number" />
+		<Input id="dotNumber" bind:value={editingInfo.dotNumber} placeholder="DOT Number" />
 	      </div>
 
 	      <div class="flex justify-end space-x-2">
