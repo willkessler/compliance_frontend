@@ -4,8 +4,13 @@
  import { LayoutDashboard, Building2, Truck, Users, Link, CircleAlert, Settings } from "lucide-svelte";
 
  const menuItems = [
-   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-   { href: '/manage/filings', label: 'Organization filings', icon: Building2,
+   { href: '/', label: 'Dashboard', icon: LayoutDashboard ,
+   subItems: [
+     { href: '/', label: 'Home' },
+     { href: '/manage/organization', label: 'Company setup' }
+   ]
+   },
+   { href: '/manage/filings', label: 'Filings', icon: Building2,
    subItems: [
      { href: '/manage/filings/federal', label: 'Federal' },
      { href: '/manage/filings/state', label: 'State' }
@@ -27,7 +32,7 @@
       <a 
         href={item.href} 
         class="flex items-center px-4 py-2 hover:bg-accent"
-        class:bg-accent={$page.url.pathname === item.href || (item.subItems && item.subItems.some(subItem => $page.url.pathname.startsWith(subItem.href)))}
+        class:bg-accent={$page.url.pathname === item.href}
         >
         <svelte:component this={item.icon} class="mr-2" size={20} />
         {item.label}
@@ -36,7 +41,7 @@
         {#each item.subItems as subItem}
           <a 
             href={subItem.href} 
-            class="flex items-center px-4 py-2 pl-8 hover:bg-accent"
+            class="flex items-center px-4 py-2 pl-12 hover:bg-accent text-sm"
             class:bg-accent={$page.url.pathname.startsWith(subItem.href)}
           >
             {subItem.label}

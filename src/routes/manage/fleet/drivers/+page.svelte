@@ -46,55 +46,29 @@ let drivers = [
  }
 </script>
 
-
-<style>
-  .drivers-table {
-    width: 100%;
-    table-layout: fixed;
-  }
-  .drivers-table :global(th),
-  .drivers-table :global(td) {
-    padding: 1rem 0.75rem;
-    height: 4rem; /* Adjust this value to increase/decrease row height */
-  }
-  .col-name { width: 25%; }
-  .col-drive-time { width: 20%; }
-  .col-total-miles { width: 20%; }
-  .col-spacer { width: 25%; }
-  .col-status { 
-    width: 10%; 
-    text-align: right;
-  }
-  .status-button {
-    width: 100%;
-    justify-content: center;
-  }
-</style>
-
 <h1 class="text-3xl font-bold mb-6">Drivers</h1>
-<Table class="drivers-table">
+<Table>
   <TableHeader>
     <TableRow>
-      <TableHead class="col-name cursor-pointer" on:click={() => sortTable("name")}>
+      <TableHead class="cursor-pointer" on:click={() => sortTable("name")}>
         Asset name 
         {#if sortColumn === "name"}
           <ChevronDown class="inline ml-1" size={16} />
         {/if}
       </TableHead>
-      <TableHead class="col-drive-time cursor-pointer" on:click={() => sortTable("driveTime")}>
+      <TableHead class="cursor-pointer" on:click={() => sortTable("driveTime")}>
         Drive time 
         {#if sortColumn === "driveTime"}
           <ChevronDown class="inline ml-1" size={16} />
         {/if}
       </TableHead>
-      <TableHead class="col-total-miles cursor-pointer" on:click={() => sortTable("mileage")}>
+      <TableHead class="cursor-pointer" on:click={() => sortTable("mileage")}>
         Total miles
         {#if sortColumn === "mileage"}
           <ChevronDown class="inline ml-1" size={16} />
         {/if}
       </TableHead>
-      <TableHead class="col-spacer"></TableHead>
-      <TableHead class="col-status cursor-pointer" on:click={() => sortTable("status")}>
+      <TableHead class="cursor-pointer text-right" on:click={() => sortTable("status")}>
         Status 
         {#if sortColumn === "status"}
           <ChevronDown class="inline ml-1" size={16} />
@@ -105,11 +79,10 @@ let drivers = [
   <TableBody>
     {#each drivers as driver}
       <TableRow>
-        <TableCell class="col-name">{driver.name}</TableCell>
-        <TableCell class="col-drive-time">{driver.totalDriveTime}</TableCell>
-        <TableCell class="col-total-miles">{driver.totalMiles}</TableCell>
-        <TableCell class="col-spacer"></TableCell>
-        <TableCell class="col-status">
+        <TableCell>{driver.name}</TableCell>
+        <TableCell>{driver.totalDriveTime}</TableCell>
+        <TableCell>{driver.totalMiles}</TableCell>
+        <TableCell class="text-right">
           <Button 
             variant={driver.flagged ? "destructive" : "secondary"} 
             size="sm"
