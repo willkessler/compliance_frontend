@@ -1,7 +1,7 @@
 <script lang="ts">
  import { page } from '$app/stores';
  import { Separator } from "$lib/components/ui/separator";
- import { LayoutDashboard, Building2, Truck, Users, Link, CircleAlert, Settings } from "lucide-svelte";
+ import { LayoutDashboard, Building2, Truck, Users, Link, CircleAlert, Info, Settings } from "lucide-svelte";
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: LayoutDashboard ,
@@ -53,7 +53,7 @@
   <Separator class="w-[90%] mx-auto my-4" />
   <div class="mt-auto ml-3 mb-2 text-sm">
     <a href="#" class="flex items-center px-4 py-2 hover:bg-accent"><Link class="mr-2" size={20} /> Connections</a>
-    <a href="#" class="flex items-center px-4 py-2 hover:bg-accent"><CircleAlert class="mr-2" size={20} /> Get help</a>
+    <a href="#" class="flex items-center px-4 py-2 hover:bg-accent"><Info class="mr-2" size={20} /> Get help</a>
     <a href="#" class="flex items-center px-4 py-2 hover:bg-accent mb-4"><Settings class="mr-2" size={20} /> Settings</a>
   </div>
 </aside>
