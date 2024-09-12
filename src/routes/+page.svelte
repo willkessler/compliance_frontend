@@ -14,8 +14,6 @@
  ];
 </script>
 
-<h1 class="text-3xl mb-5">One-Stop Compliance Dashboard</h1>
-
 <style>
   .news ul {
     list-style-type: none;
