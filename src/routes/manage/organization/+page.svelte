@@ -21,14 +21,14 @@
    name: "Trucking Co.",
    address: "123 Main St",
    city: "Oakland",
-   state: "CA",
+   state: "WY",
    zipcode: "94293",
    phone: "(555) 123-4567",
    email: "info@truckingco.com",
    dotNumber: "1234567",
  };
 
- let editingInfo: typeof companyInfo & { state: StateOption | string } = { ...companyInfo };
+ let editingInfo: typeof companyInfo & { state: StateOption } = { ...companyInfo, state: { value: companyInfo.state, label: "", disabled: false } };
 
  let errors = {
    name: "",
@@ -57,11 +57,11 @@
    }
  }
 
-function handleEdit() {
+ function handleEdit() {
    const stateOption = usStates.find(s => s.abbreviation === companyInfo.state);
    editingInfo = { 
      ...companyInfo, 
-     state: stateOption ? { value: stateOption.abbreviation, label: stateOption.name, disabled: false } : companyInfo.state
+     state: stateOption ? { value: stateOption.abbreviation, label: stateOption.name, disabled: false } : { value: companyInfo.state, label: "", disabled: false }
    };
    isEditing = true;
  }
@@ -71,20 +71,26 @@ function handleEdit() {
      companyInfo = { 
        ...editingInfo, 
      };
+
      if (typeof editingInfo.state === 'object') {
-       companyInfo.state = editingInfo.state.value.value;
+       // This is a weird hacky thing, when first submitted if there are no changes to state, we get back editingInfo.state.value, but if there are
+       // changes to the user selection we get editingInfo.state.value.value. Not sure why???
+       companyInfo.state = typeof editingInfo.state.value === 'object' ? editingInfo.state.value.value : editingInfo.state.value;
      } else {
        companyInfo.state = editingInfo.state;
      }
+
+     console.log("Saving company info:", companyInfo, "typeof editingInfo.state : ", typeof editingInfo.state);
      isEditing = false;
    }
  }
 
  function handleCancel() {
    isEditing = false;
+   const stateOption = usStates.find(s => s.abbreviation === companyInfo.state);
    editingInfo = { 
      ...companyInfo, 
-     state: usStates.find(s => s.abbreviation === companyInfo.state) || companyInfo.state
+     state: stateOption ? { value: stateOption.abbreviation, label: stateOption.name, disabled: false } : { value: companyInfo.state, label: "", disabled: false }
    };
  }
 </script>
