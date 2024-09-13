@@ -46,24 +46,24 @@ let drivers = [
  }
 </script>
 
-<h1 class="text-3xl font-bold mb-6">Violations</h1>
+<h1 class="text-3xl font-bold mb-6">Violations Manager</h1>
 <Table>
   <TableHeader>
     <TableRow>
       <TableHead class="cursor-pointer" on:click={() => sortTable("name")}>
-        Asset name 
+        Violation Info 
         {#if sortColumn === "name"}
           <ChevronDown class="inline ml-1" size={16} />
         {/if}
       </TableHead>
       <TableHead class="cursor-pointer" on:click={() => sortTable("driveTime")}>
-        Drive time 
+        Violation Date
         {#if sortColumn === "driveTime"}
           <ChevronDown class="inline ml-1" size={16} />
         {/if}
       </TableHead>
       <TableHead class="cursor-pointer" on:click={() => sortTable("mileage")}>
-        Total miles
+        Due Date
         {#if sortColumn === "mileage"}
           <ChevronDown class="inline ml-1" size={16} />
         {/if}
