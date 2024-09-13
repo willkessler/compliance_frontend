@@ -25,18 +25,24 @@
  const newsItems: NewsItem[] = [
     {
       title: "Could east coast port strike spread to West Coast?",
+      subtitle: 'ILWU has pledged to support ILA in contract fight',
+      synopsis: 'Could a work stoppage by East Coast longshoremen spread to West Coast ports? That’s the nontrivial question facing shipping lines, terminal operators and the country at large as U.S. East and Gulf Coast port employers nervously wait out an Oct. 1 strike deadline set by the International Longshoremen’s Association',
       site: 'Freightwaves',
       image: "https://www.freightwaves.com/uploads/2024/09/11/000000-Boating-As-Of-010824-ONLY-44-1200x675.jpg",
       url: 'https://www.freightwaves.com/news/could-east-coast-port-strike-spread-to-west-coast',
     },
     {
       title: "Uber Freight announces new tech offerings, reaches $20B in managed freight",
+      subtitle: 'Company now uses Uber Direct to offer to offer same day and scheduled deliveries',
+      synopsis: 'Managed transportation provider Uber Freight announced Tuesday at its annual Deliver conference in Frisco, Texas, a number of new features available to customers and said the company’s freight under management has grown to $20 billion',
       site: 'Freightwaves',
       image: "https://www.freightwaves.com/uploads/2024/09/10/Screenshot-2024-09-10-093335.png",
       url: 'https://www.freightwaves.com/news/uber-freight-announces-new-tech-offerings-reaches-20b-in-managed-freight',
     },
     {
       title: "Swissport is certified for pharma in Madrid and Barcelona",
+      subtitle: 'Swissport\’s cargo centers in Madrid (MAD) and Barcelona (BCN) have achieved Good Distribution Practice (GDP) certification for pharmaceutical handling',
+      synopsis: 'The ground handler said in a LinkedIn post today that the certification would strengthen its pharmaceutical logistics business.',
       site: 'Freightwaves',
       image: "https://www.aircargonews.net/wp-content/uploads/2023/03/Swissport-cargo-handling-Photo-Swissport.jpg",
       url: 'https://www.aircargonews.net/services/ground-handler/swissport-is-certified-for-pharma-in-madrid-and-barcelona',
@@ -246,7 +252,13 @@
             <Card class="mb-4 news-item-card">
               <CardHeader class="pb-2">
                 <img style="width:100%;" src={newsItem.image} alt={newsItem.title} class="h-30 mb-2" />
-                <CardTitle class="text-base">{newsItem.title}</CardTitle>
+                <CardTitle>
+                  <div class="text-base">{newsItem.title}</div>
+                  <div class="text-sm text-muted-foreground">
+                    <span class="italic">{newsItem.subtitle}</span>&nbsp;&nbsp;
+                    <span>{newsItem.synopsis}...</span>
+                  </div>
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p class="text-sm text-muted-foreground">{newsItem.site}</p>
