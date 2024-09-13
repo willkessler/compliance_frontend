@@ -24,30 +24,40 @@
 
  const newsItems: NewsItem[] = [
     {
-      title: "Could east coast port strike spread to West Coast?",
-      subtitle: 'ILWU has pledged to support ILA in contract fight',
-      synopsis: 'Could a work stoppage by East Coast longshoremen spread to West Coast ports? That’s the nontrivial question facing shipping lines, terminal operators and the country at large as U.S. East and Gulf Coast port employers nervously wait out an Oct. 1 strike deadline set by the International Longshoremen’s Association',
+      title: 'California Supreme Court upholds AB5 exemption for gig workers',
+      subtitle: 'Case on independent contractor law involved workers’ comp and ballot initiative Prop 22 that granted carve-out',
+      synopsis: 'Uber and Lyft drivers in California will continue to be protected from the state\’s AB5 independent contractor classification law following a decision by the state’s Supreme Court.',
       site: 'Freightwaves',
-      image: "https://www.freightwaves.com/uploads/2024/09/11/000000-Boating-As-Of-010824-ONLY-44-1200x675.jpg",
-      url: 'https://www.freightwaves.com/news/could-east-coast-port-strike-spread-to-west-coast',
+      image: 'https://www.freightwaves.com/uploads/2024/07/25/021223-76-1200x675.jpg',
+      url: 'https://www.freightwaves.com/news/california-supreme-court-upholds-ab5-exemption-for-gig-workers',
     },
     {
-      title: "Uber Freight announces new tech offerings, reaches $20B in managed freight",
-      subtitle: 'Company now uses Uber Direct to offer to offer same day and scheduled deliveries',
-      synopsis: 'Managed transportation provider Uber Freight announced Tuesday at its annual Deliver conference in Frisco, Texas, a number of new features available to customers and said the company’s freight under management has grown to $20 billion',
+      title: 'From voluntary to mandatory: Consultative expertise in sustainability compliance',
+      subtitle: 'Sustainability reporting is quickly shifting from a voluntary initiative to a mandatory undertaking',
+      synopsis: 'Governments and consumers alike have placed an increased emphasis on environmental concerns over the past several years. As a result, sustainability reporting is quickly shifting from a voluntary initiative to a mandatory undertaking. Strong relationships with transportation and logistics providers are going to be more important than ever as shippers learn to work within the regulations and expectations that come along with this “new normal."',
       site: 'Freightwaves',
-      image: "https://www.freightwaves.com/uploads/2024/09/10/Screenshot-2024-09-10-093335.png",
-      url: 'https://www.freightwaves.com/news/uber-freight-announces-new-tech-offerings-reaches-20b-in-managed-freight',
+      image: '/images/news/consultative.png',
+      url: 'https://www.freightwaves.com/news/from-voluntary-to-mandatory-consultative-expertise-in-sustainability-compliance',
     },
     {
-      title: "Swissport is certified for pharma in Madrid and Barcelona",
-      subtitle: 'Swissport\’s cargo centers in Madrid (MAD) and Barcelona (BCN) have achieved Good Distribution Practice (GDP) certification for pharmaceutical handling',
-      synopsis: 'The ground handler said in a LinkedIn post today that the certification would strengthen its pharmaceutical logistics business.',
+      title: '4 steps to improving compliance and operations in 2023',
+      subtitle: 'New regulations and proposals shouldn’t be the only things on fleets\’ minds this year',
+      synopsis: 'Compliance and operations work hand in hand, and this year, fleets have put improving in both categories on their New Year’s resolutions lists.',
       site: 'Freightwaves',
-      image: "https://www.aircargonews.net/wp-content/uploads/2023/03/Swissport-cargo-handling-Photo-Swissport.jpg",
-      url: 'https://www.aircargonews.net/services/ground-handler/swissport-is-certified-for-pharma-in-madrid-and-barcelona',
+      image: 'https://www.freightwaves.com/uploads/2023/02/22/Petro_Joplin_44_Aerial-155_IF-1-1200x674.jpg',
+      url: 'https://www.freightwaves.com/news/4-steps-to-improving-compliance-and-operations-in-2023',
+    },
+    {
+      title: 'CARB\'s Clean Truck Check testing pushed back to 2025',
+      subtitle: 'This delay is only for required inspections, meaning fleets and owner/operators are still expected to register and pay fees.',
+      synopsis: 'Noregon reported that The California Air Resources Board (CARB) announced that it has pushed back the date for required Clean Truck Check Act inspections until January 1, 2025. This delay is only for required inspections, meaning fleets and owner/operators are still expected to register and pay fees.',
+      site: 'Fleet Equipment Magazine',
+      image: 'https://marvel-b1-cdn.bc0a.com/f00000000269980/s18391.pcdn.co/wp-content/uploads/2019/01/truck-lights-generic.jpg',
+      url: 'https://www.fleetequipmentmag.com/carbs-clean-truck-check-delayed/',
     },
  ];
+
+
 
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
@@ -79,7 +89,9 @@
    font-size:48px;
  }
  .compliance-stats .status {
-   font-size:24px;
+   font-size:20px;
+   color:#ff6666;
+   width:100%;
  }
  .csa-score {
    color: green;
@@ -87,7 +99,7 @@
  }
  .csa-score-label {
    color:green;
-   font-size: 24px;
+   font-size: 20px;
  }
  .safety-score {
    color: orange;
@@ -95,7 +107,7 @@
  }
  .safety-score-label {
    color:orange;
-   font-size: 24px;
+   font-size: 20px;
  }
 
  .dashboard-grid {
@@ -144,7 +156,7 @@
       <CardContent>
         <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
           <div class="statistic">14</div>
-          <div class="status">Out of Compliance</div>
+          <div class="status">out of compliance</div>
         </div>          
         <div class="pl-2 pr-2  pt-4">
           <div class="flex">
@@ -168,7 +180,7 @@
       <CardContent>
         <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
           <div class="statistic">3</div>
-          <div class="status">Out of Compliance</div>
+          <div class="status">out of compliance</div>
         </div>          
         <div class="pl-2 pr-2 pt-4">
           <div class="flex">
@@ -201,7 +213,7 @@
 	</CardHeader>
 	<CardContent class="flex items-center">
           <div class="safety-score">153</div>
-          <div class="safety-score-label ml-4">Can improve</div>
+          <div class="safety-score-label ml-4">Can be improved</div>
 	</CardContent>
       </Card>
     </div>
