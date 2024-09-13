@@ -7,17 +7,17 @@
   import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
 
   const stateFilings = [
-  { name: "CA DOT renewal", dueDate: "Oct 31, 2024", status: "Complete" },
-  { name: "TX DOT renewal", dueDate: "Oct 31, 2024", status: "Complete" },
+  { name: "CA DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
+  { name: "TX DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
+  { name: "CARB", dueDate: "Oct 15, 2024", status: "Complete" },
   { name: "Heavy Highway Vehicle Use Tax (HVUT)", dueDate: "Oct 31, 2024", status: "Review details" },
-  { name: "CA MCP renewal", dueDate: "Oct 31, 2024", status: "Review details" },
-  { name: "CARB", dueDate: "Oct 31, 2024", status: "Complete" },
+  { name: "CA MCP renewal", dueDate: "Jan 31, 2025", status: "Review details" },
   ];
 
   const historicalFilings = [
-  { type: "CA MCP renewal", date: "Aug 31, 2023" },
+  { type: "CA MCP renewal", date: "Mar 23, 2024" },
   { type: "Heavy Highway Vehicle Use Tax (HVUT)", date: "Aug 31, 2023" },
-  { type: "CA DOT renewal", date: "Aug 31, 2023" },
+  { type: "CA DOT renewal", date: "Sep 14, 2024" },
   ];
 </script>
 

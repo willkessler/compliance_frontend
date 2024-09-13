@@ -7,21 +7,23 @@
   import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
 
   const federalFilings = [
-  { name: "US DOT renewal", dueDate: "Oct 31, 2024", status: "Complete" },
-  { name: "EIN registration", dueDate: "Oct 31, 2024", status: "Complete" },
-  { name: "MCS-150", dueDate: "Oct 31, 2024", status: "Review details" },
-  { name: "BOC-3", dueDate: "Oct 31, 2024", status: "Review details" },
-  { name: "Unified Carrier Registration (UCR)", dueDate: "Oct 31, 2024", status: "Incomplete" },
-  { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Oct 31, 2024", status: "Incomplete" },
-  { name: "International Registration Plan (IRP)", dueDate: "Oct 31, 2024", status: "Incomplete" },
+  { name: "Unified Carrier Registration (UCR)", dueDate: "Jan 31, 2025", status: "Incomplete" },
+  { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Dec 12, 2024", status: "Incomplete" },
+  { name: "International Registration Plan (IRP)", dueDate: "Dec 3, 2024", status: "Incomplete" },
+  { name: "US DOT renewal", dueDate: "March 13, 2024", status: "Complete" },
+  { name: "MCS-150", dueDate: "Jan 12, 2024", status: "Review details" },
+  { name: "BOC-3", dueDate: "Apr 9, 2024", status: "Review details" },
   ];
 
   const historicalFilings = [
-  { type: "BOC-3", date: "Aug 31, 2023" },
-  { type: "Unified Carrier Registration (UCR)", date: "Aug 31, 2023" },
-  { type: "MCS-150", date: "Aug 31, 2023" },
+  { type: "BOC-3", date: "Aug 31, 2023", filename: 'BOC-3Form.pdf' },
+  { type: "Unified Carrier Registration (UCR)", date: "May 22, 2023", filename: 'UCR-2Form.pdf' },
+  { type: "MCS-150", date: "Jan 2, 2024", filename: 'MCS-150Form.pdf' },
+  { type: "EIN registration", date: "Dec 13, 2023", filename: "MCS-150Form.pdf" },
   ];
+
 </script>
+
 
 <div class="flex h-screen bg-background">
 
@@ -78,7 +80,9 @@
 	      <TableCell>{filing.type}</TableCell>
 	      <TableCell>{filing.date}</TableCell>
 	      <TableCell class="text-right">
-		<Button variant="secondary" size="sm">Download</Button>
+                <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
+		  <Button variant="secondary" size="sm">Download</Button>
+                </a>
 	      </TableCell>
 	    </TableRow>
 	    {/each}
