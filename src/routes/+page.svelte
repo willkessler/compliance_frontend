@@ -240,7 +240,7 @@
                 <CardTitle>{newsItem.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>{newsItem.site}</p>
+                <p class="italic">{newsItem.site}</p>
               </CardContent>
             </Card>
           </a>
