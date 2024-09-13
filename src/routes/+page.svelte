@@ -1,6 +1,7 @@
 <!-- Main Dashboard -->
 
 <script lang="ts">
+ import { onMount, afterUpdate } from 'svelte';
  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
  import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
@@ -14,6 +15,37 @@
    { type: "Vehicles", openItems: 2, url: '/manage/fleet/vehicles' },
    { type: "Connections", openItems: 1, url: '/manage/integrations' },
  ];
+
+ interface NewsItem {
+   title: string;
+   image: string;
+   url: string;
+  }
+
+ const newsItems: NewsItem[] = [
+    {
+      title: "Could east coast port strike spread to West Coast?",
+      site: 'Freightwaves',
+      image: "https://www.freightwaves.com/uploads/2024/09/11/000000-Boating-As-Of-010824-ONLY-44-1200x675.jpg",
+      url: 'https://www.freightwaves.com/news/could-east-coast-port-strike-spread-to-west-coast',
+    },
+    {
+      title: "Uber Freight announces new tech offerings, reaches $20B in managed freight",
+      site: 'Freightwaves',
+      image: "https://www.freightwaves.com/uploads/2024/09/10/Screenshot-2024-09-10-093335.png",
+      url: 'https://www.freightwaves.com/news/uber-freight-announces-new-tech-offerings-reaches-20b-in-managed-freight',
+    },
+    {
+      title: "Swissport is certified for pharma in Madrid and Barcelona",
+      site: 'Freightwaves',
+      image: "https://www.aircargonews.net/wp-content/uploads/2023/03/Swissport-cargo-handling-Photo-Swissport.jpg",
+      url: 'https://www.aircargonews.net/services/ground-handler/swissport-is-certified-for-pharma-in-madrid-and-barcelona',
+    },
+ ];
+
+ const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden;";
+ const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
+
 </script>
 
 <style>
@@ -59,7 +91,32 @@
    color:orange;
    font-size: 24px;
  }
- 
+
+ .dashboard-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 1.5rem;
+ }
+
+ .fixed-height-card {
+   height: 500px;
+   display: flex;
+   flex-direction: column;
+ }
+
+ .card-content {
+   flex: 1;
+   overflow-y: auto;
+   padding-right: 1rem;
+ }
+
+ .news-item {
+   margin-bottom: 1rem;
+ }
+
+ .news-item:last-child {
+   margin-bottom: 0;
+ }
 </style>
 
 <main class="flex-1 overflow-auto">
@@ -135,52 +192,59 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-2 gap-6">
-    <Card>
+  <div class="dashboard-grid">
+    <Card style={cardStyle}>
       <CardHeader>
-	<CardTitle class="flex items-center justify-between">
-	  Summary of action items from federal, state, truck and driver pages
-	  <Avatar class="h-8 w-8 ml-4">
-	    <AvatarImage src="/images/user.png" alt="User" />
-	    <AvatarFallback>U</AvatarFallback>
-	  </Avatar>
-	</CardTitle>
+        <CardTitle class="flex items-center justify-between">
+          Summary of action items from federal, state, truck and driver pages
+          <Avatar class="h-8 w-8 ml-4">
+            <AvatarImage src="/images/user.png" alt="User" />
+            <AvatarFallback>U</AvatarFallback>
+          </Avatar>
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-	<Table>
-	  <TableHeader>
-	    <TableRow>
-	      <TableHead>Type</TableHead>
-	      <TableHead>Open items</TableHead>
-	      <TableHead></TableHead>
-	    </TableRow>
-	  </TableHeader>
-	  <TableBody>
-	    {#each actionItems as item}
-	      <TableRow>
-		<TableCell>{item.type}</TableCell>
-		<TableCell>{item.openItems}</TableCell>
-		<TableCell>
-		  <Button variant="link"><a href={item.url}>View details</a></Button>
-		</TableCell>
-	      </TableRow>
-	    {/each}
-	  </TableBody>
-	</Table>
+      <CardContent style={contentStyle}>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Type</TableHead>
+              <TableHead>Open items</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {#each actionItems as item}
+              <TableRow>
+                <TableCell>{item.type}</TableCell>
+                <TableCell>{item.openItems}</TableCell>
+                <TableCell>
+                  <Button variant="link"><a href={item.url}>View details</a></Button>
+                </TableCell>
+              </TableRow>
+            {/each}
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
-    <Card>
+    
+    <Card style={cardStyle}>
       <CardHeader>
-	<CardTitle>News feed</CardTitle>
+        <CardTitle>News feed</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ul class="news pl-5">
-          <li><a href="https://www.freightwaves.com/news/could-east-coast-port-strike-spread-to-west-coast">Could east coast port strike spread to West Coast?</a> (FreightWaves) </li>
-          <li><a href="https://www.freightwaves.com/news/uber-freight-announces-new-tech-offerings-reaches-20b-in-managed-freight">Uber Freight announces new tech offerings, reaches $20B in managed freight</a> (FreightWaves) </li>
-          <li><a href="https://www.aircargonews.net/services/ground-handler/swissport-is-certified-for-pharma-in-madrid-and-barcelona/">Swissport is certified for pharma in Madrid and Barcelona</a> (Aircargo News) </li>
-        </ul>
-
-
+      <CardContent style={contentStyle}>
+        {#each newsItems as newsItem}
+          <a href={newsItem.url} target="_blank" class="news-item">
+            <Card class="mb-4">
+              <CardHeader>
+                <img style="width:100%;" src={newsItem.image} alt={newsItem.title} class="h-30 mb-2" />
+                <CardTitle>{newsItem.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>{newsItem.site}</p>
+              </CardContent>
+            </Card>
+          </a>
+        {/each}
       </CardContent>
     </Card>
   </div>
