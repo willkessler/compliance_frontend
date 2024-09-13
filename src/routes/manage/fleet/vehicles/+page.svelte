@@ -5,9 +5,9 @@
  import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-svelte";
 
  let vehicles = [
-   { name: "Truck 1", driveTime: "100h 52m", mileage: 75743, status: "Active" },
    { name: "Truck 2", driveTime: "89h 02m", mileage: 83543, status: "Inactive" },
-   { name: "Truck 3", driveTime: "110h 33m", mileage: 95322, status: "Active" },
+   { name: "Truck 3", driveTime: "110h 33m", mileage: 95322, status: "Inactive" },
+   { name: "Truck 1", driveTime: "100h 52m", mileage: 75743, status: "Active" },
    { name: "Truck 4", driveTime: "97h 46m", mileage: 75743, status: "Active" },
    { name: "Truck 5", driveTime: "10h 02m", mileage: 743, status: "Active" },
    { name: "Truck 6", driveTime: "50h 55m", mileage: 28009, status: "Active" },

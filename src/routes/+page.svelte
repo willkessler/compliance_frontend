@@ -8,11 +8,11 @@
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
 
  const actionItems = [
-   { type: "Federal", openItems: 4, url: '/manage/filings/federal' },
-   { type: "State", openItems: 6, url: '/manage/filings/state' },
-   { type: "Vehicle", openItems: 1, url: '/manage/fleet/vehicles' },
-   { type: "Driver", openItems: 3, url: '/manage/fleet/drivers' },
-   { type: "Integration", openItems: 4 },
+   { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
+   { type: "State Filings", openItems: 2, url: '/manage/filings/state' },
+   { type: "Drivers", openItems: 1, url: '/manage/fleet/drivers' },
+   { type: "Vehicles", openItems: 2, url: '/manage/fleet/vehicles' },
+   { type: "Connections", openItems: 1, url: '/manage/integrations' },
  ];
 </script>
 

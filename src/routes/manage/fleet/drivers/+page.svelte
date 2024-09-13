@@ -5,7 +5,7 @@
  import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
 
 let drivers = [
-   { name: "Sid Sanger", status: "Active",  totalDriveTime: "89h 02m", totalMiles: "75,743", issues: "See details", flagged: true },
+   { name: "Sid Sanger", status: "Active",  totalDriveTime: "89h 02m", totalMiles: "75,743", issues: "See details", flagged: false },
    { name: "Joe Jacob", status: "Active",  totalDriveTime: "8h 22m", totalMiles: "7,743", issues: "See details", flagged: false },
    { name: "Eric Tang", status: "Active",  totalDriveTime: "42h 32m", totalMiles: "57,743", issues: "See details", flagged: false },
    { name: "Mark Taylor", status: "Out of service",  totalDriveTime: "221h 32m", totalMiles: "77,453", issues: "See details", flagged: true },
