@@ -99,7 +99,7 @@
   <main class="flex-1 p-8 pl-4 overflow-auto">
 
     <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">Company Setup</h1>
+      <h1 class="text-2xl font-bold">Organization Administration</h1>
       {#if !isEditing}
 	<Button on:click={handleEdit}>Edit</Button>
       {/if}
