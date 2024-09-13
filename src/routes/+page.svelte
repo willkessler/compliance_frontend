@@ -43,7 +43,7 @@
     },
  ];
 
- const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden;";
+ const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
 
 </script>
@@ -117,6 +117,15 @@
  .news-item:last-child {
    margin-bottom: 0;
  }
+
+ .news-item-card {
+    margin-bottom: 20px;
+ }
+
+.news-item-card:last-child {
+  margin-bottom: 0;
+ }
+
 </style>
 
 <main class="flex-1 overflow-auto">
@@ -234,13 +243,13 @@
       <CardContent style={contentStyle}>
         {#each newsItems as newsItem}
           <a href={newsItem.url} target="_blank" class="news-item">
-            <Card class="mb-4">
-              <CardHeader>
+            <Card class="mb-4 news-item-card">
+              <CardHeader class="pb-2">
                 <img style="width:100%;" src={newsItem.image} alt={newsItem.title} class="h-30 mb-2" />
-                <CardTitle>{newsItem.title}</CardTitle>
+                <CardTitle class="text-base">{newsItem.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p class="italic">{newsItem.site}</p>
+                <p class="text-sm text-muted-foreground">{newsItem.site}</p>
               </CardContent>
             </Card>
           </a>
