@@ -41,6 +41,7 @@
 		"clsx": "^2.1.1",
 		"flowbite": "^2.5.1",
 		"flowbite-svelte": "^0.46.16",
+		"flowbite-svelte-icons": "^1.6.1",
 		"lucide-svelte": "^0.439.0",
 		"svelte-radix": "^1.1.1",
 		"tailwind-merge": "^2.5.2",
