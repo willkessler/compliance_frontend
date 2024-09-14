@@ -9,6 +9,8 @@
   const stateFilings = [
   { name: "CA DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
   { name: "TX DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
+  { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Dec 12, 2024", status: "Incomplete" },
+  { name: "International Registration Plan (IRP)", dueDate: "Dec 3, 2024", status: "Incomplete" },
   { name: "CARB", dueDate: "Oct 15, 2024", status: "Complete" },
   { name: "Heavy Highway Vehicle Use Tax (HVUT)", dueDate: "Oct 31, 2024", status: "Review details" },
   { name: "CA MCP renewal", dueDate: "Jan 31, 2025", status: "Review details" },

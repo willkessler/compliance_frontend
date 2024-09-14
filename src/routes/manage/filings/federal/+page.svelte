@@ -8,8 +8,6 @@
 
   const federalFilings = [
   { name: "Unified Carrier Registration (UCR)", dueDate: "Jan 31, 2025", status: "Incomplete" },
-  { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Dec 12, 2024", status: "Incomplete" },
-  { name: "International Registration Plan (IRP)", dueDate: "Dec 3, 2024", status: "Incomplete" },
   { name: "US DOT renewal", dueDate: "March 13, 2024", status: "Complete" },
   { name: "MCS-150", dueDate: "Jan 12, 2024", status: "Review details" },
   { name: "BOC-3", dueDate: "Apr 9, 2024", status: "Review details" },

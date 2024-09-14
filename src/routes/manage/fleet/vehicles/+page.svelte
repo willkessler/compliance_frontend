@@ -5,16 +5,16 @@
  import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-svelte";
 
  let vehicles = [
-   { name: "Truck 2", driveTime: "89h 02m", mileage: 83543, status: "Inactive" },
-   { name: "Truck 3", driveTime: "110h 33m", mileage: 95322, status: "Inactive" },
-   { name: "Truck 1", driveTime: "100h 52m", mileage: 75743, status: "Active" },
-   { name: "Truck 4", driveTime: "97h 46m", mileage: 75743, status: "Active" },
-   { name: "Truck 5", driveTime: "10h 02m", mileage: 743, status: "Active" },
-   { name: "Truck 6", driveTime: "50h 55m", mileage: 28009, status: "Active" },
-   { name: "Truck 7", driveTime: "10h 52m", mileage: 1431, status: "Active" },
-   { name: "Truck 8", driveTime: "70h 12m", mileage: 7743, status: "Active" },
-   { name: "Truck 9", driveTime: "1,040h 14m", mileage: 115098, status: "Active" },
-   { name: "Truck 10", driveTime: "1,382h 49m", mileage: 153887, status: "Active" },
+   { name: "Truck 2", driveTime: "89h 02m", mileage: 83543, status: "Blocked" },
+   { name: "Truck 3", driveTime: "110h 33m", mileage: 95322, status: "Blocked" },
+   { name: "Truck 1", driveTime: "100h 52m", mileage: 75743, status: "Clear" },
+   { name: "Truck 4", driveTime: "97h 46m", mileage: 75743, status: "Clear" },
+   { name: "Truck 5", driveTime: "10h 02m", mileage: 743, status: "Clear" },
+   { name: "Truck 6", driveTime: "50h 55m", mileage: 28009, status: "Clear" },
+   { name: "Truck 7", driveTime: "10h 52m", mileage: 1431, status: "Clear" },
+   { name: "Truck 8", driveTime: "70h 12m", mileage: 7743, status: "Clear" },
+   { name: "Truck 9", driveTime: "1,040h 14m", mileage: 115098, status: "Clear" },
+   { name: "Truck 10", driveTime: "1,382h 49m", mileage: 153887, status: "Clear" },
  ];
 
  let sortColumn = "";
@@ -84,7 +84,7 @@
         <TableCell>{vehicle.driveTime}</TableCell>
         <TableCell>{vehicle.mileage.toLocaleString()}</TableCell>
         <TableCell>
-          <Badge variant={vehicle.status === "Active" ? "success" : "destructive"} class="px-6 py-1">
+          <Badge variant={vehicle.status === "Clear" ? "success" : "destructive"} class="px-6 py-1">
             {vehicle.status}
           </Badge>
         </TableCell>
