@@ -34,25 +34,58 @@
    { href: '/help', label: 'Help', icon: Info, color: 'text-inherit' },
  ];
  
-  let activeClass = 'flex items-center p-2 text-base font-normal text-primary-900 bg-primary-200 dark:bg-dark-gray-700 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-gray-700';
+ let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600';
   let nonActiveClass = 'flex items-center p-2 text-base font-normal text-green-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-green-700';
 
+ let openDropdowns = new Set();
+
+ function isDropdownOpen(label: string): boolean {
+   return openDropdowns.has(label);
+ }
+
+ let closeTimeout: number | null = null;
+
+ function handleDropdownHover(label: string, isHovering: boolean) {
+   if (isHovering) {
+     if (closeTimeout) {
+       clearTimeout(closeTimeout);
+       closeTimeout = null;
+     }
+     openDropdowns.add(label);
+   } else {
+     closeTimeout = setTimeout(() => {
+       openDropdowns.delete(label);
+       openDropdowns = openDropdowns; // Trigger reactivity
+     }, 750); // 300ms delay
+   }
+   openDropdowns = openDropdowns; // Trigger reactivity
+ }
 </script>
 
 <Sidebar {activeUrl} {activeClass} {nonActiveClass}>
-  <SidebarWrapper>
+  <SidebarWrapper class="flex flex-col h-full">
     <div class="ml-3 mt-4 mb-4 text-xl font-bold">Trucking Co.</div>
-    <SidebarGroup>
+    <SidebarGroup class="flex-grow">
       {#each menuItems as item}
         {#if item.subItems !== undefined }
-          <SidebarDropdownWrapper label={item.label} isOpen={false}>
-            <svelte:fragment slot="icon">
-              <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            </svelte:fragment>
-            {#each item.subItems as subItem}
-              <SidebarDropdownItem class="pl-12" label={subItem.label} href={subItem.href} />
-            {/each}
-          </SidebarDropdownWrapper>
+          <div
+            on:mouseenter={() => handleDropdownHover(item.label, true)}
+            on:mouseleave={() => handleDropdownHover(item.label, false)}
+            >
+            <SidebarDropdownWrapper 
+              label={item.label} 
+              isOpen={openDropdowns.has(item.label)}
+              on:mouseenter={() => handleDropdownHover(item.label, true)}
+              on:mouseleave={() => handleDropdownHover(item.label, false)}
+              >
+              <svelte:fragment slot="icon">
+                <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              </svelte:fragment>
+              {#each item.subItems as subItem}
+                <SidebarDropdownItem class="pl-12 text-sm" label={subItem.label} href={subItem.href} active={activeUrl === subItem.href} />
+              {/each}
+            </SidebarDropdownWrapper>
+          </div>
         {/if}
         {#if item.subItems == undefined }
           <SidebarItem label={item.label} href={item.href}>
@@ -68,15 +101,15 @@
         {/if}
       {/each}
     </SidebarGroup>
-    <SidebarGroup border>
+    <SidebarGroup border class="mt-auto">
       {#each adminItems as item}
-        <SidebarItem label={item.label}>
+        <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>>
           <svelte:fragment slot="icon">
             <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
           </svelte:fragment>
           <svelte:fragment slot="subtext">
             {#if item.sideLabel !== undefined}
-              <span class="inline-flex items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-blue-600"> {item.sideLabel} </span>
+              <span class="inline-flex items-center p-3 w-3 h-3 text-sm font-medium text-blue-600"> {item.sideLabel} </span>
             {/if}
           </svelte:fragment>
         </SidebarItem>
