@@ -1,101 +1,114 @@
 <script lang="ts">
- import { Button } from "$lib/components/ui/button";
- import { Badge } from "$lib/components/ui/badge";
- import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-svelte";
- import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
+ import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { ClockSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { Pagination, PaginationItem } from 'flowbite-svelte';
+ import { page } from '$app/stores';
 
-let drivers = [
-   { name: "Sid Sanger", status: "Active",  totalDriveTime: "89h 02m", totalMiles: "75,743", issues: "See details", flagged: false },
-   { name: "Joe Jacob", status: "Active",  totalDriveTime: "8h 22m", totalMiles: "7,743", issues: "See details", flagged: false },
-   { name: "Eric Tang", status: "Active",  totalDriveTime: "42h 32m", totalMiles: "57,743", issues: "See details", flagged: false },
-   { name: "Mark Taylor", status: "Out of service",  totalDriveTime: "221h 32m", totalMiles: "77,453", issues: "See details", flagged: true },
-   { name: "Joe Jasdeep", status: "Active",  totalDriveTime: "19h 12m", totalMiles: "95,437", issues: "See details", flagged: false },
-   { name: "Derek Travis", status: "Active",  totalDriveTime: "85h 02m", totalMiles: "4,173", issues: "See details", flagged: false },
-   { name: "Alex Seerman", status: "Active",  totalDriveTime: "66h 09m", totalMiles: "93,742", issues: "See details", flagged: false },
-   { name: "Charlie Topanga", status: "Active",  totalDriveTime: "19h 11m", totalMiles: "83,743", issues: "See details", flagged: false },
-   { name: "Cain Reed", status: "Active",  totalDriveTime: "121h 17m", totalMiles: "18,212", issues: "See details", flagged: false },
-   { name: "Marcus Miller", status: "Active",  totalDriveTime: "209h 57m", totalMiles: "15,283", issues: "See details", flagged: false },
- ]
- 
+ let drivers = [
+   { name: "Eric Tang",    totalDriveTime: "42h 32m", totalMiles: "57,743", status: "Blocked", icon: ClockSolid },
+   { name: "Mark Taylor",  totalDriveTime: "221h 32m", totalMiles: "77,453", status: "In progress", icon: ClockSolid },
+   { name: "Sid Sanger",   totalDriveTime: "89h 02m", totalMiles: "75,743", status: "Clear",  },
+   { name: "Joe Jacob",    totalDriveTime: "8h 22m", totalMiles: "7,743", status: "Clear",  },
+   { name: "Joe Jasdeep",  totalDriveTime: "19h 12m", totalMiles: "95,437", status: "Clear",  },
+   { name: "Derek Travis", totalDriveTime: "85h 02m", totalMiles: "4,173", status: "Clear",  },
+   { name: "Alex Seerman", totalDriveTime: "66h 09m", totalMiles: "93,742", status: "Clear",  },
+   { name: "Charlie Topanga", totalDriveTime: "19h 11m", totalMiles: "83,743", status: "Clear",  },
+   { name: "Cain Reed",    totalDriveTime: "121h 17m", totalMiles: "18,212", status: "Clear",  },
+   { name: "Marcus Miller", totalDriveTime: "209h 57m", totalMiles: "15,283", status: "Clear",  },
+ ];
+
  let sortColumn = "";
  let sortDirection = "asc";
 
- function sortTable(column: string) {
-   if (sortColumn === column) {
-     sortDirection = sortDirection === "asc" ? "desc" : "asc";
-   } else {
-     sortColumn = column;
-     sortDirection = "asc";
+ function getStatusColor(status) {
+   switch (status.toLowerCase()) {
+     case 'clear':
+     case 'completed':
+       return 'green';
+     case 'in progress':
+       return 'blue';
+     case 'blocked':
+       return 'red';
+     default:
+       return 'gray';
    }
-
-   drivers.sort((a, b) => {
-     let compareA = a[column];
-     let compareB = b[column];
-
-     if (column === "mileage") {
-       compareA = parseInt(compareA);
-       compareB = parseInt(compareB);
-     }
-
-     if (compareA < compareB) return sortDirection === "asc" ? -1 : 1;
-     if (compareA > compareB) return sortDirection === "asc" ? 1 : -1;
-     return 0;
-   });
-
-   drivers = drivers;
  }
+
+ // boilerplate from https://flowbite-svelte.com/docs/components/pagination
+ $: activeUrl = $page.url.searchParams.get('page');
+  let pages = [
+    { name: 1, href: '/components/pagination?page=1' },
+    { name: 2, href: '/components/pagination?page=2' },
+    { name: 3, href: '/components/pagination?page=3' },
+    { name: 4, href: '/components/pagination?page=4' },
+    { name: 5, href: '/components/pagination?page=5' }
+  ];
+
+  $: {
+    pages.forEach((page) => {
+      let splitUrl = page.href.split('?');
+      let queryString = splitUrl.slice(1).join('?');
+      const hrefParams = new URLSearchParams(queryString);
+      let hrefValue = hrefParams.get('page');
+      if (hrefValue === activeUrl) {
+        page.active = true;
+      } else {
+        page.active = false;
+      }
+    });
+    pages = pages;
+  }
+
+  const previous = () => {
+    alert('Previous btn clicked. Make a call to your server to fetch data.');
+  };
+  const next = () => {
+    alert('Next btn clicked. Make a call to your server to fetch data.');
+  };
+
 </script>
 
 <h1 class="text-3xl font-bold mb-6">Drivers</h1>
-<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead class="cursor-pointer" on:click={() => sortTable("name")}>
-        Asset name 
-        {#if sortColumn === "name"}
-          <ChevronDown class="inline ml-1" size={16} />
-        {/if}
-      </TableHead>
-      <TableHead class="cursor-pointer" on:click={() => sortTable("driveTime")}>
-        Drive time 
-        {#if sortColumn === "driveTime"}
-          <ChevronDown class="inline ml-1" size={16} />
-        {/if}
-      </TableHead>
-      <TableHead class="cursor-pointer" on:click={() => sortTable("mileage")}>
-        Total miles
-        {#if sortColumn === "mileage"}
-          <ChevronDown class="inline ml-1" size={16} />
-        {/if}
-      </TableHead>
-      <TableHead class="cursor-pointer text-right" on:click={() => sortTable("status")}>
-        Status 
-        {#if sortColumn === "status"}
-          <ChevronDown class="inline ml-1" size={16} />
-        {/if}
-      </TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
+<Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
+  <TableHead class="bg-gray-50 whitespace-nowrap">
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+  </TableHead>
+  <TableBody class="bg-white divide-y divide-gray-200">
     {#each drivers as driver}
-      <TableRow>
-        <TableCell>{driver.name}</TableCell>
-        <TableCell>{driver.totalDriveTime}</TableCell>
-        <TableCell>{driver.totalMiles}</TableCell>
-        <TableCell class="text-right">
-          <Button 
-            variant={driver.flagged ? "destructive" : "secondary"} 
-            size="sm"
-            class="status-button"
-          >
-            {driver.issues}
-          </Button>
-        </TableCell>
-      </TableRow>
+      <TableBodyRow>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalMiles}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalDriveTime}</TableBodyCell>
+        <TableBodyCell>
+          <Badge large rounded color={getStatusColor(driver.status)} class="px-6 py-1">
+              {#if driver.icon !== undefined}
+                <svelte:component this={driver.icon} class=" text-{getStatusColor(driver.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              {/if}
+            {driver.status}
+          </Badge>
+        </TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+          <Button color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
+        </TableBodyCell>
+      </TableBodyRow>
     {/each}
   </TableBody>
 </Table>
-<div class="flex justify-end mt-4">
-  <Button variant="outline" size="sm" class="mr-2"><ChevronLeft size={16} /> Previous</Button>
-  <Button variant="outline" size="sm">Next <ChevronRight size={16} /></Button>
+
+
+<div class="w-full flex justify-end pr-4 mt-4">
+  <Pagination {pages} on:previous={previous} on:next={next} icon>
+    <svelte:fragment slot="prev">
+      <span class="sr-only">Previous</span>
+      <ChevronLeftOutline class="w-6 h-6" />
+    </svelte:fragment>
+    <svelte:fragment slot="next">
+      <span class="sr-only">Next</span>
+      <ChevronRightOutline class="w-6 h-6" />
+    </svelte:fragment>
+  </Pagination>
 </div>
