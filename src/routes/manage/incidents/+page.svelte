@@ -1,9 +1,11 @@
 <script>
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { ClockSolid } from 'flowbite-svelte-icons';
+ import { ClockSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { page } from '$app/stores';
+ import { Pagination, PaginationItem } from 'flowbite-svelte';
 
-  let activeTab = 'all events';
-  const tabs = ['All events', 'Needs attention', 'Upcoming'];
+ let activeTab = 'all events';
+ const tabs = ['All events', 'Needs attention', 'Upcoming'];
 
   const events = [
     { name: 'Tire rotation for Truck #2348 CAW', icon: ClockSolid, 
@@ -14,6 +16,11 @@
     type: 'Incident', status: 'Open', occurrenceDate: 'Apr 18, 2021', dueDate: 'Apr 18, 2021' },
     { name: 'Payment from Lana Byrd', type: 'In progress', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
     { name: 'Payment from Jese Leos', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
+    { name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
   ];
 
   function getTypeColor(type) {
@@ -49,8 +56,53 @@
    }
  }
 
+ // boilerplate from https://flowbite-svelte.com/docs/components/pagination
+ $: activeUrl = $page.url.searchParams.get('page');
+  let pages = [
+    { name: 1, href: '/components/pagination?page=1' },
+    { name: 2, href: '/components/pagination?page=2' },
+    { name: 3, href: '/components/pagination?page=3' },
+    { name: 4, href: '/components/pagination?page=4' },
+    { name: 5, href: '/components/pagination?page=5' }
+  ];
 
+  $: {
+    pages.forEach((page) => {
+      let splitUrl = page.href.split('?');
+      let queryString = splitUrl.slice(1).join('?');
+      const hrefParams = new URLSearchParams(queryString);
+      let hrefValue = hrefParams.get('page');
+      if (hrefValue === activeUrl) {
+        page.active = true;
+      } else {
+        page.active = false;
+      }
+    });
+    pages = pages;
+  }
+
+  const previous = () => {
+    alert('Previous btn clicked. Make a call to your server to fetch data.');
+  };
+  const next = () => {
+    alert('Next btn clicked. Make a call to your server to fetch data.');
+  };
 </script>
+
+<!-- these don't work for some reason -->
+<style>
+ :global(.flowbite-table) {
+   @apply shadow overflow-hidden border-b border-gray-200 sm:rounded-lg;
+ }
+ :global(.flowbite-table-head) {
+   @apply bg-gray-50;
+ }
+ :global(.badge-purple) {
+   background-color: #f3e8ff !important;
+   color: #6b21a8 !important;
+ }
+</style>
+
 
 <div class="p-4">
 
@@ -105,15 +157,15 @@
   </Table>
 </div>
 
-<style>
- :global(.flowbite-table) {
-   @apply shadow overflow-hidden border-b border-gray-200 sm:rounded-lg;
- }
- :global(.flowbite-table-head) {
-   @apply bg-gray-50;
- }
- :global(.badge-purple) {
-   background-color: #f3e8ff !important;
-   color: #6b21a8 !important;
- }
-</style>
+<div class="w-full flex justify-end pr-4">
+  <Pagination {pages} on:previous={previous} on:next={next} icon>
+    <svelte:fragment slot="prev">
+      <span class="sr-only">Previous</span>
+      <ChevronLeftOutline class="w-6 h-6" />
+    </svelte:fragment>
+    <svelte:fragment slot="next">
+      <span class="sr-only">Next</span>
+      <ChevronRightOutline class="w-6 h-6" />
+    </svelte:fragment>
+  </Pagination>
+</div>
