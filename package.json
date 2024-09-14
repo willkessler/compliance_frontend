@@ -35,9 +35,12 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@popperjs/core": "^2.11.8",
 		"bits-ui": "^0.21.13",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"flowbite": "^2.5.1",
+		"flowbite-svelte": "^0.46.16",
 		"lucide-svelte": "^0.439.0",
 		"svelte-radix": "^1.1.1",
 		"tailwind-merge": "^2.5.2",
