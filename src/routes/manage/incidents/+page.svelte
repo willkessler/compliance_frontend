@@ -1,30 +1,20 @@
 <script>
-  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { ClockSolid } from 'flowbite-svelte-icons';
 
   let activeTab = 'all events';
   const tabs = ['All events', 'Needs attention', 'Upcoming'];
 
   const events = [
-    { name: 'Tire rotation for Truck #2348 CAW', type: 'Maintenance', status: 'Done', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
-    { name: 'Payment refund to #00910', type: 'Other issue', status: 'Other status', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
-    { name: 'Broken taillight for Truck #4396', type: 'Incident', status: 'Open', occurrenceDate: 'Apr 18, 2021', dueDate: 'Apr 18, 2021' },
+    { name: 'Tire rotation for Truck #2348 CAW', icon: ClockSolid, 
+    type: 'Maintenance', status: 'Done', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
+    { name: 'Payment refund to #00910', icon: ClockSolid, 
+    type: 'Other issue', status: 'Other status', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
+    { name: 'Broken taillight for Truck #4396', icon: ClockSolid, 
+    type: 'Incident', status: 'Open', occurrenceDate: 'Apr 18, 2021', dueDate: 'Apr 18, 2021' },
     { name: 'Payment from Lana Byrd', type: 'In progress', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
     { name: 'Payment from Jese Leos', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
   ];
-
-function getStatusColor(status) {
-    switch (status.toLowerCase()) {
-      case 'done':
-      case 'completed':
-        return 'green';
-      case 'open':
-        return 'red';
-      case 'in progress':
-        return 'purple';
-      default:
-        return 'gray';
-    }
-  }
 
   function getTypeColor(type) {
     switch (type.toLowerCase()) {
@@ -33,15 +23,32 @@ function getStatusColor(status) {
       case 'incident':
         return 'red';
       case 'in progress':
-        return 'purple';
+        return 'blue';
       case 'completed':
         return 'green';
       case 'other issue':
-        return 'yellow';
+        return 'blue';
       default:
         return 'gray';
     }
   }
+
+ function getStatusColor(status) {
+   switch (status.toLowerCase()) {
+     case 'done':
+     case 'completed':
+       return 'green';
+     case 'open':
+       return 'red';
+     case 'in progress':
+       return 'blue';
+     case 'other status':
+       return 'blue';
+     default:
+       return 'gray';
+   }
+ }
+
 
 </script>
 
@@ -53,7 +60,7 @@ function getStatusColor(status) {
       {#each tabs as tab}
         <Button
           color={activeTab === tab.toLowerCase() ? 'alternative' : 'light'}
-          class="min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-neutral-300' : ''}"
+          class="min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-neutral-100' : ''}"
           on:click={() => activeTab = tab.toLowerCase()}
           >
           {tab}
@@ -62,7 +69,7 @@ function getStatusColor(status) {
   </div>
 
   <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
-    <TableHead class="bg-gray-50">
+    <TableHead class="bg-gray-50 whitespace-nowrap">
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name of event</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type of event</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
@@ -76,6 +83,9 @@ function getStatusColor(status) {
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{event.name}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             <Badge large rounded color={getTypeColor(event.type)}>
+              {#if event.icon !== undefined}
+                <svelte:component this={event.icon} class=" text-gray-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              {/if}
               {event.type}
             </Badge>
           </TableBodyCell>
