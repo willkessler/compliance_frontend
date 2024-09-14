@@ -81,8 +81,8 @@
     {#each drivers as driver}
       <TableBodyRow>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalMiles}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalDriveTime}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalMiles}</TableBodyCell>
         <TableBodyCell>
           <Badge large rounded color={getStatusColor(driver.status)} class="px-6 py-1">
               {#if driver.icon !== undefined}
