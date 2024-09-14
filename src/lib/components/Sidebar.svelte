@@ -2,8 +2,12 @@
  import { page } from '$app/stores';
  import { Separator } from "$lib/components/ui/separator";
  import { LayoutDashboard, ScrollText, Building2, Truck, Users, Link, CircleAlert, Info, WandSparkles, Settings } from "lucide-svelte";
- import { ChartPieSolid, GridSolid, MailBoxSolid, UserSolid, ShoppingBagSolid, ArrowRightToBracketOutline, 
-        EditOutline, FireSolid, BookSolid, RestoreWindowOutline, LifeSaverSolid } from 'flowbite-svelte-icons';
+ import { 
+        HomeOutline, 
+        QuestionCircleOutline,
+        TableColumnOutline,
+        ShareNodesOutline, 
+        } from 'flowbite-svelte-icons';
 
  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownWrapper, SidebarDropdownItem } from 'flowbite-svelte';
  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
@@ -11,27 +15,27 @@
  $: activeUrl = $page.url.pathname;
 
  const menuItems = [
-   { href: '/', label: 'Dashboard', icon: LayoutDashboard, color: 'text-inherit' },
-   { href: '/manage/violations', label: 'Violations Manager', icon: CircleAlert, color: 'text-red-600', pillCount: 5 },
-   { href: '/manage/filings', label: 'Company Compliance', icon: ScrollText , color: 'text-inherit', 
-   subItems: [
-     { href: '/manage/filings/federal', label: 'Federal' },
-     { href: '/manage/filings/state', label: 'State' }
-   ]
-   },
+   { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
+   { href: '/manage/incidents', label: 'Incident Manager', icon: HomeOutline, color: 'text-red-600', pillCount: 5 },
    { href: '/manage/fleet', label: 'Fleet Compliance', icon: Truck, color: 'text-inherit',
    subItems: [
      { href: '/manage/fleet/vehicles', label: 'Vehicles' },
      { href: '/manage/fleet/drivers', label: 'Drivers' }
    ]
    },
+   { href: '/manage/filings', label: 'Company Compliance', icon: ScrollText , color: 'text-inherit', 
+   subItems: [
+     { href: '/manage/filings/federal', label: 'Federal' },
+     { href: '/manage/filings/state', label: 'State' }
+   ]
+   },
  ];
 
  const adminItems = [
    { href: '/manage/ai', label: 'AI-Compliance Check', icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
-   { href: '/manage/integrations', label: 'Connections', icon: Link, color: 'text-inherit' },
+   { href: '/manage/integrations', label: 'Connections', icon: ShareNodesOutline, color: 'text-inherit' },
    { href: '/manage/organization', label: 'Admin', icon: Settings , color: 'text-inherit' },
-   { href: '/help', label: 'Help', icon: Info, color: 'text-inherit' },
+   { href: '/help', label: 'Help', icon: QuestionCircleOutline, color: 'text-inherit' },
  ];
  
  let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600';
@@ -64,8 +68,8 @@
 
 <Sidebar {activeUrl} {activeClass} {nonActiveClass}>
   <SidebarWrapper class="flex flex-col h-full">
-    <div class="ml-3 mt-4 mb-4 text-xl font-bold">Trucking Co.</div>
-    <SidebarGroup class="flex-grow">
+    <div class="ml-3 mt-4  text-lg text-gray-600">Trucking Co.</div>
+    <SidebarGroup class="flex-grow" border>
       {#each menuItems as item}
         {#if item.subItems !== undefined }
           <div
@@ -101,7 +105,7 @@
         {/if}
       {/each}
     </SidebarGroup>
-    <SidebarGroup border class="mt-auto">
+    <SidebarGroup border class="mt-auto mb-2">
       {#each adminItems as item}
         <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>>
           <svelte:fragment slot="icon">
