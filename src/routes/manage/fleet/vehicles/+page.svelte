@@ -1,101 +1,114 @@
 <script lang="ts">
- import { Button } from "$lib/components/ui/button";
- import { Badge } from "$lib/components/ui/badge";
- import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
- import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-svelte";
+ import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { ClockSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { Pagination, PaginationItem } from 'flowbite-svelte';
+ import { page } from '$app/stores';
 
  let vehicles = [
-   { name: "Truck 2", driveTime: "89h 02m", mileage: 83543, status: "Blocked" },
-   { name: "Truck 3", driveTime: "110h 33m", mileage: 95322, status: "Blocked" },
-   { name: "Truck 1", driveTime: "100h 52m", mileage: 75743, status: "Clear" },
-   { name: "Truck 4", driveTime: "97h 46m", mileage: 75743, status: "Clear" },
-   { name: "Truck 5", driveTime: "10h 02m", mileage: 743, status: "Clear" },
-   { name: "Truck 6", driveTime: "50h 55m", mileage: 28009, status: "Clear" },
-   { name: "Truck 7", driveTime: "10h 52m", mileage: 1431, status: "Clear" },
-   { name: "Truck 8", driveTime: "70h 12m", mileage: 7743, status: "Clear" },
-   { name: "Truck 9", driveTime: "1,040h 14m", mileage: 115098, status: "Clear" },
-   { name: "Truck 10", driveTime: "1,382h 49m", mileage: 153887, status: "Clear" },
+   { name: "Truck #4396 TX", operatingTime: "100h 52m",    mileage: "75,743", status: "Blocked", icon: ClockSolid, },
+   { name: "Truck #4385 TX", operatingTime: "97h 46m",     mileage: "47,573", status: "In progress", icon: ClockSolid },
+   { name: "Truck #2348 CA", operatingTime: "89h 02m",     mileage: "83,543", status: "Clear" },
+   { name: "Truck #6354 TX", operatingTime: "110h 33m",    mileage: "95,322", status: "Clear" },
+   { name: "Truck #5322 TX", operatingTime: "10h 02m",     mileage: "7,433", status: "Clear" },
+   { name: "Truck #5323 TX", operatingTime: "50h 55m",     mileage: "28,009", status: "Clear" },
+   { name: "Truck #5331 TX", operatingTime: "10h 52m",     mileage: "1,431", status: "Clear" },
+   { name: "Truck #9822 AR", operatingTime: "70h 12m",     mileage: "7,743", status: "Clear" },
+   { name: "Truck #9282 AR", operatingTime: "1,040h 14m",  mileage: "115,098", status: "Clear" },
+   { name: "Truck #9283 AR", operatingTime: "1,382h 49m", mileage: "153,887", status: "Clear" },
  ];
 
  let sortColumn = "";
  let sortDirection = "asc";
 
- function sortTable(column: string) {
-   if (sortColumn === column) {
-     sortDirection = sortDirection === "asc" ? "desc" : "asc";
-   } else {
-     sortColumn = column;
-     sortDirection = "asc";
+ function getStatusColor(status) {
+   switch (status.toLowerCase()) {
+     case 'clear':
+     case 'completed':
+       return 'green';
+     case 'in progress':
+       return 'blue';
+     case 'blocked':
+       return 'red';
+     default:
+       return 'gray';
    }
-
-   vehicles.sort((a, b) => {
-     let compareA = a[column];
-     let compareB = b[column];
-
-     if (column === "mileage") {
-       compareA = parseInt(compareA);
-       compareB = parseInt(compareB);
-     }
-
-     if (compareA < compareB) return sortDirection === "asc" ? -1 : 1;
-     if (compareA > compareB) return sortDirection === "asc" ? 1 : -1;
-     return 0;
-   });
-
-   vehicles = vehicles;
  }
+
+ // boilerplate from https://flowbite-svelte.com/docs/components/pagination
+ $: activeUrl = $page.url.searchParams.get('page');
+  let pages = [
+    { name: 1, href: '/components/pagination?page=1' },
+    { name: 2, href: '/components/pagination?page=2' },
+    { name: 3, href: '/components/pagination?page=3' },
+    { name: 4, href: '/components/pagination?page=4' },
+    { name: 5, href: '/components/pagination?page=5' }
+  ];
+
+  $: {
+    pages.forEach((page) => {
+      let splitUrl = page.href.split('?');
+      let queryString = splitUrl.slice(1).join('?');
+      const hrefParams = new URLSearchParams(queryString);
+      let hrefValue = hrefParams.get('page');
+      if (hrefValue === activeUrl) {
+        page.active = true;
+      } else {
+        page.active = false;
+      }
+    });
+    pages = pages;
+  }
+
+  const previous = () => {
+    alert('Previous btn clicked. Make a call to your server to fetch data.');
+  };
+  const next = () => {
+    alert('Next btn clicked. Make a call to your server to fetch data.');
+  };
+
 </script>
 
 <h1 class="text-3xl font-bold mb-6">Vehicles</h1>
-<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead class="cursor-pointer" on:click={() => sortTable("name")}>
-        Asset name 
-        {#if sortColumn === "name"}
-          <ChevronDown class="inline" size={16} />
-        {/if}
-      </TableHead>
-      <TableHead class="cursor-pointer" on:click={() => sortTable("driveTime")}>
-        Drive time 
-        {#if sortColumn === "driveTime"}
-          <ChevronDown class="inline" size={16} />
-        {/if}
-      </TableHead>
-      <TableHead class="cursor-pointer" on:click={() => sortTable("mileage")}>
-        Total mileage 
-        {#if sortColumn === "mileage"}
-          <ChevronDown class="inline" size={16} />
-        {/if}
-      </TableHead>
-      <TableHead class="cursor-pointer" on:click={() => sortTable("status")}>
-        Status 
-        {#if sortColumn === "status"}
-          <ChevronDown class="inline" size={16} />
-        {/if}
-      </TableHead>
-      <TableHead class="text-right">Action</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
+<Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
+  <TableHead class="bg-gray-50 whitespace-nowrap">
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Mileage</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Operating time</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+  </TableHead>
+  <TableBody class="bg-white divide-y divide-gray-200">
     {#each vehicles as vehicle}
-      <TableRow>
-        <TableCell>{vehicle.name}</TableCell>
-        <TableCell>{vehicle.driveTime}</TableCell>
-        <TableCell>{vehicle.mileage.toLocaleString()}</TableCell>
-        <TableCell>
-          <Badge variant={vehicle.status === "Clear" ? "success" : "destructive"} class="px-6 py-1">
+      <TableBodyRow>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{vehicle.name}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{vehicle.mileage}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{vehicle.operatingTime}</TableBodyCell>
+        <TableBodyCell>
+          <Badge large rounded color={getStatusColor(vehicle.status)} class="px-6 py-1">
+              {#if vehicle.icon !== undefined}
+                <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              {/if}
             {vehicle.status}
           </Badge>
-        </TableCell>
-        <TableCell class="text-right">
-          <Button variant="outline" size="sm">See details</Button>
-        </TableCell>
-      </TableRow>
+        </TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+          <Button color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
+        </TableBodyCell>
+      </TableBodyRow>
     {/each}
   </TableBody>
 </Table>
-<div class="flex justify-end mt-4">
-  <Button variant="outline" size="sm" class="mr-2"><ChevronLeft size={16} /> Previous</Button>
-  <Button variant="outline" size="sm">Next <ChevronRight size={16} /></Button>
+
+
+<div class="w-full flex justify-end pr-4 mt-4">
+  <Pagination {pages} on:previous={previous} on:next={next} icon>
+    <svelte:fragment slot="prev">
+      <span class="sr-only">Previous</span>
+      <ChevronLeftOutline class="w-6 h-6" />
+    </svelte:fragment>
+    <svelte:fragment slot="next">
+      <span class="sr-only">Next</span>
+      <ChevronRightOutline class="w-6 h-6" />
+    </svelte:fragment>
+  </Pagination>
 </div>

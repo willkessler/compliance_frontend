@@ -136,7 +136,7 @@
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             <Badge large rounded color={getTypeColor(event.type)}>
               {#if event.icon !== undefined}
-                <svelte:component this={event.icon} class=" text-gray-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <svelte:component this={event.icon} class=" text-{getTypeColor(event.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
               {event.type}
             </Badge>
@@ -148,7 +148,7 @@
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.occurrenceDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.dueDate}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <Button color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
           </TableBodyCell>
         </TableBodyRow>
