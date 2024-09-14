@@ -69,7 +69,7 @@
 </script>
 
 <h1 class="text-3xl font-bold mb-6">Drivers</h1>
-<Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
+<Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
   <TableHead class="bg-gray-50 whitespace-nowrap">
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>

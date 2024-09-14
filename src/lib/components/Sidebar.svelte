@@ -16,7 +16,7 @@
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
-   { href: '/manage/incidents', label: 'Incident Manager', icon: HomeOutline, color: 'text-red-600', pillCount: 5 },
+   { href: '/manage/incidents', label: 'Incident Manager', icon: HomeOutline, color: 'text-red-600', pillCount: 4 },
    { href: '/manage/fleet', label: 'Fleet Compliance', icon: Truck, color: 'text-inherit',
    subItems: [
      { href: '/manage/fleet/vehicles', label: 'Vehicles' },

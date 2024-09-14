@@ -3,9 +3,8 @@
 <script lang="ts">
  import { onMount, afterUpdate } from 'svelte';
  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
- import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
+ import { Badge, Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
- import { Button } from "$lib/components/ui/button";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
  
  const actionItems = [
@@ -231,23 +230,21 @@
         </CardTitle>
       </CardHeader>
       <CardContent style={contentStyle}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Type</TableHead>
-              <TableHead>Open items</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+        <Table hoverable={true}>
+          <TableHead>
+            <TableHeadCell>Type</TableHeadCell>
+            <TableHeadCell>Open items</TableHeadCell>
+            <TableHeadCell>Action</TableHeadCell>
+          </TableHead>
+          <TableBody class="bg-white divide-y divide-gray-200">
             {#each actionItems as item}
-              <TableRow>
-                <TableCell>{item.type}</TableCell>
-                <TableCell>{item.openItems}</TableCell>
-                <TableCell>
-                  <Button variant="link"><a href={item.url}>View details</a></Button>
-                </TableCell>
-              </TableRow>
+              <TableBodyRow>
+                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.type}</TableBodyCell>
+                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.openItems}</TableBodyCell>
+                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-medium">
+                  <Button href={item.url} color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
+                </TableBodyCell>
+              </TableBodyRow>
             {/each}
           </TableBody>
         </Table>
