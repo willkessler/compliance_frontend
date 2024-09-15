@@ -5,16 +5,16 @@
  import { page } from '$app/stores';
 
  let vehicles = [
-   { name: "Truck #4396 TX", operatingTime: "100h 52m",    mileage: "75,743", status: "Blocked", icon: ExclamationCircleSolid, },
-   { name: "Truck #4385 TX", operatingTime: "97h 46m",     mileage: "47,573", status: "In progress", icon: ClockSolid },
-   { name: "Truck #2348 CA", operatingTime: "89h 02m",     mileage: "83,543", status: "Clear", icon: ThumbsUpSolid, },
-   { name: "Truck #6354 TX", operatingTime: "110h 33m",    mileage: "95,322", status: "Clear", icon: ThumbsUpSolid,},
-   { name: "Truck #5322 TX", operatingTime: "10h 02m",     mileage: "7,433", status: "Clear", icon: ThumbsUpSolid,},
-   { name: "Truck #5323 TX", operatingTime: "50h 55m",     mileage: "28,009", status: "Clear", icon: ThumbsUpSolid,},
-   { name: "Truck #5331 TX", operatingTime: "10h 52m",     mileage: "1,431", status: "Clear", icon: ThumbsUpSolid,},
-   { name: "Truck #9822 AR", operatingTime: "70h 12m",     mileage: "7,743", status: "Clear", icon: ThumbsUpSolid,},
-   { name: "Truck #9282 AR", operatingTime: "1,040h 14m",  mileage: "115,098", status: "Clear", icon: ThumbsUpSolid,},
-   { name: "Truck #9283 AR", operatingTime: "1,382h 49m", mileage: "153,887", status: "Clear", icon: ThumbsUpSolid,},
+   { id: 4396, name: "Truck #4396 TX", operatingTime: "100h 52m",    mileage: "75,743", status: "Blocked", icon: ExclamationCircleSolid, },
+   { id: 4385, name: "Truck #4385 TX", operatingTime: "97h 46m",     mileage: "47,573", status: "In progress", icon: ClockSolid },
+   { id: 2348, name: "Truck #2348 CA", operatingTime: "89h 02m",     mileage: "83,543", status: "Clear", icon: ThumbsUpSolid, },
+   { id: 6354, name: "Truck #6354 TX", operatingTime: "110h 33m",    mileage: "95,322", status: "Clear", icon: ThumbsUpSolid,},
+   { id: 5322, name: "Truck #5322 TX", operatingTime: "10h 02m",     mileage: "7,433", status: "Clear", icon: ThumbsUpSolid,},
+   { id: 5323, name: "Truck #5323 TX", operatingTime: "50h 55m",     mileage: "28,009", status: "Clear", icon: ThumbsUpSolid,},
+   { id: 5331, name: "Truck #5331 TX", operatingTime: "10h 52m",     mileage: "1,431", status: "Clear", icon: ThumbsUpSolid,},
+   { id: 9822, name: "Truck #9822 AR", operatingTime: "70h 12m",     mileage: "7,743", status: "Clear", icon: ThumbsUpSolid,},
+   { id: 9282, name: "Truck #9282 AR", operatingTime: "1,040h 14m",  mileage: "115,098", status: "Clear", icon: ThumbsUpSolid,},
+   { id: 9283, name: "Truck #9283 AR", operatingTime: "1,382h 49m", mileage: "153,887", status: "Clear", icon: ThumbsUpSolid,},
  ];
 
  let sortColumn = "";
@@ -92,7 +92,7 @@
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
+          <Button href="/manage/fleet/vehicles/vehicle/{vehicle.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}
