@@ -1,5 +1,6 @@
 <script lang="ts">
- import { Badge, Button, Card,  Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { Badge, Button, Card,  Modal, Select, Pagination, PaginationItem, 
+        Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, FileSolid, FileImageSolid, CirclePlusSolid, 
         TruckSolid, BadgeCheckSolid, 
         UsersOutline,
@@ -8,9 +9,12 @@
 
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
- import { Pagination, PaginationItem } from 'flowbite-svelte';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
+ // Modal setup
+ let defaultModal = false;
+
+ // Date handler
  let dueDate = new Date('2024-08-31');
  function handleFocus(event) {
    event.target.showPicker();
@@ -32,7 +36,7 @@
     formattedDate = formatDate(dueDate);
   });
 
-
+ // Table data
  $: id = parseInt($page.params.id); // get the page id from the url
 
  let incident = {
@@ -95,7 +99,7 @@
  }
 
 
- // boilerplate
+ // pagination boilerplate
  $: activeUrl = $page.url.searchParams.get('page');
  let pages = [
    { name: 1, href: '/components/pagination?page=1' },
@@ -154,7 +158,8 @@
 
   <div class="flex justify-between items-center mb-0 ml-2">
     <h1 class="text-xl font-bold">History of Action Items</h1>
-    <Button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5"><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
+    <Button on:click={() => (defaultModal = true)}
+      class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5"><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
   </div>
   
   <div>
@@ -210,7 +215,7 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date added</TableHeadCell>
       </TableHead>
-      <TableBody class="bg-white divide-y divide-gray-200">
+      <TableBody>
         {#each uploadedFiles as uploadedFile}
           <TableBodyRow>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
@@ -234,14 +239,14 @@
       <p class="font-semibold text-gray-500">{incident.date}</p>
     </div>
     <div class="space-x-2">
-      <Badge class="py-1"  color="green">Maintenance</Badge>
-      <Badge class="py-1" color="red">Critical</Badge>
-      <Badge class="py-1" color="blue">Open</Badge>
+      <Badge class="py-1 cursor-pointer"  color="green">Maintenance</Badge>
+      <Badge class="py-1 cursor-pointer" color="red">Critical</Badge>
+      <Badge class="py-1 cursor-pointer" color="blue">Open</Badge>
     </div>
     <div>
-      <p class="mb-2"><span class="font-semibold">Level:</span><Badge class="ml-2 bg-gray-100"> {incident.level}</Badge></p>
-      <p class="mb-2"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
-      <p class="mb-2"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Level:</span><Badge class="ml-2 bg-gray-100"> {incident.level}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Due date:</div>
         <div class="flex items-center">
@@ -266,11 +271,22 @@
       <Card class="p-2 m-0 mt-2 divide-y shadow-none">
           <p class="text-sm">{incident.description}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
-            <div class="pr-3"><MapPinAltSolid /></div>
-            <div><FileImageSolid /></div>
+            <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
+            <div class="cursor-pointer"><FileImageSolid /></div>
           </div>
       </Card>
     </div>
-    <Button class="w-full">Save Change</Button>
   </div>
+  
+<Modal bind:open={defaultModal} autoclose 
+  backdropClass="fixed inset-0 z-40 bg-white/80">
+  <h3 class="font-bold" slot="header">Create New Action</h3>
+  <p>This is a default modal to check if the overlay is working correctly.</p>
+  <svelte:fragment slot="footer">
+    <Button on:click={() => defaultModal = false}>Close</Button>
+  </svelte:fragment>
+</Modal>
+
 </IncidentLayout>
+
+

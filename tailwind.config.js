@@ -5,7 +5,10 @@ import flowbitePlugin from 'flowbite/plugin'
 /** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: 'selector',
-  content: ["./src/**/*.{html,js,svelte,ts}"],
+  content: [
+    './src/**/*.{html,js,svelte,ts}',
+    './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}',
+  ],
   safelist: ["dark"],
   theme: {
     container: {
@@ -21,6 +24,9 @@ const config = {
 	input: "hsl(var(--input) / <alpha-value>)",
 	background: "hsl(var(--background) / <alpha-value>)",
 	foreground: "hsl(var(--foreground) / <alpha-value>)",
+        backgroundColor: {
+          'modal-backdrop' : 'rgba(255,255,255,0.5)',
+        },
         // flowbite-svelte
         primary: {
           50: '#FFF5F2',
@@ -59,7 +65,7 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    flowbitePlugin,
+    require('flowbite/plugin'),
   ],
 };
 

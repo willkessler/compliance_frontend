@@ -1,9 +1,9 @@
 <script lang="ts">
-  import "../app.postcss";
-  import Sidebar from '$lib/components/Sidebar.svelte';
-  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
-
-  import { page } from '$app/stores';
+ import "../app.postcss";
+ import Sidebar from '$lib/components/Sidebar.svelte';
+ import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ import 'flowbite/dist/flowbite.css';
+ import { page } from '$app/stores';
  $: isIncidentPage = $page.url.pathname.startsWith('/manage/incidents/incident/');
 </script>
 
