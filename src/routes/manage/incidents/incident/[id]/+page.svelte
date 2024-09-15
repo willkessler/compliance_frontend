@@ -1,11 +1,22 @@
 <script lang="ts">
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { ClockSolid, FileSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { ClockSolid, FileSolid, CirclePlusSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
+ import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
- console.log('Page store:', $page);
-  $: id = parseInt($page.params.id); // get the page id from the url
+ $: id = parseInt($page.params.id); // get the page id from the url
+
+ let incident = {
+   id: $page.params.id,
+   title: `Payment refund to #00910`,
+   date: 'Jul 31, 2024',
+   level: 'State',
+   driver: 'Thomas Pascal',
+   vehicle: 'Truck #4396',
+   dueDate: 'Aug 31, 2024',
+   description: 'We are working with Tom\'s repair shop here. Mark is the point of contact and expect to complete the repair on time. Location details below...'
+ };
 
  const incidents = [
    { id: 1292, title: 'Tire rotation for Truck #2348 CAW' },
@@ -95,35 +106,40 @@
   }
 </script>
 
-<div class="p-4">
-  <div class="flex justify-between items-top mb-6">
-    <div>
-      <div class="text-gray-500 text-sm">Incident #{id}</div>
-      <h1 class="text-3xl font-bold mb-4">{getIncidentById(id).title}</h1>
-      <h1 class="text-lg font-bold mb-4">History of Action Items</h1>
+<IncidentLayout>
+  <div>
+    <h1 class="text-gray-500 text-sm">Incident #{id}</h1>
+    <h1 class="text-3xl font-bold mb-2">{getIncidentById(id).title}</h1>
+  </div>
 
-      <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-        <TableHead class="bg-gray-50 whitespace-nowrap">
-          <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-          <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>
-          <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
-          <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-        </TableHead>
-        <TableBody class="bg-white divide-y divide-gray-200">
-          {#each actions as action}
-            <TableBodyRow>
-              <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
-              <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
-              <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
-              <TableBodyCell>
-                <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px]">
-                  {action.type}
-                </Badge>
-              </TableBodyCell>
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      <div class="w-full flex justify-end pr-4 mt-2">
+  <div class="flex justify-between items-center mb-0 ml-2">
+    <h1 class="text-xl font-bold">History of Action Items</h1>
+    <Button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5"><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
+  </div>
+  
+  <div>
+    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
+      </TableHead>
+      <TableBody>
+        {#each actions as action}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
+            <TableBodyCell>
+              <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px]">
+                {action.type}
+              </Badge>
+            </TableBodyCell>
+          </TableBodyRow>
+        {/each}
+      </TableBody>
+      <div class="w-full flex justify-start pr-4 ml-4 mt-2">
         <Pagination 
           bind:currentPage
           {totalPages}
@@ -145,36 +161,51 @@
         </Pagination>
       </div>
 
-      </Table>
+    </Table>
 
-      <h1 class="text-lg font-bold mb-4 mt-5">Uploaded Files</h1>
+    <h1 class="text-lg font-bold mb-4 mt-5">Uploaded Files</h1>
 
-      <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-        <TableHead class="bg-gray-50 whitespace-nowrap">
-          <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-          <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date added</TableHeadCell>
-        </TableHead>
-        <TableBody class="bg-white divide-y divide-gray-200">
-          {#each uploadedFiles as uploadedFile}
-            <TableBodyRow>
-              <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-                <a href="#" >
-                  <div class="flex items-top">
-                    {uploadedFile.filename} &nbsp;
-                    <FileSolid />
-                  </div>
-                </a>
-              </TableBodyCell>
-              <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{uploadedFile.date}</TableBodyCell>
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      </Table>
+    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date added</TableHeadCell>
+      </TableHead>
+      <TableBody class="bg-white divide-y divide-gray-200">
+        {#each uploadedFiles as uploadedFile}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+              <a href="#" >
+                <div class="flex items-top">
+                  {uploadedFile.filename} &nbsp;
+                  <FileSolid />
+                </div>
+              </a>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{uploadedFile.date}</TableBodyCell>
+          </TableBodyRow>
+        {/each}
+      </TableBody>
+    </Table>
+  </div>
 
+  <div slot="right-panel" class="p-4 space-y-4">
+    <h2 class="text-xl font-bold">DETAILS</h2>
+    <p class="font-semibold">{incident.date}</p>
+    <div class="space-x-2">
+      <Badge color="yellow">Maintenance</Badge>
+      <Badge color="red">Critical</Badge>
+      <Badge color="blue">Open</Badge>
     </div>
     <div>
-      <Button class="bg-blue-500 hover:bg-blue-600 text-white text-md p-3">+ Action Item</Button>
+      <p><span class="font-semibold">Level:</span> {incident.level}</p>
+      <p><span class="font-semibold">Driver:</span> {incident.driver}</p>
+      <p><span class="font-semibold">Vehicle:</span> {incident.vehicle}</p>
+      <p><span class="font-semibold">Due date:</span> {incident.dueDate}</p>
     </div>
-
+    <div>
+      <h3 class="font-semibold">Description and notes</h3>
+      <p class="text-sm">{incident.description}</p>
+    </div>
+    <Button class="w-full">Save Change</Button>
   </div>
-</div>
+</IncidentLayout>

@@ -2,12 +2,26 @@
   import "../app.postcss";
   import Sidebar from '$lib/components/Sidebar.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+
+  import { page } from '$app/stores';
+ $: isIncidentPage = $page.url.pathname.startsWith('/manage/incidents/incident/');
 </script>
+
 
 <div class="flex h-screen bg-background">
   <Sidebar />
-  <main class="flex-1 p-8 overflow-auto">
-    <Breadcrumbs />
-    <slot />
-  </main>
+  {#if isIncidentPage}
+    <div class="flex-1 overflow-hidden">
+      <slot />
+    </div>
+  {:else}
+    <div class="flex-1 flex flex-col">
+      <header class="p-4">
+        <Breadcrumbs />
+      </header>
+      <div class="flex-1 overflow-auto p-4">
+        <slot />
+      </div>
+    </div>
+  {/if}
 </div>
