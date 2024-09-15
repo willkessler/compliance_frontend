@@ -2169,6 +2169,11 @@ svelte-compare@^0.0.2:
     nightwind "^1.1.12"
     svelte2tsx "^0.5.9"
 
+svelte-droplet@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/svelte-droplet/-/svelte-droplet-1.0.1.tgz#db5f3741d174988d5f556af179ed1b26502b876c"
+  integrity sha512-HQ48nvm6Cxd8ZN3RAUtcXP+rGHVhPtqqcjjIeysbkx6RJov5O0EoPWrZk9jKnk+cA4Y7jfc9Qt+qvDvdnAfiPw==
+
 svelte-eslint-parser@^0.41.1:
   version "0.41.1"
   resolved "https://registry.yarnpkg.com/svelte-eslint-parser/-/svelte-eslint-parser-0.41.1.tgz#a60e1f91630589c5626a4c50f13a3b9bb88f5069"

@@ -1,20 +1,55 @@
 <script lang="ts">
- import { Badge, Button, Card,  Modal, Select, Pagination, PaginationItem, 
+ import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { FileDrop } from 'svelte-droplet';
  import { ClockSolid, FileSolid, FileImageSolid, CirclePlusSolid, 
         TruckSolid, BadgeCheckSolid, 
         UsersOutline,
         CalendarMonthOutline,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
+ import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
- import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
  // Modal setup
  let defaultModal = false;
+ let actionType = '';
+ let actionName = '';
+ let actionNotes = '';
+ let uploadedFiles = [];
 
+ const actionTypes = [
+   { value: 'call', name: 'Call' },
+   { value: 'email', name: 'Email' },
+   { value: 'onsite', name: 'Onsite' },
+ ];
+
+ function handleFiles(files: File[]) {
+   uploadedFiles = [...uploadedFiles, ...files];
+   for (const file of files) {
+     console.log(file.name)
+   }
+ }
+
+ function removeFile(index) {
+   uploadedFiles = uploadedFiles.filter((_, i) => i !== index);
+ }
+
+ function handleFileUpload(event) {
+   const files = event.detail.files;
+   uploadedFiles = [...uploadedFiles, ...files];
+ }
+
+ function createAction() {
+   // Handle action creation logic here
+   console.log({ actionType, actionName, actionNotes, uploadedFiles });
+   defaultModal = false;
+ }
+
+ //
  // Date handler
+ //
  let dueDate = new Date('2024-08-31');
  function handleFocus(event) {
    event.target.showPicker();
@@ -71,7 +106,7 @@
    { name: "Payment from... ",        description: 'Payment from ...', date: 'Sep 19, 2024', type: 'Call'},
  ];
 
- let uploadedFiles = [
+ let previouslyUploadedFiles = [
    { filename: "Document_name_incident_report",    date: 'Aug 31, 2024'},
    { filename: "Picture_of_the_issue.jpg",         date: 'Aug 31, 2024'},
  ];
@@ -216,7 +251,7 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date added</TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each uploadedFiles as uploadedFile}
+        {#each previouslyUploadedFiles as uploadedFile}
           <TableBodyRow>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
               <a href="#" >
@@ -278,15 +313,63 @@
     </div>
   </div>
   
-<Modal bind:open={defaultModal} autoclose 
-  backdropClass="fixed inset-0 z-40 bg-white/80">
-  <h3 class="font-bold" slot="header">Create New Action</h3>
-  <p>This is a default modal to check if the overlay is working correctly.</p>
-  <svelte:fragment slot="footer">
-    <Button on:click={() => defaultModal = false}>Close</Button>
-  </svelte:fragment>
-</Modal>
+  <Modal bind:open={defaultModal} autoclose outsideclose 
+    backdropClass="fixed inset-0 z-40 bg-white/80">
+    <h3 class="text-gray-700 font-bold" slot="header">Create New Action</h3>
+    <form class="space-y-6">
+      <div>
+        <Label for="actionType" class="mb-2">Type of action</Label>
+        <Select id="actionType" bind:value={actionType} items={actionTypes} placeholder="Select one" />
+      </div>
+      <div>
+        <Label for="actionName" class="mb-2">Name of action</Label>
+        <Input id="actionName" bind:value={actionName} placeholder="Descriptive name" />
+      </div>
+      <div>
+        <Label for="actionNotes" class="mb-2">Add notes</Label>
+        <Textarea id="actionNotes" bind:value={actionNotes} rows="4" placeholder="Write text here ..." />
+      </div>
+
+      <div>
+        <Label class="mb-2">Upload relevant files</Label>
+        <FileDrop {handleFiles} let:droppable>
+          <div class="text-center border p-2 mt-2 mb-4 rounded">
+            <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p class="mt-1 text-sm text-gray-600">
+              Click to upload or drag and drop
+            </p>
+            <p class="mt-1 text-xs text-gray-500">
+              Max. File Size: 30MB
+            </p>
+          </div>
+        </FileDrop>
+        {#if uploadedFiles.length > 0}
+          <div class="mt-4">
+            {#each uploadedFiles as file, index}
+              <div class="flex items-center mt-2">
+                <FileSolid class="text-gray-500 mr-2" />
+                <span class="text-sm text-gray-600">{file.name}</span>
+                <button class="ml-auto text-red-500 hover:text-red-700" on:click={() => removeFile(index)}>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            {/each}
+          </div>
+        {/if}
+      </div>
+    </form>
+
+    <svelte:fragment slot="footer">
+      <div class="w-full flex justify-end">
+        <Button class="bg-white-900 hover:bg-gray-100 text-gray-500 mr-2" on:click={() => defaultModal = false}>Cancel</Button>
+        <Button class="bg-blue-500 hover:bg-blue-600" on:click={() => defaultModal = false}>Add action item</Button>
+      </div>
+    </svelte:fragment>
+  </Modal>
 
 </IncidentLayout>
-
 
