@@ -1,20 +1,20 @@
 <script lang="ts">
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { ClockSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { ClockSolid, ThumbsUpSolid, ExclamationCircleSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import { page } from '$app/stores';
 
  let drivers = [
-   { name: "Eric Tang",    totalDriveTime: "42h 32m", totalMiles: "57,743", status: "Blocked", icon: ClockSolid },
+   { name: "Eric Tang",    totalDriveTime: "42h 32m", totalMiles: "57,743", status: "Blocked", icon: ExclamationCircleSolid },
    { name: "Mark Taylor",  totalDriveTime: "221h 32m", totalMiles: "77,453", status: "In progress", icon: ClockSolid },
-   { name: "Sid Sanger",   totalDriveTime: "89h 02m", totalMiles: "75,743", status: "Clear",  },
-   { name: "Joe Jacob",    totalDriveTime: "8h 22m", totalMiles: "7,743", status: "Clear",  },
-   { name: "Joe Jasdeep",  totalDriveTime: "19h 12m", totalMiles: "95,437", status: "Clear",  },
-   { name: "Derek Travis", totalDriveTime: "85h 02m", totalMiles: "4,173", status: "Clear",  },
-   { name: "Alex Seerman", totalDriveTime: "66h 09m", totalMiles: "93,742", status: "Clear",  },
-   { name: "Charlie Topanga", totalDriveTime: "19h 11m", totalMiles: "83,743", status: "Clear",  },
-   { name: "Cain Reed",    totalDriveTime: "121h 17m", totalMiles: "18,212", status: "Clear",  },
-   { name: "Marcus Miller", totalDriveTime: "209h 57m", totalMiles: "15,283", status: "Clear",  },
+   { name: "Sid Sanger",   totalDriveTime: "89h 02m", totalMiles: "75,743", status: "Clear", icon: ThumbsUpSolid },
+   { name: "Joe Jacob",    totalDriveTime: "8h 22m", totalMiles: "7,743", status: "Clear", icon: ThumbsUpSolid  },
+   { name: "Joe Jasdeep",  totalDriveTime: "19h 12m", totalMiles: "95,437", status: "Clear", icon: ThumbsUpSolid },
+   { name: "Derek Travis", totalDriveTime: "85h 02m", totalMiles: "4,173", status: "Clear", icon: ThumbsUpSolid },
+   { name: "Alex Seerman", totalDriveTime: "66h 09m", totalMiles: "93,742", status: "Clear", icon: ThumbsUpSolid },
+   { name: "Charlie Topanga", totalDriveTime: "19h 11m", totalMiles: "83,743", status: "Clear", icon: ThumbsUpSolid },
+   { name: "Cain Reed",    totalDriveTime: "121h 17m", totalMiles: "18,212", status: "Clear", icon: ThumbsUpSolid },
+   { name: "Marcus Miller", totalDriveTime: "209h 57m", totalMiles: "15,283", status: "Clear", icon: ThumbsUpSolid },
  ];
 
  let sortColumn = "";
@@ -84,7 +84,7 @@
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalDriveTime}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalMiles}</TableBodyCell>
         <TableBodyCell>
-          <Badge large rounded color={getStatusColor(driver.status)} class="px-6 py-1">
+          <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px]">
               {#if driver.icon !== undefined}
                 <svelte:component this={driver.icon} class=" text-{getStatusColor(driver.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}

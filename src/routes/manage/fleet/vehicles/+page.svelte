@@ -1,20 +1,20 @@
 <script lang="ts">
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { ClockSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ExclamationCircleSolid, ThumbsUpSolid } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import { page } from '$app/stores';
 
  let vehicles = [
-   { name: "Truck #4396 TX", operatingTime: "100h 52m",    mileage: "75,743", status: "Blocked", icon: ClockSolid, },
+   { name: "Truck #4396 TX", operatingTime: "100h 52m",    mileage: "75,743", status: "Blocked", icon: ExclamationCircleSolid, },
    { name: "Truck #4385 TX", operatingTime: "97h 46m",     mileage: "47,573", status: "In progress", icon: ClockSolid },
-   { name: "Truck #2348 CA", operatingTime: "89h 02m",     mileage: "83,543", status: "Clear" },
-   { name: "Truck #6354 TX", operatingTime: "110h 33m",    mileage: "95,322", status: "Clear" },
-   { name: "Truck #5322 TX", operatingTime: "10h 02m",     mileage: "7,433", status: "Clear" },
-   { name: "Truck #5323 TX", operatingTime: "50h 55m",     mileage: "28,009", status: "Clear" },
-   { name: "Truck #5331 TX", operatingTime: "10h 52m",     mileage: "1,431", status: "Clear" },
-   { name: "Truck #9822 AR", operatingTime: "70h 12m",     mileage: "7,743", status: "Clear" },
-   { name: "Truck #9282 AR", operatingTime: "1,040h 14m",  mileage: "115,098", status: "Clear" },
-   { name: "Truck #9283 AR", operatingTime: "1,382h 49m", mileage: "153,887", status: "Clear" },
+   { name: "Truck #2348 CA", operatingTime: "89h 02m",     mileage: "83,543", status: "Clear", icon: ThumbsUpSolid, },
+   { name: "Truck #6354 TX", operatingTime: "110h 33m",    mileage: "95,322", status: "Clear", icon: ThumbsUpSolid,},
+   { name: "Truck #5322 TX", operatingTime: "10h 02m",     mileage: "7,433", status: "Clear", icon: ThumbsUpSolid,},
+   { name: "Truck #5323 TX", operatingTime: "50h 55m",     mileage: "28,009", status: "Clear", icon: ThumbsUpSolid,},
+   { name: "Truck #5331 TX", operatingTime: "10h 52m",     mileage: "1,431", status: "Clear", icon: ThumbsUpSolid,},
+   { name: "Truck #9822 AR", operatingTime: "70h 12m",     mileage: "7,743", status: "Clear", icon: ThumbsUpSolid,},
+   { name: "Truck #9282 AR", operatingTime: "1,040h 14m",  mileage: "115,098", status: "Clear", icon: ThumbsUpSolid,},
+   { name: "Truck #9283 AR", operatingTime: "1,382h 49m", mileage: "153,887", status: "Clear", icon: ThumbsUpSolid,},
  ];
 
  let sortColumn = "";
@@ -84,7 +84,7 @@
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{vehicle.mileage}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{vehicle.operatingTime}</TableBodyCell>
         <TableBodyCell>
-          <Badge large rounded color={getStatusColor(vehicle.status)} class="px-6 py-1">
+          <Badge color={getStatusColor(vehicle.status)} class="px-2 py-1.5 rounded rounded-[6px]">
               {#if vehicle.icon !== undefined}
                 <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
