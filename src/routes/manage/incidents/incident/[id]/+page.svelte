@@ -1,9 +1,16 @@
 <script lang="ts">
- import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { ClockSolid, FileSolid, CirclePlusSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { Badge, Button, Card,  Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { ClockSolid, FileSolid, FileImageSolid, CirclePlusSolid, 
+        TruckSolid, BadgeCheckSolid, 
+        UsersOutline,
+        ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
+
+ import { Datepicker } from 'flowbite-svelte';
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
+
+ let selectedDate = new Date('2024-08-31');
 
  $: id = parseInt($page.params.id); // get the page id from the url
 
@@ -15,7 +22,7 @@
    driver: 'Thomas Pascal',
    vehicle: 'Truck #4396',
    dueDate: 'Aug 31, 2024',
-   description: 'We are working with Tom\'s repair shop here. Mark is the point of contact and expect to complete the repair on time. Location details below...'
+   description: 'We are working with Tom\'s repair shop here.  Mark is the point of contact and expect to complete the repair on time. Location details below...'
  };
 
  const incidents = [
@@ -188,23 +195,46 @@
     </Table>
   </div>
 
-  <div slot="right-panel" class="p-4 space-y-4">
-    <h2 class="text-xl font-bold">DETAILS</h2>
-    <p class="font-semibold">{incident.date}</p>
+  <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full">
+    <div class="flex justify-between items-center mb-0 ml-2">
+      <h2 class="text-xl font-bold text-gray-500 uppercase">details</h2>
+      <p class="font-semibold text-gray-500">{incident.date}</p>
+    </div>
     <div class="space-x-2">
-      <Badge color="yellow">Maintenance</Badge>
-      <Badge color="red">Critical</Badge>
-      <Badge color="blue">Open</Badge>
+      <Badge class="py-1"  color="yellow">Maintenance</Badge>
+      <Badge class="py-1" color="red">Critical</Badge>
+      <Badge class="py-1" color="blue">Open</Badge>
     </div>
     <div>
-      <p><span class="font-semibold">Level:</span> {incident.level}</p>
-      <p><span class="font-semibold">Driver:</span> {incident.driver}</p>
-      <p><span class="font-semibold">Vehicle:</span> {incident.vehicle}</p>
-      <p><span class="font-semibold">Due date:</span> {incident.dueDate}</p>
+      <p class="mb-2"><span class="font-semibold">Level:</span><Badge class="ml-2 bg-gray-100"> {incident.level}</Badge></p>
+      <p class="mb-2"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
+      <p class="mb-2"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
+      <div class="flex justify-between items-middle mb-0 ">
+        <div class="mt-4 font-semibold text-nowrap mr-2">Due date:</div>
+        <div class="relative max-w-sm">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <Datepicker
+            bind:value={selectedDate}
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pl-4"
+            placeholder="Due date"
+            format="MMM DD, YYYY"
+          />
+        </div>
+      </div>
     </div>
     <div>
-      <h3 class="font-semibold">Description and notes</h3>
-      <p class="text-sm">{incident.description}</p>
+      <h3>Description and notes</h3>
+      <Card class="p-2 m-0 mt-2 divide-y shadow-none">
+          <p class="text-sm">{incident.description}</p>
+          <div class="flex justify-end items-center mt-2 pt-2 ml-2">
+            <div class="pr-3"><MapPinAltSolid /></div>
+            <div><FileImageSolid /></div>
+          </div>
+      </Card>
     </div>
     <Button class="w-full">Save Change</Button>
   </div>
