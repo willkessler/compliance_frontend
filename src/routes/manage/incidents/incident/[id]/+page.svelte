@@ -3,14 +3,32 @@
  import { ClockSolid, FileSolid, FileImageSolid, CirclePlusSolid, 
         TruckSolid, BadgeCheckSolid, 
         UsersOutline,
+        CalendarMonthOutline,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
 
- import { Datepicker } from 'flowbite-svelte';
+ import { DatePicker } from '@svelte-plugins/datepicker'
+ import { format } from 'date-fns';
+
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
- let selectedDate = new Date('2024-08-31');
+ let startDate = new Date('2024-08-31');
+ let dateFormat = 'MM/dd/yy';
+ let isOpen = false;
+ const toggleDatePicker = () => (isOpen = !isOpen);
+
+ const formatDate = (dateString) => {
+   return dateString && format(new Date(dateString), dateFormat) || '';
+ };
+
+ let formattedStartDate = formatDate(startDate);
+
+ const onChange = () => {
+   startDate = new Date(formattedStartDate);
+ };
+
+ $: formattedStartDate = formatDate(startDate);
 
  $: id = parseInt($page.params.id); // get the page id from the url
 
@@ -113,6 +131,15 @@
   }
 </script>
 
+<style>
+  input[type="text"] {
+    border: 1px solid #e8e9ea;
+    border-radius: 4px;
+    padding: 8px;
+    font-size:12px;
+  }
+</style>
+
 <IncidentLayout>
   <div>
     <h1 class="text-gray-500 text-sm">Incident #{id}</h1>
@@ -201,7 +228,7 @@
       <p class="font-semibold text-gray-500">{incident.date}</p>
     </div>
     <div class="space-x-2">
-      <Badge class="py-1"  color="yellow">Maintenance</Badge>
+      <Badge class="py-1"  color="green">Maintenance</Badge>
       <Badge class="py-1" color="red">Critical</Badge>
       <Badge class="py-1" color="blue">Open</Badge>
     </div>
@@ -209,21 +236,11 @@
       <p class="mb-2"><span class="font-semibold">Level:</span><Badge class="ml-2 bg-gray-100"> {incident.level}</Badge></p>
       <p class="mb-2"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
       <p class="mb-2"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
-      <div class="flex justify-between items-middle mb-0 ">
+      <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Due date:</div>
-        <div class="relative max-w-sm">
-          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-          <Datepicker
-            bind:value={selectedDate}
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pl-4"
-            placeholder="Due date"
-            format="MMM DD, YYYY"
-          />
-        </div>
+        <DatePicker bind:isOpen bind:startDate>
+          <input type="text" placeholder="Select date" bind:value={formattedStartDate} on:click={toggleDatePicker} />
+        </DatePicker>
       </div>
     </div>
     <div>
