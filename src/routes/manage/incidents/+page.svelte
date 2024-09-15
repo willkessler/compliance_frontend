@@ -8,19 +8,21 @@
  const tabs = ['All events', 'Needs attention', 'Upcoming'];
 
   const events = [
-    { id: 1, name: 'Tire rotation for Truck #2348 CAW', icon: ClockSolid, 
+    { id: 1292, name: 'Tire rotation for Truck #2348 CAW', icon: ClockSolid, 
     type: 'Maintenance', status: 'Done', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
-    { id: 2, name: 'Payment refund to #00910', icon: ClockSolid, 
+    { id: 292, name: 'Payment refund to #00910', icon: ClockSolid, 
     type: 'Other issue', status: 'Other status', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
-    { id: 3, name: 'Broken taillight for Truck #4396', icon: ClockSolid, 
+    { id: 33828, name: 'Broken taillight for Truck #4396', icon: ClockSolid, 
     type: 'Incident', status: 'Open', occurrenceDate: 'Apr 18, 2021', dueDate: 'Apr 18, 2021' },
-    { id: 4, name: 'Payment from Lana Byrd', type: 'In progress', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
-    { id: 5, name: 'Payment from Jese Leos', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
-    { id: 6, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 7, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 8, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 9, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 10, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { id: 48482, name: 'Payment from Lana Byrd', icon: ClockSolid, 
+    type: 'In progress', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
+    { id: 59382, name: 'Payment from Jese Leos', 
+    type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
+    { id: 68282, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { id: 79182, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { id: 81829, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { id: 99928, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    { id: 10023, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
   ];
 
   function getTypeColor(type) {
