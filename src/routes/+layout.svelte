@@ -4,9 +4,11 @@
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import 'flowbite/dist/flowbite.css';
  import { page } from '$app/stores';
- $: isIncidentPage = $page.url.pathname.startsWith('/manage/incidents/incident/');
+ $: isIncidentPage = (
+   $page.url.pathname.startsWith('/manage/incidents/incident/') ||
+   $page.url.pathname.startsWith('/manage/fleet/vehicles/vehicle/')
+ );
 </script>
-
 
 <div class="flex h-screen bg-background">
   <Sidebar />
