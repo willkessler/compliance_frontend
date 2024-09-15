@@ -6,29 +6,14 @@
         CalendarMonthOutline,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
 
- import { DatePicker } from '@svelte-plugins/datepicker'
- import { format } from 'date-fns';
-
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
- let startDate = new Date('2024-08-31');
- let dateFormat = 'MM/dd/yy';
- let isOpen = false;
- const toggleDatePicker = () => (isOpen = !isOpen);
-
- const formatDate = (dateString) => {
-   return dateString && format(new Date(dateString), dateFormat) || '';
- };
-
- let formattedStartDate = formatDate(startDate);
-
- const onChange = () => {
-   startDate = new Date(formattedStartDate);
- };
-
- $: formattedStartDate = formatDate(startDate);
+ let dueDate = new Date('2024-08-31');
+  function handleFocus(event) {
+    event.target.showPicker();
+  }
 
  $: id = parseInt($page.params.id); // get the page id from the url
 
@@ -132,11 +117,14 @@
 </script>
 
 <style>
-  input[type="text"] {
-    border: 1px solid #e8e9ea;
-    border-radius: 4px;
-    padding: 8px;
-    font-size:12px;
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
   }
 </style>
 
@@ -238,9 +226,18 @@
       <p class="mb-2"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Due date:</div>
-        <DatePicker bind:isOpen bind:startDate>
-          <input type="text" placeholder="Select date" bind:value={formattedStartDate} on:click={toggleDatePicker} />
-        </DatePicker>
+        <div class="relative max-w-[200px]">
+          <svg class="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+          </svg>
+          <input
+            type="date"
+            bind:value={dueDate}
+            on:focus={handleFocus}
+            on:click={handleFocus}
+            class="block w-full pl-8 pr-2 py-1.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+          />
+        </div>
       </div>
     </div>
     <div>
