@@ -10,7 +10,7 @@
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
  import { page } from '$app/stores';
- import { onMount } from 'svelte';
+ import { onMount, tick } from 'svelte';
 
  // Modal setup
  let defaultModal = false;
@@ -39,12 +39,6 @@
  function handleFileUpload(event) {
    const files = event.detail.files;
    uploadedFiles = [...uploadedFiles, ...files];
- }
-
- function createAction() {
-   // Handle action creation logic here
-   console.log({ actionType, actionName, actionNotes, uploadedFiles });
-   defaultModal = false;
  }
 
  //
@@ -99,7 +93,7 @@
  ];
  
  let actions = [
-   { id: 1, name: "Call Tom's repair shop",    description: 'Schedule ...', date: 'Aug 31, 2024', type: 'Call'},
+   { id: 1, name: "Call Tom's repair shop",    description: 'Schedule a pickup time', date: 'Aug 31, 2024', type: 'Call'},
    { id: 2, name: "Payment from... ",          description: 'Payment from ...', date: 'Aug 31, 2024', type: 'Onsite'},
    { id: 3, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 15, 2024', type: 'Email'},
    { id: 4, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 17, 2024', type: 'Call'},
@@ -175,6 +169,48 @@
   function pageChange(event) {
     currentPage = event.detail;
   }
+
+ let selectedAction = null;
+ let selectedActionType = null;
+ let selectElement;
+
+  let selectedActionTypeValue = ''; // This will hold the string value of the selected action type
+
+  $: if (selectedAction) {
+    selectedActionTypeValue = selectedAction.type.toLowerCase();
+  }
+
+  function openModalWithAction(action) {
+    console.log('openModalWithAction');
+    selectedAction = action;
+    selectedActionTypeValue = action.type.toLowerCase();
+    actionName = action.name;
+    actionNotes = action.description;
+    defaultModal = true;
+  }
+
+ async function handleSelectChange(event) {
+    await tick();
+    console.log('new value:', event.target.value);
+   //selectedActionTypeValue = event.target.value;
+    console.log('Selected action type:', selectedActionTypeValue);
+  }
+
+  function updateAction() {
+    // Handle action update logic here
+    console.log('Updating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
+    defaultModal = false;
+    selectedAction = null;
+    selectedActionTypeValue = '';
+  }
+
+  function createAction() {
+    // Handle action creation logic here
+    console.log('Creating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
+    defaultModal = false;
+    selectedActionTypeValue = '';
+  }
+
 </script>
 
 <style>
@@ -217,9 +253,11 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
             <TableBodyCell>
-              <Badge  large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px]">
-                {action.type}
-              </Badge>
+              <div on:click={() => openModalWithAction(action)}>
+                <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer" >
+                  {action.type}
+                </Badge>
+              </div>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
@@ -322,11 +360,19 @@
     backdropClass="fixed inset-0 z-40 bg-white/80"
     class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
   >
-    <h3 class="text-gray-700 font-bold" slot="header">Create New Action</h3>
+    <h3 class="text-gray-700 font-bold" slot="header">
+      {selectedAction ? 'Edit Action' : 'Create New Action'}
+    </h3>
     <form class="space-y-6">
       <div>
         <Label for="actionType" class="mb-2">Type of action</Label>
-        <Select id="actionType" bind:value={actionType} items={actionTypes} placeholder="Select one" />
+        <Select 
+          id="actionType"
+          bind:value={selectedActionTypeValue} 
+          items={actionTypes} 
+          on:change={handleSelectChange}
+          placeholder="Select one"
+        />
       </div>
       <div>
         <Label for="actionName" class="mb-2">Name of action</Label>
@@ -372,8 +418,16 @@
 
     <svelte:fragment slot="footer">
       <div class="w-full flex justify-end">
-        <Button class="bg-white-900 hover:bg-gray-100 text-gray-500 mr-2" on:click={() => defaultModal = false}>Cancel</Button>
-        <Button class="bg-blue-500 hover:bg-blue-600" on:click={() => defaultModal = false}>Add action item</Button>
+        <Button class="bg-white-900 hover:bg-gray-100 text-gray-500 mr-2" 
+          on:click={() => {
+                   defaultModal = false;
+                   selectedAction = null;
+                   selectedActionType = null;
+                   selectedActionTypeValue = '';
+                       }}>Cancel</Button>
+        <Button class="bg-blue-500 hover:bg-blue-600" on:click={selectedAction ? updateAction : createAction}>
+          {selectedAction ? 'Update action item' : 'Add action item'}
+        </Button>
       </div>
     </svelte:fragment>
   </Modal>
