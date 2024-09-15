@@ -57,9 +57,9 @@
  let formattedDate;
 
  function formatDate(date) {
-    const d = new Date(date);
+   const d = new Date(date);
    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+   return d.toLocaleDateString('en-US', options);
   }
 
   function handleInput(event) {
@@ -99,11 +99,11 @@
  ];
  
  let actions = [
-   { name: "Call Tom's repair shop",    description: 'Schedule ...', date: 'Aug 31, 2024', type: 'Call'},
-   { name: "Payment from... ",        description: 'Payment from ...', date: 'Aug 31, 2024', type: 'Onsite'},
-   { name: "Payment from... ",        description: 'Payment from ...', date: 'Sep 15, 2024', type: 'Email'},
-   { name: "Payment from... ",        description: 'Payment from ...', date: 'Sep 17, 2024', type: 'Call'},
-   { name: "Payment from... ",        description: 'Payment from ...', date: 'Sep 19, 2024', type: 'Call'},
+   { id: 1, name: "Call Tom's repair shop",    description: 'Schedule ...', date: 'Aug 31, 2024', type: 'Call'},
+   { id: 2, name: "Payment from... ",          description: 'Payment from ...', date: 'Aug 31, 2024', type: 'Onsite'},
+   { id: 3, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 15, 2024', type: 'Email'},
+   { id: 4, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 17, 2024', type: 'Call'},
+   { id: 5, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 19, 2024', type: 'Call'},
  ];
 
  let previouslyUploadedFiles = [
@@ -133,6 +133,10 @@
    }
  }
 
+ function openModalWithActionId(actionId) {
+   debugger;
+   defaultModal = true;
+ }
 
  // pagination boilerplate
  $: activeUrl = $page.url.searchParams.get('page');
@@ -183,6 +187,7 @@
     left: 0;
     cursor: pointer;
   }
+
 </style>
 
 <IncidentLayout>
@@ -212,7 +217,7 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
             <TableBodyCell>
-              <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px]">
+              <Badge  large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px]">
                 {action.type}
               </Badge>
             </TableBodyCell>
@@ -314,7 +319,9 @@
   </div>
   
   <Modal bind:open={defaultModal} autoclose outsideclose 
-    backdropClass="fixed inset-0 z-40 bg-white/80">
+    backdropClass="fixed inset-0 z-40 bg-white/80"
+    class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
+  >
     <h3 class="text-gray-700 font-bold" slot="header">Create New Action</h3>
     <form class="space-y-6">
       <div>
