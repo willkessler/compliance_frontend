@@ -7,13 +7,31 @@
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
 
  import { page } from '$app/stores';
+ import { onMount } from 'svelte';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
 
  let dueDate = new Date('2024-08-31');
-  function handleFocus(event) {
-    event.target.showPicker();
+ function handleFocus(event) {
+   event.target.showPicker();
+ }
+ let formattedDate;
+
+ function formatDate(date) {
+    const d = new Date(date);
+   const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
   }
+
+  function handleInput(event) {
+    dueDate = event.target.value;
+    formattedDate = formatDate(dueDate);
+  }
+
+  onMount(() => {
+    formattedDate = formatDate(dueDate);
+  });
+
 
  $: id = parseInt($page.params.id); // get the page id from the url
 
@@ -226,22 +244,25 @@
       <p class="mb-2"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Due date:</div>
-        <div class="relative max-w-[200px]">
-          <svg class="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-          </svg>
-          <input
-            type="date"
-            bind:value={dueDate}
-            on:focus={handleFocus}
-            on:click={handleFocus}
-            class="block w-full pl-8 pr-2 py-1.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
-          />
+        <div class="flex items-center">
+          <div class="relative inline-block">
+            <input
+              type="date"
+              bind:value={dueDate}
+              on:input={handleInput}
+              class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
+            />
+            <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
+              <svg class="w-4 h-4 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-sm text-gray-700">{formattedDate}</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     <div>
-      <h3>Description and notes</h3>
+      <div class="mt-6">Description and notes</div>
       <Card class="p-2 m-0 mt-2 divide-y shadow-none">
           <p class="text-sm">{incident.description}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
