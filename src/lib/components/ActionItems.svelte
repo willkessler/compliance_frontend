@@ -4,23 +4,30 @@
  import { FileDrop } from 'svelte-droplet';
  import { CirclePlusSolid, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
- import { onMount, tick } from 'svelte';
+ import { onMount } from 'svelte';
 
  //
  // Modal related
  //
 
- let defaultModal = false;
+ export let environment; // where the modal is being used
+
+ let defaultModal = false; // whether the modal is visible
  let actionType = '';
  let actionName = '';
  let actionNotes = '';
 
  let selectedAction = null;
  let selectedActionType = null;
- let selectElement;
+
+ let selectedStatus = null;
+ let selectedStatusType = null;
+ 
+ 
  let uploadedFiles = [];
 
- let selectedActionTypeValue = ''; // This will hold the string value of the selected action type
+ let selectedActionTypeValue = '';
+ let selectedStatusTypeValue = '';
 
  $: if (selectedAction) {
    selectedActionTypeValue = selectedAction.type.toLowerCase();
@@ -30,6 +37,12 @@
    { value: 'call', name: 'Call' },
    { value: 'email', name: 'Email' },
    { value: 'onsite', name: 'Onsite' },
+ ];
+
+ const statusTypes = [
+   { value: 'open', name: 'Open' },
+   { value: 'hold', name: 'Hold' },
+   { value: 'closed', name: 'Closed' },
  ];
 
  function handleFiles(files: File[]) {
@@ -58,11 +71,16 @@
     uploadedFiles = [ { name: 'receipt_382.pdf'}, {name: 'bol_9_9_24.pdf'} ];
   }
 
- async function handleSelectChange(event) {
-    await tick();
+ function handleTypeChange(event) {
     console.log('new value:', event.target.value);
    //selectedActionTypeValue = event.target.value;
     console.log('Selected action type:', selectedActionTypeValue);
+  }
+
+ function handleStatusChange(event) {
+    console.log('new value:', event.target.value);
+   //selectedActionTypeValue = event.target.value;
+    console.log('Selected action type:', selectedStatusTypeValue);
   }
 
   function updateAction() {
@@ -144,8 +162,38 @@
    }
  }
 
- 
+ // date picker junk
+ let dueDate = new Date('2024-08-31');
+ let formattedDate;
+
+ function formatDate(date) {
+   const d = new Date(date);
+   const options = { year: 'numeric', month: 'short', day: 'numeric' };
+   return d.toLocaleDateString('en-US', options);
+  }
+
+  function handleDateInput(event) {
+    dueDate = event.target.value;
+    formattedDate = formatDate(dueDate);
+  }
+
+  onMount(() => {
+    formattedDate = formatDate(dueDate);
+  });
+
 </script>
+
+<style>
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+</style>
 
 <div class="flex justify-between items-center mb-0 ml-2 mt-3">
   <h1 class="text-xl font-bold">Action Items History</h1>
@@ -212,20 +260,70 @@
     {selectedAction ? 'Edit Action' : 'Create New Action'}
   </h3>
   <form class="space-y-6">
-    <div>
-      <Label for="actionType" class="mb-2">Type of action</Label>
-      <Select 
-        id="actionType"
-        bind:value={selectedActionTypeValue} 
-        items={actionTypes} 
-        on:change={handleSelectChange}
-        placeholder="Select one"
-      />
-    </div>
+    {#if environment === 'incident'}
+      <div>
+        <Label for="actionType" class="mb-2">Type of action</Label>
+        <Select 
+          id="actionType"
+          bind:value={selectedActionTypeValue} 
+          items={actionTypes} 
+          on:change={handleTypeChange}
+          placeholder="Select one"
+        />
+      </div>
+    {/if}
+
     <div>
       <Label for="actionName" class="mb-2">Name of action</Label>
       <Input id="actionName" bind:value={actionName} placeholder="Descriptive name" />
     </div>
+
+    {#if environment === 'vehicle'}
+      <div class="w-full">
+        <div class="flex gap-4 w-full mb-4">
+          <div class="w-1/2">
+            <Label for="actionType" class="mb-2">Type of Action</Label>
+            <Select 
+              id="actionType"
+              bind:value={selectedActionTypeValue} 
+              items={actionTypes} 
+              on:change={handleTypeChange}
+              placeholder="Select one"
+            />
+          </div>
+          <div class="w-1/2">
+            <Label for="status" class="mb-2">Status</Label>
+            <Select 
+              id="status"
+              bind:value={selectedStatusTypeValue}
+              items={statusTypes} 
+              on:change={handleStatusChange}
+              placeholder="Select one"
+            />
+          </div>
+        </div>
+
+        <div class="w-full">
+          <Label for="dueDate" class="mb-2">Due date</Label>
+          <div class="relative w-full">
+            <input
+              id="dueDate"
+              type="date"
+              bind:value={dueDate}
+              on:input={handleDateInput}
+              class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
+            />
+            <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 py-2 w-full">
+              <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-sm text-gray-700">{formattedDate}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {/if}
+
     <div>
       <Label for="actionNotes" class="mb-2">Add notes</Label>
       <Textarea id="actionNotes" bind:value={actionNotes} rows="4" placeholder="Write text here ..." />

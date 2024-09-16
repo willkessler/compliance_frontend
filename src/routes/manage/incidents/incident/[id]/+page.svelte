@@ -92,7 +92,7 @@
     <h1 class="text-3xl font-bold mb-2">{getIncidentById(id).title}</h1>
   </div>
 
-  <ActionItems />
+  <ActionItems environment="incident" />
 
   <div class="w-full mt-24">
     <hr />

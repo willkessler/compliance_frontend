@@ -98,7 +98,7 @@
     <h1 class="text-3xl font-bold mb-2">Vehicle #{getVehicleById(id).name}</h1>
   </div>
 
-  <ActionItems />
+  <ActionItems environment="vehicle" />
 
   <!-- driver details -->
   <h1 class="text-lg font-bold mb-4 mt-6">Driver details</h1>
