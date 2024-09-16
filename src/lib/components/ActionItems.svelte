@@ -217,20 +217,21 @@
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
           <TableBodyCell>
-              <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32" >
-                {action.type}
-              </Badge>
+            <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32" >
+              {action.type}
+            </Badge>
           </TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
-        </TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
+          </TableBodyCell>
 
         </TableBodyRow>
       {/each}
     </TableBody>
   </Table>
 </div>
-<div class="w-full flex justify-end pr-4 ml-4 mt-2">
+
+<div class="w-full flex justify-end mt-2">
   <Pagination 
     bind:currentPage
     {totalPages}
@@ -250,6 +251,7 @@
     </svelte:fragment>
   </Pagination>
 </div>
+
 
 
 <Modal bind:open={defaultModal} autoclose outsideclose 
