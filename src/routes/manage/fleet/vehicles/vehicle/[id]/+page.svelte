@@ -162,7 +162,7 @@
             <div class="cursor-pointer"><FileImageSolid /></div>
           </div>
       </Card>
-      <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-1.5 w-full mt-4">
+      <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-full mt-4">
         <FloppyDiskOutline class="mr-2" />Save Changes
       </Button>
     </div>

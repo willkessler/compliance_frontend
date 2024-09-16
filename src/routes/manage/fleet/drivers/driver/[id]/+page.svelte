@@ -66,6 +66,14 @@
    { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
  ];
  
+ let historyItems = [
+   { item: 'Violation: tire wear', expiry: 'Aug 31, 2024', status: 'Open', action: 'See details', icon: ExclamationCircleSolid },
+   { item: 'CDL License', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { item: 'Drug and alcohol test', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details-', icon: ThumbsUpSolid },
+ ];
+
 
  function getDriverById (id) {
    for (let driver of drivers) {
@@ -81,7 +89,9 @@
    switch (status.toLowerCase()) {
      case 'clear':
      case 'completed':
+     case 'closed':
        return 'green';
+     case 'open':
      case 'in progress':
        return 'blue';
      case 'blocked':
@@ -147,8 +157,43 @@
     </Table>
   </div>
   
+  <!-- Activity history -->
+  <h1 class="text-lg font-bold mb-4 mt-6">Activity history</h1>
+
+  <div>
+    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">item</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">expiration date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">status</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">action</TableHeadCell>
+      </TableHead>
+      <TableBody>
+        {#each historyItems as historyItem}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.item}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.expiry}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+              <Badge large rounded color={getStatusColor(historyItem.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer">
+                {#if historyItem.icon !== undefined}
+                  <svelte:component this={historyItem.icon} class=" text-{getStatusColor(historyItem.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                {/if}
+                {historyItem.status}
+              </Badge>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">
+                {historyItem.action} →
+              </Button>
+            </TableBodyCell>
+          </TableBodyRow>
+        {/each}
+      </TableBody>
+    </Table>
+  </div>
+
   <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full min-w-80">
-    <div class="flex justify-between items-center mb-0 ml-2">
+    <div class="flex justify-between items-center mb-0 ml">
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Basic information</h2>
     </div>
     <div>
@@ -167,7 +212,7 @@
             <div class="cursor-pointer"><FileImageSolid /></div>
           </div>
       </Card>
-      <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-1.5 w-full mt-4">
+      <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-full mt-4">
         <FloppyDiskOutline class="mr-2" />Save Changes
       </Button>
     </div>

@@ -2,7 +2,7 @@
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileDrop } from 'svelte-droplet';
- import { CirclePlusSolid, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid } from 'flowbite-svelte-icons';
+ import { CirclePlusSolid, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { onMount, tick } from 'svelte';
 
@@ -157,6 +157,7 @@
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
     </TableHead>
     <TableBody>
       {#each actions as action}
@@ -165,12 +166,14 @@
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
           <TableBodyCell>
-            <div on:click={() => openModalWithAction(action)}>
               <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer" >
                 {action.type}
               </Badge>
-            </div>
           </TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+          <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-400 hover:text-gray-900 p-2"><PenOutline/>&nbsp;Edit</Button>
+        </TableBodyCell>
+
         </TableBodyRow>
       {/each}
     </TableBody>

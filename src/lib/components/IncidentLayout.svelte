@@ -12,7 +12,7 @@
       <slot />
     </div>
   </div>
-  <div class="w-80 bg-gray-100 overflow-y-auto">
+  <div class="w-100 bg-gray-100 overflow-y-auto">
     <slot name="right-panel" />
   </div>
 </div>
