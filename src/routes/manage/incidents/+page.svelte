@@ -14,7 +14,7 @@
     type: 'Accident', status: 'Open', occurrenceDate: 'Apr 18, 2021', dueDate: 'Apr 18, 2021' },
     { id: 81829, name: 'Moving violation, Driver #8878', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: CheckCircleSolid },
     { id: 99928, name: 'Parking violation, Driver #9219', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: CheckCircleSolid },
-    { id: 10023, name: 'Vehicle conversion to electric', type: 'Documents', status: 'Open', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021',icon: CheckCircleSolid },
+    { id: 10023, name: 'Vehicle conversion to electric', type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021',icon: CheckCircleSolid },
 
     { id: 48482, name: 'Payment from Lana Byrd', icon: ClockSolid, 
     type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
@@ -29,7 +29,7 @@
   function getTypeColor(type) {
     switch (type.toLowerCase()) {
       case 'maintenance':
-        return 'gray';
+        return 'purple';
       case 'accident':
       case 'incident':
         return 'red';
@@ -38,8 +38,10 @@
         return 'blue';
       case 'completed':
         return 'green';
+      case 'driver issue':
+        return 'yellow';
       case 'documents':
-        return 'blue';
+        return 'gray';
       default:
         return 'gray';
     }
@@ -51,7 +53,7 @@
      case 'completed':
        return 'green';
      case 'open':
-       return 'red';
+       return 'gray';
      case 'in progress':
        return 'blue';
      case 'other status':
@@ -138,15 +140,15 @@
         <TableBodyRow>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{event.name}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <Badge rounded color={getTypeColor(event.type)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getTypeColor(event.type)}-100">
               {#if event.icon !== undefined}
                 <svelte:component this={event.icon} class=" text-{getTypeColor(event.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
                 {event.type}
             </Badge>
           </TableBodyCell>
-          <TableBodyCell class="whitespace-nowrap text-sm text-gray-500">
-            <Badge color={getStatusColor(event.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+          <TableBodyCell class="whitespace-nowrap text-sm ">
+            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(event.status)}-200 text-gray-700} ">
               {event.status}
             </Badge>
           </TableBodyCell>
