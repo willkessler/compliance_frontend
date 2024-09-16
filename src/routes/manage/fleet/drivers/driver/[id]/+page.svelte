@@ -196,16 +196,30 @@
     <div class="flex justify-between items-center mb-0 ml">
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Basic information</h2>
     </div>
-    <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">License:</span><span class="ml-2 text-gray-800"> {driver.license}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Lic. Expiration:</span><span class="ml-2 text-gray-800"> {driver.licenseExpiration}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">SSN/EIN:</span><span class="ml-2 text-gray-800 "> {driver.ssn}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Total Drive time:</span><span class="ml-2 text-gray-800"> {driver.totalDriveTime}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Mileage:</span><span class="ml-2 text-gray-800">{driver.mileage}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 text-gray-800 bg-gray-100"><TruckSolid />{driver.vehicle}</Badge></p>
+    <div class="grid grid-cols-2 gap-y-2 gap-x-4">
+      <div class="font-semibold">License</div>
+      <div>{driver.license}</div>
 
-      <div class="mt-6">Description and notes</div>
-      <Card class="mt-2 divide-y shadow-none">
+      <div clsas="font-semibold">Lic. Expiration</div>
+      <div class="text-gray-800"> {driver.licenseExpiration}</div>
+      
+      <div clsas="font-semibold">SSN/EIN</div>
+      <div class="text-gray-800 "> {driver.ssn}</div>
+      
+      <div clsas="font-semibold">Total Drive time</div>
+      <div class="text-gray-800"> {driver.totalDriveTime}</div>
+      
+      <div clsas="font-semibold">Mileage</div>
+      <div class="text-gray-800">{driver.mileage}</div>
+      
+      <div clsas="font-semibold">Vehicle</div>
+      <div>
+        <Badge class="text-gray-800 bg-gray-100"><TruckSolid />{driver.vehicle}</Badge>
+      </div>
+    </div>
+
+    <div class="mt-6">Description and notes</div>
+      <Card class="mt-0 divide-y shadow-none">
           <p class="text-md">{driver.description}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
             <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
@@ -215,7 +229,6 @@
       <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-full mt-4">
         <FloppyDiskOutline class="mr-2" />Save Changes
       </Button>
-    </div>
   </div>
   
 </IncidentLayout>

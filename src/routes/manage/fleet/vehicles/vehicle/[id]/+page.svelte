@@ -138,13 +138,28 @@
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">asset info</h2>
       <p class="font-semibold text-gray-500 text-nowrap">{asset.date}</p>
     </div>
-    <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">License</span><span class="ml-2 text-gray-800 text-md"> {asset.license}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">VIN</span><span class="ml-2 text-gray-800 text-md"> {asset.vin}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver</span><Badge class="ml-2 text-gray-800 text-md bg-gray-100"> <UsersOutline />{asset.driver}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle</span><Badge class="ml-2 text-gray-800 text-md  bg-gray-100"><TruckSolid />{asset.vehicle}</Badge></p>
+    <div class="grid grid-cols-2 gap-y-2 gap-x-4">
+      <div class="font-semibold">License</div>
+      <div>{asset.license}</div>
+      
+      <div class="font-semibold">VIN</div>
+      <div>{asset.vin}</div>
+      
+      <div class="font-semibold">Driver</div>
+      <Badge class="bg-gray-100 text-gray-800">
+        <UsersOutline class="inline-block mr-1" />
+        {asset.driver}
+      </Badge>
+      
+      <div class="font-semibold">Vehicle</div>
+      <Badge class="bg-gray-100 text-gray-800">
+        <TruckSolid class="inline-block mr-1" />
+        {asset.vehicle}
+      </Badge>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Registration</div>
+      </div>
+      <div>
         <div class="flex items-center">
           <div class="relative inline-block">
             <input
@@ -162,6 +177,7 @@
           </div>
         </div>
       </div>
+    </div>
       <div>
         <div class="mt-6">Description and notes</div>
         <Card class="mt-2 divide-y shadow-none">
