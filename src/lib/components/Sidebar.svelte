@@ -66,7 +66,7 @@
  }
 </script>
 
-<Sidebar {activeUrl} {activeClass} {nonActiveClass}>
+<Sidebar {activeUrl} {activeClass} {nonActiveClass} >
   <SidebarWrapper class="flex flex-col h-full">
     <div class="ml-3 mt-4 text-lg text-gray-600">Trucking Co.</div>
     <SidebarGroup class="flex-grow" border>
@@ -120,3 +120,4 @@
     </SidebarGroup>
   </SidebarWrapper>
 </Sidebar>
+
