@@ -219,7 +219,7 @@
   </div>
 
   <div class="dashboard-grid">
-    <Card style={cardStyle}>
+    <Card class="fixed-height-card">
       <CardHeader>
         <CardTitle class="flex items-center justify-between">
           Summary of action items from federal, state, truck and driver pages
@@ -229,7 +229,7 @@
           </Avatar>
         </CardTitle>
       </CardHeader>
-      <CardContent style={contentStyle}>
+      <CardContent style="card-content">
         <Table hoverable={true}>
           <TableHead>
             <TableHeadCell>Type</TableHeadCell>
@@ -251,30 +251,27 @@
       </CardContent>
     </Card>
     
-    <Card style={cardStyle}>
+    <Card class="fixed-height-card">
       <CardHeader>
-        <CardTitle>News feed</CardTitle>
+        <h2 class="text-2xl font-bold">News feed</h2>
       </CardHeader>
-      <CardContent style={contentStyle}>
-        {#each newsItems as newsItem}
-          <a href={newsItem.url} target="_blank" class="news-item">
-            <Card class="mb-4 news-item-card">
-              <CardHeader class="pb-2">
-                <img style="width:100%;" src={newsItem.image} alt={newsItem.title} class="h-30 mb-2" />
-                <CardTitle>
-                  <div class="text-base">{newsItem.title}</div>
-                  <div class="text-sm text-muted-foreground">
-                    <span class="italic">{newsItem.subtitle}</span>&nbsp;&nbsp;
-                    <span>{newsItem.synopsis}...</span>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p class="text-sm text-muted-foreground">{newsItem.site}</p>
-              </CardContent>
-            </Card>
-          </a>
-        {/each}
+      <CardContent class="card-content">
+        <div class="space-y-6">
+          {#each newsItems as newsItem}
+            <a href={newsItem.url} class="block">
+              <div class="flex space-x-4">
+                <div class="w-1/4 flex-shrink-0">
+                  <img src={newsItem.image} alt={newsItem.title} class="w-full h-auto object-cover rounded-md" />
+                  <i>{newsItem.site}</i>
+                </div>
+                <div class="flex-grow">
+                  <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{newsItem.title}</h5>
+                  <p class="text-sm text-gray-700 dark:text-gray-400">{newsItem.synopsis}</p>
+                </div>
+              </div>
+            </a>
+          {/each}
+        </div>
       </CardContent>
     </Card>
   </div>
