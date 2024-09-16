@@ -55,6 +55,7 @@
     actionName = action.name;
     actionNotes = action.description;
     defaultModal = true;
+    uploadedFiles = [ { name: 'receipt_382.pdf'}, {name: 'bol_9_9_24.pdf'} ];
   }
 
  async function handleSelectChange(event) {
@@ -70,6 +71,7 @@
     defaultModal = false;
     selectedAction = null;
     selectedActionTypeValue = '';
+    uploadedFiles = [];
   }
 
   function createAction() {
@@ -77,6 +79,7 @@
     console.log('Creating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
     defaultModal = false;
     selectedActionTypeValue = '';
+    uploadedFiles = [];
   }
 
  //
@@ -145,8 +148,8 @@
 </script>
 
 <div class="flex justify-between items-center mb-0 ml-2 mt-3">
-  <h1 class="text-xl font-bold">History of Action Items</h1>
-  <Button on:click={() => (defaultModal = true)}
+  <h1 class="text-xl font-bold">Action Items History</h1>
+  <Button on:click={() => { defaultModal = true; uploadedFiles = []; }}
     class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5"><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
 </div>
 
@@ -166,12 +169,12 @@
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
           <TableBodyCell>
-              <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer" >
+              <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32" >
                 {action.type}
               </Badge>
           </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-400 hover:text-gray-900 p-2"><PenOutline/>&nbsp;Edit</Button>
+          <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
         </TableBodyCell>
 
         </TableBodyRow>
@@ -186,7 +189,6 @@
         on:next={next} 
         on:pageChange={pageChange}
         icon
-        large 
       >
         <svelte:fragment slot="prev">
           <span class="sr-only">Previous</span>
@@ -272,6 +274,7 @@
                  selectedAction = null;
                  selectedActionType = null;
                  selectedActionTypeValue = '';
+                 uploadedFiles = [];
                  }}>Cancel</Button>
       <Button class="bg-blue-500 hover:bg-blue-600" on:click={selectedAction ? updateAction : createAction}>
         {selectedAction ? 'Update action item' : 'Add action item'}

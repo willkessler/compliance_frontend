@@ -71,7 +71,7 @@
    { item: 'CDL License', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
    { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
    { item: 'Drug and alcohol test', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details-', icon: ThumbsUpSolid },
+   { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
  ];
 
 
@@ -139,7 +139,7 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.item}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.expiry}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-              <Badge large rounded color={getStatusColor(certification.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer">
+              <Badge large rounded color={getStatusColor(certification.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
                 {#if certification.icon !== undefined}
                   <svelte:component this={certification.icon} class=" text-{getStatusColor(certification.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 {/if}
@@ -147,7 +147,7 @@
               </Badge>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">
+              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">
                 {certification.action} →
               </Button>
             </TableBodyCell>
@@ -174,7 +174,7 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.item}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.expiry}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-              <Badge large rounded color={getStatusColor(historyItem.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer">
+              <Badge large rounded color={getStatusColor(historyItem.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
                 {#if historyItem.icon !== undefined}
                   <svelte:component this={historyItem.icon} class=" text-{getStatusColor(historyItem.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 {/if}

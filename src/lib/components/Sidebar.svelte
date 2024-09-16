@@ -60,7 +60,7 @@
      closeTimeout = setTimeout(() => {
        openDropdowns.delete(label);
        openDropdowns = openDropdowns; // Trigger reactivity
-     }, 750); // 300ms delay
+     }, 1000);
    }
    openDropdowns = openDropdowns; // Trigger reactivity
  }
@@ -68,7 +68,7 @@
 
 <Sidebar {activeUrl} {activeClass} {nonActiveClass}>
   <SidebarWrapper class="flex flex-col h-full">
-    <div class="ml-3 mt-4  text-lg text-gray-600">Trucking Co.</div>
+    <div class="ml-3 mt-4 text-lg text-gray-600">Trucking Co.</div>
     <SidebarGroup class="flex-grow" border>
       {#each menuItems as item}
         {#if item.subItems !== undefined }
@@ -86,7 +86,7 @@
                 <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               </svelte:fragment>
               {#each item.subItems as subItem}
-                <SidebarDropdownItem class="pl-12 text-sm" label={subItem.label} href={subItem.href} active={activeUrl === subItem.href} />
+                <SidebarDropdownItem class="ml-10 text-sm" label={subItem.label} href={subItem.href} active={activeUrl === subItem.href} />
               {/each}
             </SidebarDropdownWrapper>
           </div>

@@ -3,7 +3,6 @@
  import { Badge, Button,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Card,  CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
-  import { Separator } from "$lib/components/ui/separator";
   import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
  import { DownloadOutline } from 'flowbite-svelte-icons';
 
@@ -51,7 +50,7 @@
 	    <TableBodyCell>{filing.name}</TableBodyCell>
 	    <TableBodyCell>{filing.dueDate}</TableBodyCell>
 	    <TableBodyCell class="text-right">
-              <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px]">
+              <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
 	        {filing.status}
 	        <CircleAlert class="h-4 w-4 ml-2" />
 	      </Badge>
@@ -70,16 +69,16 @@
 	  <TableHead>
 	    <TableHeadCell>Filing type</TableHeadCell>
 	    <TableHeadCell>Date</TableHeadCell>
-	    <TableHeadCell class="text-right">Action</TableHeadCell>
+	    <TableHeadCell>Action</TableHeadCell>
 	  </TableHead>
 	  <TableBody>
 	    {#each historicalFilings as filing}
 	    <TableBodyRow>
 	      <TableBodyCell>{filing.type}</TableBodyCell>
 	      <TableBodyCell>{filing.date}</TableBodyCell>
-	      <TableBodyCell class="text-right">
+	      <TableBodyCell >
                 <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		  <Button class="bg-gray-300 px-2 py-1" size="sm"><DownloadOutline />Download</Button>
+		  <Button class="bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
                 </a>
 	      </TableBodyCell>
 	    </TableBodyRow>

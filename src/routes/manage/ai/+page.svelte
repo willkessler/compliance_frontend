@@ -9,4 +9,4 @@
 
 <h3>Clear and Compliant can run an organization-wide check of all your compliance concerns using our custom AI. Just click the button to see how you're doing.</h3>
 
-<Button class="mt-4" style="background-color:#44f">Run AI Check Now</Button>
+<Button class="mt-4 bg-gray-300" >Run AI Check Now</Button>

@@ -1,6 +1,6 @@
 <script>
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { ClockSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+ import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ThumbsUpSolid, CheckCircleSolid } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
 
@@ -15,14 +15,14 @@
     { id: 33828, name: 'Broken taillight for Truck #4396', icon: ClockSolid, 
     type: 'Incident', status: 'Open', occurrenceDate: 'Apr 18, 2021', dueDate: 'Apr 18, 2021' },
     { id: 48482, name: 'Payment from Lana Byrd', icon: ClockSolid, 
-    type: 'In progress', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
-    { id: 59382, name: 'Payment from Jese Leos', 
-    type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
-    { id: 68282, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 79182, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 81829, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 99928, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
-    { id: 10023, name: 'Payment from THEMSBERG LLC', type: 'Completed', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021' },
+    type: 'Payment', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
+    { id: 59382, name: 'Payment from Jesse Leos', 
+    type: 'Payment', status: 'Completed', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021', icon: CheckCircleSolid },
+    { id: 68282, name: 'Payment from THEMSBERG LLC', type: 'Payment', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021',icon: CheckCircleSolid },
+    { id: 79182, name: 'Payment from THEMSBERG LLC', type: 'Payment', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: CheckCircleSolid },
+    { id: 81829, name: 'Payment from THEMSBERG LLC', type: 'Payment', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: CheckCircleSolid },
+    { id: 99928, name: 'Payment from THEMSBERG LLC', type: 'Payment', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: CheckCircleSolid },
+    { id: 10023, name: 'Payment from THEMSBERG LLC', type: 'Payment', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021',icon: CheckCircleSolid },
   ];
 
   function getTypeColor(type) {
@@ -32,6 +32,7 @@
       case 'incident':
         return 'red';
       case 'in progress':
+      case 'payment':
         return 'blue';
       case 'completed':
         return 'green';
@@ -113,8 +114,7 @@
   <div class="inline-block bg-white border rounded-lg p-0">
       {#each tabs as tab}
         <Button
-          color={activeTab === tab.toLowerCase() ? 'alternative' : 'light'}
-          class="min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-neutral-100' : ''}"
+          class="text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-gray-300' : ''}"
           on:click={() => activeTab = tab.toLowerCase()}
           >
           {tab}
@@ -136,7 +136,7 @@
         <TableBodyRow>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{event.name}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <Badge rounded color={getTypeColor(event.type)} class="px-2 py-1.5 rounded rounded-[6px]">
+            <Badge rounded color={getTypeColor(event.type)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {#if event.icon !== undefined}
                 <svelte:component this={event.icon} class=" text-{getTypeColor(event.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
@@ -144,14 +144,14 @@
             </Badge>
           </TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm text-gray-500">
-            <Badge color={getStatusColor(event.status)} class="px-2 py-1.5 rounded rounded-[6px]">
+            <Badge color={getStatusColor(event.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {event.status}
             </Badge>
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.occurrenceDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.dueDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/incidents/incident/{event.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
+            <Button href="/manage/incidents/incident/{event.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
           </TableBodyCell>
         </TableBodyRow>
       {/each}
