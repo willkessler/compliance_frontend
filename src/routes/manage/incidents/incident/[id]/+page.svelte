@@ -112,8 +112,8 @@
     </div>
     <div>
       <p class="mb-2 cursor-pointer"><span class="font-semibold">Level</span><span class="ml-2 text-gray-800"> {incident.level}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver</span><Badge class="ml-2 text-gray-800 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle</span><Badge class="ml-2 text-gray-800 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"> <UsersOutline />{incident.driver}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />{incident.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Due date</div>
         <div class="flex items-center">

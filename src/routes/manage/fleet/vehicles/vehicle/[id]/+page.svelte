@@ -134,17 +134,17 @@
   <Uploads />
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full min-w-80">
-    <div class="flex justify-between items-center mb-0 ml-2">
+    <div class="flex justify-between items-center mb-0 ">
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">asset info</h2>
       <p class="font-semibold text-gray-500 text-nowrap">{asset.date}</p>
     </div>
     <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">License:</span><Badge class="ml-2 text-gray-800 bg-gray-100"> {asset.license}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">VIN:</span><Badge class="ml-2 text-gray-800 bg-gray-100"> {asset.vin}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 text-gray-800  bg-gray-100"> <UsersOutline />{asset.driver}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 text-gray-800  bg-gray-100"><TruckSolid />{asset.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">License</span><span class="ml-2 text-gray-800 text-md"> {asset.license}</span></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">VIN</span><span class="ml-2 text-gray-800 text-md"> {asset.vin}</span></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver</span><Badge class="ml-2 text-gray-800 text-md bg-gray-100"> <UsersOutline />{asset.driver}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle</span><Badge class="ml-2 text-gray-800 text-md  bg-gray-100"><TruckSolid />{asset.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
-        <div class="mt-4 font-semibold text-nowrap mr-2">Registration:</div>
+        <div class="mt-4 font-semibold text-nowrap mr-2">Registration</div>
         <div class="flex items-center">
           <div class="relative inline-block">
             <input
@@ -162,20 +162,20 @@
           </div>
         </div>
       </div>
-    <div>
-      <div class="mt-6">Description and notes</div>
-      <Card class="mt-2 divide-y shadow-none">
+      <div>
+        <div class="mt-6">Description and notes</div>
+        <Card class="mt-2 divide-y shadow-none">
           <p class="text-md">{asset.description}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
             <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
             <div class="cursor-pointer"><FileImageSolid /></div>
           </div>
-      </Card>
-      <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-full mt-4">
-        <FloppyDiskOutline class="mr-2" />Save Changes
-      </Button>
+        </Card>
+        <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-full mt-4">
+          <FloppyDiskOutline class="mr-2" />Save Changes
+        </Button>
+      </div>
     </div>
-  </div>
-  
+    
 </IncidentLayout>
 
