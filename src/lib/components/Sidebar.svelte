@@ -81,7 +81,7 @@
                 <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               </svelte:fragment>
               {#each item.subItems as subItem}
-                <SidebarDropdownItem class="ml-10 text-sm hover:bg-gray-300" label={subItem.label} href={subItem.href} active={activeUrl === subItem.href} />
+                <SidebarDropdownItem class="pl-10 text-sm hover:bg-gray-300" label={subItem.label} href={subItem.href} active={activeUrl === subItem.href} />
               {/each}
             </SidebarDropdownWrapper>
           </div>
