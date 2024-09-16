@@ -4,15 +4,18 @@
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import 'flowbite/dist/flowbite.css';
  import { page } from '$app/stores';
- $: isIncidentPage = (
+ $: isThreePanelPage = (
    $page.url.pathname.startsWith('/manage/incidents/incident/') ||
-   $page.url.pathname.startsWith('/manage/fleet/vehicles/vehicle/')
+   $page.url.pathname.startsWith('/manage/fleet/vehicles/vehicle/') ||
+   $page.url.pathname.startsWith('/manage/fleet/drivers/driver/')
  );
+ console.log('three panel check: ', $page.url.pathname);
+
 </script>
 
 <div class="flex h-screen bg-background">
   <Sidebar />
-  {#if isIncidentPage}
+  {#if isThreePanelPage}
     <div class="flex-1 overflow-hidden">
       <slot />
     </div>

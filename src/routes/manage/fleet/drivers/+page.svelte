@@ -5,16 +5,16 @@
  import { page } from '$app/stores';
 
  let drivers = [
-   { name: "Eric Tang",    totalDriveTime: "42h 32m", totalMiles: "57,743", status: "Blocked", icon: ExclamationCircleSolid },
-   { name: "Mark Taylor",  totalDriveTime: "221h 32m", totalMiles: "77,453", status: "In progress", icon: ClockSolid },
-   { name: "Sid Sanger",   totalDriveTime: "89h 02m", totalMiles: "75,743", status: "Clear", icon: ThumbsUpSolid },
-   { name: "Joe Jacob",    totalDriveTime: "8h 22m", totalMiles: "7,743", status: "Clear", icon: ThumbsUpSolid  },
-   { name: "Joe Jasdeep",  totalDriveTime: "19h 12m", totalMiles: "95,437", status: "Clear", icon: ThumbsUpSolid },
-   { name: "Derek Travis", totalDriveTime: "85h 02m", totalMiles: "4,173", status: "Clear", icon: ThumbsUpSolid },
-   { name: "Alex Seerman", totalDriveTime: "66h 09m", totalMiles: "93,742", status: "Clear", icon: ThumbsUpSolid },
-   { name: "Charlie Topanga", totalDriveTime: "19h 11m", totalMiles: "83,743", status: "Clear", icon: ThumbsUpSolid },
-   { name: "Cain Reed",    totalDriveTime: "121h 17m", totalMiles: "18,212", status: "Clear", icon: ThumbsUpSolid },
-   { name: "Marcus Miller", totalDriveTime: "209h 57m", totalMiles: "15,283", status: "Clear", icon: ThumbsUpSolid },
+   { id: 1922, name: "Thomas Payne", totalDriveTime: "42h 32m", totalMiles: "57,743", status: "Blocked", icon: ExclamationCircleSolid },
+   { id: 1923, name: "Mark Ingram",  totalDriveTime: "221h 32m", totalMiles: "77,453", status: "In progress", icon: ClockSolid },
+   { id: 1924, name: "Sid Sanger",   totalDriveTime: "89h 02m", totalMiles: "75,743", status: "Clear", icon: ThumbsUpSolid },
+   { id: 1925, name: "Joe Jacob",    totalDriveTime: "8h 22m", totalMiles: "7,743", status: "Clear", icon: ThumbsUpSolid  },
+   { id: 1926, name: "Joe Jasdeep",  totalDriveTime: "19h 12m", totalMiles: "95,437", status: "Clear", icon: ThumbsUpSolid },
+   { id: 1927, name: "Derek Travis", totalDriveTime: "85h 02m", totalMiles: "4,173", status: "Clear", icon: ThumbsUpSolid },
+   { id: 1928, name: "Alex Seerman", totalDriveTime: "66h 09m", totalMiles: "93,742", status: "Clear", icon: ThumbsUpSolid },
+   { id: 1929, name: "Charlie Topanga", totalDriveTime: "19h 11m", totalMiles: "83,743", status: "Clear", icon: ThumbsUpSolid },
+   { id: 1930, name: "Cain Reed",    totalDriveTime: "121h 17m", totalMiles: "18,212", status: "Clear", icon: ThumbsUpSolid },
+   { id: 1931, name: "Marcus Miller", totalDriveTime: "209h 57m", totalMiles: "15,283", status: "Clear", icon: ThumbsUpSolid },
  ];
 
  let sortColumn = "";
@@ -92,7 +92,7 @@
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
+          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}
