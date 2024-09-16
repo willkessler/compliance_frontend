@@ -197,12 +197,12 @@
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Basic information</h2>
     </div>
     <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">License:</span><Badge class="ml-2 bg-gray-100"> {driver.license}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Lic. Expiration:</span><Badge class="ml-2 bg-gray-100"> {driver.licenseExpiration}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">SSN/EIN:</span><Badge class="ml-2 bg-gray-100"> {driver.ssn}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Total Drive time:</span><Badge class="ml-2 bg-gray-100"> {driver.totalDriveTime}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Mileage:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{driver.mileage}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{driver.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">License:</span><span class="ml-2 text-gray-800"> {driver.license}</span></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Lic. Expiration:</span><span class="ml-2 text-gray-800"> {driver.licenseExpiration}</span></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">SSN/EIN:</span><span class="ml-2 text-gray-800 "> {driver.ssn}</span></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Total Drive time:</span><span class="ml-2 text-gray-800"> {driver.totalDriveTime}</span></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Mileage:</span><span class="ml-2 text-gray-800">{driver.mileage}</span></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 text-gray-800 bg-gray-100"><TruckSolid />{driver.vehicle}</Badge></p>
 
       <div class="mt-6">Description and notes</div>
       <Card class="mt-2 divide-y shadow-none">

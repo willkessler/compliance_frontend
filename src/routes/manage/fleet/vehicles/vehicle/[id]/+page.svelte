@@ -100,6 +100,10 @@
 
   <ActionItems environment="vehicle" />
 
+  <div class="w-full mt-10">
+    <hr />
+  </div>
+
   <!-- driver details -->
   <h1 class="text-lg font-bold mb-4 mt-6">Driver details</h1>
 
@@ -121,7 +125,12 @@
       </TableBody>
     </Table>
   </div>
-  
+
+
+  <div class="w-full mt-10 text-gray-100">
+    <hr />
+  </div>
+
   <Uploads />
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full min-w-80">
@@ -130,10 +139,10 @@
       <p class="font-semibold text-gray-500 text-nowrap">{asset.date}</p>
     </div>
     <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">License:</span><Badge class="ml-2 bg-gray-100"> {asset.license}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">VIN:</span><Badge class="ml-2 bg-gray-100"> {asset.vin}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{asset.driver}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{asset.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">License:</span><Badge class="ml-2 text-gray-800 bg-gray-100"> {asset.license}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">VIN:</span><Badge class="ml-2 text-gray-800 bg-gray-100"> {asset.vin}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 text-gray-800  bg-gray-100"> <UsersOutline />{asset.driver}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 text-gray-800  bg-gray-100"><TruckSolid />{asset.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Registration:</div>
         <div class="flex items-center">

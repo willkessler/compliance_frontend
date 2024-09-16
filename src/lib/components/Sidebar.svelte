@@ -78,9 +78,7 @@
             >
             <SidebarDropdownWrapper 
               label={item.label} 
-              isOpen={openDropdowns.has(item.label)}
-              on:mouseenter={() => handleDropdownHover(item.label, true)}
-              on:mouseleave={() => handleDropdownHover(item.label, false)}
+              isOpen={true}
               >
               <svelte:fragment slot="icon">
                 <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />

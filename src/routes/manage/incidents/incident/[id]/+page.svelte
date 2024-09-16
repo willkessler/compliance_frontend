@@ -1,5 +1,5 @@
 <script lang="ts">
- import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem,
+ import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,
@@ -111,9 +111,9 @@
       <Badge class="py-1 cursor-pointer" color="blue">Open</Badge>
     </div>
     <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Level:</span><Badge class="ml-2 bg-gray-100"> {incident.level}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Level:</span><Badge class="ml-2 text-gray-800 bg-gray-100"> {incident.level}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 text-gray-800 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 text-gray-800 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Due date:</div>
         <div class="flex items-center">
@@ -135,13 +135,13 @@
       </div>
     <div>
       <div class="mt-6">Description and notes</div>
-      <Card class="p-2 m-0 mt-2 divide-y shadow-none">
-          <p class="text-sm">{incident.description}</p>
-          <div class="flex justify-end items-center mt-2 pt-2 ml-2">
+      <div class="p-4 mt-2 divide-y shadow-none border rounded">
+          <p class="text-md text-gray-600">{incident.description}</p>
+          <div class="text-gray-500 flex justify-end items-center mt-2 pt-2 ml-2">
             <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
             <div class="cursor-pointer"><FileImageSolid /></div>
           </div>
-      </Card>
+      </div>
       <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-full mt-4">
         <FloppyDiskOutline class="mr-2" />Save Changes
       </Button>

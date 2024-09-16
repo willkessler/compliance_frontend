@@ -222,11 +222,7 @@
     <Card class="fixed-height-card">
       <CardHeader>
         <CardTitle class="flex items-center justify-between">
-          Summary of action items from federal, state, truck and driver pages
-          <Avatar class="h-8 w-8 ml-4">
-            <AvatarImage src="/images/user.png" alt="User" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
+          Summary of action items
         </CardTitle>
       </CardHeader>
       <CardContent style="card-content">
@@ -253,7 +249,7 @@
     
     <Card class="fixed-height-card">
       <CardHeader>
-        <h2 class="text-2xl font-bold">News feed</h2>
+        <h2 class="text-lg font-bold">News feed</h2>
       </CardHeader>
       <CardContent class="card-content">
         <div class="space-y-6">

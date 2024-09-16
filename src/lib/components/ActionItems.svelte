@@ -228,29 +228,29 @@
         </TableBodyRow>
       {/each}
     </TableBody>
-    <div class="w-full flex justify-start pr-4 ml-4 mt-2">
-      <Pagination 
-        bind:currentPage
-        {totalPages}
-        {pages} 
-        on:previous={previous} 
-        on:next={next} 
-        on:pageChange={pageChange}
-        icon
-      >
-        <svelte:fragment slot="prev">
-          <span class="sr-only">Previous</span>
-          <ChevronLeftOutline class="w-6 h-6" />
-        </svelte:fragment>
-        <svelte:fragment slot="next">
-          <span class="sr-only">Next</span>
-          <ChevronRightOutline class="w-6 h-6" />
-        </svelte:fragment>
-      </Pagination>
-    </div>
-
   </Table>
 </div>
+<div class="w-full flex justify-end pr-4 ml-4 mt-2">
+  <Pagination 
+    bind:currentPage
+    {totalPages}
+    {pages} 
+    on:previous={previous} 
+    on:next={next} 
+    on:pageChange={pageChange}
+    icon
+  >
+    <svelte:fragment slot="prev">
+      <span class="sr-only">Previous</span>
+      <ChevronLeftOutline class="w-6 h-6" />
+    </svelte:fragment>
+    <svelte:fragment slot="next">
+      <span class="sr-only">Next</span>
+      <ChevronRightOutline class="w-6 h-6" />
+    </svelte:fragment>
+  </Pagination>
+</div>
+
 
 <Modal bind:open={defaultModal} autoclose outsideclose 
   backdropClass="fixed inset-0 z-40 bg-white/80"

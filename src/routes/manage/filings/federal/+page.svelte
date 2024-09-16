@@ -3,12 +3,13 @@
  import { Badge, Button,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Card,  CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
-  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
+ import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
  import { DownloadOutline } from 'flowbite-svelte-icons';
+ import { CheckCircleSolid } from 'flowbite-svelte-icons';
 
   const federalFilings = [
   { name: "Unified Carrier Registration (UCR)", dueDate: "Jan 31, 2025", status: "Incomplete" },
-  { name: "US DOT renewal", dueDate: "March 13, 2024", status: "Complete" },
+  { name: "US DOT renewal", dueDate: "March 13, 2024", status: "Completed" },
   { name: "MCS-150", dueDate: "Jan 12, 2024", status: "Review details" },
   { name: "BOC-3", dueDate: "Apr 9, 2024", status: "Review details" },
   ];
@@ -21,7 +22,7 @@
   ];
 
  function getStatusColor(status) {
-   return (status === "Complete" ? 
+   return (status === "Completed" ? 
            "bg-green-100 text-green-800" : (status === "Review details" ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-800")
    );
  }
@@ -42,17 +43,21 @@
       <TableHead class="bg-gray-50 whitespace-nowrap">
 	<TableHeadCell>Filing name</TableHeadCell>
 	<TableHeadCell>Due date</TableHeadCell>
-	<TableHeadCell class="text-right">Status</TableHeadCell>
+	<TableHeadCell >Status</TableHeadCell>
       </TableHead>
       <TableBody>
 	{#each federalFilings as filing}
 	  <TableBodyRow>
 	    <TableBodyCell>{filing.name}</TableBodyCell>
 	    <TableBodyCell>{filing.dueDate}</TableBodyCell>
-	    <TableBodyCell class="text-right">
+	    <TableBodyCell >
               <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
+                {#if filing.status === 'Completed'}
+                  <CheckCircleSolid class="h-4 w-4 ml-2" />&nbsp;
+                {:else}
+	          <CircleAlert class="h-4 w-4 ml-2" />&nbsp;
+                {/if}
 	        {filing.status}
-	        <CircleAlert class="h-4 w-4 ml-2" />
 	      </Badge>
             </TableBodyCell>
           </TableBodyRow>
@@ -60,32 +65,32 @@
       </TableBody>
     </Table>
 
-    <Card class="mt-8">
-      <CardHeader>
-	<CardTitle>Historical filings</CardTitle>
-      </CardHeader>
-      <CardContent>
-	<Table hoverable={true}>
-	  <TableHead>
-	    <TableHeadCell>Filing type</TableHeadCell>
-	    <TableHeadCell>Date</TableHeadCell>
-	    <TableHeadCell>Action</TableHeadCell>
-	  </TableHead>
-	  <TableBody>
-	    {#each historicalFilings as filing}
-	    <TableBodyRow>
-	      <TableBodyCell>{filing.type}</TableBodyCell>
-	      <TableBodyCell>{filing.date}</TableBodyCell>
-	      <TableBodyCell >
-                <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		  <Button class="bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
-                </a>
-	      </TableBodyCell>
-	    </TableBodyRow>
-	    {/each}
-	  </TableBody>
-	</Table>
-      </CardContent>
-    </Card>
-  </main>
+  <div class="w-full mt-20">
+    <hr />
+  </div>
+
+  <div class="flex-1 py-6 overflow-auto">
+    <h1 class="text-xl font-bold mb-3">Historical filings</h1>
+    <Table hoverable={true}>
+      <TableHead>
+	<TableHeadCell>Filing type</TableHeadCell>
+	<TableHeadCell>Date</TableHeadCell>
+	<TableHeadCell>Action</TableHeadCell>
+      </TableHead>
+      <TableBody>
+	{#each historicalFilings as filing}
+	  <TableBodyRow>
+	    <TableBodyCell>{filing.type}</TableBodyCell>
+	    <TableBodyCell>{filing.date}</TableBodyCell>
+	    <TableBodyCell >
+              <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
+		<Button class="bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
+              </a>
+	    </TableBodyCell>
+	  </TableBodyRow>
+	{/each}
+      </TableBody>
+    </Table>
+  </div>
+
 </div>

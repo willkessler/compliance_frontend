@@ -114,7 +114,7 @@
   <div class="inline-block bg-white border rounded-lg p-0">
       {#each tabs as tab}
         <Button
-          class="text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-gray-300' : ''}"
+          class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-gray-300' : ''}"
           on:click={() => activeTab = tab.toLowerCase()}
           >
           {tab}
