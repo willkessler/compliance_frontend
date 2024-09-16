@@ -59,11 +59,11 @@
  ];
 
  let certifications = [
-   { item: 'DOT License', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Auto-file' },
-   { item: 'CDL License', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Notify driver' },
-   { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Blocked', action: 'Notify driver' },
-   { item: 'Drug and alcohol test', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Notify driver' },
-   { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Auto-file' },
+   { item: 'DOT License', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
+   { item: 'CDL License', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Notify driver', icon: ThumbsUpSolid },
+   { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
+   { item: 'Drug and alcohol test', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Notify driver', icon: ThumbsUpSolid },
+   { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
  ];
  
 
@@ -77,6 +77,20 @@
    return null;
  }
  
+ function getStatusColor(status) {
+   switch (status.toLowerCase()) {
+     case 'clear':
+     case 'completed':
+       return 'green';
+     case 'in progress':
+       return 'blue';
+     case 'blocked':
+       return 'red';
+     default:
+       return 'gray';
+   }
+ }
+
 </script>
 
 <style>
@@ -114,8 +128,19 @@
           <TableBodyRow>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.item}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.expiry}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.status}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.action}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+              <Badge large rounded color={getStatusColor(certification.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer">
+                {#if certification.icon !== undefined}
+                  <svelte:component this={certification.icon} class=" text-{getStatusColor(certification.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                {/if}
+                {certification.status}
+              </Badge>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">
+                {certification.action} →
+              </Button>
+            </TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>
