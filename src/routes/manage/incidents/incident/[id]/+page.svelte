@@ -1,8 +1,9 @@
 <script lang="ts">
- import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
+ import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { FileSolid, FileImageSolid, CirclePlusSolid, 
-        TruckSolid, 
+ import { FileSolid, FileImageSolid, CirclePlusSolid,
+        TruckSolid,
+        FloppyDiskOutline,
         UsersOutline,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
@@ -59,7 +60,7 @@
    { id: 99928, title: 'Payment from THEMSBERG LLC' },
    { id: 10023, title: 'Payment from THEMSBERG LLC' },
  ];
- 
+
 
  function getIncidentById (id) {
    for (let incident of incidents) {
@@ -69,7 +70,7 @@
    }
    return null;
  }
- 
+
 </script>
 
 <style>
@@ -136,8 +137,10 @@
             <div class="cursor-pointer"><FileImageSolid /></div>
           </div>
       </Card>
+      <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-1.5 w-full mt-4">
+        <FloppyDiskOutline class="mr-2" />Save Changes
+      </Button>
     </div>
   </div>
-  
-</IncidentLayout>
 
+</IncidentLayout>

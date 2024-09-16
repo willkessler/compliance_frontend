@@ -4,6 +4,7 @@
  import { FileSolid, FileImageSolid, CirclePlusSolid, 
         TruckSolid, 
         UsersOutline,
+        FloppyDiskOutline,
         ExclamationCircleSolid,
         ClockSolid,
         ThumbsUpSolid,
@@ -39,15 +40,14 @@
  // Table data
  $: id = parseInt($page.params.id); // get the page id from the url
 
- let incident = {
+ let asset = {
    id: $page.params.id,
-   title: `Payment refund to #00910`,
-   date: 'Jul 31, 2024',
-   level: 'State',
-   driver: 'Thomas Pascal',
+   license: '6NDW861',
+   vin: '2345034948345890549',
+   driver: 'Thomas Payne',
    vehicle: 'Truck #4396',
-   dueDate: 'Aug 31, 2024',
-   description: 'We are working with Tom\'s repair shop here.  Mark is the point of contact and expect to complete the repair on time. Location details below...'
+   date: 'Aug 31, 2024',
+   description: 'This truck is a diesel vehicle that Eric puchased second-hand.',
  };
 
  let vehicles = [
@@ -61,6 +61,11 @@
    { id: 9822, name: "9822 (AR)", operatingTime: "70h 12m",     mileage: "7,743", status: "Clear", icon: ThumbsUpSolid,},
    { id: 9282, name: "9282 (AR)", operatingTime: "1,040h 14m",  mileage: "115,098", status: "Clear", icon: ThumbsUpSolid,},
    { id: 9283, name: "9283 (AR)", operatingTime: "1,382h 49m", mileage: "153,887", status: "Clear", icon: ThumbsUpSolid,},
+ ];
+
+ let drivers = [
+   { id: 1922, name: 'Thomas Payne', startDate: 'Jan 1, 2024', endDate: 'Ongoing' },
+   { id: 1922, name: 'Mark Ingram', startDate: 'Jan 1, 2023', endDate: 'Dec 31, 2023' },
  ];
 
  function getVehicleById (id) {
@@ -94,24 +99,43 @@
   </div>
 
   <ActionItems />
+
+  <!-- driver details -->
+  <h1 class="text-lg font-bold mb-4 mt-6">Driver details</h1>
+
+  <div>
+    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">End date</TableHeadCell>
+      </TableHead>
+      <TableBody>
+        {#each drivers as driver}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.startDate}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.endDate}</TableBodyCell>
+          </TableBodyRow>
+        {/each}
+      </TableBody>
+    </Table>
+  </div>
+  
   <Uploads />
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full min-w-80">
     <div class="flex justify-between items-center mb-0 ml-2">
-      <h2 class="text-xl font-bold text-gray-500 uppercase">details</h2>
-      <p class="font-semibold text-gray-500">{incident.date}</p>
-    </div>
-    <div class="space-x-2">
-      <Badge class="py-1 cursor-pointer"  color="green">Maintenance</Badge>
-      <Badge class="py-1 cursor-pointer" color="red">Critical</Badge>
-      <Badge class="py-1 cursor-pointer" color="blue">Open</Badge>
+      <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">asset info</h2>
+      <p class="font-semibold text-gray-500 text-nowrap">{asset.date}</p>
     </div>
     <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Level:</span><Badge class="ml-2 bg-gray-100"> {incident.level}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{incident.driver}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{incident.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">License:</span><Badge class="ml-2 bg-gray-100"> {asset.license}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">VIN:</span><Badge class="ml-2 bg-gray-100"> {asset.vin}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver:</span><Badge class="ml-2 bg-gray-100"> <UsersOutline />{asset.driver}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle:</span><Badge class="ml-2 bg-gray-100"><TruckSolid />{asset.vehicle}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
-        <div class="mt-4 font-semibold text-nowrap mr-2">Due date:</div>
+        <div class="mt-4 font-semibold text-nowrap mr-2">Registration:</div>
         <div class="flex items-center">
           <div class="relative inline-block">
             <input
@@ -131,13 +155,16 @@
       </div>
     <div>
       <div class="mt-6">Description and notes</div>
-      <Card class="p-2 m-0 mt-2 divide-y shadow-none">
-          <p class="text-sm">{incident.description}</p>
+      <Card class="mt-2 divide-y shadow-none">
+          <p class="text-md">{asset.description}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
             <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
             <div class="cursor-pointer"><FileImageSolid /></div>
           </div>
       </Card>
+      <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-1.5 w-full mt-4">
+        <FloppyDiskOutline class="mr-2" />Save Changes
+      </Button>
     </div>
   </div>
   

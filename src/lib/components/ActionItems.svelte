@@ -144,7 +144,7 @@
  
 </script>
 
-<div class="flex justify-between items-center mb-0 ml-2">
+<div class="flex justify-between items-center mb-0 ml-2 mt-3">
   <h1 class="text-xl font-bold">History of Action Items</h1>
   <Button on:click={() => (defaultModal = true)}
     class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5"><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
