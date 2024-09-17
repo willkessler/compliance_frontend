@@ -193,9 +193,6 @@
                 />
               </div>
             </div>
-            <div class="chart">
-              <ComplianceHistoryChart />
-            </div>
           </div>
 	</CardContent>
       </Card>

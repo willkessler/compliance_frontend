@@ -13,7 +13,7 @@
   export let totalDrivers = 0;
 
   let chart;
-  let dimensions = writable({ width: 300, height: 150 });
+  let dimensions = writable({ width: 300, height: 80 });
 
   const data = writable([
     { category: 'Trucks', outOfCompliance: trucksOutOfCompliance, total: totalTrucks },
@@ -33,11 +33,11 @@
       .range([0, $dimensions.width - 50])
   );
 
-  const yScale = derived([data, dimensions], ([$data, $dimensions]) => 
-    scaleBand()
-      .domain($data.map(d => d.category))
-      .range([0, $dimensions.height - 40])
-      .padding(0.4)
+ const yScale = derived([data, dimensions], ([$data, $dimensions]) => 
+   scaleBand()
+     .domain($data.map(d => d.category))
+     .range([0, $dimensions.height - 10]) // Adjusted range
+     .padding(0.4)  // Adjusted padding
   );
 
   const colorScale = scaleOrdinal()
@@ -77,17 +77,17 @@
     data={$tweenedData}
     xScale={$xScale}
     yScale={$yScale}
-    padding={{ top: 0, right: 20, bottom:0, left: 10 }}
+    padding={{ top: 5, right: 20, bottom: 10, left: 10 }}
     width={$dimensions.width}
     height={$dimensions.height}
-    >
+  >
     <Svg>
       <g class="bars">
         {#each $tweenedData as d, i}
           <text
             x={$xScale(0)}
-            y={$yScale(d.category) - 5}
-            font-size="14"
+            y={$yScale(d.category) - 2}
+            font-size="12"
             font-weight="600"
             fill="#333"
           >{d.category}</text>
@@ -107,8 +107,8 @@
           />
           <text
             x={$xScale(0)}
-            y={$yScale(d.category) + $yScale.bandwidth() + 20}
-            font-size="14"
+            y={$yScale(d.category) + $yScale.bandwidth() + 10}
+            font-size="10"
             fill="#333"
           >{d.outOfCompliance} / {d.total} out of compliance</text>
         {/each}
@@ -122,9 +122,9 @@
     width: 100%;
     height: 100%;
   }
- .chart-title {
-   margin: 10px 0 5px 0px;
-   font-size: 16px;
-   font-weight: 500;
+  .chart-title {
+    margin: 0 0 2px 0;
+    font-size: 16px;
+    font-weight: 500;
   }
 </style>

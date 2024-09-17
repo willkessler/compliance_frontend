@@ -18,15 +18,15 @@
       date.setDate(today.getDate() - i);
       data.push({
         date: date.toISOString().split('T')[0],
-        csaScore: Math.random() * 50 + 50, // Random score between 50-100
-        safetyScore: Math.random() * 50 + 50 // Random score between 50-100
+        csaScore: Math.random() * 50 + 50,
+        safetyScore: Math.random() * 50 + 50
       });
     }
     return data;
   };
 
   let chart;
-  let dimensions = writable({ width: 600, height: 300 });
+  let dimensions = writable({ width: 600, height: 250 });
   
   const data = writable(generateSampleData());
 
@@ -35,13 +35,13 @@
   const xScale = derived([data, dimensions], ([$data, $dimensions]) => 
     scaleBand()
       .domain($data.map(d => d.date))
-      .range([0, $dimensions.width - 20])
+      .range([0, $dimensions.width - 100]) // Adjusted for y-axis and legend space
       .padding(0.1)
   );
 
   const yScale = derived(dimensions, ($dimensions) => 
     scaleLinear()
-      .domain([0, 200]) // Max possible sum of csaScore and safetyScore
+      .domain([0, 200])
       .range([$dimensions.height - 40, 0])
   );
 
@@ -78,7 +78,7 @@
     data={$tweenedData}
     xScale={$xScale}
     yScale={$yScale}
-    padding={{ top: 20, right: 20, bottom: 40, left: 20 }}
+    padding={{ top: 20, right: 70, bottom: 30, left: 40 }}
     width={$dimensions.width}
     height={$dimensions.height}
   >
@@ -97,7 +97,7 @@
             y={$yScale(d.csaScore + d.safetyScore)}
             width={$xScale.bandwidth()}
             height={$dimensions.height - 40 - $yScale(d.safetyScore)}
-            fill="#ffa500"
+            fill="#FFA500"
           />
         {/each}
       </g>
@@ -108,7 +108,8 @@
             x={$xScale(d.date) + $xScale.bandwidth() / 2}
             y={$dimensions.height - 10}
             text-anchor="middle"
-            font-size="10"
+            font-size="8"
+            transform="rotate(-45 {$xScale(d.date) + $xScale.bandwidth() / 2} {$dimensions.height - 10})"
           >{d.date.slice(-5)}</text>
         {/each}
       </g>
@@ -116,13 +117,20 @@
       <g class="y-axis">
         {#each [0, 50, 100, 150, 200] as tick}
           <text
-            x="5"
+            x="-5"
             y={$yScale(tick)}
-            text-anchor="start"
+            text-anchor="end"
             font-size="10"
             dy="0.3em"
           >{tick}</text>
         {/each}
+      </g>
+      <!-- Legend -->
+      <g class="legend" transform="translate({$dimensions.width - 60}, 30)">
+        <rect x="0" y="0" width="15" height="15" fill="#00bb00" />
+        <text x="20" y="12" font-size="10">CSA Score</text>
+        <rect x="0" y="20" width="15" height="15" fill="#FFA500" />
+        <text x="20" y="32" font-size="10">Safety Score</text>
       </g>
     </Svg>
   </LayerCake>
@@ -134,7 +142,7 @@
     height: 100%;
   }
   .chart-title {
-    margin: 10px 0 5px 0px;
+    margin: 5px 0 5px 0px;
     font-size: 16px;
     font-weight: 500;
   }
