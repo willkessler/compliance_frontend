@@ -8,7 +8,8 @@
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
  import ComplianceBarChart from '$lib/components/ComplianceBarChart.svelte';
- 
+ import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
+
  const actionItems = [
    { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
    { type: "State Filings", openItems: 2, url: '/manage/filings/state' },
@@ -144,6 +145,17 @@
   margin-bottom: 0;
  }
 
+  .charts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .chart {
+    width: 100%;
+    height: 300px;
+  }
+
 </style>
 
 <main class="flex-1 overflow-auto">
@@ -171,7 +183,7 @@
           </div>
           <div>
             <div class="flex items-center">
-              <div style="width:100%; height:300px;">
+              <div class="chart">
                 <ComplianceBarChart
                   chartTitle="Your statistics"
                   {trucksOutOfCompliance}
@@ -180,6 +192,9 @@
                   {totalDrivers}
                 />
               </div>
+            </div>
+            <div class="chart">
+              <ComplianceHistoryChart />
             </div>
           </div>
 	</CardContent>
@@ -223,7 +238,7 @@
 
       </CardContent>
     </Card>
-    
+
     <Card class="fixed-height-card">
       <CardHeader>
         <h2 class="text-lg font-bold">Lates news</h2>
@@ -249,4 +264,3 @@
     </Card>
   </div>
 </main>
-

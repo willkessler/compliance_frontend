@@ -13,7 +13,7 @@
   export let totalDrivers = 0;
 
   let chart;
-  let dimensions = writable({ width: 300, height: 200 });
+  let dimensions = writable({ width: 300, height: 150 });
 
   const data = writable([
     { category: 'Trucks', outOfCompliance: trucksOutOfCompliance, total: totalTrucks },
@@ -36,13 +36,13 @@
   const yScale = derived([data, dimensions], ([$data, $dimensions]) => 
     scaleBand()
       .domain($data.map(d => d.category))
-      .range([0, $dimensions.height - 80])
-      .padding(0.8)  // Increased padding to create more space between bars
+      .range([0, $dimensions.height - 40])
+      .padding(0.4)
   );
 
   const colorScale = scaleOrdinal()
     .domain(['outOfCompliance', 'inCompliance'])
-    .range(['#FFA500', '#00ff00']);
+    .range(['#FFA500', '#00bb00']);
 
   const tweenedData = tweened($data, {
     duration: 500,
@@ -77,7 +77,7 @@
     data={$tweenedData}
     xScale={$xScale}
     yScale={$yScale}
-    padding={{ top: 10, right: 20, bottom: 40, left: 10 }}
+    padding={{ top: 0, right: 20, bottom:0, left: 10 }}
     width={$dimensions.width}
     height={$dimensions.height}
     >
@@ -87,7 +87,7 @@
           <text
             x={$xScale(0)}
             y={$yScale(d.category) - 5}
-            font-size="20"
+            font-size="14"
             font-weight="600"
             fill="#333"
           >{d.category}</text>
@@ -123,7 +123,6 @@
     height: 100%;
   }
  .chart-title {
-   position:absolute;
    margin: 10px 0 5px 0px;
    font-size: 16px;
    font-weight: 500;
