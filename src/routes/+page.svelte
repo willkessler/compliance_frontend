@@ -9,6 +9,7 @@
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
  import ComplianceBarChart from '$lib/components/ComplianceBarChart.svelte';
  import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
+ import ChatBot from  '$lib/components/ChatBot.svelte';
 
  const actionItems = [
    { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
@@ -232,7 +233,7 @@
         </CardTitle>
       </CardHeader>
       <CardContent style="card-content">
-
+        <ChatBot />
       </CardContent>
     </Card>
 
