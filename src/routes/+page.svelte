@@ -7,6 +7,7 @@
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
+ import ComplianceBarChart from '$lib/components/ComplianceBarChart.svelte';
  
  const actionItems = [
    { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
@@ -57,10 +58,13 @@
     },
  ];
 
-
-
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
+
+ let trucksOutOfCompliance = 10;
+ let totalTrucks = 100;
+ let driversOutOfCompliance = 5;
+ let totalDrivers = 50;
 
 </script>
 
@@ -165,43 +169,16 @@
               </div>
             </div>
           </div>
-          <div class="flex items-center">
-            <div>
-              <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
-                <div class="score">14</div>
-                <div class="status">vehicles out of compliance</div>
-              </div>          
-              <div class="pl-2 pr-2  pt-4">
-                <div class="flex">
-                  <svelte:component this={UsersRound} class="mr-2" size={20} />
-                  Ahmad Kakar
-                </div>
-                <div class="flex">
-                  <svelte:component this={UsersRound} class="mr-2" size={20} />
-                  Will Kessler
-                </div>
-                <div class="pl-8">
-                  <a href="#">See all...</a>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
-                <div class="score">3</div>
-                <div class="status">drivers out of compliance</div>
-              </div>          
-              <div class="pl-2 pr-2 pt-4">
-                <div class="flex">
-                  <svelte:component this={Truck} class="mr-2" size={20} />
-                  Reefer: 4129-23
-                </div>
-                <div class="flex">
-                  <svelte:component this={Truck} class="mr-2" size={20} />
-                  Flatbed: 8322-38
-                </div>
-                <div class="pl-8">
-                  <a href="#">See all...</a>
-                </div>
+          <div>
+            <div class="flex items-center">
+              <div style="width:100%; height:300px;">
+                <ComplianceBarChart
+                  chartTitle="Your statistics"
+                  {trucksOutOfCompliance}
+                  {totalTrucks}
+                  {driversOutOfCompliance}
+                  {totalDrivers}
+                />
               </div>
             </div>
           </div>
