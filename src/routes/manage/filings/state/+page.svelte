@@ -81,7 +81,7 @@
 	    <TableBodyCell>{filing.date}</TableBodyCell>
 	    <TableBodyCell >
               <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		<Button class="bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
+		<Button class="text-gray-800 bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
               </a>
 	    </TableBodyCell>
 	  </TableBodyRow>

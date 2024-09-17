@@ -6,6 +6,7 @@
  import { Badge, Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
+ import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
  
  const actionItems = [
    { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
@@ -92,21 +93,17 @@
    color:#ff6666;
    width:100%;
  }
+ .score {
+   font-size: 60px;
+ }
+ .score-label {
+   font-size: 25px;
+ }
  .csa-score {
    color: green;
-   font-size: 48px;
- }
- .csa-score-label {
-   color:green;
-   font-size: 20px;
  }
  .safety-score {
    color: orange;
-   font-size: 48px;
- }
- .safety-score-label {
-   color:orange;
-   font-size: 20px;
  }
 
  .dashboard-grid {
@@ -147,83 +144,73 @@
 
 <main class="flex-1 overflow-auto">
 
-  <div class="grid grid-cols-3 gap-6 mb-6">
-    <Card>
-      <CardHeader class="pb-2">
-	<CardTitle>Drivers</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
-          <div class="statistic">14</div>
-          <div class="status">out of compliance</div>
-        </div>          
-        <div class="pl-2 pr-2  pt-4">
-          <div class="flex">
-            <svelte:component this={UsersRound} class="mr-2" size={20} />
-            Ahmad Kakar
-          </div>
-          <div class="flex">
-            <svelte:component this={UsersRound} class="mr-2" size={20} />
-            Will Kessler
-          </div>
-          <div class="pl-8">
-            <a href="#">See all...</a>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-    <Card>
-      <CardHeader class="pb-2">
-	<CardTitle>Trucks</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
-          <div class="statistic">3</div>
-          <div class="status">out of compliance</div>
-        </div>          
-        <div class="pl-2 pr-2 pt-4">
-          <div class="flex">
-            <svelte:component this={Truck} class="mr-2" size={20} />
-            Reefer: 4129-23
-          </div>
-          <div class="flex">
-            <svelte:component this={Truck} class="mr-2" size={20} />
-            Flatbed: 8322-38
-          </div>
-          <div class="pl-8">
-            <a href="#">See all...</a>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-    <div class="space-y-6">
+  <div class="grid grid-cols-2 gap-6 mb-6">
+    <div class="grid gap-2">
       <Card>
-	<CardHeader class="pb-0">
-	  <CardTitle>CSA score</CardTitle>
+	<CardHeader class="pb-2">
+	  <CardTitle>Your compliance levels</CardTitle>
 	</CardHeader>
-	<CardContent class="flex items-center">
-          <div class="csa-score">15</div>
-          <div class="csa-score-label ml-4">Good!</div>
-	</CardContent>
-      </Card>
-      <Card>
-	<CardHeader class="pb-0">
-	  <CardTitle>Safety Score</CardTitle>
-	</CardHeader>
-	<CardContent class="flex items-center">
-          <div class="safety-score">153</div>
-          <div class="safety-score-label ml-4">Can be improved</div>
+	<CardContent >
+          <div class="flex items-center">
+            <div class="flex items-center gap-8 pl-2 pr-2">
+              <div class="flex items-center csa-score">
+                <div class="mr-4" style="scale:3"><LandmarkOutline /></div>
+                <div class="score">15</div>
+                <div class="score-label pl-2">CSA Score</div>
+              </div>
+              <div class="flex items-center safety-score">
+                <div class="mr-4" style="scale:3"><ShieldCheckSolid /></div>
+                <div class="score">153</div>
+                <div class="score-label pl-2">Safety Score</div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <div>
+              <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
+                <div class="score">14</div>
+                <div class="status">vehicles out of compliance</div>
+              </div>          
+              <div class="pl-2 pr-2  pt-4">
+                <div class="flex">
+                  <svelte:component this={UsersRound} class="mr-2" size={20} />
+                  Ahmad Kakar
+                </div>
+                <div class="flex">
+                  <svelte:component this={UsersRound} class="mr-2" size={20} />
+                  Will Kessler
+                </div>
+                <div class="pl-8">
+                  <a href="#">See all...</a>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center gap-8 pl-2 pr-2 compliance-stats">
+                <div class="score">3</div>
+                <div class="status">drivers out of compliance</div>
+              </div>          
+              <div class="pl-2 pr-2 pt-4">
+                <div class="flex">
+                  <svelte:component this={Truck} class="mr-2" size={20} />
+                  Reefer: 4129-23
+                </div>
+                <div class="flex">
+                  <svelte:component this={Truck} class="mr-2" size={20} />
+                  Flatbed: 8322-38
+                </div>
+                <div class="pl-8">
+                  <a href="#">See all...</a>
+                </div>
+              </div>
+            </div>
+          </div>
 	</CardContent>
       </Card>
     </div>
-  </div>
-
-  <div class="dashboard-grid">
-    <Card class="fixed-height-card">
-      <CardHeader>
-        <CardTitle class="flex items-center justify-between">
-          Summary of action items
-        </CardTitle>
+    <Card>
+      <CardHeader class="pb-2">
+	<CardTitle>Summary of action items</CardTitle>
       </CardHeader>
       <CardContent style="card-content">
         <Table hoverable={true}>
@@ -246,10 +233,23 @@
         </Table>
       </CardContent>
     </Card>
+  </div>
+
+  <div class="dashboard-grid">
+    <Card class="fixed-height-card">
+      <CardHeader>
+        <CardTitle class="flex items-center justify-between">
+          Ask the AI!
+        </CardTitle>
+      </CardHeader>
+      <CardContent style="card-content">
+
+      </CardContent>
+    </Card>
     
     <Card class="fixed-height-card">
       <CardHeader>
-        <h2 class="text-lg font-bold">News feed</h2>
+        <h2 class="text-lg font-bold">Lates news</h2>
       </CardHeader>
       <CardContent class="card-content">
         <div class="space-y-6">
