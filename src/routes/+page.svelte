@@ -9,13 +9,14 @@
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
  import ComplianceBarChart from '$lib/components/ComplianceBarChart.svelte';
  import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
+ import DonutChart from '$lib/components/DonutChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
 
  const actionItems = [
    { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
    { type: "State Filings", openItems: 2, url: '/manage/filings/state' },
-   { type: "Drivers", openItems: 8, url: '/manage/fleet/drivers' },
-   { type: "Vehicles", openItems: 3, url: '/manage/fleet/vehicles' },
+   { type: "Vehicles", openItems: 8, url: '/manage/fleet/drivers' },
+   { type: "Drivers", openItems: 13, url: '/manage/fleet/vehicles' },
    { type: "Connections", openItems: 1, url: '/manage/integrations' },
  ];
 
@@ -68,6 +69,19 @@
  let driversOutOfCompliance = 3;
  let totalDrivers = 97;
 
+ let donutChartData = 
+   { 
+   trucks:  [
+     { label: "Out of Compliance", value: 8, color: "#ffa500" },
+     { label: "Compliant", value: 95, color: "#00bb00" },
+   ],
+   drivers:  [
+     { label: "Out of Compliance", value: 12, color: "#ffa500" },
+     { label: "Compliant", value: 94, color: "#00bb00" },
+   ],
+   };
+ let showPercentages = true;
+ 
 </script>
 
 <style>
@@ -165,11 +179,11 @@
     <div class="grid gap-2">
       <Card>
 	<CardHeader class="pb-2">
-	  <CardTitle>Your compliance levels</CardTitle>
+	  <CardTitle>Your compliance by the numbers</CardTitle>
 	</CardHeader>
 	<CardContent >
           <div class="flex items-center">
-            <div class="flex items-center gap-8 pl-2 pr-2">
+            <div class="grid grid-cols-2 gap-8 pl-2 pr-2 justify-items-stretch">
               <div class="flex items-center csa-score">
                 <div class="mr-4" style="scale:3"><LandmarkOutline /></div>
                 <div class="score">15</div>
@@ -184,15 +198,19 @@
           </div>
           <div>
             <div class="flex items-center">
-              <div class="chart">
-                <ComplianceBarChart
-                  chartTitle="Your statistics"
-                  {trucksOutOfCompliance}
-                  {totalTrucks}
-                  {driversOutOfCompliance}
-                  {totalDrivers}
-                />
-              </div>
+            <div class="chart">
+              <DonutChart
+                title="Vehicles"
+                data={donutChartData.trucks}
+                {showPercentages}
+              />
+            </div>
+            <div class="chart">
+              <DonutChart
+                title="Drivers"
+                data={donutChartData.drivers}
+                {showPercentages}
+              />
             </div>
           </div>
 	</CardContent>

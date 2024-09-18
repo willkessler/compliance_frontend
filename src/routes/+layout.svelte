@@ -9,7 +9,6 @@
    $page.url.pathname.startsWith('/manage/fleet/vehicles/vehicle/') ||
    $page.url.pathname.startsWith('/manage/fleet/drivers/driver/')
  );
- console.log('three panel check: ', $page.url.pathname);
 
 </script>
 

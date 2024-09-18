@@ -3,7 +3,7 @@
   import { Button, Textarea } from 'flowbite-svelte';
 
   let messages = [];
-  let userInput = 'How frequently do I need to file my UCR?';
+  let userInput = '';
   let chatContainer;
   let inputContainer;
   let errorMessage = '';
