@@ -59,7 +59,7 @@
  ];
 
  let certifications = [
-   { item: 'DOT registration', expiry: 'Sep 15, 2024', status: 'Blocked', action: 'Notify driver', icon: ThumbsUpSolid },
+   { item: 'DOT registration', expiry: 'Sep 15, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
    { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
    { item: 'CDL', expiry: 'Sep 17, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
    { item: 'Drug and alcohol test', expiry: 'Sep 19, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
@@ -187,19 +187,19 @@
       <div class="font-semibold">License</div>
       <div>{driver.license}</div>
 
-      <div clsas="font-semibold">Lic. Expiration</div>
+      <div class="font-semibold">Lic. Expiration</div>
       <div class="text-gray-800"> {driver.licenseExpiration}</div>
       
-      <div clsas="font-semibold">SSN/EIN</div>
+      <div class="font-semibold">SSN/EIN</div>
       <div class="text-gray-800 "> {driver.ssn}</div>
       
-      <div clsas="font-semibold">Total Drive time</div>
+      <div class="font-semibold">Total Drive time</div>
       <div class="text-gray-800"> {driver.totalDriveTime}</div>
       
-      <div clsas="font-semibold">Mileage</div>
+      <div class="font-semibold">Mileage</div>
       <div class="text-gray-800">{driver.mileage}</div>
       
-      <div clsas="font-semibold">Vehicle</div>
+      <div class="font-semibold">Vehicle</div>
       <div>
         <Badge class="text-gray-800 bg-gray-100"><TruckSolid />{driver.vehicle}</Badge>
       </div>

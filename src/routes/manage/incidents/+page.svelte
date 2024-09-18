@@ -10,24 +10,24 @@
   const events = [
     // todo issues
     { id: 1292, name: 'Tire rotation for Truck #2348 CAW', icon: TruckSolid, 
-    type: 'Maintenance', status: 'Open', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
+    type: 'Maintenance', status: 'Open', occurrenceDate: 'Apr 23, 2024', dueDate: 'Apr 23, 2024' },
     { id: 33828, name: 'Broken taillight for Truck #4396', icon: TruckSolid, 
-    type: 'Accident', status: 'Open', occurrenceDate: 'Apr 18, 2021', dueDate: 'Apr 18, 2021' },
+    type: 'Accident', status: 'Open', occurrenceDate: 'Apr 18, 2024', dueDate: 'Apr 18, 2024' },
 
     // open issues
-    { id: 81829, name: 'Moving violation, Driver #8878', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: UsersOutline },
-    { id: 99928, name: 'Parking violation, Driver #9219', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: UsersOutline },
-    { id: 10023, name: 'Vehicle conversion to electric', type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021',icon: FileLinesOutline },
+    { id: 81829, name: 'Moving violation, Driver #8878', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024', icon: UsersOutline },
+    { id: 99928, name: 'Parking violation, Driver #9219', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024', icon: UsersOutline },
+    { id: 10023, name: 'Vehicle conversion to electric', type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024',icon: FileLinesOutline },
 
     // documents, completed
     { id: 48482, name: 'Payment from Lana Byrd', icon: FileLinesOutline, 
-    type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021' },
+    type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 15, 2024', dueDate: 'Apr 15, 2024' },
     { id: 292, name: 'Payment refund to #00910', icon: FileLinesOutline, 
-    type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 23, 2021', dueDate: 'Apr 23, 2021' },
-    { id: 79182, name: 'UCR processing error', type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021', icon: FileLinesOutline },
+    type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 23, 2024', dueDate: 'Apr 23, 2024' },
+    { id: 79182, name: 'UCR processing error', type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024', icon: FileLinesOutline },
     { id: 59382, name: 'Payment from Jesse Leos', 
-    type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 15, 2021', dueDate: 'Apr 15, 2021', icon: FileLinesOutline },
-    { id: 68282, name: 'Contract from Themsberg LLC', type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 11, 2021', dueDate: 'Apr 11, 2021',icon: FileLinesOutline },
+    type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 15, 2024', dueDate: 'Apr 15, 2024', icon: FileLinesOutline },
+    { id: 68282, name: 'Contract from Themsberg LLC', type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024',icon: FileLinesOutline },
   ];
 
   function getTypeColor(type) {

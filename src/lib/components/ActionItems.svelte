@@ -83,6 +83,50 @@
     console.log('Selected action type:', selectedStatusTypeValue);
   }
 
+ function getStatusColor(status) {
+   switch (status.toLowerCase()) {
+     case 'clear':
+     case 'completed':
+       return 'green';
+     case 'open':
+     case 'in progress':
+       return 'yellow';
+     case 'closed':
+       return 'green';
+     case 'blocked':
+       return 'red';
+     default:
+       return 'gray';
+   }
+ }
+
+ function getTypeColor(type, context) {
+   if (context == 'bg') {
+     switch (type.toLowerCase()) {
+       case 'call':
+         return '300';
+       case 'email':
+         return '400';
+       case 'onsite':
+         return '500';
+       default:
+         return '600';
+     }
+   } else { // text
+     switch (type.toLowerCase()) {
+       case 'call':
+         return '600';
+       case 'email':
+         return '100';
+       case 'onsite':
+         return '200';
+       default:
+         return '800';
+     }
+   }
+   
+ }
+
   function updateAction() {
     // Handle action update logic here
     console.log('Updating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
@@ -141,27 +185,14 @@
   }
 
  let actions = [
-   { id: 1, name: "Call Tom's repair shop",    totalMiles: '8,7812', description: 'Schedule a pickup time', date: 'Aug 31, 2024', type: 'Call'},
-   { id: 2, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Aug 31, 2024', type: 'Onsite'},
-   { id: 3, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Sep 15, 2024', type: 'Email'},
-   { id: 4, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Sep 17, 2024', type: 'Call'},
-   { id: 5, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Sep 19, 2024', type: 'Call'},
+   { id: 1, name: "Call Tom's repair shop",    totalMiles: '8,7812', description: 'Schedule a pickup time', eventDate: 'Aug 31, 2024', dueDate: 'Sep 14, 2024', type: 'Call', status: 'Open'},
+   { id: 2, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Aug 31, 2024', dueDate: 'Sep 21, 2024', type: 'Onsite', status: 'Open'},
+   { id: 3, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 15, 2024', dueDate: 'Sep 31, 2024', type: 'Email', status: 'Closed'},
+   { id: 4, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 17, 2024', dueDate: 'Nov 1, 2024', type: 'Call', status: 'Closed'},
+   { id: 5, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 19, 2024', dueDate: 'Dec 1, 2024', type: 'Call', status: 'Closed'},
  ];
 
  
- function getTypeColor(type) {
-   switch (type.toLowerCase()) {
-     case 'call':
-       return 'blue';
-     case 'email':
-       return 'red';
-     case 'onsite':
-       return 'green';
-     default:
-       return 'gray';
-   }
- }
-
  // date picker junk
  let dueDate = new Date('2024-08-31');
  let formattedDate;
@@ -198,38 +229,78 @@
 <div class="flex justify-between items-center mb-0 ml-2 mt-3">
   <h1 class="text-xl font-bold">Action Items History</h1>
   <Button on:click={() => { defaultModal = true; uploadedFiles = []; }}
-    class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5"><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
+    class="bg-blue-500 hover:bg-blue-600 text-white text-sm "><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
 </div>
 
 <div>
-  <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-    <TableHead class="bg-gray-50 whitespace-nowrap">
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action Taken</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
-    </TableHead>
-    <TableBody>
-      {#each actions as action}
-        <TableBodyRow>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.totalMiles}</TableBodyCell>
-          <TableBodyCell>
-            <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32" >
-              {action.type}
-            </Badge>
-          </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
-          </TableBodyCell>
+  {#if environment === 'incident' } <!-- incidents -->
+    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action Taken</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+      </TableHead>
+      <TableBody>
+        {#each actions as action}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.totalMiles}</TableBodyCell>
+            <TableBodyCell>
+              <Badge large rounded class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+                {action.type}
+              </Badge>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
+            </TableBodyCell>
 
-        </TableBodyRow>
-      {/each}
-    </TableBody>
-  </Table>
+          </TableBodyRow>
+        {/each}
+      </TableBody>
+    </Table>
+{:else} <!-- vehicles -->
+    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Event Date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type of Action</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+      </TableHead>
+      <TableBody>
+        {#each actions as action}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.eventDate}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.dueDate}</TableBodyCell>
+            <TableBodyCell>
+              <Badge large rounded class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+                {action.type}
+              </Badge>
+            </TableBodyCell>
+            <TableBodyCell>
+              <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+                {#if action.icon !== undefined}
+                  <svelte:component this={action.icon} class=" text-{getStatusColor(action.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                {/if}
+                {action.status}
+              </Badge>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
+            </TableBodyCell>
+          </TableBodyRow>
+        {/each}
+      </TableBody>
+    </Table>
+
+  {/if}
 </div>
+
 
 <div class="w-full flex justify-end mt-2">
   <Pagination 

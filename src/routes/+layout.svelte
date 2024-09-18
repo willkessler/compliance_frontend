@@ -9,7 +9,6 @@
    $page.url.pathname.startsWith('/manage/fleet/vehicles/vehicle/') ||
    $page.url.pathname.startsWith('/manage/fleet/drivers/driver/')
  );
-
 </script>
 
 <div class="flex h-screen bg-background">

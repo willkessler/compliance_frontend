@@ -31,8 +31,7 @@
 </script>
 
 <div class="flex h-screen bg-background">
-
-  <main class="flex-1 p-8 pl-4 overflow-auto">
+  <main class="flex-1 p-8 pl-4">
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-3xl font-bold">State filings</h1>
       <Button class="bg-blue-500 hover:bg-blue-600 text-white">Start Review</Button>
@@ -52,8 +51,8 @@
 	  <TableBodyCell>{filing.dueDate}</TableBodyCell>
 	  <TableBodyCell>
             <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
+	      <CircleAlert class="h-4 w-4 mr-2" />
 	      {filing.status}
-	      <CircleAlert class="h-4 w-4 ml-2" />
 	    </Badge>
 	  </TableBodyCell>
 	</TableBodyRow>
@@ -65,8 +64,7 @@
     <hr />
   </div>
 
-
-  <div class="flex-1 py-6 overflow-auto">
+  <div class="flex-1 py-6">
     <h1 class="text-xl font-bold mb-3">Historical filings</h1>
     <Table hoverable={true}>
       <TableHead>

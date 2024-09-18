@@ -132,7 +132,7 @@
 
   <Uploads />
 
-  <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full">
+  <div slot="right-panel" class="p-4  space-y-4 bg-white h-full min-w-80">
     <div class="flex justify-between items-center mb-0">
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">asset info</h2>
       <p class="font-semibold text-gray-500 text-nowrap">{asset.date}</p>
