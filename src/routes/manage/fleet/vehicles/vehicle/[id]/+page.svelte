@@ -43,7 +43,7 @@
  let asset = {
    id: $page.params.id,
    license: '6NDW861',
-   vin: '2345034948345890549',
+   vin: '2345034948...',
    driver: 'Thomas Payne',
    vehicle: 'Truck #4396',
    date: 'Aug 31, 2024',
@@ -126,15 +126,14 @@
     </Table>
   </div>
 
-
   <div class="w-full mt-10 text-gray-100">
     <hr />
   </div>
 
   <Uploads />
 
-  <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full min-w-80">
-    <div class="flex justify-between items-center mb-0 ">
+  <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full">
+    <div class="flex justify-between items-center mb-0">
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">asset info</h2>
       <p class="font-semibold text-gray-500 text-nowrap">{asset.date}</p>
     </div>
@@ -143,7 +142,7 @@
       <div>{asset.license}</div>
       
       <div class="font-semibold">VIN</div>
-      <div>{asset.vin}</div>
+      <div title="Full VIN: 2345034948345890549">{asset.vin}</div>
       
       <div class="font-semibold">Driver</div>
       <Badge class="bg-gray-100 text-gray-800">
