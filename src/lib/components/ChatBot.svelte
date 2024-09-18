@@ -1,6 +1,7 @@
 <script>
   import { onMount, afterUpdate } from 'svelte';
   import { Button, Textarea } from 'flowbite-svelte';
+ import { Spinner } from 'flowbite-svelte';
 
   let messages = [];
   let userInput = '';
@@ -91,6 +92,7 @@
     {/each}
     {#if isLoading}
       <div class="message assistant loading">
+        <div class="text-right"><Spinner color="purple" size={4} /></div>
         <p><i>Generating response, please wait...</p>
       </div>
     {/if}
@@ -165,27 +167,4 @@
     align-items: center;
   }
 
-  .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-    margin-right: 10px;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  li {
-    margin-bottom: 5px;
-  }
 </style>

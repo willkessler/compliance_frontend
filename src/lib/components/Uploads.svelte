@@ -21,7 +21,7 @@
     {#each previouslyUploadedFiles as uploadedFile}
       <TableBodyRow>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-          <a href="#" >
+          <a href="/" >
             <div class="flex items-top">
               {uploadedFile.filename} &nbsp;
               <FileSolid />

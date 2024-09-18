@@ -85,34 +85,6 @@
 </script>
 
 <style>
-  .news ul {
-    list-style-type: none;
-    padding-left: 20px;
-  }
-  .news li {
-    position: relative;
-  }
-  .news li::before {
-    content: "◆";  /* Unicode character for a diamond */
-    position: absolute;
-    left: -20px;
-    color: #000;  /* Change color as needed */
-  }
- .news li:hover {
-   color:blue;
- }
- .compliance-stats {
-   color:red;
-   font-size:48px;
- }
- .compliance-stats .statistic {
-   font-size:48px;
- }
- .compliance-stats .status {
-   font-size:20px;
-   color:#ff6666;
-   width:100%;
- }
  .score {
    font-size: 60px;
  }
@@ -132,44 +104,10 @@
    gap: 1.5rem;
  }
 
- .fixed-height-card {
-   height: 500px;
-   display: flex;
-   flex-direction: column;
+ .chart {
+   width: 100%;
+   height: 300px;
  }
-
- .card-content {
-   flex: 1;
-   overflow-y: auto;
-   padding-right: 1rem;
- }
-
- .news-item {
-   margin-bottom: 1rem;
- }
-
- .news-item:last-child {
-   margin-bottom: 0;
- }
-
- .news-item-card {
-    margin-bottom: 20px;
- }
-
-.news-item-card:last-child {
-  margin-bottom: 0;
- }
-
-  .charts-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .chart {
-    width: 100%;
-    height: 300px;
-  }
 
 </style>
 
@@ -220,7 +158,7 @@
       <CardHeader class="pb-2">
 	<CardTitle>Summary of action items</CardTitle>
       </CardHeader>
-      <CardContent style="card-content">
+      <CardContent>
         <Table hoverable={true}>
           <TableHead>
             <TableHeadCell>Type</TableHeadCell>
@@ -244,37 +182,37 @@
   </div>
 
   <div class="dashboard-grid">
-    <Card class="fixed-height-card">
-      <CardContent style="card-content">
-        <div class="font-bold pl-4 pt-4 pb-0">
-          Ask the AI!
-        </div>
-        <ChatBot />
-      </CardContent>
-    </Card>
+      <Card style="height:400px;overflow:auto;">
+        <CardContent>
+          <div class="font-bold pl-2 pt-4 pb-2">
+            Ask the AI!
+          </div>
+          <ChatBot />
+        </CardContent>
+      </Card>
 
-    <Card class="fixed-height-card">
-      <CardHeader>
-        <h2 class="text-lg font-bold">Latest news</h2>
-      </CardHeader>
-      <CardContent class="card-content">
-        <div class="space-y-6">
-          {#each newsItems as newsItem}
-            <a href={newsItem.url} class="block">
-              <div class="flex space-x-4">
-                <div class="w-1/4 flex-shrink-0">
-                  <img src={newsItem.image} alt={newsItem.title} class="w-full h-auto object-cover rounded-md" />
-                  <i>{newsItem.site}</i>
+      <Card style="height:400px;overflow:auto;">
+        <CardHeader>
+          <h2 class="text-lg font-bold">Latest news</h2>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-6">
+            {#each newsItems as newsItem}
+              <a href={newsItem.url} class="block">
+                <div class="flex space-x-4">
+                  <div class="w-1/4 flex-shrink-0">
+                    <img src={newsItem.image} alt={newsItem.title} class="w-full h-auto object-cover rounded-md" />
+                    <i>{newsItem.site}</i>
+                  </div>
+                  <div class="flex-grow">
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{newsItem.title}</h5>
+                    <p class="text-sm text-gray-700 dark:text-gray-400">{newsItem.synopsis}</p>
+                  </div>
                 </div>
-                <div class="flex-grow">
-                  <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{newsItem.title}</h5>
-                  <p class="text-sm text-gray-700 dark:text-gray-400">{newsItem.synopsis}</p>
-                </div>
-              </div>
-            </a>
-          {/each}
-        </div>
-      </CardContent>
-    </Card>
+              </a>
+            {/each}
+          </div>
+        </CardContent>
+      </Card>
   </div>
 </main>

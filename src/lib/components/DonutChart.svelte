@@ -58,7 +58,7 @@
           text-anchor="middle"
           dominant-baseline="central"
           fill="white"
-          font-size="16px"
+          font-size="18px"
           font-weight="bold"
         >
           {getLabelText(arc.data)}
@@ -72,7 +72,7 @@
       text-anchor="middle"
       dominant-baseline="central"
       fill="black"
-      font-size="16px"
+      font-size="24px"
       font-weight="bold"
     >
       {title}
