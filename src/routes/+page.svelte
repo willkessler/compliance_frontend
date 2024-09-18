@@ -227,19 +227,17 @@
 
   <div class="dashboard-grid">
     <Card class="fixed-height-card">
-      <CardHeader>
-        <CardTitle class="flex items-center justify-between">
-          Ask the AI!
-        </CardTitle>
-      </CardHeader>
       <CardContent style="card-content">
+        <div class="font-bold pl-4 pt-4 pb-0">
+          Ask the AI!
+        </div>
         <ChatBot />
       </CardContent>
     </Card>
 
     <Card class="fixed-height-card">
       <CardHeader>
-        <h2 class="text-lg font-bold">Lates news</h2>
+        <h2 class="text-lg font-bold">Latest news</h2>
       </CardHeader>
       <CardContent class="card-content">
         <div class="space-y-6">
