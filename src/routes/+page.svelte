@@ -14,8 +14,8 @@
  const actionItems = [
    { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
    { type: "State Filings", openItems: 2, url: '/manage/filings/state' },
-   { type: "Drivers", openItems: 1, url: '/manage/fleet/drivers' },
-   { type: "Vehicles", openItems: 2, url: '/manage/fleet/vehicles' },
+   { type: "Drivers", openItems: 8, url: '/manage/fleet/drivers' },
+   { type: "Vehicles", openItems: 3, url: '/manage/fleet/vehicles' },
    { type: "Connections", openItems: 1, url: '/manage/integrations' },
  ];
 
@@ -63,10 +63,10 @@
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
 
- let trucksOutOfCompliance = 10;
- let totalTrucks = 100;
- let driversOutOfCompliance = 5;
- let totalDrivers = 50;
+ let trucksOutOfCompliance = 8;
+ let totalTrucks = 103;
+ let driversOutOfCompliance = 3;
+ let totalDrivers = 97;
 
 </script>
 

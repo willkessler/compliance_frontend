@@ -141,11 +141,11 @@
   }
 
  let actions = [
-   { id: 1, name: "Call Tom's repair shop",    description: 'Schedule a pickup time', date: 'Aug 31, 2024', type: 'Call'},
-   { id: 2, name: "Payment from... ",          description: 'Payment from ...', date: 'Aug 31, 2024', type: 'Onsite'},
-   { id: 3, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 15, 2024', type: 'Email'},
-   { id: 4, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 17, 2024', type: 'Call'},
-   { id: 5, name: "Payment from... ",          description: 'Payment from ...', date: 'Sep 19, 2024', type: 'Call'},
+   { id: 1, name: "Call Tom's repair shop",    totalMiles: '8,7812', description: 'Schedule a pickup time', date: 'Aug 31, 2024', type: 'Call'},
+   { id: 2, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Aug 31, 2024', type: 'Onsite'},
+   { id: 3, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Sep 15, 2024', type: 'Email'},
+   { id: 4, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Sep 17, 2024', type: 'Call'},
+   { id: 5, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', date: 'Sep 19, 2024', type: 'Call'},
  ];
 
  
@@ -205,7 +205,7 @@
   <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
     <TableHead class="bg-gray-50 whitespace-nowrap">
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action Taken</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
@@ -215,7 +215,7 @@
         <TableBodyRow>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.date}</TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.totalMiles}</TableBodyCell>
           <TableBodyCell>
             <Badge large rounded color={getTypeColor(action.type)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32" >
               {action.type}

@@ -59,19 +59,19 @@
  ];
 
  let certifications = [
-   { item: 'DOT License', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
-   { item: 'CDL License', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Notify driver', icon: ThumbsUpSolid },
+   { item: 'DOT registration', expiry: 'Sep 15, 2024', status: 'Blocked', action: 'Notify driver', icon: ThumbsUpSolid },
    { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
-   { item: 'Drug and alcohol test', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Notify driver', icon: ThumbsUpSolid },
-   { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
+   { item: 'CDL', expiry: 'Sep 17, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
+   { item: 'Drug and alcohol test', expiry: 'Sep 19, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
+   { item: 'Clearinghouse registration', expiry: 'Jan 31, 2025', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
  ];
  
  let historyItems = [
-   { item: 'Violation: tire wear', expiry: 'Aug 31, 2024', status: 'Open', action: 'See details', icon: ExclamationCircleSolid },
-   { item: 'CDL License', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { item: 'Drug and alcohol test', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { item: 'Clearinghouse registration', expiry: 'Aug 31, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { item: 'Violation: tire wear', expiry: 'Jan 11, 2023', status: 'Open', action: 'See details', icon: ExclamationCircleSolid },
+   { item: 'CDL', expiry: 'Jun 3, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { item: 'DOT medical card', expiry: 'May 14, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { item: 'Drug and alcohol test', expiry: 'May 29, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { item: 'Clearinghouse registration', expiry: 'August 7, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
  ];
 
 
