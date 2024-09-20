@@ -13,6 +13,9 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
 
+ import { drivers, getDriverById } from '$lib/data/driverData';
+ import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
+
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
 
@@ -39,6 +42,14 @@
 
  // Table data
  $: id = parseInt($page.params.id); // get the page id from the url
+ let vehicleId, vehicle, driver;
+
+ $: if ($page.params.id) {
+   vehicleId = parseInt($page.params.id);
+   vehicle = getVehicleById(vehicleId);
+   driver =  getVehicleDriver(vehicleId);
+   console.log(`got driver ${driver.id} for vehicle ${vehicle.id}` );
+ }
 
  let asset = {
    id: $page.params.id,
@@ -50,34 +61,6 @@
    description: 'This truck is a diesel vehicle that Eric puchased second-hand.',
  };
 
- let vehicles = [
-   { id: 4396, name: "4396 (TX)", operatingTime: "100h 52m",    mileage: "75,743", status: "Blocked", icon: ExclamationCircleSolid, },
-   { id: 4385, name: "4385 (TX)", operatingTime: "97h 46m",     mileage: "47,573", status: "In progress", icon: ClockSolid },
-   { id: 2348, name: "2348 (CA)", operatingTime: "89h 02m",     mileage: "83,543", status: "Clear", icon: ThumbsUpSolid, },
-   { id: 6354, name: "6354 (TX)", operatingTime: "110h 33m",    mileage: "95,322", status: "Clear", icon: ThumbsUpSolid,},
-   { id: 5322, name: "5322 (TX)", operatingTime: "10h 02m",     mileage: "7,433", status: "Clear", icon: ThumbsUpSolid,},
-   { id: 5323, name: "5323 (TX)", operatingTime: "50h 55m",     mileage: "28,009", status: "Clear", icon: ThumbsUpSolid,},
-   { id: 5331, name: "5331 (TX)", operatingTime: "10h 52m",     mileage: "1,431", status: "Clear", icon: ThumbsUpSolid,},
-   { id: 9822, name: "9822 (AR)", operatingTime: "70h 12m",     mileage: "7,743", status: "Clear", icon: ThumbsUpSolid,},
-   { id: 9282, name: "9282 (AR)", operatingTime: "1,040h 14m",  mileage: "115,098", status: "Clear", icon: ThumbsUpSolid,},
-   { id: 9283, name: "9283 (AR)", operatingTime: "1,382h 49m", mileage: "153,887", status: "Clear", icon: ThumbsUpSolid,},
- ];
-
- let drivers = [
-   { id: 1922, name: 'Thomas Payne', startDate: 'Jan 1, 2024', endDate: 'Ongoing' },
-   { id: 1923, name: 'Mark Ingram', startDate: 'Jan 1, 2023', endDate: 'Dec 31, 2023' },
- ];
-
- function getVehicleById (id) {
-   for (let vehicle of vehicles) {
-     console.log(id, vehicle.id);
-     if(vehicle.id === parseInt(id)) {
-       return vehicle;
-     }
-   }
-   return null;
- }
- 
 </script>
 
 <style>
@@ -115,7 +98,7 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">End date</TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each drivers as driver}
+        {#each drivers.slice(0,3) as driver}
           <TableBodyRow>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.startDate}</TableBodyCell>
@@ -134,26 +117,26 @@
 
   <div slot="right-panel" class="p-4  space-y-4 bg-white h-full min-w-80">
     <div class="flex justify-between items-center mb-0">
-      <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">asset info</h2>
-      <p class="font-semibold text-gray-500 text-nowrap">{asset.date}</p>
+      <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Asset Info</h2>
+      <p class="font-semibold text-gray-500 text-nowrap">{vehicle.acquisitionDate}</p>
     </div>
     <div class="grid grid-cols-2 gap-y-2 gap-x-4">
-      <div class="font-semibold">License</div>
-      <div>{asset.license}</div>
+      <div class="font-semibold">Plate</div>
+      <div>{vehicle.licensePlate}</div>
       
       <div class="font-semibold">VIN</div>
-      <div title="Full VIN: 2345034948345890549">{asset.vin}</div>
+      <div title="Full VIN: 2345034948345890549">{vehicle.vin}</div>
       
       <div class="font-semibold">Driver</div>
       <Badge class="bg-gray-100 text-gray-800">
         <UsersOutline class="inline-block mr-1" />
-        {asset.driver}
+        {driver.name}
       </Badge>
       
       <div class="font-semibold">Vehicle</div>
       <Badge class="bg-gray-100 text-gray-800">
         <TruckSolid class="inline-block mr-1" />
-        {asset.vehicle}
+        Truck #{vehicle.id}
       </Badge>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Registration</div>
@@ -180,7 +163,7 @@
       <div>
         <div class="mt-6">Description and notes</div>
         <Card class="mt-2 divide-y shadow-none">
-          <p class="text-md">{asset.description}</p>
+          <p class="text-md">{vehicle.description}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
             <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
             <div class="cursor-pointer"><FileImageSolid /></div>

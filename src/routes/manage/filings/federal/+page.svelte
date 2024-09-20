@@ -5,7 +5,7 @@
  import { Card,  CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
  import { DownloadOutline } from 'flowbite-svelte-icons';
- import { CheckCircleSolid } from 'flowbite-svelte-icons';
+ import { CheckCircleSolid, ExclamationCircleSolid } from 'flowbite-svelte-icons';
 
   const federalFilings = [
   { name: "Unified Carrier Registration (UCR)", dueDate: "Jan 31, 2025", status: "Incomplete" },
@@ -43,6 +43,7 @@
       <TableHead class="bg-gray-50 whitespace-nowrap">
 	<TableHeadCell>Filing name</TableHeadCell>
 	<TableHeadCell>Due date</TableHeadCell>
+	<TableHeadCell>Priority</TableHeadCell>
 	<TableHeadCell >Status</TableHeadCell>
       </TableHead>
       <TableBody>
@@ -50,6 +51,7 @@
 	  <TableBodyRow>
 	    <TableBodyCell>{filing.name}</TableBodyCell>
 	    <TableBodyCell>{filing.dueDate}</TableBodyCell>
+	    <TableBodyCell><div class="flex text-red-500 font-bold"><ExclamationCircleSolid class="text-red-400 mr-2" />{filing.dueDate} (4 days left!)</div></TableBodyCell>
 	    <TableBodyCell >
               <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
                 {#if filing.status === 'Completed'}

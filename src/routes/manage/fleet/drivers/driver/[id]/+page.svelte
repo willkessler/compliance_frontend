@@ -12,6 +12,8 @@
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
+ import { drivers, getDriverById } from '$lib/data/driverData';
+ import { vehicles, getVehicleById } from '$lib/data/vehicleData';
 
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
@@ -37,26 +39,12 @@
     formattedDate = formatDate(dueDate);
   });
 
- // Table data
- $: id = parseInt($page.params.id); // get the page id from the url
-
- let driver = {
-   id: $page.params.id,
-   license: '6NDW861',
-   licenseExpiration: '02/31/2025',
-   ssn: '616-55-5555',
-   totalDriveTime: '265d 15h 24m',
-   mileage: '255,354',
-   driver: 'Thomas Payne',
-   vehicle: 'Truck #4396',
-   date: 'Aug 31, 2024',
-   description: 'Thomas left on 7/29/22 and came back 01/01/24.',
- };
-
- let drivers = [
-   { id: 1922, name: 'Thomas Payne', startDate: 'Jan 1, 2024', endDate: 'Ongoing' },
-   { id: 1923, name: 'Mark Ingram', startDate: 'Jan 1, 2023', endDate: 'Dec 31, 2023' },
- ];
+ let driverId, driver;
+ $: if ($page.params.id) {
+   driverId = parseInt($page.params.id);
+   driver = getDriverById(driverId);
+   console.log(`got driver ${driver} for ${driverId}` );
+ }
 
  let certifications = [
    { item: 'DOT registration', expiry: 'Sep 15, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
@@ -73,17 +61,6 @@
    { item: 'Drug and alcohol test', expiry: 'May 29, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
    { item: 'Clearinghouse registration', expiry: 'August 7, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
  ];
-
-
- function getDriverById (id) {
-   for (let driver of drivers) {
-     console.log(id, driver.id);
-     if(driver.id === parseInt(id)) {
-       return driver;
-     }
-   }
-   return null;
- }
  
  function getStatusColor(status) {
    switch (status.toLowerCase()) {
@@ -105,7 +82,7 @@
 
 <IncidentLayout>
   <div>
-    <h1 class="text-3xl font-bold mb-2">{getDriverById(id).name}</h1>
+    <h1 class="text-3xl font-bold mb-2">{driver.name}</h1>
   </div>
 
 
@@ -197,17 +174,17 @@
       <div class="text-gray-800"> {driver.totalDriveTime}</div>
       
       <div class="font-semibold">Mileage</div>
-      <div class="text-gray-800">{driver.mileage}</div>
+      <div class="text-gray-800">{driver.totalMiles}</div>
       
       <div class="font-semibold">Vehicle</div>
       <div>
-        <Badge class="text-gray-800 bg-gray-100"><TruckSolid />{driver.vehicle}</Badge>
+        <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
       </div>
     </div>
 
     <div class="mt-6">Description and notes</div>
       <Card class="mt-0 divide-y shadow-none">
-          <p class="text-md">{driver.description}</p>
+          <p class="text-md">{driver.notes}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
             <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
             <div class="cursor-pointer"><FileImageSolid /></div>

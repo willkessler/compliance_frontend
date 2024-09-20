@@ -185,7 +185,7 @@
   }
 
  let actions = [
-   { id: 1, name: "Call Tom's repair shop",    totalMiles: '8,7812', description: 'Schedule a pickup time', eventDate: 'Aug 31, 2024', dueDate: 'Sep 14, 2024', type: 'Call', status: 'Open'},
+   { id: 1, name: "Call Tom's repair shop",    totalMiles: '8,711', description: 'Schedule a pickup time', eventDate: 'Aug 31, 2024', dueDate: 'Sep 14, 2024', type: 'Call', status: 'Open'},
    { id: 2, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Aug 31, 2024', dueDate: 'Sep 21, 2024', type: 'Onsite', status: 'Open'},
    { id: 3, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 15, 2024', dueDate: 'Sep 31, 2024', type: 'Email', status: 'Closed'},
    { id: 4, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 17, 2024', dueDate: 'Nov 1, 2024', type: 'Call', status: 'Closed'},

@@ -10,6 +10,10 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
 
+ import { incidents, getIncidentById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/incidentData';
+ import { drivers, getDriverById } from '$lib/data/driverData';
+ import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
+
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
 
@@ -37,39 +41,31 @@
  // Table data
  $: id = parseInt($page.params.id); // get the page id from the url
 
+ let incidentId, incident, vehicle, driver;
+
+ $: if ($page.params.id) {
+   incidentId = parseInt($page.params.id);
+   //console.log(`incidentId: ${incidentId}`);
+   incident = getIncidentById(incidentId);
+   // console.log(`incident: ${JSON.stringify(incident)}`);
+   vehicle = getVehicleById(incident.vehicleId);
+   // console.log(`vehicle: ${JSON.stringify(vehicle)}`);
+   driver =  getVehicleDriver(vehicle.id);
+   //console.log(`got driver ${driver.id} for incident ${incident.id}` );
+ }
+
+/*
  let incident = {
    id: $page.params.id,
    title: `Payment refund to #00910`,
    date: 'Jul 31, 2024',
    level: 'State',
-   driver: 'Thomas Pascal',
-   vehicle: 'Truck #4396',
+   driverId: 1922,
+   vehicleId: 4396,
    dueDate: 'Aug 31, 2024',
    description: 'We are working with Tom\'s repair shop here.  Mark is the point of contact and expect to complete the repair on time. Location details below...'
  };
-
- const incidents = [
-   { id: 1292, title: 'Tire rotation for Truck #2348 CAW' },
-   { id: 292, title: 'Payment refund to #00910' },
-   { id: 33828, title: 'Broken taillight for Truck #4396' },
-   { id: 48482, title: 'Payment from Lana Byrd' },
-   { id: 59382, title: 'Payment from Jese Leos' },
-   { id: 68292, title: 'Payment from THEMSBERG LLC' },
-   { id: 79182, title: 'Payment from THEMSBERG LLC' },
-   { id: 81829, title: 'Payment from THEMSBERG LLC' },
-   { id: 99928, title: 'Payment from THEMSBERG LLC' },
-   { id: 10023, title: 'Payment from THEMSBERG LLC' },
- ];
-
-
- function getIncidentById (id) {
-   for (let incident of incidents) {
-     if(incident.id === id) {
-       return incident;
-     }
-   }
-   return null;
- }
+*/
 
 </script>
 
@@ -89,7 +85,7 @@
 <IncidentLayout>
   <div>
     <h1 class="text-gray-500 text-sm">Incident #{id}</h1>
-    <h1 class="text-3xl font-bold mb-2">{getIncidentById(id).title}</h1>
+    <h1 class="text-3xl font-bold mb-2">{vehicle.name}</h1>
   </div>
 
   <ActionItems environment="incident" />
@@ -101,19 +97,19 @@
   <Uploads />
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full min-w-80">
-    <div class="flex justify-between items-center mb-0 ml-2">
-      <h2 class="text-xl font-bold text-gray-500 uppercase">details</h2>
-      <p class="font-semibold text-gray-500">{incident.date}</p>
+    <div class="flex justify-between items-center mb-0">
+      <h2 class="text-xl font-bold text-gray-500 uppercase">Details</h2>
+      <p class="font-semibold text-gray-500">{incident.occurrenceDate}</p>
     </div>
     <div class="space-x-2">
-      <Badge class="py-1 cursor-pointer"  color="green">Maintenance</Badge>
-      <Badge class="py-1 cursor-pointer" color="red">Critical</Badge>
-      <Badge class="py-1 cursor-pointer" color="blue">Open</Badge>
+      <Badge class="py-1 cursor-pointer bg-{getTypeColor(incident.type)}-200 text-gray-700">{incident.type}</Badge>
+      <Badge class="py-1 cursor-pointer bg-{getPriorityColor(incident.priority)}-200 text-gray-700">{incident.priority}</Badge>
+      <Badge class="py-1 cursor-pointer bg-{getStatusColor(incident.status)}-200 text-gray-700">{incident.status}</Badge>
     </div>
     <div>
       <p class="mb-2 cursor-pointer"><span class="font-semibold">Level</span><span class="ml-2 text-gray-800"> {incident.level}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"> <UsersOutline />{incident.driver}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />{incident.vehicle}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"> <UsersOutline />{driver.name}</Badge></p>
+      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></p>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Due date</div>
         <div class="flex items-center">
