@@ -109,12 +109,26 @@
       <Badge class="py-1 cursor-pointer bg-{getPriorityColor(incident.priority)}-200 text-gray-700">{incident.priority}</Badge>
       <Badge class="py-1 cursor-pointer bg-{getStatusColor(incident.status)}-200 text-gray-700">{incident.status}</Badge>
     </div>
+    <div class="grid grid-cols-2 gap-y-2 gap-x-4">
+      <div class="font-semibold">Level</div>
+      <div>{incident.level}</div>
+    </div>
+    <div class="grid grid-cols-2 gap-y-2">
+      <div class="font-semibold">Driver</div>
+      <div>
+        <Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge>
+      </div>
+    </div>
     <div>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Level</span><span class="ml-2 text-gray-800"> {incident.level}</span></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Driver</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"> <UsersOutline />{driver.name}</Badge></p>
-      <p class="mb-2 cursor-pointer"><span class="font-semibold">Vehicle</span><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></p>
-      <div class="flex justify-start items-middle mb-0">
-        <div class="mt-4 font-semibold text-nowrap mr-2">Due date</div>
+    <div class="grid grid-cols-2 gap-y-2">
+      <div class="font-semibold">Vehicle</div>
+      <div>
+        <Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge>
+      </div>
+    </div>
+    <div>
+    <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+      <div class="font-semibold">Due Date</div>
         <div class="flex items-center">
           <div class="relative inline-block">
             <input
@@ -132,6 +146,8 @@
           </div>
         </div>
       </div>
+    </div>
+
     <div>
       <div class="mt-6">Description and notes</div>
       <div class="p-4 mt-2 divide-y shadow-none border rounded">
