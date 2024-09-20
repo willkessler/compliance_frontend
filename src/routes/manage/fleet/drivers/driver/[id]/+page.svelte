@@ -186,29 +186,42 @@
     <div class="flex justify-between items-center mb-0">
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Basic information</h2>
     </div>
-    <div class="grid grid-cols-2 gap-y-2 gap-x-4">
-      <div class="font-semibold">License</div>
-      <div>{driver.license}</div>
-
-      <div class="font-semibold">Lic. Expiration</div>
-      <div class="text-gray-800"> {driver.licenseExpiration}</div>
-      
-      <div class="font-semibold">SSN/EIN</div>
-      <div class="text-gray-800 "> {driver.ssn}</div>
-      
-      <div class="font-semibold">Total Drive time</div>
-      <div class="text-gray-800"> {driver.totalDriveTime}</div>
-      
-      <div class="font-semibold">Mileage</div>
-      <div class="text-gray-800">{driver.totalMiles}</div>
-      
-      <div class="font-semibold">Vehicle</div>
-      <div>
-        <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+    <Card class="shadow-none">
+      <div class="relative pt-[95%] overflow-hidden">
+        <img 
+          src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
+          alt="driver.name"
+          class="absolute inset-0 w-full h-full object-cover object-top"
+        />
       </div>
-    </div>
+      <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+        <div class="font-semibold">Name</div>
+        <div class="text-gray-800 font-bold">
+          {driver.name}
+        </div>
+        <div class="font-semibold">License</div>
+        <div class="text-gray-800">{driver.license}</div>
 
-    <div class="mt-6">Description and notes</div>
+        <div class="font-semibold">Lic. Expiration</div>
+        <div class="text-gray-800"> {driver.licenseExpiration}</div>
+        
+        <div class="font-semibold">SSN/EIN</div>
+        <div class="text-gray-800 "> {driver.ssn}</div>
+        
+        <div class="font-semibold">Total Drive time</div>
+        <div class="text-gray-800"> {driver.totalDriveTime}</div>
+        
+        <div class="font-semibold">Mileage</div>
+        <div class="text-gray-800">{driver.totalMiles}</div>
+        
+        <div class="font-semibold">Vehicle</div>
+        <div>
+          <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+        </div>
+      </div>
+    </Card>
+
+    <div class="mt-6">Notes</div>
       <Card class="mt-0 divide-y shadow-none">
           <p class="text-md">{driver.notes}</p>
           <div class="flex justify-end items-center mt-2 pt-2 ml-2">
