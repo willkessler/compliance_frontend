@@ -171,7 +171,13 @@
               <TableBodyRow>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.type}</TableBodyCell>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.openItems}</TableBodyCell>
-                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large font-bold text-red-600">{(item.criticalItems > 0 ? item.criticalItems : ' ')}</TableBodyCell>
+                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large font-bold text-red-600">
+                  {#if (item.criticalItems > 0) }
+                    <a href={item.url}>
+                      <Badge class="p-2 uppercase cursor-pointer">{item.criticalItems} item{item.criticalItems > 1 ? 's' : ''} to review</Badge>
+                    </a>
+                  {/if}
+                </TableBodyCell>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-medium">
                   <Button href={item.url} color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
                 </TableBodyCell>
