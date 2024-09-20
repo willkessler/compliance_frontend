@@ -156,7 +156,7 @@ export const drivers = [
 
 export function getDriverById (id) {
   for (let driver of drivers) {
-    console.log(`id: ${id}, driver.id: ${driver.id}`);
+    //console.log(`id: ${id}, driver.id: ${driver.id}`);
     if(driver.id === parseInt(id)) {
       return driver;
     }

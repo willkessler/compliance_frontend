@@ -1,6 +1,6 @@
 <script lang="ts">
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
-        Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+        Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Tooltip } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid, 
         TruckSolid, 
         UsersOutline,
@@ -43,23 +43,23 @@
  $: if ($page.params.id) {
    driverId = parseInt($page.params.id);
    driver = getDriverById(driverId);
-   console.log(`got driver ${driver} for ${driverId}` );
+   //console.log(`got driver ${driver} for ${driverId}` );
  }
 
  let certifications = [
-   { item: 'DOT registration', expiry: 'Sep 15, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
-   { item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
-   { item: 'CDL', expiry: 'Sep 17, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
-   { item: 'Drug and alcohol test', expiry: 'Sep 19, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
-   { item: 'Clearinghouse registration', expiry: 'Jan 31, 2025', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
+   { id: 1, item: 'DOT registration', expiry: 'Sep 15, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
+   { id: 2, item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
+   { id: 3, item: 'CDL', expiry: 'Sep 17, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
+   { id: 4, item: 'Drug and alcohol test', expiry: 'Sep 19, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
+   { id: 5, item: 'Clearinghouse registration', expiry: 'Jan 31, 2025', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
  ];
  
  let historyItems = [
-   { item: 'Violation: tire wear', expiry: 'Jan 11, 2023', status: 'Open', action: 'See details', icon: ExclamationCircleSolid },
-   { item: 'CDL', expiry: 'Jun 3, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { item: 'DOT medical card', expiry: 'May 14, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { item: 'Drug and alcohol test', expiry: 'May 29, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { item: 'Clearinghouse registration', expiry: 'August 7, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { id: 1, item: 'Violation: tire wear', expiry: 'Jan 11, 2023', status: 'Open', action: 'See details', icon: ExclamationCircleSolid },
+   { id: 2, item: 'CDL', expiry: 'Jun 3, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { id: 3, item: 'DOT medical card', expiry: 'May 14, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { id: 4, item: 'Drug and alcohol test', expiry: 'May 29, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
+   { id: 5, item: 'Clearinghouse registration', expiry: 'August 7, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
  ];
  
  function getStatusColor(status) {
@@ -73,6 +73,22 @@
        return 'blue';
      case 'blocked':
        return 'red';
+     default:
+       return 'gray';
+   }
+ }
+
+ function getToolTipText(status) {
+   switch (status.toLowerCase()) {
+     case 'clear':
+     case 'completed':
+     case 'closed':
+       return 'All good here!';
+     case 'open':
+     case 'in progress':
+       return 'Check details to learn more';
+     case 'blocked':
+       return 'Pending signed paperwork to be turned into to the company by this driver.';
      default:
        return 'gray';
    }
@@ -103,12 +119,17 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.item}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.expiry}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-              <Badge large rounded color={getStatusColor(certification.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
+              <Badge 
+                large
+                rounded 
+                id="status-{certification.id}"
+                color={getStatusColor(certification.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
                 {#if certification.icon !== undefined}
                   <svelte:component this={certification.icon} class=" text-{getStatusColor(certification.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 {/if}
                 {certification.status}
               </Badge>
+              <Tooltip placement="bottom" triggeredBy="#status-{certification.id}">{getToolTipText(certification.status)}</Tooltip>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
               <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">
@@ -138,12 +159,17 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.item}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.expiry}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-              <Badge large rounded color={getStatusColor(historyItem.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
+              <Badge 
+                large
+                rounded
+                id="history-{historyItem.id}"
+                color={getStatusColor(historyItem.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
                 {#if historyItem.icon !== undefined}
                   <svelte:component this={historyItem.icon} class=" text-{getStatusColor(historyItem.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 {/if}
                 {historyItem.status}
               </Badge>
+              <Tooltip placement="bottom" triggeredBy="#history-{historyItem.id}">{getToolTipText(historyItem.status)}</Tooltip>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
               <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">

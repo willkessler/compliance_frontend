@@ -7,7 +7,7 @@ export function getActionItems (environment, id) {
     incidentId = parseInt(id);
   } else {
     incidentId = getIncidentIdForVehicleId(id);
-    console.log(`got incidentId ${incidentId}`);
+    //console.log(`got incidentId ${incidentId}`);
   }
 
   for (let action of actions) {
@@ -37,7 +37,7 @@ export function getStatusColor(status) {
  }
 
 export function getTypeColor(type, context) {
-  console.log(`type ${type} context ${context}`);
+  //console.log(`type ${type} context ${context}`);
    if (context == 'bg') {
      switch (type.toLowerCase()) {
        case 'call':

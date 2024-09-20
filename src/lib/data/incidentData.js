@@ -13,7 +13,7 @@ export function getIncidentById (id) {
 export function getIncidentIdForVehicleId (vehicleId) {
   for (let incident of incidents) {
     if(incident.vehicleId === parseInt(vehicleId)) {
-      console.log(`returning ${incident.id}`);
+      //console.log(`returning ${incident.id}`);
       return incident.id;
     }
   }
