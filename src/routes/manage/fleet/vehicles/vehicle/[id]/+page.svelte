@@ -51,16 +51,6 @@
    console.log(`got driver ${driver.id} for vehicle ${vehicle.id}` );
  }
 
- let asset = {
-   id: $page.params.id,
-   license: '6NDW861',
-   vin: '2345034948...',
-   driver: 'Thomas Payne',
-   vehicle: 'Truck #4396',
-   date: 'Aug 31, 2024',
-   description: 'This truck is a diesel vehicle that Eric puchased second-hand.',
- };
-
 </script>
 
 <style>
@@ -81,7 +71,10 @@
     <h1 class="text-3xl font-bold mb-2">Vehicle #{getVehicleById(id).name}</h1>
   </div>
 
-  <ActionItems environment="vehicle" />
+  <ActionItems 
+    environment="vehicle" 
+    vehicleId={vehicle.id}
+  />
 
   <div class="w-full mt-10">
     <hr />
@@ -138,10 +131,14 @@
         <TruckSolid class="inline-block mr-1" />
         Truck #{vehicle.id}
       </Badge>
+      <div class="font-semibold mt-2">Current Location</div>
+      <div class="cursor-pointer mt-2 text-md text-nowrap">
+        <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>
+      </div>
       <div class="flex justify-start items-middle mb-0">
         <div class="mt-4 font-semibold text-nowrap mr-2">Registration</div>
       </div>
-      <div>
+      <div class="mt-3">
         <div class="flex items-center">
           <div class="relative inline-block">
             <input

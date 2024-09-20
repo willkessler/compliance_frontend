@@ -1,9 +1,20 @@
 import { TruckSolid, FileLinesOutline } from 'flowbite-svelte-icons';
 
+// needs refactor to use id's as keyss vs stupid loop lookups, dumb AI code
 export function getIncidentById (id) {
   for (let incident of incidents) {
     if(incident.id === id) {
       return incident;
+    }
+  }
+  return null;
+}
+
+export function getIncidentIdForVehicleId (vehicleId) {
+  for (let incident of incidents) {
+    if(incident.vehicleId === parseInt(vehicleId)) {
+      console.log(`returning ${incident.id}`);
+      return incident.id;
     }
   }
   return null;

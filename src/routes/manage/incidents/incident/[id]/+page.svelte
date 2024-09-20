@@ -88,7 +88,10 @@
     <h1 class="text-3xl font-bold mb-2">{vehicle.name}</h1>
   </div>
 
-  <ActionItems environment="incident" />
+  <ActionItems 
+    environment="incident"
+    incidentId={incident.id}
+  />
 
   <div class="w-full mt-24">
     <hr />

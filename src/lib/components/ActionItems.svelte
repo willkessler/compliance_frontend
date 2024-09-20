@@ -5,12 +5,15 @@
  import { CirclePlusSolid, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
+ import { actions, getActionItems, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
 
  //
  // Modal related
  //
 
- export let environment; // where the modal is being used
+ export let environment; // where the modal is being used, either 'incident' or 'vehicle'
+ export let incidentId; // which incident id was passed in
+ export let vehicleId; // which incident id was passed in
 
  let defaultModal = false; // whether the modal is visible
  let actionType = '';
@@ -22,7 +25,6 @@
 
  let selectedStatus = null;
  let selectedStatusType = null;
- 
  
  let uploadedFiles = [];
 
@@ -83,50 +85,6 @@
     console.log('Selected action type:', selectedStatusTypeValue);
   }
 
- function getStatusColor(status) {
-   switch (status.toLowerCase()) {
-     case 'clear':
-     case 'completed':
-       return 'green';
-     case 'open':
-     case 'in progress':
-       return 'yellow';
-     case 'closed':
-       return 'green';
-     case 'blocked':
-       return 'red';
-     default:
-       return 'gray';
-   }
- }
-
- function getTypeColor(type, context) {
-   if (context == 'bg') {
-     switch (type.toLowerCase()) {
-       case 'call':
-         return '300';
-       case 'email':
-         return '400';
-       case 'onsite':
-         return '500';
-       default:
-         return '600';
-     }
-   } else { // text
-     switch (type.toLowerCase()) {
-       case 'call':
-         return '600';
-       case 'email':
-         return '100';
-       case 'onsite':
-         return '200';
-       default:
-         return '800';
-     }
-   }
-   
- }
-
   function updateAction() {
     // Handle action update logic here
     console.log('Updating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
@@ -183,15 +141,6 @@
   function pageChange(event) {
     currentPage = event.detail;
   }
-
- let actions = [
-   { id: 1, name: "Call Tom's repair shop",    totalMiles: '8,711', description: 'Schedule a pickup time', eventDate: 'Aug 31, 2024', dueDate: 'Sep 14, 2024', type: 'Call', status: 'Open'},
-   { id: 2, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Aug 31, 2024', dueDate: 'Sep 21, 2024', type: 'Onsite', status: 'Open'},
-   { id: 3, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 15, 2024', dueDate: 'Sep 31, 2024', type: 'Email', status: 'Closed'},
-   { id: 4, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 17, 2024', dueDate: 'Nov 1, 2024', type: 'Call', status: 'Closed'},
-   { id: 5, name: "Payment from... ",          totalMiles: '8,748', description: 'Payment from ...', eventDate: 'Sep 19, 2024', dueDate: 'Dec 1, 2024', type: 'Call', status: 'Closed'},
- ];
-
  
  // date picker junk
  let dueDate = new Date('2024-08-31');
@@ -243,7 +192,8 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each actions as action}
+        {environment}
+        {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
           <TableBodyRow>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
@@ -272,7 +222,7 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each actions as action}
+        {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
           <TableBodyRow>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.eventDate}</TableBodyCell>
