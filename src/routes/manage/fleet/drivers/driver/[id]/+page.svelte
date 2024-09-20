@@ -95,6 +95,22 @@
    }
  }
 
+ function getDriverStatus() {
+   const driverStatuses = [
+     'Driving',
+     'Available',
+     'Out of service',
+     'Off duty',
+     'Unloading',
+     'At rest stop',
+     'Other',
+   ];
+   const now = new Date();
+   const minute = now.getMinutes();
+   const choice = parseInt(minute % driverStatuses.length);
+   return driverStatuses[choice];     
+ }
+ 
 </script>
 
 <IncidentLayout>
@@ -186,7 +202,8 @@
   <Uploads 
     previouslyUploadedFiles={[
                             { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
-                            { filename: 'CDL (pdf)', date: 'Feb 12, 2024' }
+                            { filename: 'CDL (pdf)', date: 'Feb 12, 2024' },
+                            { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' }
                             ]}
   />
 
@@ -217,7 +234,7 @@
         <div class="text-gray-800"> {driver.licenseExpiration}</div>
         
         <div class="font-semibold">SSN/EIN</div>
-        <div class="text-gray-800 "> {driver.ssn}</div>
+        <div class="text-gray-800 ">{driver.ssn}</div>
         
         <div class="font-semibold">Total Drive time</div>
         <div class="text-gray-800"> {driver.totalDriveTime}</div>
@@ -231,6 +248,10 @@
             <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
           </a>
         </div>
+
+        <div class="font-semibold">Live activity</div>
+        <div class="text-gray-800 italic">{getDriverStatus()}</div>
+
       </div>
     </Card>
 
@@ -248,4 +269,3 @@
   </div>
   
 </IncidentLayout>
-
