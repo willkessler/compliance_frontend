@@ -13,11 +13,11 @@
  import ChatBot from  '$lib/components/ChatBot.svelte';
 
  const actionItems = [
-   { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
-   { type: "State Filings", openItems: 2, url: '/manage/filings/state' },
-   { type: "Vehicles", openItems: 8, url: '/manage/fleet/drivers' },
-   { type: "Drivers", openItems: 13, url: '/manage/fleet/vehicles' },
-   { type: "Connections", openItems: 1, url: '/manage/integrations' },
+   { type: "Federal Filings", openItems: 3, criticalItems:2, url: '/manage/filings/federal' },
+   { type: "State Filings", openItems: 2, criticalItems:1, url: '/manage/filings/state' },
+   { type: "Vehicles", openItems: 8, criticalItems:0, url: '/manage/fleet/drivers' },
+   { type: "Drivers", openItems: 13, criticalItems:0, url: '/manage/fleet/vehicles' },
+   { type: "Connections", openItems: 1, criticalItems:0, url: '/manage/integrations' },
  ];
 
  interface NewsItem {
@@ -163,6 +163,7 @@
           <TableHead>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Open items</TableHeadCell>
+            <TableHeadCell>Critical items</TableHeadCell>
             <TableHeadCell>Action</TableHeadCell>
           </TableHead>
           <TableBody class="bg-white divide-y divide-gray-200">
@@ -170,6 +171,7 @@
               <TableBodyRow>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.type}</TableBodyCell>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.openItems}</TableBodyCell>
+                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large font-bold text-red-600">{(item.criticalItems > 0 ? item.criticalItems : ' ')}</TableBodyCell>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-medium">
                   <Button href={item.url} color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
                 </TableBodyCell>

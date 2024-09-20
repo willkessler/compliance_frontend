@@ -16,18 +16,11 @@
 
   const apps: App[] = [
     {
-      name: "California BAR CTP Integration",
-      logo: "bar.webp",
-      description: "Streamline smog testing and reporting for government vehicles in California",
-      tags: ["NEWLY ADDED", "COMPLIANCE"],
-      categories: ["Compliance"]
-    },
-    {
-      name: "RyderConnect eDVIR",
-      logo: "RyderConnect.webp",
-      description: "Sync defects and repairs with Ryder to stay compliant and maximize uptime.",
+      name: "LogRock",
+      logo: "logrock.webp",
+      description: "Connect your Samsara and FMCSA data to find and resolve compliance risks before they occur.",
       tags: ["MAINTENANCE", "COMPLIANCE"],
-      categories: ["Compliance", "Maintenance"]
+      categories: ["Compliance"]
     },
     {
       name: "Vusion",
@@ -37,11 +30,11 @@
       categories: ["Compliance", "Fuel Management"]
     },
     {
-      name: "Per Diem Plus",
-      logo: "PDP_logo.webp",
-      description: "Seamless integration of Samsara ELD and Per Diem Plus Fleets software.",
+      name: "RyderConnect eDVIR",
+      logo: "RyderConnect.webp",
+      description: "Sync defects and repairs with Ryder to stay compliant and maximize uptime.",
       tags: ["MAINTENANCE", "COMPLIANCE"],
-      categories: ["Maintenance"]
+      categories: ["Compliance", "Maintenance"]
     },
     {
       name: "InfoStream",
@@ -51,6 +44,13 @@
       categories: ["Safety & Coaching", "Compliance"]
     },
     {
+      name: "Per Diem Plus",
+      logo: "PDP_logo.webp",
+      description: "Seamless integration of Samsara ELD and Per Diem Plus Fleets software.",
+      tags: ["MAINTENANCE", "COMPLIANCE"],
+      categories: ["Maintenance"]
+    },
+    {
       name: "ProMiles",
       logo: "Frame-4.webp",
       description: "Simplify your fuel tax reporting with ProMiles.",
@@ -58,10 +58,10 @@
       categories: ["Fuel Management", "Compliance"]
     },
     {
-      name: "LogRock",
-      logo: "logrock.webp",
-      description: "Connect your Samsara and FMCSA data to find and resolve compliance risks before they occur.",
-      tags: ["MAINTENANCE", "COMPLIANCE"],
+      name: "California BAR CTP Integration",
+      logo: "bar.webp",
+      description: "Streamline smog testing and reporting for government vehicles in California",
+      tags: ["NEWLY ADDED", "COMPLIANCE"],
       categories: ["Compliance"]
     },
   ];

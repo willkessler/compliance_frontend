@@ -5,13 +5,13 @@
  import { Card,  CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
  import { DownloadOutline } from 'flowbite-svelte-icons';
- import { CheckCircleSolid, ExclamationCircleSolid } from 'flowbite-svelte-icons';
+ import { CheckCircleSolid, ExclamationCircleSolid, BellActiveSolid } from 'flowbite-svelte-icons';
 
   const federalFilings = [
-  { name: "Unified Carrier Registration (UCR)", dueDate: "Jan 31, 2025", status: "Incomplete" },
-  { name: "MCS-150", dueDate: "Jan 12, 2024", status: "Review details" },
-  { name: "BOC-3", dueDate: "Apr 9, 2024", status: "Review details" },
-  { name: "US DOT renewal", dueDate: "March 13, 2024", status: "Completed" },
+    { name: "Unified Carrier Registration (UCR)", dueDate: "Sep 24, 2024", status: "Incomplete" },
+    { name: "BOC-3", dueDate: "Sep 15, 2024", status: "Review details" },
+    { name: "MCS-150", dueDate: "Sep 9, 2025", status: "Completed" },
+    { name: "US DOT renewal", dueDate: "Oct 13, 2024", status: "Completed" },
   ];
 
   const historicalFilings = [
@@ -27,6 +27,36 @@
    );
  }
 
+ function displayDueDate(filing: { dueDate: string | Date }): { text: string; color: string } {
+   const dueDate = new Date(filing.dueDate);
+   const now = new Date();
+   const differenceInDays = Math.floor((dueDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
+   const formattedDate = dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+   console.log(`Due date: ${formattedDate}, Difference in days: ${differenceInDays}`);
+
+   if (differenceInDays < 0) {
+     console.log("Returning: red (late)");
+     return {
+       text: `${Math.abs(differenceInDays)} days late`,
+       color: 'red',
+       show: true,
+     };
+   } else if (differenceInDays <= 14) {
+     console.log("Returning: red (within 14 days)");
+     return {
+       text: `${formattedDate} (${differenceInDays} days left)`,
+       color: 'yellow',
+       show: true
+     };
+   } else {
+     console.log("Returning: black (more than 14 days)");
+     return {
+       show: false,
+     };
+   }
+   
+}
 </script>
 
 
@@ -43,15 +73,27 @@
       <TableHead class="bg-gray-50 whitespace-nowrap">
 	<TableHeadCell>Filing name</TableHeadCell>
 	<TableHeadCell>Due date</TableHeadCell>
-	<TableHeadCell>Priority</TableHeadCell>
+	<TableHeadCell>Urgency</TableHeadCell>
 	<TableHeadCell >Status</TableHeadCell>
+	<TableHeadCell >Take Action</TableHeadCell>
       </TableHead>
       <TableBody>
 	{#each federalFilings as filing}
 	  <TableBodyRow>
 	    <TableBodyCell>{filing.name}</TableBodyCell>
 	    <TableBodyCell>{filing.dueDate}</TableBodyCell>
-	    <TableBodyCell><div class="flex text-red-500 font-bold"><ExclamationCircleSolid class="text-red-400 mr-2" />{filing.dueDate} (4 days left!)</div></TableBodyCell>
+	    <TableBodyCell>
+              {#if displayDueDate(filing).show}
+                <div class="flex font-bold text-{displayDueDate(filing).color}-400">
+                  <div>
+                    <BellActiveSolid class="mr-2 text-{displayDueDate(filing).color}-400" />
+                  </div>
+                  <div>
+                    {displayDueDate(filing).text}
+                  </div>
+                </div>
+              {/if}
+            </TableBodyCell>
 	    <TableBodyCell >
               <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
                 {#if filing.status === 'Completed'}
@@ -62,6 +104,11 @@
 	        {filing.status}
 	      </Badge>
             </TableBodyCell>
+
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <Button href="/manage/filings/federal" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+            </TableBodyCell>
+
           </TableBodyRow>
 	{/each}
       </TableBody>
