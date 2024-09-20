@@ -7,6 +7,7 @@
         FloppyDiskOutline,
         ExclamationCircleSolid,
         ClockSolid,
+        PenOutline,
         ThumbsUpSolid,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
@@ -189,10 +190,13 @@
     <Card class="shadow-none">
       <div class="relative pt-[95%] overflow-hidden">
         <img 
-          src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
-          alt="driver.name"
-          class="absolute inset-0 w-full h-full object-cover object-top"
+            src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
+            alt="driver.name"
+          class="absolute inset-0 w-full h-full object-cover object-top border"
         />
+        <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
+          <PenOutline class="w-4 h-4 text-gray-700" />
+        </div>
       </div>
       <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
         <div class="font-semibold">Name</div>

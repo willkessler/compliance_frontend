@@ -33,6 +33,7 @@ export const vehicles = [
     city: 'San Anselmo',
     state: 'CA',
     description: 'This truck is a diesel vehicle that Eric puchased second-hand.',
+    photo: '360_F_653378267_CEGxV4MvGGTTRpugGVgGzGJij2v0g0YF.jpg',
   },
   {
     id: 4385,
@@ -47,6 +48,7 @@ export const vehicles = [
     city: 'San Leandro',
     state: 'CA',
     description: 'Truck bought new. Ready for rehaul in 2025.',
+    photo: 'basic-white-modern-semi-trailer-truck-closeup-shot-135825237.webp',
   },
   {
     id: 2348,
@@ -61,6 +63,7 @@ export const vehicles = [
     city: 'Austin',
     state: 'TX',
     description: 'Daimler-Benz warranty issue.',
+    photo: 'basic-white-modern-semi-trailer-truck-front-view-basic-white-modern-semi-trailer-truck-front-view-135825234.webp',
   },
   {
     id: 6354,
@@ -75,6 +78,7 @@ export const vehicles = [
     city: 'Dallas',
     state: 'TX',
     description: 'Cherry red paint, attracts CHP. Can we get this redone in white for crying out loud!',
+    photo: 'new-red-semi-truck-ready-to-go-to-work-CPPEAA.jpg',
   },  
   {
     id: 5322,
@@ -89,6 +93,7 @@ export const vehicles = [
     city: 'Los Angeles',
     state: 'CA',
     description: 'Built Ford tough. Dismal mpg.',
+    photo: 'red-truck-2986654.webp',
   },  
   {
     id: 5323,
@@ -103,6 +108,7 @@ export const vehicles = [
     city: 'San Diego',
     state: 'CA',
     description: 'Model A. My grandma drove this truck. Still chugging along, at 2mpg.',
+    photo: 'semitrailer-truck-isolated-front-view-260nw-1490601317.webp',
   },  
   {
     id: 5331,
