@@ -116,14 +116,14 @@
     <div class="grid grid-cols-2 gap-y-2">
       <div class="font-semibold">Driver</div>
       <div>
-        <Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge>
+        <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
       </div>
     </div>
     <div>
     <div class="grid grid-cols-2 gap-y-2">
       <div class="font-semibold">Vehicle</div>
       <div>
-        <Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge>
+        <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
       </div>
     </div>
     <div>

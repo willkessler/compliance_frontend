@@ -134,16 +134,19 @@
         <div title="Full VIN: 2345034948345890549">{vehicle.vin}</div>
         
         <div class="font-semibold">Driver</div>
-        <Badge class="bg-gray-100 text-gray-800">
-          <UsersOutline class="inline-block mr-1" />
-          {driver.name}
-        </Badge>
-        
+        <a href="/manage/fleet/drivers/driver/{driver.id}">
+          <Badge class="bg-gray-100 text-gray-800">
+            <UsersOutline class="inline-block mr-1" />
+            {driver.name}
+          </Badge>
+        </a>
         <div class="font-semibold">Vehicle</div>
-        <Badge class="bg-gray-100 text-gray-800">
-          <TruckSolid class="inline-block mr-1" />
-          Truck #{vehicle.id}
-        </Badge>
+        <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}">
+          <Badge class="bg-gray-100 text-gray-800">
+            <TruckSolid class="inline-block mr-1" />
+            Truck #{vehicle.id}
+          </Badge>
+        </a>
         <div class="font-semibold mt-2">Current Location</div>
         <div class="cursor-pointer mt-2 text-md text-nowrap">
           <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>

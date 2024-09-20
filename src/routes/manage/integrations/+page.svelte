@@ -44,6 +44,20 @@
       categories: ["Safety & Coaching", "Compliance"]
     },
     {
+      name: "McLeod LoadMaster",
+      logo: "mcleod.webp",
+      description: "Enrich your transportation management with telematics data from Samsara and a full workflow integration.",
+      tags: ["COMPLIANCE"],
+      categories: ["Telematics", "Compliance"],
+    },
+    {
+      name: "Fullbay Connect",
+      logo: "Fullbay_logo.webp",
+      description: "Unlock new ways to manage your auto service business in Fullbay Connect by gaining visibility into vehicle location and diagnostics with Samsara.",
+      tags: ["COMPLIANCE", "MAINTENANCE"],
+      categories: ["Maintenance",  "Compliance"],
+    },
+    {
       name: "Per Diem Plus",
       logo: "PDP_logo.webp",
       description: "Seamless integration of Samsara ELD and Per Diem Plus Fleets software.",
@@ -93,7 +107,7 @@
   </p>
 
   <div class="flex mb-8">
-    <div class="relative flex-grow mr-4">
+   <div class="relative flex-grow mr-4">
       <Search class="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
       <Input type="text" placeholder="Search" class="pl-10" bind:value={searchQuery} />
     </div>

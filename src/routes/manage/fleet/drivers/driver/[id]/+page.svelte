@@ -220,7 +220,9 @@
         
         <div class="font-semibold">Vehicle</div>
         <div>
-          <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+          <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
+            <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+          </a>
         </div>
       </div>
     </Card>
