@@ -183,6 +183,13 @@
     </Table>
   </div>
 
+  <Uploads 
+    previouslyUploadedFiles={[
+                            { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
+                            { filename: 'CDL (pdf)', date: 'Feb 12, 2024' }
+                            ]}
+  />
+
   <div slot="right-panel" class="p-4 space-y-4 bg-white border h-full min-w-80">
     <div class="flex justify-between items-center mb-0">
       <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Basic information</h2>

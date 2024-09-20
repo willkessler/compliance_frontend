@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
  import {  Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
 
  import { FileSolid } from 'flowbite-svelte-icons';
 
- let previouslyUploadedFiles = [
+ export let previouslyUploadedFiles = [
    { filename: "Document_name_incident_report",    date: 'Aug 31, 2024'},
    { filename: "Picture_of_the_issue.jpg",         date: 'Aug 31, 2024'},
  ];
