@@ -62,13 +62,13 @@ export function getPriorityColor(priority) {
   case 'critical':
     return 'red';
   case 'high':
-    return 'yellow';
+    return 'pink';
   case 'medium':
     return 'blue';
   case 'low':
-    return 'green';
+    return 'yellow';
   default:
-    return 'green';
+    return 'gray';
   }
 }
 

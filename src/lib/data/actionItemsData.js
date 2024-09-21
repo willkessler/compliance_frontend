@@ -1,4 +1,6 @@
 import { incidents, getIncidentIdForVehicleId } from '$lib/data/incidentData';
+import { PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-icons';
+
 
 export function getActionItems (environment, id) {
   //console.log(`id ${id} environment ${environment}`);
@@ -62,6 +64,19 @@ export function getTypeColor(type, context) {
      }
    }
  }
+
+export function getTypeIcon(type) {
+  switch (type.toLowerCase()) {
+    case 'Call':
+      return PhoneSolid;
+    case 'Email':
+      return MailBoxOutline;
+    case 'Onsite':
+      return MapPinAltOutline;
+    default:
+      return null;
+  }
+}
 
 export const actions = [
   { 
