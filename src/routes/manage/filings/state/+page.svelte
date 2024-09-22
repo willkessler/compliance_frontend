@@ -41,7 +41,6 @@
      console.log("Returning: red (late)");
      return {
        text: `${Math.abs(differenceInDays)} days overdue`,
-       text: `${Math.abs(differenceInDays)} days overdue`,
        color: 'red',
        show: true,
      };

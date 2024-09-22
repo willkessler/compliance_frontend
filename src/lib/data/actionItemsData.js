@@ -67,11 +67,11 @@ export function getTypeColor(type, context) {
 
 export function getTypeIcon(type) {
   switch (type.toLowerCase()) {
-    case 'Call':
+    case 'call':
       return PhoneSolid;
-    case 'Email':
+    case 'email':
       return MailBoxOutline;
-    case 'Onsite':
+    case 'onsite':
       return MapPinAltOutline;
     default:
       return null;

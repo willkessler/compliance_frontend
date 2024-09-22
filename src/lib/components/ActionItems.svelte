@@ -199,16 +199,19 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.totalMiles}</TableBodyCell>
             <TableBodyCell>
               <Badge large rounded class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+                {#if getTypeIcon(action.type)}
+                  <svelte:component this={getTypeIcon(action.type)} class="mr-2 inline" />
+                {/if}
                 {action.type}
               </Badge>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
               <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
-                {#if action.status === 'open'}
+                {#if action.status.toLowerCase() === 'open'}
                   <CirclePlusSolid class="text-blue-500 mr-2 inline" />
-                {:else if action.status === 'hold'}
+                {:else if action.status.toLowerCase() === 'hold'}
                   <PenOutline class="text-yellow-500 mr-2 inline" />
-                {:else if action.status === 'closed'}
+                {:else if action.status.toLowerCase() === 'closed'}
                   <FileSolid class="text-green-500 mr-2 inline" />
                 {/if}
                 {action.status}
