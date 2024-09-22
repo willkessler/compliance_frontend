@@ -1,12 +1,15 @@
 <script lang="ts">
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ExclamationCircleSolid, MapPinAltSolid, ThumbsUpSolid } from 'flowbite-svelte-icons';
- import { Pagination, PaginationItem } from 'flowbite-svelte';
+ import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
 
- let sortColumn = "";
- let sortDirection = "asc";
+ let filters = [
+   { value: 'filter1', name: 'Local' },
+   { value: 'filter2', name: 'All' },
+ ];
+ let selectedFilter;
 
  function getStatusColor(status) {
    switch (status.toLowerCase()) {
@@ -56,7 +59,18 @@
 
 </script>
 
-<h1 class="text-3xl font-bold mb-6">Vehicles</h1>
+<div class="flex items-end justify-between pr-4">
+  <div>
+    <h1 class="text-3xl font-bold ">Vehicles</h1>
+  </div>
+  <div>
+    <Label>
+      Filter selections:
+      <Select class="text-xs mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
+    </Label>
+  </div>
+</div>
+
 <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
   <TableHead class="bg-gray-50 whitespace-nowrap">
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</TableHeadCell>

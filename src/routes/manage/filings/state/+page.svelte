@@ -35,19 +35,19 @@
    const differenceInDays = Math.floor((dueDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
    const formattedDate = dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-   console.log(`Due date: ${formattedDate}, Difference in days: ${differenceInDays}`);
+   //console.log(`Due date: ${formattedDate}, Difference in days: ${differenceInDays}`);
 
    if (differenceInDays < 0) {
      console.log("Returning: red (late)");
      return {
-       text: `${Math.abs(differenceInDays)} days late`,
+       text: `${Math.abs(differenceInDays)} days overdue`,
        color: 'red',
        show: true,
      };
    } else if (differenceInDays <= 14) {
      console.log("Returning: red (within 14 days)");
      return {
-       text: `${formattedDate} (${differenceInDays} days left)`,
+       text: `${differenceInDays} days remaining`,
        color: 'yellow',
        show: true
      };
@@ -73,7 +73,7 @@
       <TableHead>
 	<TableHeadCell>Filing name</TableHeadCell>
 	<TableHeadCell>Due date</TableHeadCell>
-	<TableHeadCell>Urgency</TableHeadCell>
+	<TableHeadCell>Time left</TableHeadCell>
 	<TableHeadCell>Status</TableHeadCell>
 	<TableHeadCell >Take Action</TableHeadCell>
       </TableHead>

@@ -115,7 +115,7 @@
 
 <IncidentLayout>
   <div>
-    <h1 class="text-3xl font-bold mb-2">{driver.name}</h1>
+    <h1 class="text-3xl font-bold mb-2">Driver: {driver.name}</h1>
   </div>
 
 
@@ -159,6 +159,10 @@
     </Table>
   </div>
   
+  <div class="w-full mt-10 text-gray-100">
+    <hr />
+  </div>
+
   <!-- Activity history -->
   <h1 class="text-lg font-bold mb-4 mt-6">Activity history</h1>
 
@@ -197,6 +201,10 @@
         {/each}
       </TableBody>
     </Table>
+  </div>
+
+  <div class="w-full mt-10 text-gray-100">
+    <hr />
   </div>
 
   <Uploads 
