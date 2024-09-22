@@ -2,11 +2,10 @@
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileDrop } from 'svelte-droplet';
- import { CirclePlusSolid, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid } from 'flowbite-svelte-icons';
+ import { CirclePlusSolid, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid, PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
- import { actions, getActionItems, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
-
+ import { actions, getTypeIcon, getActionItems, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
  //
  // Modal related
  //
@@ -188,6 +187,7 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action Taken</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type of action</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
       </TableHead>
@@ -199,7 +199,22 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.totalMiles}</TableBodyCell>
             <TableBodyCell>
               <Badge large rounded class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+                {#if getTypeIcon(action.type)}
+                  <svelte:component this={getTypeIcon(action.type)} class="mr-2 inline" />
+                {/if}
                 {action.type}
+              </Badge>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+              <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+                {#if action.status.toLowerCase() === 'open'}
+                  <CirclePlusSolid class="text-blue-500 mr-2 inline" />
+                {:else if action.status.toLowerCase() === 'hold'}
+                  <PenOutline class="text-yellow-500 mr-2 inline" />
+                {:else if action.status.toLowerCase() === 'closed'}
+                  <FileSolid class="text-green-500 mr-2 inline" />
+                {/if}
+                {action.status}
               </Badge>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -227,14 +242,20 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.eventDate}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.dueDate}</TableBodyCell>
             <TableBodyCell>
-              <Badge large rounded class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+              <!-- <Badge large rounded class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+                {action.type}
+              </Badge> -->
+              <Badge class="px-2 py-1.5 rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type,'text')} bg-gray-{getTypeColor(action.type, 'bg')} text-sm">
+                {#if getTypeIcon(action.type)}
+                  <svelte:component this={getTypeIcon(action.type)} class="mr-2 inline" />
+                {/if}
                 {action.type}
               </Badge>
             </TableBodyCell>
             <TableBodyCell>
-              <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+              <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded-[6px] min-w-32 text-sm">
                 {#if action.icon !== undefined}
-                  <svelte:component this={action.icon} class=" text-{getStatusColor(action.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                  <svelte:component this={getTypeIcon(action.icon)} class=" text-{getStatusColor(action.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 {/if}
                 {action.status}
               </Badge>

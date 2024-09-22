@@ -44,15 +44,15 @@
        color: 'red',
        show: true,
      };
-   } else if (differenceInDays <= 14) {
-     console.log("Returning: red (within 14 days)");
+   } else if (differenceInDays <= 30) {
+     console.log("Returning: red (within 30 days)");
      return {
-       text: `${differenceInDays} days remaining`,
+       text: `${differenceInDays} days left`,
        color: 'yellow',
        show: true
      };
    } else {
-     console.log("Returning: black (more than 14 days)");
+     console.log("Returning: black (more than 30 days)");
      return {
        show: false,
      };
@@ -84,7 +84,7 @@
 	  <TableBodyCell>{filing.dueDate}</TableBodyCell>
 	  <TableBodyCell>
               {#if displayDueDate(filing).show}
-                <div class="flex font-bold text-{displayDueDate(filing).color}-400">
+                <div class="flex font-medium text-{displayDueDate(filing).color}-400">
                   <div>
                     <BellActiveSolid class="mr-2 text-{displayDueDate(filing).color}-400" />
                   </div>

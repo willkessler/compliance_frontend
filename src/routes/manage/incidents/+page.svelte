@@ -78,10 +78,10 @@
     <TableHead class="bg-gray-50 whitespace-nowrap">
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name of event</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Event Type</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Occurred On</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Due On</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Take Action</TableHeadCell>
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
@@ -98,18 +98,18 @@
                 {incident.type}
             </Badge>
           </TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.occurrenceDate}</TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.dueDate}</TableBodyCell>
+          <TableBodyCell class="whitespace-nowrap text-sm ">
+            <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getPriorityColor(incident.priority)}-100 text-gray-700} ">
+              {incident.priority}
+            </Badge>
+          </TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
             <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(incident.status)}-200 text-gray-700} ">
               {incident.status}
             </Badge>
           </TableBodyCell>
-          <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getPriorityColor(incident.priority)}-200 text-gray-700} ">
-              {incident.priority}
-            </Badge>
-          </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.occurrenceDate}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.dueDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <Button href="/manage/incidents/incident/{incident.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
           </TableBodyCell>
