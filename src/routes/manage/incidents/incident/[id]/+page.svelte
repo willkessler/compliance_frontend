@@ -6,6 +6,7 @@
         FloppyDiskOutline,
         UsersOutline,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
+ import styles from '$lib/css/rightPanel.module.css';
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
@@ -67,28 +68,6 @@
     cursor: pointer;
   }
 
- .custom-outer-shadow {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-   position: relative;
-   background-color: white;
-   height: 100%;
-   width: 100%;
-   padding: 22px;
- }
-
- .custom-outer-shadow::before {
-   content: '';
-   position: absolute;
-   box-shadow: 0 0 8px rgba(0, 0, 0, 0.08); 
- }
-
- .content-wrapper {
-   height: 100%;
-   overflow-y: auto;
- }
-
-
-
 </style>
 
 <IncidentLayout>
@@ -110,9 +89,9 @@
   <Uploads />
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden">
-    <div class="custom-outer-shadow h-full overflow-auto">
-      <div class="content-wrapper">
-        <div class="flex justify-between items-center mb-2">
+    <div class="{styles.customOuterShadow} h-full overflow-auto">
+      <div class={styles.contentWrapper}>
+        <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-bold text-gray-500 uppercase">Details</h2>
           <p class="font-semibold text-gray-500">{incident.occurrenceDate}</p>
         </div>
@@ -121,25 +100,25 @@
           <Badge class="py-1 cursor-pointer bg-{getPriorityColor(incident.priority)}-200 text-gray-700">{incident.priority}</Badge>
           <Badge class="py-1 cursor-pointer bg-{getStatusColor(incident.status)}-200 text-gray-700">{incident.status}</Badge>
         </div>
-        <div class="grid grid-cols-2 gap-y-2 gap-x-4">
+        <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
           <div class="font-semibold">Level</div>
           <div>{incident.level}</div>
         </div>
-        <div class="grid grid-cols-2 gap-y-2">
+        <div class="grid grid-cols-2 gap-y-2 mt-1">
           <div class="font-semibold">Driver</div>
           <div>
             <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
           </div>
         </div>
         <div>
-          <div class="grid grid-cols-2 gap-y-2">
+          <div class="grid grid-cols-2 gap-y-2 mt-1">
             <div class="font-semibold">Vehicle</div>
             <div>
               <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
             </div>
           </div>
           <div>
-            <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+            <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
               <div class="font-semibold">Due Date</div>
               <div class="flex items-center">
                 <div class="relative inline-block">
