@@ -194,7 +194,7 @@
         {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
           <TableBodyRow>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}<br>(@ {action.totalMiles} miles)</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
             <TableBodyCell>
               <Badge large rounded class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
                 {#if getTypeIcon(action.type)}
