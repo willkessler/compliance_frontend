@@ -218,7 +218,6 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
               <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
             </TableBodyCell>
-
           </TableBodyRow>
         {/each}
       </TableBody>
