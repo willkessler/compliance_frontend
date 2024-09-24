@@ -5,58 +5,9 @@
  import { Card,  CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
  import { DownloadOutline } from 'flowbite-svelte-icons';
- import { CheckCircleSolid, ExclamationCircleSolid, BellActiveSolid } from 'flowbite-svelte-icons';
+ import { CheckCircleOutline, BellActiveSolid } from 'flowbite-svelte-icons';
+ import { getStatusColor, displayDueDate, filings } from '$lib/data/filingData';
 
-  const federalFilings = [
-    { name: "Unified Carrier Registration (UCR)", dueDate: "Sep 24, 2024", status: "Incomplete" },
-    { name: "BOC-3", dueDate: "Sep 15, 2024", status: "Review details" },
-    { name: "MCS-150", dueDate: "Sep 9, 2025", status: "Completed" },
-    { name: "US DOT renewal", dueDate: "Oct 13, 2024", status: "Completed" },
-  ];
-
-  const historicalFilings = [
-  { type: "BOC-3", date: "Aug 31, 2023", filename: 'BOC-3Form.pdf' },
-  { type: "Unified Carrier Registration (UCR)", date: "May 22, 2023", filename: 'UCR-2Form.pdf' },
-  { type: "MCS-150", date: "Jan 2, 2024", filename: 'MCS-150Form.pdf' },
-  { type: "EIN registration", date: "Dec 13, 2023", filename: "MCS-150Form.pdf" },
-  ];
-
- function getStatusColor(status) {
-   return (status === "Completed" ? 
-           "bg-green-100 text-green-800" : (status === "Review details" ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-800")
-   );
- }
-
- function displayDueDate(filing: { dueDate: string | Date }): { text: string; color: string } {
-   const dueDate = new Date(filing.dueDate);
-   const now = new Date();
-   const differenceInDays = Math.floor((dueDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
-   const formattedDate = dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-   console.log(`Due date: ${formattedDate}, Difference in days: ${differenceInDays}`);
-
-   if (differenceInDays < 0) {
-     console.log("Returning: red (late)");
-     return {
-       text: `${Math.abs(differenceInDays)} days overdue`,
-       color: 'red',
-       show: true,
-     };
-   } else if (differenceInDays <= 30) {
-     console.log("Returning: red (within 30 days)");
-     return {
-       text: `${differenceInDays} days left`,
-       color: 'yellow',
-       show: true
-     };
-   } else {
-     console.log("Returning: black (more than 30 days)");
-     return {
-       show: false,
-     };
-   }
-   
-}
 </script>
 
 
@@ -78,7 +29,7 @@
 	<TableHeadCell >Take Action</TableHeadCell>
       </TableHead>
       <TableBody>
-	{#each federalFilings as filing}
+	{#each filings.federal.main as filing}
 	  <TableBodyRow>
 	    <TableBodyCell>{filing.name}</TableBodyCell>
 	    <TableBodyCell>{filing.dueDate}</TableBodyCell>
@@ -96,8 +47,8 @@
             </TableBodyCell>
 	    <TableBodyCell >
               <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
-                {#if filing.status === 'Completed'}
-                  <CheckCircleSolid class="h-4 w-4 ml-2" />&nbsp;
+                {#if filing.status === 'Complete'}
+                  <CheckCircleOutline class="h-4 w-4 ml-2" />&nbsp;
                 {:else}
 	          <CircleAlert class="h-4 w-4 ml-2" />&nbsp;
                 {/if}
@@ -127,7 +78,7 @@
 	<TableHeadCell>Action</TableHeadCell>
       </TableHead>
       <TableBody>
-	{#each historicalFilings as filing}
+	{#each filings.federal.historical as filing}
 	  <TableBodyRow>
 	    <TableBodyCell>{filing.type}</TableBodyCell>
 	    <TableBodyCell>{filing.date}</TableBodyCell>

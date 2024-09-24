@@ -1,7 +1,6 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
 import flowbitePlugin from 'flowbite/plugin'
 
-
 /** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: 'selector',
@@ -15,48 +14,53 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-	"2xl": "1400px"
+        "2xl": "1400px"
       }
     },
     extend: {
       colors: {
-	border: "hsl(var(--border) / <alpha-value>)",
-	input: "hsl(var(--input) / <alpha-value>)",
-	background: "hsl(var(--background) / <alpha-value>)",
-	foreground: "hsl(var(--foreground) / <alpha-value>)",
-        backgroundColor: {
-          'modal-backdrop' : 'rgba(255,255,255,0.5)',
-        },
-        // flowbite-svelte
+        border: "hsl(var(--border) / <alpha-value>)",
+        input: "hsl(var(--input) / <alpha-value>)",
+        ring: "hsl(var(--ring) / <alpha-value>)",
+        background: "hsl(var(--background) / <alpha-value>)",
+        foreground: "hsl(var(--foreground) / <alpha-value>)",
         primary: {
-          50: '#FFF5F2',
-          100: '#FFF1EE',
-          200: '#FFE4DE',
-          300: '#FFD5CC',
-          400: '#FFBCAD',
-          500: '#FE795D',
-          600: '#EF562F',
-          700: '#EB4F27',
-          800: '#CC4522',
-          900: '#A5371B'
+          DEFAULT: "hsl(var(--primary) / <alpha-value>)",
+          foreground: "hsl(var(--primary-foreground) / <alpha-value>)",
         },
-        green: {
-          100: '#dcfce7',
-          800: '#166534',
+        secondary: {
+          DEFAULT: "hsl(var(--secondary) / <alpha-value>)",
+          foreground: "hsl(var(--secondary-foreground) / <alpha-value>)",
         },
-        purple: {
-          100: '#f3e8ff',
-          800: '#6b21a8',
+        destructive: {
+          DEFAULT: "hsl(var(--destructive) / <alpha-value>)",
+          foreground: "hsl(var(--destructive-foreground) / <alpha-value>)",
         },
-        gray: {
-          100: '#f3f4f6',
-          800: '#1f2937',
+        muted: {
+          DEFAULT: "hsl(var(--muted) / <alpha-value>)",
+          foreground: "hsl(var(--muted-foreground) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent) / <alpha-value>)",
+          foreground: "hsl(var(--accent-foreground) / <alpha-value>)",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover) / <alpha-value>)",
+          foreground: "hsl(var(--popover-foreground) / <alpha-value>)",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card) / <alpha-value>)",
+          foreground: "hsl(var(--card-foreground) / <alpha-value>)",
+        },
+        ringGray: {
+          light: '#E2E8F0', // A light grey
+          dark: '#4A5568',  // A darker grey for dark mode
         },
       },
       borderRadius: {
-	lg: "var(--radius)",
-	md: "calc(var(--radius) - 2px)",
-	sm: "calc(var(--radius) - 4px)"
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)"
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
@@ -65,7 +69,7 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    require('flowbite/plugin'),
+    flowbitePlugin,
   ],
 };
 

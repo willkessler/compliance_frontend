@@ -106,7 +106,7 @@
             </Badge>
           </TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(incident.status)}-200 text-gray-700} ">
+            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(incident.status)}-200 text-gray-{incident.status.toLowerCase() === 'closed' ? '400' : '700'} ">
               {incident.status}
             </Badge>
           </TableBodyCell>

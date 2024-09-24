@@ -101,7 +101,7 @@
     <Textarea
       bind:value={userInput}
       on:keydown={handleKeydown}
-      placeholder="Type your message..."
+      placeholder="Enter any question you have about trucking compliance here..."
       disabled={isLoading}
       rows="3"
     />
@@ -134,7 +134,7 @@
 
   .input-container {
     padding: 10px;
-    background-color: white;
+    background-color: bg-gray-100;
   }
 
   .message {

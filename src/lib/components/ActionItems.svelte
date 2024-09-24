@@ -2,7 +2,7 @@
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileDrop } from 'svelte-droplet';
- import { CirclePlusSolid, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid, PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-icons';
+ import { CheckCircleOutline, CheckCircleSolid, CirclePlusSolid, ExclamationCircleOutline, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid, PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
  import { actions, getTypeIcon, getActionItems, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
@@ -206,11 +206,11 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
               <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
                 {#if action.status.toLowerCase() === 'open'}
-                  <CirclePlusSolid class="text-blue-500 mr-2 inline" />
+                  <ExclamationCircleOutline class="text-{getStatusColor(action.status)}-500 mr-2 inline" />
                 {:else if action.status.toLowerCase() === 'hold'}
                   <PenOutline class="text-yellow-500 mr-2 inline" />
                 {:else if action.status.toLowerCase() === 'closed'}
-                  <FileSolid class="text-green-500 mr-2 inline" />
+                  <CheckCircleOutline class="text-green-500 mr-2 inline" />
                 {/if}
                 {action.status}
               </Badge>

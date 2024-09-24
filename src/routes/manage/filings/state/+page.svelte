@@ -1,63 +1,12 @@
-<!-- http://svelte0.dev/ui/66e1d2bbc8a8ce12e8276942 -->
 <script lang="ts">
  import { Badge, Button,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
-  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
-  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
+ import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
+ import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
+ import { CheckCircleOutline } from 'flowbite-svelte-icons';
  import { DownloadOutline } from 'flowbite-svelte-icons';
  import { BellActiveSolid } from 'flowbite-svelte-icons';
-
-  const stateFilings = [
-  { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Sep 17, 2024", status: "Incomplete" },
-  { name: "International Registration Plan (IRP)", dueDate: "Oct 1, 2024", status: "Incomplete" },
-  { name: "Heavy Highway Vehicle Use Tax (HVUT)", dueDate: "Oct 31, 2024", status: "Review details" },
-  { name: "CA MCP renewal", dueDate: "Jan 31, 2025", status: "Review details" },
-  { name: "CA DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
-  { name: "TX DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
-  { name: "CARB", dueDate: "Oct 15, 2024", status: "Complete" },
-  ];
-
-  const historicalFilings = [
-  { type: "CA MCP renewal", date: "Mar 23, 2024" },
-  { type: "Heavy Highway Vehicle Use Tax (HVUT)", date: "Aug 31, 2023" },
-  { type: "CA DOT renewal", date: "Sep 14, 2024" },
-  ];
-
- function getStatusColor(status) {
-   return (status === "Complete" ? 
-           "bg-green-100 text-green-800" : (status === "Review details" ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-800")
-   );
- }
-
- function displayDueDate(filing: { dueDate: string | Date }): { text: string; color: string } {
-   const dueDate = new Date(filing.dueDate);
-   const now = new Date();
-   const differenceInDays = Math.floor((dueDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
-   const formattedDate = dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-   //console.log(`Due date: ${formattedDate}, Difference in days: ${differenceInDays}`);
-
-   if (differenceInDays < 0) {
-     console.log("Returning: red (late)");
-     return {
-       text: `${Math.abs(differenceInDays)} days overdue`,
-       color: 'red',
-       show: true,
-     };
-   } else if (differenceInDays <= 30) {
-     console.log("Returning: red (within 30 days)");
-     return {
-       text: `${differenceInDays} days left`,
-       color: 'yellow',
-       show: true
-     };
-   } else {
-     console.log("Returning: black (more than 30 days)");
-     return {
-       show: false,
-     };
-   }
- }
+ import { getStatusColor, displayDueDate, filings } from '$lib/data/filingData';
 
 </script>
 
@@ -78,7 +27,7 @@
 	<TableHeadCell >Take Action</TableHeadCell>
       </TableHead>
       <TableBody>
-	{#each stateFilings as filing}
+	{#each filings.state.main as filing}
 	<TableBodyRow>
 	  <TableBodyCell>{filing.name}</TableBodyCell>
 	  <TableBodyCell>{filing.dueDate}</TableBodyCell>
@@ -96,7 +45,11 @@
           </TableBodyCell>
 	  <TableBodyCell>
             <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
-	      <CircleAlert class="h-4 w-4 mr-2" />
+              {#if filing.status.toLowerCase() === 'complete'}
+                <CheckCircleOutline class="h-4 w-4 ml-2" />&nbsp;
+              {:else}
+	        <CircleAlert class="h-4 w-4 ml-2" />&nbsp;
+              {/if}
 	      {filing.status}
 	    </Badge>
 	  </TableBodyCell>
@@ -123,7 +76,7 @@
 	<TableHeadCell>Action</TableHeadCell>
       </TableHead>
       <TableBody>
-	{#each historicalFilings as filing}
+	{#each filings.state.historical as filing}
 	  <TableBodyRow>
 	    <TableBodyCell>{filing.type}</TableBodyCell>
 	    <TableBodyCell>{filing.date}</TableBodyCell>
