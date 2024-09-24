@@ -98,7 +98,7 @@
                 {incident.type}
             </Badge>
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.occurrenceDate}</TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.dueDate}</TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
             <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getPriorityColor(incident.priority)}-100 text-gray-700} ">

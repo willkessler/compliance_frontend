@@ -13,14 +13,12 @@ export function displayDueDate(filing) {
   //console.log(`Due date: ${formattedDate}, Difference in days: ${differenceInDays}`);
 
   if (differenceInDays < 0) {
-    //console.log("Returning: red (late)");
     return {
       text: `${Math.abs(differenceInDays)} days overdue`,
       color: 'red',
       show: true,
     }
   } else if (differenceInDays <= 30) {
-    //console.log("Returning: red (within 30 days)");
     if (filing.status.toLowerCase() === 'complete') {
       return {
         show: false,
@@ -33,7 +31,6 @@ export function displayDueDate(filing) {
       show: true,
     }
   } else {
-    //console.log("Returning: black (more than 30 days)");
     return {
       show: false,
     }
