@@ -33,7 +33,7 @@
 
  const adminItems = [
    { href: '/manage/ai', label: 'AI-Compliance Check', icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
-   { href: '/manage/integrations', label: 'Connections', icon: ShareNodesOutline, color: 'text-inherit' },
+   { href: '/manage/integrations', label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
    { href: '/help', label: 'Help', icon: QuestionCircleOutline, color: 'text-inherit' },
    { href: '/manage/organization', label: 'Admin', icon: Settings , color: 'text-inherit' },
  ];

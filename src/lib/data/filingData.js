@@ -37,11 +37,38 @@ export function displayDueDate(filing) {
   }
 }
 
+export function getReviewCounts(kind) {
+  if (kind !== 'federal' && kind !== 'state') {
+    return 0;
+  }
+  let count = 0;
+  for (let filing of filings[kind].main) {
+    if (filing.status.toLowerCase() !== 'complete') {
+      count++;
+    }
+  }
+  return count;
+}
+
+export function getSoonestDaysRemaining(item) {
+  if (item.type !== 'federal' && item.type !== 'state') {
+    return -1;
+  }
+  let minDiff = 1000000, differenceInDays;
+  const now = new Date();
+  for (let filing of filings[item.type].main) {
+    const dueDate = new Date(filing.dueDate);
+    differenceInDays = Math.floor((dueDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
+    minDiff = differenceInDays < minDiff ? differenceInDays : minDiff;
+  }
+  return minDiff;
+}
+
 export const filings = {
   federal: {
     main: [
-      { name: "Unified Carrier Registration (UCR)", dueDate: "Sep 24, 2024", status: "Incomplete" },
-      { name: "BOC-3", dueDate: "Sep 15, 2024", status: "Review details" },
+      { name: "Unified Carrier Registration (UCR)", dueDate: "Oct 24, 2024", status: "Incomplete" },
+      { name: "BOC-3", dueDate: "Oct 15, 2024", status: "Review details" },
       { name: "MCS-150", dueDate: "Sep 9, 2025", status: "Complete" },
       { name: "US DOT renewal", dueDate: "Oct 13, 2024", status: "Complete" },
     ],
@@ -54,7 +81,7 @@ export const filings = {
   },
   state: {
     main: [
-      { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Sep 17, 2024", status: "Incomplete" },
+      { name: "International Fuel Tax Agreement (IFTA)", dueDate: "oct 17, 2024", status: "Incomplete" },
       { name: "International Registration Plan (IRP)", dueDate: "Oct 1, 2024", status: "Incomplete" },
       { name: "Heavy Highway Vehicle Use Tax (HVUT)", dueDate: "Oct 31, 2024", status: "Review details" },
       { name: "CA MCP renewal", dueDate: "Jan 31, 2025", status: "Review details" },

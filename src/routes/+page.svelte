@@ -5,22 +5,20 @@
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
- import ComplianceBarChart from '$lib/components/ComplianceBarChart.svelte';
  import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
- import DonutChart from '$lib/components/DonutChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
+ import { filings, getReviewCounts, getSoonestDaysRemaining } from '$lib/data/filingData';
  import { newsItems } from '$lib/data/newsItemsData';
  import { X, WandSparkles } from 'lucide-svelte';
 
-
  let showModal = false;
- 
- const actionItems = [
-   { type: "Federal Filings", openItems: 3, criticalItems:2, url: '/manage/filings/federal' },
-   { type: "State Filings", openItems: 2, criticalItems:1, url: '/manage/filings/state' },
-   { type: "Vehicles", openItems: 8, criticalItems:0, url: '/manage/fleet/drivers' },
-   { type: "Drivers", openItems: 13, criticalItems:0, url: '/manage/fleet/vehicles' },
-   { type: "Connections", openItems: 1, criticalItems:0, url: '/manage/integrations' },
+
+ const reviewItems = [
+   { type: 'federal', name: "Federal Filings", openItems: getReviewCounts('federal'), url: '/manage/filings/federal' },
+   { type: 'state',   name: "State Filings", openItems: getReviewCounts('state') , url: '/manage/filings/state' },
+   { type: 'vehicles', name: "Vehicles", openItems: getReviewCounts('vehicles'), url: '/manage/fleet/drivers' },
+   { type: 'drivers', name: "Drivers", openItems: getReviewCounts('drivers'), url: '/manage/fleet/vehicles' },
+   { type: 'integrations', name: "Integrations", openItems: getReviewCounts('integrations'), url: '/manage/integrations' },
  ];
 
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
@@ -31,8 +29,8 @@
  let driversOutOfCompliance = 3;
  let totalDrivers = 97;
 
- let donutChartData = 
-   { 
+ let donutChartData =
+   {
    trucks:  [
      { label: "Out of Compliance", value: 8, color: "#ffa500" },
      { label: "Compliant", value: 95, color: "#00bb00" },
@@ -43,145 +41,90 @@
    ],
    };
  let showPercentages = true;
- 
+
 </script>
 
-<style>
- .score {
-   font-size: 60px;
- }
- .score-label {
-   font-size: 25px;
- }
- .csa-score {
-   color: green;
- }
- .safety-score {
-   color: orange;
- }
-
- .dashboard-grid {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 1.5rem;
- }
-
- .chart {
-   width: 100%;
-   height: 300px;
- }
-
-</style>
 
 <main class="flex-1 overflow-auto">
 
   <div class="grid grid-cols-2 gap-6 mb-6">
       <Card>
-	<CardHeader class="pb-2">
-	  <CardTitle>Your compliance by the numbers</CardTitle>
-	</CardHeader>
 	<CardContent >
           <div class="flex items-center">
-            <div class="grid grid-cols-2 gap-8 pl-2 pr-2 justify-items-stretch">
               <div class="flex items-center csa-score">
-                <div class="mr-4" style="scale:3"><LandmarkOutline /></div>
-                <div class="score">15</div>
-                <div class="score-label pl-2">CSA Score</div>
+                <div class="ml-4 mr-4" style="scale:3"><LandmarkOutline /></div>
+                <div class="score ml-4">15</div>
+                <div class="score-label ml-3">Today's CSA Score</div>
               </div>
-              <div class="flex items-center safety-score">
-                <div class="mr-4" style="scale:3"><ShieldCheckSolid /></div>
-                <div class="score">153</div>
-                <div class="score-label pl-2">Safety Score</div>
-              </div>
-            </div>
           </div>
           <div>
             <div class="flex items-center">
-            <div class="chart">
-              <DonutChart
-                title="Vehicles"
-                data={donutChartData.trucks}
-                {showPercentages}
-              />
-            </div>
-            <div class="chart">
-              <DonutChart
-                title="Drivers"
-                data={donutChartData.drivers}
-                {showPercentages}
-              />
+              <div class="chart">
+                <ComplianceHistoryChart
+                  chartTitle="Your CSA Score Over Time"
+                  metricType="csaScore"
+                  color="green"
+                  titleColor="green-800"
+                />
+              </div>
             </div>
           </div>
 	</CardContent>
       </Card>
       <Card>
-	<CardHeader class="pb-2">
-	  <CardTitle>Your compliance by the numbers</CardTitle>
-	</CardHeader>
 	<CardContent >
           <div class="flex items-center">
-            <div class="grid grid-cols-2 gap-8 pl-2 pr-2 justify-items-stretch">
-              <div class="flex items-center csa-score">
-                <div class="mr-4" style="scale:3"><LandmarkOutline /></div>
-                <div class="score">15</div>
-                <div class="score-label pl-2">CSA Score</div>
-              </div>
               <div class="flex items-center safety-score">
                 <div class="mr-4" style="scale:3"><ShieldCheckSolid /></div>
                 <div class="score">153</div>
-                <div class="score-label pl-2">Safety Score</div>
+                <div class="score-label pl-2">Today's Safety Score</div>
               </div>
-            </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
-                <DonutChart
-                  title="Vehicles"
-                  data={donutChartData.trucks}
-                  {showPercentages}
-                />
-              </div>
-              <div class="chart">
-                <DonutChart
-                  title="Drivers"
-                  data={donutChartData.drivers}
-                  {showPercentages}
+                <ComplianceHistoryChart
+                  chartTitle="Your Safety Score Over Time"
+                  metricType="safetyScore"
+                  color="orange"
+                  titleColor="orange-400"
                 />
               </div>
             </div>
+          </div>
 	</CardContent>
       </Card>
-          </div>
+  </div>
 
-  <div class="dashboard-grid">
     <Card>
-      <CardHeader class="pb-2">
-	<CardTitle>Summary of action items</CardTitle>
+      <CardHeader class="pb-4">
+	<CardTitle>Summary of Important Actions to Take</CardTitle>
       </CardHeader>
       <CardContent>
         <Table hoverable={true}>
           <TableHead>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Open items</TableHeadCell>
-            <TableHeadCell>Critical items</TableHeadCell>
+            <TableHeadCell>Time Sensitive</TableHeadCell>
             <TableHeadCell>Days remaining</TableHeadCell>
-            <TableHeadCell>Action</TableHeadCell>
+            <TableHeadCell>&nbsp;</TableHeadCell>
           </TableHead>
           <TableBody>
-            {#each actionItems as item}
+            {#each reviewItems as item}
               <TableBodyRow>
-                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.type}</TableBodyCell>
-                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.openItems}</TableBodyCell>
-                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large font-bold text-red-600">
-                  {#if (item.criticalItems > 0) }
+                <TableBodyCell class="whitespace-nowrap text-sm font-large text-gray-600 p-2">{item.name}</TableBodyCell>
+                <TableBodyCell class="whitespace-nowrap text-sm font-large text-gray-600 p-2p-2">{item.openItems}</TableBodyCell>
+                <TableBodyCell class="whitespace-nowrap text-sm font-large font-bold text-red-600 m-0">
+                  {#if (item.openItems > 0) }
                     <a href={item.url}>
-                      <Badge class="p-2 uppercase cursor-pointer">{item.criticalItems} item{item.criticalItems > 1 ? 's' : ''} to review</Badge>
+                      <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-red-100 text-gray-700} cursor-pointer uppercase">
+                        {item.openItems} item{item.openItems > 1 ? 's' : ''} to review
+                      </Badge>
                     </a>
                   {/if}
                 </TableBodyCell>
-                <TableBodyCell>
-                  5
+                <TableBodyCell >
+                  {getSoonestDaysRemaining(item) > 0 ? getSoonestDaysRemaining(item) + ' days' : ''} 
                 </TableBodyCell>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-medium">
                   <Button href={item.url} color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
@@ -193,7 +136,7 @@
       </CardContent>
     </Card>
 
-      <Card style="height:500px;overflow:auto;">
+      <Card class="mt-4" style="height:500px;overflow:auto;">
         <CardHeader>
           <h2 class="text-lg font-bold">Latest news</h2>
         </CardHeader>
@@ -216,16 +159,17 @@
           </div>
         </CardContent>
       </Card>
-  </div>
+
 
 
   <Modal
     bind:open={showModal}
-    backdropClass="fixed inset-0 z-40 bg-white/60"
+    backdropClass="fixed inset-0 z-40 bg-white/70"
     size="custom"
     class="w-[35vw] h-[90vh] rounded-lg overflow-hidden fixed right-10 top-1/2 -translate-y-1/2 bg-gray-100"
     autoclose
     outsideclose
+    border
   >
     <div class="relative h-full p-4 bg-gray-100">
       <button
@@ -242,14 +186,42 @@
     </div>
   </Modal>
 
-  <div class="fixed top-4 right-4">
+  <div class="fixed top-4 right-4"> <!-- AI button -->
     <Button
       on:click={() => showModal = true}
-      class="p-4 bg-gray-300 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-gray-400 transition-colors duration-200"
+      class="p-3 bg-gray-300 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-gray-400 transition-colors duration-200"
       >
-      <WandSparkles class="text-gray-600 group-hover:text-gray-800" />
+      <WandSparkles class="text-gray-600 group-hover:text-gray-800" size={15} />
     </Button>
   </div>
 
 
 </main>
+
+<style>
+ .score {
+   font-size: 60px;
+ }
+ .score-label {
+   font-size: 25px;
+   font-weight:600;
+ }
+ .csa-score {
+   color: green;
+ }
+ .safety-score {
+   color: orange;
+ }
+
+ .dashboard-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 1.5rem;
+ }
+
+ .chart {
+   width: 100%;
+   height: 300px;
+ }
+
+</style>
