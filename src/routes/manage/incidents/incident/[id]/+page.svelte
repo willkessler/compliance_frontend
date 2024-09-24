@@ -104,21 +104,25 @@
           <div class="font-semibold">Level</div>
           <div>{incident.level}</div>
         </div>
-        <div class="grid grid-cols-2 gap-y-2 mt-1">
+        <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-1">
+          <div class="font-semibold">Occurred on</div>
+          <div>{incident.occurrenceDate}</div>
+        </div>
+        <div class="grid grid-cols-2 gap-y-2 mt-2">
           <div class="font-semibold">Driver</div>
           <div>
             <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
           </div>
         </div>
         <div>
-          <div class="grid grid-cols-2 gap-y-2 mt-1">
+          <div class="grid grid-cols-2 gap-y-2 mt-2">
             <div class="font-semibold">Vehicle</div>
             <div>
               <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
             </div>
           </div>
           <div>
-            <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
+            <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-3">
               <div class="font-semibold">Due Date</div>
               <div class="flex items-center">
                 <div class="relative inline-block">
