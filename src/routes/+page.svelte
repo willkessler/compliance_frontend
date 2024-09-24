@@ -11,7 +11,7 @@
  import { newsItems } from '$lib/data/newsItemsData';
  import { X, WandSparkles } from 'lucide-svelte';
 
- let showModal = false;
+ let showModal = true;
 
  const reviewItems = [
    { type: 'federal', name: "Federal Filings", openItems: getReviewCounts('federal'), url: '/manage/filings/federal' },
@@ -148,20 +148,20 @@
     bind:open={showModal}
     backdropClass="fixed inset-0 z-40 bg-white/70"
     size="custom"
-    class="w-[35vw] h-[90vh] rounded-lg overflow-hidden fixed right-10 top-1/2 -translate-y-1/2 bg-gray-100"
+    class="w-[35vw] h-[90vh] rounded-lg overflow-hidden fixed right-20 top-1/2 -translate-y-1/2 bg-gray-100"
     autoclose
     outsideclose
     border
   >
-    <div class="relative h-full p-4 bg-gray-100">
+    <div class="h-full bg-gray-100">
       <button
         on:click={() => showModal = false}
         class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
         >
       </button>
-      <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+      <div class="mb-4 text-2xl font-medium text-gray-900 dark:text-white">
         Ask the AI!
-      </h3>
+      </div>
       <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
         <ChatBot />
       </p>
