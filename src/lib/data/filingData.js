@@ -96,3 +96,11 @@ export const filings = {
     ]
   }
 }
+
+export const reviewItems = [
+  { type: 'federal', name: "Federal Filings", openItems: getReviewCounts('federal'), url: '/manage/filings/federal' },
+  { type: 'state',   name: "State Filings", openItems: getReviewCounts('state') , url: '/manage/filings/state' },
+  { type: 'vehicles', name: "Vehicles", openItems: getReviewCounts('vehicles'), url: '/manage/fleet/drivers' },
+  { type: 'drivers', name: "Drivers", openItems: getReviewCounts('drivers'), url: '/manage/fleet/vehicles' },
+  { type: 'integrations', name: "Integrations", openItems: getReviewCounts('integrations'), url: '/manage/integrations' },
+];

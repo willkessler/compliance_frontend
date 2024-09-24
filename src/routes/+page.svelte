@@ -7,19 +7,11 @@
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
  import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
- import { filings, getReviewCounts, getSoonestDaysRemaining } from '$lib/data/filingData';
+ import { filings, reviewItems, getReviewCounts, getSoonestDaysRemaining } from '$lib/data/filingData';
  import { newsItems } from '$lib/data/newsItemsData';
  import { X, WandSparkles } from 'lucide-svelte';
 
- let showModal = true;
-
- const reviewItems = [
-   { type: 'federal', name: "Federal Filings", openItems: getReviewCounts('federal'), url: '/manage/filings/federal' },
-   { type: 'state',   name: "State Filings", openItems: getReviewCounts('state') , url: '/manage/filings/state' },
-   { type: 'vehicles', name: "Vehicles", openItems: getReviewCounts('vehicles'), url: '/manage/fleet/drivers' },
-   { type: 'drivers', name: "Drivers", openItems: getReviewCounts('drivers'), url: '/manage/fleet/vehicles' },
-   { type: 'integrations', name: "Integrations", openItems: getReviewCounts('integrations'), url: '/manage/integrations' },
- ];
+ let showModal = false;
 
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";

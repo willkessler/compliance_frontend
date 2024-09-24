@@ -97,6 +97,14 @@ export function getIncidentTitle (incident) {
   return title;
 }
 
+export function getOpenIncidentCount() {
+  let count = 0;
+  for (let incident of incidents) {
+    count += (incident.status.toLowerCase() !== 'closed' ? 1 : 0);
+  }
+  return count;
+}
+
 
 export const incidents = [
   {

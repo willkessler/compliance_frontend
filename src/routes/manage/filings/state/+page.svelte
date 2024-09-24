@@ -55,7 +55,7 @@
 	  </TableBodyCell>
 
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/filings/federal" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+            <Button href="/manage/filings/state" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
           </TableBodyCell>
 
 	</TableBodyRow>

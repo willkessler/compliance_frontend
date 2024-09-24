@@ -91,7 +91,7 @@
             {getIncidentTitle(incident)}
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getTypeColor(incident.type)}-100">
+            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getTypeColor(incident.type)}-200">
               {#if incident.icon !== undefined}
                 <svelte:component this={incident.icon} class=" text-{getTypeColor(incident.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
@@ -101,7 +101,7 @@
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.dueDate}</TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getPriorityColor(incident.priority)}-100 text-gray-700} ">
+            <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getPriorityColor(incident.priority)}-200 text-gray-700} ">
               {incident.priority}
             </Badge>
           </TableBodyCell>
