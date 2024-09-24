@@ -23,37 +23,19 @@
 
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
-
- let trucksOutOfCompliance = 8;
- let totalTrucks = 103;
- let driversOutOfCompliance = 3;
- let totalDrivers = 97;
-
- let donutChartData =
-   {
-   trucks:  [
-     { label: "Out of Compliance", value: 8, color: "#ffa500" },
-     { label: "Compliant", value: 95, color: "#00bb00" },
-   ],
-   drivers:  [
-     { label: "Out of Compliance", value: 12, color: "#ffa500" },
-     { label: "Compliant", value: 94, color: "#00bb00" },
-   ],
-   };
- let showPercentages = true;
+ const csaRange = { range:15, buffer:15, today: 15};
+ const safetyRange = { range:100, buffer:100, today:153};
 
 </script>
 
-
 <main class="flex-1 overflow-auto">
-
   <div class="grid grid-cols-2 gap-6 mb-6">
       <Card>
 	<CardContent >
           <div class="flex items-center">
               <div class="flex items-center csa-score">
                 <div class="ml-4 mr-4" style="scale:3"><LandmarkOutline /></div>
-                <div class="score ml-4">15</div>
+                <div class="score ml-4">{csaRange.today}</div>
                 <div class="score-label ml-3">Today's CSA Score</div>
               </div>
           </div>
@@ -63,8 +45,8 @@
                 <ComplianceHistoryChart
                   chartTitle="Your CSA Score Over Time"
                   metricType="csaScore"
+                  dataRange={csaRange}
                   color="green"
-                  titleColor="green-800"
                 />
               </div>
             </div>
@@ -76,7 +58,7 @@
           <div class="flex items-center">
               <div class="flex items-center safety-score">
                 <div class="mr-4" style="scale:3"><ShieldCheckSolid /></div>
-                <div class="score">153</div>
+                <div class="score">{safetyRange.today}</div>
                 <div class="score-label pl-2">Today's Safety Score</div>
               </div>
           </div>
@@ -86,8 +68,8 @@
                 <ComplianceHistoryChart
                   chartTitle="Your Safety Score Over Time"
                   metricType="safetyScore"
+                  dataRange={safetyRange}
                   color="orange"
-                  titleColor="orange-400"
                 />
               </div>
             </div>
@@ -98,7 +80,7 @@
 
     <Card>
       <CardHeader class="pb-4">
-	<CardTitle>Summary of Important Actions to Take</CardTitle>
+	<CardTitle>Important Actions to Take</CardTitle>
       </CardHeader>
       <CardContent>
         <Table hoverable={true}>
@@ -211,12 +193,6 @@
  }
  .safety-score {
    color: orange;
- }
-
- .dashboard-grid {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 1.5rem;
  }
 
  .chart {
