@@ -77,18 +77,18 @@
 
 <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
   <TableHead class="bg-gray-50 whitespace-nowrap">
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Take Action</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Total drive time</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Total miles driven</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
   </TableHead>
   <TableBody class="bg-white divide-y divide-gray-200">
     {#each drivers as driver}
       <TableBodyRow>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalDriveTime}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalMiles}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalDriveTime}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalMiles}</TableBodyCell>
         <TableBodyCell>
           <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {#if driver.icon !== undefined}
@@ -98,7 +98,7 @@
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-500 hover:text-customGray p-2 min-w-32">See details →</Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}

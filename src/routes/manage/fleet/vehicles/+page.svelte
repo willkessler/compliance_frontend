@@ -73,19 +73,19 @@
 
 <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
   <TableHead class="bg-gray-50 whitespace-nowrap">
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Mileage</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Operating time</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle Location</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Take Action</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Mileage</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
   </TableHead>
   <TableBody class="bg-white divide-y divide-gray-200">
     {#each vehicles as vehicle}
       <TableBodyRow>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">Truck #{vehicle.name}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{vehicle.mileage}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{vehicle.operatingTime}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">Truck #{vehicle.name}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
         <TableBodyCell>
           <Badge color={getStatusColor(vehicle.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {#if vehicle.icon !== undefined}
@@ -94,14 +94,14 @@
             {vehicle.status}
           </Badge>
         </TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
           <div class="flex cursor-pointer">
             <div>{vehicle.city}, {vehicle.state}</div>
             <div><MapPinAltSolid class="ml-2" /></div>
           </div>
           </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button href="/manage/fleet/vehicles/vehicle/{vehicle.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+          <Button href="/manage/fleet/vehicles/vehicle/{vehicle.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}

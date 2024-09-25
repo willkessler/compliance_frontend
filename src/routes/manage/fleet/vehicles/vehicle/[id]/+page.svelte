@@ -95,9 +95,9 @@
       <TableBody>
         {#each drivers.slice(0,3) as driver}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.startDate}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.endDate}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-500">{driver.name}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-500">{driver.startDate}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-500">{driver.endDate}</TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>

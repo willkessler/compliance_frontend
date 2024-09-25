@@ -126,17 +126,17 @@
   <div>
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">item</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">expiration date</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">status</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">action</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">action</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each certifications as certification}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.item}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{certification.expiry}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{certification.item}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{certification.expiry}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
               <Badge 
                 large
                 rounded 
@@ -149,8 +149,8 @@
               </Badge>
               <Tooltip placement="bottom" triggeredBy="#status-{certification.id}">{getToolTipText(certification.status)}</Tooltip>
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">
                 {certification.action} →
               </Button>
             </TableBodyCell>
@@ -170,17 +170,17 @@
   <div>
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">item</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">expiration date</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">status</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">action</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">action</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each historyItems as historyItem}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.item}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{historyItem.expiry}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{historyItem.item}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{historyItem.expiry}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
               <Badge 
                 large
                 rounded
@@ -193,8 +193,8 @@
               </Badge>
               <Tooltip placement="bottom" triggeredBy="#history-{historyItem.id}">{getToolTipText(historyItem.status)}</Tooltip>
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
-              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2">
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2">
                 {historyItem.action} →
               </Button>
             </TableBodyCell>
@@ -220,7 +220,7 @@
     <div class="{styles.customOuterShadow} h-full overflow-auto">
       <div class={styles.contentWrapper}>
         <div class="flex justify-between items-center mb-0">
-          <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Basic information</h2>
+          <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Basic information</h2>
         </div>
         <Card class="shadow-none">
           <div class="relative pt-[95%] overflow-hidden">
