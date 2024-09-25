@@ -184,26 +184,26 @@
   {#if environment === 'incident' } <!-- incidents -->
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action Taken</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type of action</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+        <TableHeadCell class="px-0 py-3 text-xs font-medium text-gray-400 uppercase">Name</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-gray-400 uppercase">Action Taken</TableHeadCell>
+        <TableHeadCell class="px-1 py-3 text-xs font-medium text-gray-400 uppercase">Type of action</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-gray-400 uppercase">Status</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-gray-400 uppercase">Action</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
-            <TableBodyCell>
-              <Badge large rounded class="px-1 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+            <TableBodyCell class="px-0 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
+            <TableBodyCell class="px-1">
+              <Badge large rounded class="px-0 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
                 {#if getTypeIcon(action.type)}
                   <svelte:component this={getTypeIcon(action.type)} class="mr-2 inline" />
                 {/if}
                 {action.type}
               </Badge>
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-500">
               <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
                 {#if action.status.toLowerCase() === 'open'}
                   <ExclamationCircleOutline class="text-{getStatusColor(action.status)}-500 mr-2 inline" />
@@ -215,7 +215,7 @@
                 {action.status}
               </Badge>
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
               <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
             </TableBodyCell>
           </TableBodyRow>
@@ -225,10 +225,10 @@
 {:else} <!-- vehicles -->
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-0 text-xs font-medium text-gray-500 uppercase">Name</TableHeadCell>
-        <TableHeadCell class="px-2 text-xs font-medium text-gray-500 uppercase">Event Date</TableHeadCell>
-        <TableHeadCell class="px-1 text-xs font-medium text-gray-500 uppercase">Due Date</TableHeadCell>
-        <TableHeadCell class="px-0 text-xs font-medium text-gray-500 uppercase">Type of Action</TableHeadCell>
+        <TableHeadCell class="px-0 text-xs font-medium text-gray-400 uppercase">Name</TableHeadCell>
+        <TableHeadCell class="px-2 text-xs font-medium text-gray-400 uppercase">Event Date</TableHeadCell>
+        <TableHeadCell class="px-1 text-xs font-medium text-gray-400 uppercase">Due Date</TableHeadCell>
+        <TableHeadCell class="px-0 text-xs font-medium text-gray-400 uppercase">Type of Action</TableHeadCell>
         <TableHeadCell class="text-xs font-medium text-gray-500 uppercase">Status</TableHeadCell>
         <TableHeadCell class="text-xs font-medium text-gray-500 uppercase">Action</TableHeadCell>
       </TableHead>
