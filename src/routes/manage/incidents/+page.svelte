@@ -8,8 +8,8 @@
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
- let activeTab = 'all events';
- const tabs = ['All events', 'Needs attention', 'Upcoming'];
+ const tabs = ['On the road', 'Maintenance', 'Docs Needed', 'All Incidents'];
+ let activeTab = tabs[0];
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
@@ -61,9 +61,11 @@
 
 <div class="p-4">
 
-  <h1 class="text-3xl font-bold mb-4">Incident manager</h1>
+  <h1 class="text-3xl font-bold mb-4">Incidents Manager</h1>
 
-  <div class="inline-block bg-white border rounded-lg p-0">
+  <div class="flex justify-start items-center ">
+    <div class="font-bold mr-2">Filter incidents to:</div>
+    <div class="inline-block bg-white border rounded-lg p-0">
       {#each tabs as tab}
         <Button
           class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-gray-300' : ''}"
@@ -72,8 +74,9 @@
           {tab}
         </Button>
       {/each}
+    </div>
   </div>
-
+  
   <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
     <TableHead class="bg-gray-50 whitespace-nowrap">
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name of event</TableHeadCell>
