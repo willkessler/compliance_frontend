@@ -10,13 +10,15 @@
         } from 'flowbite-svelte-icons';
 
  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownWrapper, SidebarDropdownItem } from 'flowbite-svelte';
+ import { getOpenIncidentCount } from '$lib/data/incidentData';
+
  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
 
  $: activeUrl = $page.url.pathname;
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
-   { href: '/manage/incidents', label: 'Incident Manager', icon: HomeOutline, color: 'text-red-600', pillCount: 4 },
+   { href: '/manage/incidents', label: 'Incidents Manager', icon: HomeOutline, color: 'text-red-600', pillCount: getOpenIncidentCount() },
    { href: '/manage/fleet', label: 'Fleet Compliance', icon: Truck, color: 'text-inherit',
    subItems: [
      { href: '/manage/fleet/vehicles', label: 'Vehicles' },
@@ -33,7 +35,7 @@
 
  const adminItems = [
    { href: '/manage/ai', label: 'AI-Compliance Check', icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
-   { href: '/manage/integrations', label: 'Connections', icon: ShareNodesOutline, color: 'text-inherit' },
+   { href: '/manage/integrations', label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
    { href: '/help', label: 'Help', icon: QuestionCircleOutline, color: 'text-inherit' },
    { href: '/manage/organization', label: 'Admin', icon: Settings , color: 'text-inherit' },
  ];
@@ -97,7 +99,7 @@
             </svelte:fragment>
             <svelte:fragment slot="subtext">
               {#if item.pillCount !== undefined}
-                <span class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-primary-200 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
+                <span class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
               {/if}
             </svelte:fragment>
           </SidebarItem>

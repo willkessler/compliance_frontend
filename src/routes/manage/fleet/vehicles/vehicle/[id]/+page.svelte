@@ -1,5 +1,5 @@
 <script lang="ts">
- import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem,
+ import { Badge, Button, Card, Label, Input, Textarea,  Select, Pagination, PaginationItem,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,
