@@ -25,6 +25,13 @@
    }
  }
 
+ function upgradeStatus(vehicle) {
+   if (vehicle.status.toLowerCase() === 'blocked') {
+     return '4 Blockers';
+   }
+   return vehicle.status;
+ }
+ 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
   let pages = [
@@ -91,7 +98,7 @@
               {#if vehicle.icon !== undefined}
                 <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
-            {vehicle.status}
+            {upgradeStatus(vehicle)}
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
