@@ -28,6 +28,13 @@
    }
  }
 
+ function upgradeStatus(driver) {
+   if (driver.status.toLowerCase() === 'blocked') {
+     return '2 Blockers';
+   }
+   return driver.status;
+ }
+
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
   let pages = [
@@ -94,7 +101,7 @@
               {#if driver.icon !== undefined}
                 <svelte:component this={driver.icon} class=" text-{getStatusColor(driver.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
-            {driver.status}
+            {upgradeStatus(driver)}
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">

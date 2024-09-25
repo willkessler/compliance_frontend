@@ -16,6 +16,34 @@
 
   const apps: App[] = [
     {
+      name: "Samsara",
+      logo: "samsara.png",
+      description: "Integrate with Samsara and integrate all of its various ELD data streams.",
+      tags: ["MAINTENANCE", "COMPLIANCE"],
+      categories: ["Compliance"]
+    },
+    {
+      name: "Motive",
+      logo: "motive.png",
+      description: "Integrate with Motive and integrate their ELD data streams.",
+      tags: ["MAINTENANCE", "COMPLIANCE"],
+      categories: ["Compliance"]
+    },
+    {
+      name: "McLeod LoadMaster",
+      logo: "mcleod.webp",
+      description: "Enrich your transportation management with telematics data from Samsara and a full workflow integration.",
+      tags: ["COMPLIANCE"],
+      categories: ["Telematics", "Compliance"],
+    },
+    {
+      name: "Fullbay Connect",
+      logo: "Fullbay_logo.webp",
+      description: "Unlock new ways to manage your auto service business in Fullbay Connect by gaining visibility into vehicle location and diagnostics with Samsara.",
+      tags: ["COMPLIANCE", "MAINTENANCE"],
+      categories: ["Maintenance",  "Compliance"],
+    },
+    {
       name: "LogRock",
       logo: "logrock.webp",
       description: "Connect your Samsara and FMCSA data to find and resolve compliance risks before they occur.",
@@ -42,20 +70,6 @@
       description: "Bring telematics data and video events from Samsara into InfoStream’s driver performance and safety solutions to improve compliance and mitigate risk.",
       tags: ["MAINTENANCE", "COMPLIANCE"],
       categories: ["Safety & Coaching", "Compliance"]
-    },
-    {
-      name: "McLeod LoadMaster",
-      logo: "mcleod.webp",
-      description: "Enrich your transportation management with telematics data from Samsara and a full workflow integration.",
-      tags: ["COMPLIANCE"],
-      categories: ["Telematics", "Compliance"],
-    },
-    {
-      name: "Fullbay Connect",
-      logo: "Fullbay_logo.webp",
-      description: "Unlock new ways to manage your auto service business in Fullbay Connect by gaining visibility into vehicle location and diagnostics with Samsara.",
-      tags: ["COMPLIANCE", "MAINTENANCE"],
-      categories: ["Maintenance",  "Compliance"],
     },
     {
       name: "Per Diem Plus",
@@ -135,7 +149,9 @@
       {#each filteredApps as app}
         <Card>
           <CardHeader>
-            <img style="height:120px" src={'/images/logos/' + app.logo} alt={app.name} class="h-30 mb-2" />
+            <div style="min-height:220px">
+              <img style="max-width:200px" src={'/images/logos/' + app.logo} alt={app.name} class="h-30 mb-2" />
+            </div>
             <CardTitle>{app.name}</CardTitle>
           </CardHeader>
           <CardContent>

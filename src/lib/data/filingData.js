@@ -71,6 +71,7 @@ export const filings = {
       { name: "BOC-3", dueDate: "Oct 15, 2024", status: "Review details" },
       { name: "MCS-150", dueDate: "Sep 9, 2025", status: "Complete" },
       { name: "US DOT renewal", dueDate: "Oct 13, 2024", status: "Complete" },
+      { name: "IRS Form 2290", dueDate: "Jun 30, 2025", status: "Complete" },
     ],
     historical: [
       { type: "BOC-3", date: "Aug 31, 2023", filename: 'BOC-3Form.pdf' },
