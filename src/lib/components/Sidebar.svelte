@@ -80,7 +80,7 @@
               isOpen={true}
               >
               <svelte:fragment slot="icon">
-                <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               </svelte:fragment>
               {#each item.subItems as subItem}
                 <SidebarDropdownItem class="pl-10 text-sm hover:bg-gray-300" label={subItem.label} href={subItem.href} active={activeUrl.startsWith(subItem.href)} />
@@ -95,7 +95,7 @@
             class={item.label === 'Incident Manager' && activeUrl.startsWith('/manage/incidents') ? 'bg-gray-300 hover:bg-gray-300' : ''}
           >
             <svelte:fragment slot="icon">
-              <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
             </svelte:fragment>
             <svelte:fragment slot="subtext">
               {#if item.pillCount !== undefined}
@@ -110,7 +110,7 @@
       {#each adminItems as item}
         <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>>
           <svelte:fragment slot="icon">
-            <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+            <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
           </svelte:fragment>
           <svelte:fragment slot="subtext">
             {#if item.sideLabel !== undefined}

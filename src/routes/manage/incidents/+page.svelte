@@ -80,21 +80,21 @@
   
   <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
     <TableHead class="bg-gray-50 whitespace-nowrap">
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name of event</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Event Type</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Occurred On</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Due On</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Take Action</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name of event</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Event Type</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Occurred On</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Due On</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Priority</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
       {#each getIncidentsByCategory(activeCategory) as incident}
         <TableBodyRow>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
             {getIncidentTitle(incident)}
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">
             <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getTypeColor(incident.type)}-200">
               {#if incident.icon !== undefined}
                 <svelte:component this={incident.icon} class=" text-{getTypeColor(incident.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
@@ -102,8 +102,8 @@
                 {incident.type}
             </Badge>
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{incident.dueDate}</TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.dueDate}</TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
             <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getPriorityColor(incident.priority)}-200 text-gray-700} ">
               {incident.priority}
@@ -115,7 +115,7 @@
             </Badge>
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/incidents/incident/{incident.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+            <Button href="/manage/incidents/incident/{incident.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
           </TableBodyCell>
         </TableBodyRow>
       {/each}

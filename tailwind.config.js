@@ -57,6 +57,10 @@ const config = {
           light: '#E2E8F0', // A light grey
           dark: '#4A5568',  // A darker grey for dark mode
         },
+        customGray: {
+          DEFAULT: '#718096',
+          hover: '#4A5568',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

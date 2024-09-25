@@ -14,13 +14,13 @@
 
 <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
   <TableHead class="bg-gray-50 whitespace-nowrap">
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date added</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Date added</TableHeadCell>
   </TableHead>
   <TableBody>
     {#each previouslyUploadedFiles as uploadedFile}
       <TableBodyRow>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
           <a href="/" >
             <div class="flex items-top">
               {uploadedFile.filename} &nbsp;
@@ -28,7 +28,7 @@
             </div>
           </a>
         </TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{uploadedFile.date}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{uploadedFile.date}</TableBodyCell>
       </TableBodyRow>
     {/each}
   </TableBody>

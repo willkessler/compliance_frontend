@@ -184,26 +184,26 @@
   {#if environment === 'incident' } <!-- incidents -->
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action Taken</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type of action</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+        <TableHeadCell class="px-0 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
+        <TableHeadCell class="px-1 py-3 text-xs font-medium text-customGray uppercase">Type of action</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.name}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{action.description}</TableBodyCell>
-            <TableBodyCell>
-              <Badge large rounded class="px-1 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
+            <TableBodyCell class="px-0 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.description}</TableBodyCell>
+            <TableBodyCell class="px-1">
+              <Badge large rounded class="px-0 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
                 {#if getTypeIcon(action.type)}
                   <svelte:component this={getTypeIcon(action.type)} class="mr-2 inline" />
                 {/if}
                 {action.type}
               </Badge>
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
               <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
                 {#if action.status.toLowerCase() === 'open'}
                   <ExclamationCircleOutline class="text-{getStatusColor(action.status)}-500 mr-2 inline" />
@@ -215,8 +215,8 @@
                 {action.status}
               </Badge>
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
+              <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
@@ -225,19 +225,19 @@
 {:else} <!-- vehicles -->
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-0 text-xs font-medium text-gray-500 uppercase">Name</TableHeadCell>
-        <TableHeadCell class="px-2 text-xs font-medium text-gray-500 uppercase">Event Date</TableHeadCell>
-        <TableHeadCell class="px-1 text-xs font-medium text-gray-500 uppercase">Due Date</TableHeadCell>
-        <TableHeadCell class="px-0 text-xs font-medium text-gray-500 uppercase">Type of Action</TableHeadCell>
-        <TableHeadCell class="text-xs font-medium text-gray-500 uppercase">Status</TableHeadCell>
-        <TableHeadCell class="text-xs font-medium text-gray-500 uppercase">Action</TableHeadCell>
+        <TableHeadCell class="px-0 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+        <TableHeadCell class="px-2 text-xs font-medium text-customGray uppercase">Event Date</TableHeadCell>
+        <TableHeadCell class="px-1 text-xs font-medium text-customGray uppercase">Due Date</TableHeadCell>
+        <TableHeadCell class="px-0 text-xs font-medium text-customGray uppercase">Type of Action</TableHeadCell>
+        <TableHeadCell class="text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+        <TableHeadCell class="text-xs font-medium text-customGray uppercase">Action</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
           <TableBodyRow>
-            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-gray-600">{action.name}</TableBodyCell>
-            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-gray-600">{action.eventDate}</TableBodyCell>
-            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-gray-600">{action.dueDate}</TableBodyCell>
+            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.name}</TableBodyCell>
+            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.eventDate}</TableBodyCell>
+            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.dueDate}</TableBodyCell>
             <TableBodyCell class="px-0 py-4">
               <Badge class="px-2 py-1.5 rounded-[6px] cursor-pointer min-w-28 text-gray-{getTypeColor(action.type,'text')} bg-gray-{getTypeColor(action.type, 'bg')} text-sm">
                 {#if getTypeIcon(action.type)}
@@ -249,13 +249,13 @@
             <TableBodyCell class="px-0">
               <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded-[6px] min-w-28 text-sm">
                 {#if action.icon !== undefined}
-                  <svelte:component this={getTypeIcon(action.icon)} class=" text-{getStatusColor(action.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                  <svelte:component this={getTypeIcon(action.icon)} class=" text-{getStatusColor(action.status)}-500 mr-2 transition duration-75 dark:text-customGray group-hover:text-gray-900 dark:group-hover:text-white" />
                 {/if}
                 {action.status}
               </Badge>
             </TableBodyCell>
             <TableBodyCell class="px-0 pl-2 whitespace-nowrap text-sm font-medium">
-              <Button on:click={() => openModalWithAction(action)} color="light" class="text-gray-500 hover:text-gray-900 min-w-24 p-2"><PenOutline/>&nbsp;Edit</Button>
+              <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-24 p-2"><PenOutline/>&nbsp;Edit</Button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
@@ -351,7 +351,7 @@
               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
             />
             <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 py-2 w-full">
-              <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <svg class="w-5 h-5 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
               </svg>
               <span class="text-sm text-gray-700">{formattedDate}</span>
@@ -373,10 +373,10 @@
           <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 48 48">
             <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <p class="mt-1 text-sm text-gray-600">
+          <p class="mt-1 text-sm text-customGray">
             Click to upload or drag and drop
           </p>
-          <p class="mt-1 text-xs text-gray-500">
+          <p class="mt-1 text-xs text-customGray">
             Max. File Size: 30MB
           </p>
         </div>
@@ -385,9 +385,9 @@
         <div class="mt-4">
           {#each uploadedFiles as file, index}
             <div class="flex items-center mt-2">
-              <FileSolid class="text-gray-500 mr-2" />
-              <span class="text-sm text-gray-600">{file.name}</span>
-              <button class="ml-auto text-red-500 hover:text-red-700" on:click={() => removeFile(index)}>
+              <FileSolid class="text-customGray mr-2" />
+              <span class="text-sm text-customGray">{file.name}</span>
+              <button class="ml-auto text-red-500 hover:text-red-600" on:click={() => removeFile(index)}>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -401,7 +401,7 @@
 
   <svelte:fragment slot="footer">
     <div class="w-full flex justify-end">
-      <Button class="bg-white-900 hover:bg-gray-100 text-gray-500 mr-2" 
+      <Button class="bg-white-900 hover:bg-gray-100 text-customGray mr-2" 
         on:click={() => {
                  defaultModal = false;
                  actionName = null;

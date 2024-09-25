@@ -10,7 +10,6 @@
 
 </script>
 
-
 <div class="flex h-screen bg-background">
 
   <main class="flex-1 p-8 pl-4 overflow-auto">
@@ -22,18 +21,18 @@
 
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-	<TableHeadCell>Filing name</TableHeadCell>
-	<TableHeadCell>Due date</TableHeadCell>
-	<TableHeadCell>Urgency</TableHeadCell>
-	<TableHeadCell >Status</TableHeadCell>
-	<TableHeadCell >Take Action</TableHeadCell>
+	<TableHeadCell class="text-customGray">Filing name</TableHeadCell>
+	<TableHeadCell class="text-customGray">Due date</TableHeadCell>
+	<TableHeadCell class="text-customGray">Urgency</TableHeadCell>
+	<TableHeadCell class="text-customGray">Status</TableHeadCell>
+	<TableHeadCell class="text-customGray">Take Action</TableHeadCell>
       </TableHead>
       <TableBody>
 	{#each filings.federal.main as filing}
 	  <TableBodyRow>
-	    <TableBodyCell>{filing.name}</TableBodyCell>
-	    <TableBodyCell>{filing.dueDate}</TableBodyCell>
-	    <TableBodyCell>
+	    <TableBodyCell class="text-customGray">{filing.name}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">{filing.dueDate}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">
               {#if displayDueDate(filing).show}
                 <div class="flex font-medium text-{displayDueDate(filing).color}-400">
                   <div>
@@ -45,7 +44,7 @@
                 </div>
               {/if}
             </TableBodyCell>
-	    <TableBodyCell >
+	    <TableBodyCell>
               <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
                 {#if filing.status === 'Complete'}
                   <CheckCircleOutline class="h-4 w-4 ml-2" />&nbsp;
@@ -57,7 +56,7 @@
             </TableBodyCell>
 
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <Button href="/manage/filings/federal" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+              <Button href="/manage/filings/federal" color="light" class="hover:text-customGray p-2 min-w-32 text-customGray">See details →</Button>
             </TableBodyCell>
 
           </TableBodyRow>
@@ -72,19 +71,19 @@
   <div class="flex-1 py-6 overflow-auto">
     <h1 class="text-xl font-bold mb-3">Historical filings</h1>
     <Table hoverable={true}>
-      <TableHead>
-	<TableHeadCell>Filing type</TableHeadCell>
-	<TableHeadCell>Date</TableHeadCell>
-	<TableHeadCell>Action</TableHeadCell>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+	<TableHeadCell class="text-customGray">Filing type</TableHeadCell>
+	<TableHeadCell class="text-customGray">Date</TableHeadCell>
+	<TableHeadCell class="text-customGray">Action</TableHeadCell>
       </TableHead>
       <TableBody>
 	{#each filings.federal.historical as filing}
 	  <TableBodyRow>
-	    <TableBodyCell>{filing.type}</TableBodyCell>
-	    <TableBodyCell>{filing.date}</TableBodyCell>
-	    <TableBodyCell >
+	    <TableBodyCell class="text-customGray">{filing.type}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">{filing.date}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">
               <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		<Button class="text-gray-800 bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
+		<Button class="text-customGray bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
               </a>
 	    </TableBodyCell>
 	  </TableBodyRow>

@@ -1,4 +1,5 @@
 <script>
+ // cf https://dev.to/dev_michael/the-hunt-for-the-perfect-svelte-charting-library-a-happy-ending-o0p
  import { Chart, Svg, Bars, Axis, Tooltip, Rule, Text } from "layerchart";
  import { scaleBand } from "d3-scale";
  import { timeFormat, timeParse } from "d3-time-format";

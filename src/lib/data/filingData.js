@@ -81,7 +81,7 @@ export const filings = {
   },
   state: {
     main: [
-      { name: "International Fuel Tax Agreement (IFTA)", dueDate: "oct 17, 2024", status: "Incomplete" },
+      { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Oct 17, 2024", status: "Incomplete" },
       { name: "International Registration Plan (IRP)", dueDate: "Oct 1, 2024", status: "Incomplete" },
       { name: "Heavy Highway Vehicle Use Tax (HVUT)", dueDate: "Oct 31, 2024", status: "Review details" },
       { name: "CA MCP renewal", dueDate: "Jan 31, 2025", status: "Review details" },
