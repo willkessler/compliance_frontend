@@ -3,7 +3,7 @@
  import { ClockSolid, ThumbsUpSolid, ExclamationCircleSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
- import { drivers } from '$lib/data/driverData';
+ import { drivers, getDriverStatus } from '$lib/data/driverData';
 
  let sortColumn = "";
  let sortDirection = "asc";
@@ -85,6 +85,7 @@
 <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
   <TableHead class="bg-gray-50 whitespace-nowrap">
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Driving Status</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Total drive time</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Total miles driven</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
@@ -94,6 +95,11 @@
     {#each drivers as driver}
       <TableBodyRow>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+          <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+            {getDriverStatus(driver)}
+          </Badge>
+        </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalDriveTime}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalMiles}</TableBodyCell>
         <TableBodyCell>

@@ -19,6 +19,21 @@ export const drivers = [
     photo: 'istockphoto-180806801-612x612.jpg',
   },
   {
+    id: 4010,
+    name: "Charlie Topanga",
+    totalDriveTime: "19h 11m",
+    startDate: 'Jan 1, 2023',
+    endDate: 'Dec 31, 2023',
+    license: '882XW82',
+    licenseExpiration: '4/3/2025',
+    ssn: '616-33-3828',
+    notes: ' ',
+    vehicleId: 9822,
+    totalMiles: "83,743",
+    status: "Blocked",
+    icon: ExclamationCircleSolid,
+  },
+  {
     id: 1923,
     name: "Mark Ingram",
     startDate: 'Feb 14, 2023',
@@ -115,21 +130,6 @@ export const drivers = [
     photo: 'portrait-of-a-teenage-girl-wearing-a-baseball-cap-2C44948.jpg',
   },
   {
-    id: 1929,
-    name: "Charlie Topanga",
-    totalDriveTime: "19h 11m",
-    startDate: 'Jan 1, 2023',
-    endDate: 'Dec 31, 2023',
-    license: '882XW82',
-    licenseExpiration: '4/3/2025',
-    ssn: '616-33-3828',
-    notes: ' ',
-    vehicleId: 9822,
-    totalMiles: "83,743",
-    status: "Clear",
-    icon: ThumbsUpSolid,
-  },
-  {
     id: 1930,
     name: "Cain Reed",
     startDate: 'Jan 1, 2023',
@@ -169,4 +169,20 @@ export function getDriverById (id) {
     }
   }
   return null;
+}
+
+export function getDriverStatus(driver) {
+  const driverStatuses = [
+    'Driving',
+    'Available',
+    'Out of service',
+    'Off duty',
+    'On Break',
+    'Other',
+  ];
+  const now = new Date();
+  // const minute = now.getMinutes();
+  // const choice = parseInt(minute % driverStatuses.length);
+  const choice = driver.id % driverStatuses.length;
+  return driverStatuses[choice];     
 }

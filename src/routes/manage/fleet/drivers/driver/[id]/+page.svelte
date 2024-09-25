@@ -14,7 +14,7 @@
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
- import { drivers, getDriverById } from '$lib/data/driverData';
+ import { drivers, getDriverById, getDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
 
  import { page } from '$app/stores';
@@ -94,22 +94,6 @@
      default:
        return 'gray';
    }
- }
-
- function getDriverStatus() {
-   const driverStatuses = [
-     'Driving',
-     'Available',
-     'Out of service',
-     'Off duty',
-     'Unloading',
-     'At rest stop',
-     'Other',
-   ];
-   const now = new Date();
-   const minute = now.getMinutes();
-   const choice = parseInt(minute % driverStatuses.length);
-   return driverStatuses[choice];     
  }
  
 </script>
@@ -260,8 +244,12 @@
               </a>
             </div>
 
-            <div class="font-semibold">Live activity</div>
-            <div class="text-gray-800 italic">{getDriverStatus()}</div>
+            <div class="font-semibold">Driving status</div>
+            <div class="text-gray-800">
+              <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+                {getDriverStatus(driver)}
+              </Badge>
+            </div>
 
           </div>
         </Card>
