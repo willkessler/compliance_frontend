@@ -4,12 +4,13 @@
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
 
- import { incidents, getIncidentById, getIncidentTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/incidentData';
+ import { incidents, getIncidentById, getIncidentsByCategory, 
+        getIncidentTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/incidentData';
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
- const tabs = ['On the road', 'Maintenance', 'Docs Needed', 'All Incidents'];
- let activeTab = tabs[0];
+ const categories = ['On the Road', 'Maintenance', 'Records', 'All Incident Categories', ];
+ let activeCategory = 'On the Road';
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
@@ -64,14 +65,14 @@
   <h1 class="text-3xl font-bold mb-4">Incidents Manager</h1>
 
   <div class="flex justify-start items-center ">
-    <div class="font-bold mr-2">Filter incidents to:</div>
+    <div class="font-bold mr-2">Incident category:</div>
     <div class="inline-block bg-white border rounded-lg p-0">
-      {#each tabs as tab}
+      {#each categories as category}
         <Button
-          class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-gray-300' : ''}"
-          on:click={() => activeTab = tab.toLowerCase()}
+          class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeCategory.toLowerCase() === category.toLowerCase() ? 'bg-gray-300' : ''}"
+          on:click={() => activeCategory = category.toLowerCase()}
           >
-          {tab}
+          {category}
         </Button>
       {/each}
     </div>
@@ -88,7 +89,7 @@
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Take Action</TableHeadCell>
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
-      {#each incidents as incident}
+      {#each getIncidentsByCategory(activeCategory) as incident}
         <TableBodyRow>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">
             {getIncidentTitle(incident)}

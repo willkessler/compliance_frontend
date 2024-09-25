@@ -10,6 +10,18 @@ export function getIncidentById (id) {
   return null;
 }
 
+export function getIncidentsByCategory(category) {
+  let filteredIncidents;
+  if (category.toLowerCase() === 'all incident categories') {
+    filteredIncidents = incidents;
+  } else {
+    filteredIncidents = incidents.filter((incident) => 
+      incident.category.toLowerCase() == category.toLowerCase());
+  }
+  console.log(category, JSON.stringify(filteredIncidents,null,2));
+  return filteredIncidents;
+}
+
 export function getIncidentIdForVehicleId (vehicleId) {
   for (let incident of incidents) {
     if(incident.vehicleId === parseInt(vehicleId)) {
@@ -111,6 +123,7 @@ export const incidents = [
     id: 1292,
     priority: 'Critical',
     type: 'Maintenance',
+    category: 'Maintenance',
     status: 'Open',
     occurrenceDate: 'Apr 23, 2024', 
     dueDate: 'Apr 23, 2024',
@@ -124,6 +137,7 @@ export const incidents = [
     id: 292,
     priority: 'High',
     type: 'Accident',
+    category: 'On the Road',
     status: 'Open',
     occurrenceDate: 'Apr 18, 2024', 
     dueDate: 'Apr 18, 2024',
@@ -137,6 +151,7 @@ export const incidents = [
     id: 33828,
     priority: 'Medium',
     type: 'Driver issue',
+    category: 'On the Road',
     status: 'Open',
     occurrenceDate: 'May 2, 2024', 
     dueDate: 'Apr 18, 2024',
@@ -150,6 +165,7 @@ export const incidents = [
     id: 48482,
     priority: 'Medium',
     type: 'Driver issue',
+    category: 'On the Road',
     status: 'Open',
     occurrenceDate: 'Jan 14, 2024', 
     dueDate: 'Apr 18, 2024',
@@ -163,6 +179,7 @@ export const incidents = [
     id: 59382,
     priority: 'Low',
     type: 'Documents',
+    category: 'Records',
     status: 'Closed',
     occurrenceDate: 'Jan 24, 2024', 
     dueDate: '--',
@@ -176,6 +193,7 @@ export const incidents = [
     id: 68292,
     priority: 'Low',
     type: 'Documents',
+    category: 'Records',
     status: 'Closed',
     occurrenceDate: 'Jun 3, 2024', 
     dueDate: '--',
@@ -189,6 +207,7 @@ export const incidents = [
     id: 79182,
     priority: 'Low',
     type: 'Documents',
+    category: 'Records',
     status: 'Closed',
     occurrenceDate: 'Jul 18, 2024', 
     dueDate: '--',
@@ -202,6 +221,7 @@ export const incidents = [
     id: 81829,
     priority: 'Low',
     type: 'Documents',
+    category: 'Records',
     status: 'Closed',
     occurrenceDate: 'Sep 9, 2024', 
     dueDate: '--',
@@ -215,6 +235,7 @@ export const incidents = [
     id: 99928,
     priority: 'Low',
     type: 'Documents',
+    category: 'Records',
     status: 'Closed',
     occurrenceDate: 'Dec 11, 2023', 
     dueDate: '--',
@@ -228,6 +249,7 @@ export const incidents = [
     id: 10023,
     priority: 'Low',
     type: 'Documents',
+    category: 'Records',
     status: 'Closed',
     occurrenceDate: 'Dec 12, 2023', 
     dueDate: '--',
@@ -238,4 +260,3 @@ export const incidents = [
     description:' ',
   },
 ];
-
