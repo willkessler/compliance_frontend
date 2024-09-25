@@ -55,7 +55,7 @@
 	  </TableBodyCell>
 
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/filings/state" color="light" class="text-gray-500 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+            <Button href="/manage/filings/state" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
           </TableBodyCell>
 
 	</TableBodyRow>
@@ -70,17 +70,17 @@
   <div class="flex-1 py-6">
     <h1 class="text-xl font-bold mb-3">Historical filings</h1>
     <Table hoverable={true}>
-      <TableHead class="bg-gray-50 whitespace-nowrap text-gray-500">
-	<TableHeadCell class="text-gray-500">Filing type</TableHeadCell>
-	<TableHeadCell class="text-gray-500">Date</TableHeadCell>
-	<TableHeadCell class="text-gray-500">Action</TableHeadCell>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+	<TableHeadCell class="text-customGray">Filing type</TableHeadCell>
+	<TableHeadCell class="text-customGray">Date</TableHeadCell>
+	<TableHeadCell class="text-customGray">Action</TableHeadCell>
       </TableHead>
       <TableBody>
 	{#each filings.state.historical as filing}
 	  <TableBodyRow>
-	    <TableBodyCell class="text-gray-500">{filing.type}</TableBodyCell>
-	    <TableBodyCell class="text-gray-500">{filing.date}</TableBodyCell>
-	    <TableBodyCell class="text-gray-500">
+	    <TableBodyCell class="text-customGray">{filing.type}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">{filing.date}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">
               <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
 		<Button class="text-gray-500 bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
               </a>

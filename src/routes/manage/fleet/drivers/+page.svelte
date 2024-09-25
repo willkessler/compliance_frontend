@@ -98,7 +98,7 @@
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-500 hover:text-customGray p-2 min-w-32">See details →</Button>
+          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}

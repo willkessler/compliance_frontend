@@ -72,7 +72,7 @@
 
 <IncidentLayout>
   <div>
-    <h1 class="text-gray-500 text-sm">Incident #{id}</h1>
+    <h1 class="text-customGray text-sm">Incident #{id}</h1>
     <h1 class="text-3xl font-bold mb-2">{vehicle.name}</h1>
   </div>
 
@@ -92,8 +92,8 @@
     <div class="{styles.customOuterShadow} h-full overflow-auto">
       <div class={styles.contentWrapper}>
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold text-gray-500 uppercase">Details</h2>
-          <p class="font-semibold text-gray-500">{incident.occurrenceDate}</p>
+          <h2 class="text-xl font-bold text-customGray uppercase">Details</h2>
+          <p class="font-semibold text-customGray">{incident.occurrenceDate}</p>
         </div>
         <div class="space-x-2 mb-2">
           <Badge class="py-1 cursor-pointer bg-{getTypeColor(incident.type)}-200 text-gray-700">{incident.type}</Badge>
@@ -133,7 +133,7 @@
                     class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
                   />
                   <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
-                    <svg class="w-4 h-4 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                     </svg>
                     <span class="text-sm text-gray-700">{formattedDate}</span>
@@ -147,7 +147,7 @@
             <div class="mt-6">Description and notes</div>
             <div class="p-4 mt-2 divide-y shadow-none border rounded">
               <p class="text-md text-gray-600">{incident.description}</p>
-              <div class="text-gray-500 flex justify-end items-center mt-2 pt-2 ml-2">
+              <div class="text-customGray flex justify-end items-center mt-2 pt-2 ml-2">
                 <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
                 <div class="cursor-pointer"><FileImageSolid /></div>
               </div>

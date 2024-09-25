@@ -14,8 +14,8 @@
 
 <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
   <TableHead class="bg-gray-50 whitespace-nowrap">
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase tracking-wider">Name</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase tracking-wider">Date added</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Date added</TableHeadCell>
   </TableHead>
   <TableBody>
     {#each previouslyUploadedFiles as uploadedFile}

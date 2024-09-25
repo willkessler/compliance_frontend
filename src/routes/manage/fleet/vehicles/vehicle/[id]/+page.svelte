@@ -88,16 +88,16 @@
   <div>
     <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
       <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">End date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Start Date</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">End date</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each drivers.slice(0,3) as driver}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-500">{driver.name}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-500">{driver.startDate}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-500">{driver.endDate}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.startDate}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.endDate}</TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>
@@ -114,8 +114,8 @@
     <div class="{styles.customOuterShadow} h-full overflow-auto">
       <div class={styles.contentWrapper}>
         <div class="flex justify-between items-center mb-2">
-          <h2 class="text-xl font-bold text-gray-500 uppercase text-nowrap">Asset Info</h2>
-          <p class="font-semibold text-gray-500 text-nowrap">{vehicle.acquisitionDate}</p>
+          <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Asset Info</h2>
+          <p class="font-semibold text-customGray text-nowrap">{vehicle.acquisitionDate}</p>
         </div>
 
         <div class="p-2">
@@ -168,7 +168,7 @@
                     class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
                   />
                   <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
-                    <svg class="w-4 h-4 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                     </svg>
                     <span class="text-sm text-gray-700">{formattedDate}</span>
