@@ -1,0 +1,19 @@
+.customOuterShadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  position: relative;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  padding: 22px;
+}
+
+.customOuterShadow::before {
+  content: '';
+  position: absolute;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08); 
+}
+
+.contentWrapper {
+  height: 100%;
+  overflow-y: auto;
+}

@@ -1,25 +1,19 @@
 <script lang="ts">
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ThumbsUpSolid, ExclamationCircleSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
- import { Pagination, PaginationItem } from 'flowbite-svelte';
+ import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
-
- let drivers = [
-   { id: 1922, name: "Thomas Payne", totalDriveTime: "42h 32m", totalMiles: "57,743", status: "Blocked", icon: ExclamationCircleSolid },
-   { id: 1923, name: "Mark Ingram",  totalDriveTime: "221h 32m", totalMiles: "77,453", status: "In progress", icon: ClockSolid },
-   { id: 1924, name: "Sid Sanger",   totalDriveTime: "89h 02m", totalMiles: "75,743", status: "Clear", icon: ThumbsUpSolid },
-   { id: 1925, name: "Joe Jacob",    totalDriveTime: "8h 22m", totalMiles: "7,743", status: "Clear", icon: ThumbsUpSolid  },
-   { id: 1926, name: "Joe Jasdeep",  totalDriveTime: "19h 12m", totalMiles: "95,437", status: "Clear", icon: ThumbsUpSolid },
-   { id: 1927, name: "Derek Travis", totalDriveTime: "85h 02m", totalMiles: "4,173", status: "Clear", icon: ThumbsUpSolid },
-   { id: 1928, name: "Alex Seerman", totalDriveTime: "66h 09m", totalMiles: "93,742", status: "Clear", icon: ThumbsUpSolid },
-   { id: 1929, name: "Charlie Topanga", totalDriveTime: "19h 11m", totalMiles: "83,743", status: "Clear", icon: ThumbsUpSolid },
-   { id: 1930, name: "Cain Reed",    totalDriveTime: "121h 17m", totalMiles: "18,212", status: "Clear", icon: ThumbsUpSolid },
-   { id: 1931, name: "Marcus Miller", totalDriveTime: "209h 57m", totalMiles: "15,283", status: "Clear", icon: ThumbsUpSolid },
- ];
+ import { drivers, getDriverStatus } from '$lib/data/driverData';
 
  let sortColumn = "";
  let sortDirection = "asc";
 
+ let filters = [
+   { value: 'filter1', name: 'Local' },
+   { value: 'filter2', name: 'All' },
+ ];
+ let selectedFilter;
+ 
  function getStatusColor(status) {
    switch (status.toLowerCase()) {
      case 'clear':
@@ -32,6 +26,13 @@
      default:
        return 'gray';
    }
+ }
+
+ function upgradeStatus(driver) {
+   if (driver.status.toLowerCase() === 'blocked') {
+     return '2 Blockers';
+   }
+   return driver.status;
  }
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
@@ -68,31 +69,49 @@
 
 </script>
 
-<h1 class="text-3xl font-bold mb-6">Drivers</h1>
+
+<div class="flex items-end justify-between pr-4">
+  <div>
+    <h1 class="text-3xl font-bold ">Drivers</h1>
+  </div>
+  <div>
+    <Label>
+      Filter selections:
+      <Select class="text-xs mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
+    </Label>
+  </div>
+</div>
+
 <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
   <TableHead class="bg-gray-50 whitespace-nowrap">
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total drive time</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total miles driven</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Driving Status</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Total drive time</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Total miles driven</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
   </TableHead>
   <TableBody class="bg-white divide-y divide-gray-200">
     {#each drivers as driver}
       <TableBodyRow>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalDriveTime}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.totalMiles}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+          <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+            {getDriverStatus(driver)}
+          </Badge>
+        </TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalDriveTime}</TableBodyCell>
+        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalMiles}</TableBodyCell>
         <TableBodyCell>
           <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {#if driver.icon !== undefined}
                 <svelte:component this={driver.icon} class=" text-{getStatusColor(driver.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
-            {driver.status}
+            {upgradeStatus(driver)}
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}

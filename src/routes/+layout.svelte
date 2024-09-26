@@ -19,7 +19,7 @@
     </div>
   {:else}
     <div class="flex-1 flex flex-col">
-      <header class="p-4">
+      <header class="pt-4 pl-4">
         <Breadcrumbs />
       </header>
       <div class="flex-1 overflow-auto p-4">

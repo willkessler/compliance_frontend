@@ -4,6 +4,7 @@
  import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
  import { Separator } from "$lib/components/ui/separator";
  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";
+ import { EyeSolid } from 'flowbite-svelte-icons';
  import { Input } from "$lib/components/ui/input";
  import * as Select from "$lib/components/ui/select";
  import { Label } from "$lib/components/ui/label";
@@ -26,6 +27,7 @@
    phone: "(555) 123-4567",
    email: "info@truckingco.com",
    dotNumber: "1234567",
+   dotPin: '****',
  };
 
  let editingInfo: typeof companyInfo & { state: StateOption } = { ...companyInfo, state: { value: companyInfo.state, label: "", disabled: false } };
@@ -101,7 +103,7 @@
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-2xl font-bold">Organization Administration</h1>
       {#if !isEditing}
-	<Button on:click={handleEdit}>Edit</Button>
+	<Button class="bg-blue-600" on:click={handleEdit}>Edit</Button>
       {/if}
     </div>
     
@@ -173,9 +175,14 @@
 		<Input id="dotNumber" bind:value={editingInfo.dotNumber} placeholder="DOT Number" />
 	      </div>
 
+	      <div class="space-y-2">
+		<Label for="dotNumber">DOT PIN</Label>
+		<Input id="dotNumber" bind:value={editingInfo.dotPin} placeholder="DOT PIN" />
+	      </div>
+
 	      <div class="flex justify-end space-x-2">
 		<Button variant="outline" on:click={handleCancel}>Cancel</Button>
-		<Button on:click={handleSave} disabled={!isFormValid}>Save</Button>
+		<Button class="bg-blue-500" on:click={handleSave} disabled={!isFormValid}>Save</Button>
 	      </div>
 	    </form>
 	  {:else}
@@ -201,6 +208,12 @@
 		<strong>DOT Number:</strong>
 		{companyInfo.dotNumber}
 	      </p>
+                <div class="flex">
+		  <strong>DOT PIN:</strong>
+                  &nbsp;
+		  {companyInfo.dotPin}
+                  &nbsp; <EyeSolid class="cursor-pointer" />
+                </div>
 	    </div>
 	  {/if}
 	</CardContent>

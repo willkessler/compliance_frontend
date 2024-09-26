@@ -1,175 +1,105 @@
-<!-- Main Dashboard -->
-
 <script lang="ts">
  import { onMount, afterUpdate } from 'svelte';
  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
- import { Badge, Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { Badge, Button, Modal, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
- import ComplianceBarChart from '$lib/components/ComplianceBarChart.svelte';
  import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
- import DonutChart from '$lib/components/DonutChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
+ import { filings, reviewItems, getReviewCounts, getSoonestDaysRemaining } from '$lib/data/filingData';
+ import { newsItems } from '$lib/data/newsItemsData';
+ import { X, WandSparkles } from 'lucide-svelte';
 
- const actionItems = [
-   { type: "Federal Filings", openItems: 3, url: '/manage/filings/federal' },
-   { type: "State Filings", openItems: 2, url: '/manage/filings/state' },
-   { type: "Vehicles", openItems: 8, url: '/manage/fleet/drivers' },
-   { type: "Drivers", openItems: 13, url: '/manage/fleet/vehicles' },
-   { type: "Connections", openItems: 1, url: '/manage/integrations' },
- ];
-
- interface NewsItem {
-   title: string;
-   image: string;
-   url: string;
-  }
-
- const newsItems: NewsItem[] = [
-    {
-      title: 'California Supreme Court upholds AB5 exemption for gig workers',
-      subtitle: 'Case on independent contractor law involved workers’ comp and ballot initiative Prop 22 that granted carve-out',
-      synopsis: 'Uber and Lyft drivers in California will continue to be protected from the state\’s AB5 independent contractor classification law following a decision by the state’s Supreme Court.',
-      site: 'Freightwaves',
-      image: 'https://www.freightwaves.com/uploads/2024/07/25/021223-76-1200x675.jpg',
-      url: 'https://www.freightwaves.com/news/california-supreme-court-upholds-ab5-exemption-for-gig-workers',
-    },
-    {
-      title: 'From voluntary to mandatory: Consultative expertise in sustainability compliance',
-      subtitle: 'Sustainability reporting is quickly shifting from a voluntary initiative to a mandatory undertaking',
-      synopsis: 'Governments and consumers alike have placed an increased emphasis on environmental concerns over the past several years. As a result, sustainability reporting is quickly shifting from a voluntary initiative to a mandatory undertaking. Strong relationships with transportation and logistics providers are going to be more important than ever as shippers learn to work within the regulations and expectations that come along with this “new normal."',
-      site: 'Freightwaves',
-      image: '/images/news/consultative.png',
-      url: 'https://www.freightwaves.com/news/from-voluntary-to-mandatory-consultative-expertise-in-sustainability-compliance',
-    },
-    {
-      title: '4 steps to improving compliance and operations in 2023',
-      subtitle: 'New regulations and proposals shouldn’t be the only things on fleets\’ minds this year',
-      synopsis: 'Compliance and operations work hand in hand, and this year, fleets have put improving in both categories on their New Year’s resolutions lists.',
-      site: 'Freightwaves',
-      image: 'https://www.freightwaves.com/uploads/2023/02/22/Petro_Joplin_44_Aerial-155_IF-1-1200x674.jpg',
-      url: 'https://www.freightwaves.com/news/4-steps-to-improving-compliance-and-operations-in-2023',
-    },
-    {
-      title: 'CARB\'s Clean Truck Check testing pushed back to 2025',
-      subtitle: 'This delay is only for required inspections, meaning fleets and owner/operators are still expected to register and pay fees.',
-      synopsis: 'Noregon reported that The California Air Resources Board (CARB) announced that it has pushed back the date for required Clean Truck Check Act inspections until January 1, 2025. This delay is only for required inspections, meaning fleets and owner/operators are still expected to register and pay fees.',
-      site: 'Fleet Equipment Magazine',
-      image: 'https://marvel-b1-cdn.bc0a.com/f00000000269980/s18391.pcdn.co/wp-content/uploads/2019/01/truck-lights-generic.jpg',
-      url: 'https://www.fleetequipmentmag.com/carbs-clean-truck-check-delayed/',
-    },
- ];
+ let showModal = false;
 
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
+ const csaRange = { range:15, buffer:15, today: 15};
+ const safetyRange = { range:100, buffer:100, today:153};
 
- let trucksOutOfCompliance = 8;
- let totalTrucks = 103;
- let driversOutOfCompliance = 3;
- let totalDrivers = 97;
-
- let donutChartData = 
-   { 
-   trucks:  [
-     { label: "Out of Compliance", value: 8, color: "#ffa500" },
-     { label: "Compliant", value: 95, color: "#00bb00" },
-   ],
-   drivers:  [
-     { label: "Out of Compliance", value: 12, color: "#ffa500" },
-     { label: "Compliant", value: 94, color: "#00bb00" },
-   ],
-   };
- let showPercentages = true;
- 
 </script>
 
-<style>
- .score {
-   font-size: 60px;
- }
- .score-label {
-   font-size: 25px;
- }
- .csa-score {
-   color: green;
- }
- .safety-score {
-   color: orange;
- }
-
- .dashboard-grid {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 1.5rem;
- }
-
- .chart {
-   width: 100%;
-   height: 300px;
- }
-
-</style>
-
 <main class="flex-1 overflow-auto">
-
   <div class="grid grid-cols-2 gap-6 mb-6">
-    <div class="grid gap-2">
       <Card>
-	<CardHeader class="pb-2">
-	  <CardTitle>Your compliance by the numbers</CardTitle>
-	</CardHeader>
 	<CardContent >
           <div class="flex items-center">
-            <div class="grid grid-cols-2 gap-8 pl-2 pr-2 justify-items-stretch">
               <div class="flex items-center csa-score">
-                <div class="mr-4" style="scale:3"><LandmarkOutline /></div>
-                <div class="score">15</div>
-                <div class="score-label pl-2">CSA Score</div>
+                <div class="ml-4 mr-4" style="scale:3"><LandmarkOutline /></div>
+                <div class="score ml-4">{csaRange.today}</div>
+                <div class="score-label ml-3">Today's CSA Score</div>
               </div>
-              <div class="flex items-center safety-score">
-                <div class="mr-4" style="scale:3"><ShieldCheckSolid /></div>
-                <div class="score">153</div>
-                <div class="score-label pl-2">Safety Score</div>
-              </div>
-            </div>
           </div>
           <div>
             <div class="flex items-center">
-            <div class="chart">
-              <DonutChart
-                title="Vehicles"
-                data={donutChartData.trucks}
-                {showPercentages}
-              />
-            </div>
-            <div class="chart">
-              <DonutChart
-                title="Drivers"
-                data={donutChartData.drivers}
-                {showPercentages}
-              />
+              <div class="chart">
+                <ComplianceHistoryChart
+                  chartTitle="Your CSA Score Over Time"
+                  metricType="csaScore"
+                  dataRange={csaRange}
+                  color="green"
+                />
+              </div>
             </div>
           </div>
 	</CardContent>
       </Card>
-    </div>
+      <Card>
+	<CardContent >
+          <div class="flex items-center">
+              <div class="flex items-center safety-score">
+                <div class="mr-4" style="scale:3"><ShieldCheckSolid /></div>
+                <div class="score">{safetyRange.today}</div>
+                <div class="score-label pl-2">Today's Safety Score</div>
+              </div>
+          </div>
+          <div>
+            <div class="flex items-center">
+              <div class="chart">
+                <ComplianceHistoryChart
+                  chartTitle="Your Safety Score Over Time"
+                  metricType="safetyScore"
+                  dataRange={safetyRange}
+                  color="orange"
+                />
+              </div>
+            </div>
+          </div>
+	</CardContent>
+      </Card>
+  </div>
+
     <Card>
-      <CardHeader class="pb-2">
-	<CardTitle>Summary of action items</CardTitle>
+      <CardHeader class="pb-4">
+	<CardTitle>Important Actions to Take</CardTitle>
       </CardHeader>
       <CardContent>
         <Table hoverable={true}>
           <TableHead>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Open items</TableHeadCell>
-            <TableHeadCell>Action</TableHeadCell>
+            <TableHeadCell>Time Sensitive</TableHeadCell>
+            <TableHeadCell>Days remaining</TableHeadCell>
+            <TableHeadCell>&nbsp;</TableHeadCell>
           </TableHead>
-          <TableBody class="bg-white divide-y divide-gray-200">
-            {#each actionItems as item}
+          <TableBody>
+            {#each reviewItems as item}
               <TableBodyRow>
-                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.type}</TableBodyCell>
-                <TableBodyCell class="px-6 whitespace-nowrap text-sm font-large text-gray-600">{item.openItems}</TableBodyCell>
+                <TableBodyCell class="whitespace-nowrap text-sm font-large text-gray-600 p-2">{item.name}</TableBodyCell>
+                <TableBodyCell class="whitespace-nowrap text-sm font-large text-gray-600 p-2p-2">{item.openItems}</TableBodyCell>
+                <TableBodyCell class="whitespace-nowrap text-sm font-large font-bold text-red-600 m-0">
+                  {#if (item.openItems > 0) }
+                    <a href={item.url}>
+                      <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-red-100 text-gray-700} cursor-pointer uppercase">
+                        {item.openItems} item{item.openItems > 1 ? 's' : ''} to review
+                      </Badge>
+                    </a>
+                  {/if}
+                </TableBodyCell>
+                <TableBodyCell >
+                  {getSoonestDaysRemaining(item) > 0 ? getSoonestDaysRemaining(item) + ' days' : ''} 
+                </TableBodyCell>
                 <TableBodyCell class="px-6 whitespace-nowrap text-sm font-medium">
                   <Button href={item.url} color="light" class="text-grey-600 hover:text-gray-900 p-2">See details →</Button>
                 </TableBodyCell>
@@ -179,19 +109,8 @@
         </Table>
       </CardContent>
     </Card>
-  </div>
 
-  <div class="dashboard-grid">
-      <Card style="height:400px;overflow:auto;">
-        <CardContent>
-          <div class="font-bold pl-2 pt-4 pb-2">
-            Ask the AI!
-          </div>
-          <ChatBot />
-        </CardContent>
-      </Card>
-
-      <Card style="height:400px;overflow:auto;">
+      <Card class="mt-4" style="height:500px;overflow:auto;">
         <CardHeader>
           <h2 class="text-lg font-bold">Latest news</h2>
         </CardHeader>
@@ -214,5 +133,63 @@
           </div>
         </CardContent>
       </Card>
+
+
+
+  <Modal
+    bind:open={showModal}
+    backdropClass="fixed inset-0 z-40 bg-white/70"
+    size="custom"
+    class="w-[35vw] h-[90vh] rounded-lg overflow-hidden fixed right-20 top-1/2 -translate-y-1/2 bg-gray-100"
+    autoclose
+    outsideclose
+    border
+  >
+    <div class="h-full bg-gray-100">
+      <button
+        on:click={() => showModal = false}
+        class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+        >
+      </button>
+      <div class="mb-4 text-2xl font-medium text-gray-900 dark:text-white">
+        Ask the AI!
+      </div>
+      <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        <ChatBot />
+      </p>
+    </div>
+  </Modal>
+
+  <div class="fixed top-4 right-4"> <!-- AI button -->
+    <Button
+      on:click={() => showModal = true}
+      class="p-3 bg-gray-300 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-gray-400 transition-colors duration-200"
+      >
+      <WandSparkles class="text-gray-600 group-hover:text-gray-800" size={15} />
+    </Button>
   </div>
+
+
 </main>
+
+<style>
+ .score {
+   font-size: 60px;
+ }
+ .score-label {
+   font-size: 25px;
+   font-weight:600;
+ }
+ .csa-score {
+   color: green;
+ }
+ .safety-score {
+   color: orange;
+ }
+
+ .chart {
+   width: 100%;
+   height: 300px;
+ }
+
+</style>

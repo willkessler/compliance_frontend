@@ -4,100 +4,45 @@
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
 
- let activeTab = 'all events';
- const tabs = ['All events', 'Needs attention', 'Upcoming'];
+ import { incidents, getIncidentById, getIncidentsByCategory, 
+        getIncidentTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/incidentData';
+ import { drivers, getDriverById } from '$lib/data/driverData';
+ import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
-  const events = [
-    // todo issues
-    { id: 1292, name: 'Tire rotation for Truck #2348 CAW', icon: TruckSolid, 
-    type: 'Maintenance', status: 'Open', occurrenceDate: 'Apr 23, 2024', dueDate: 'Apr 23, 2024' },
-    { id: 33828, name: 'Broken taillight for Truck #4396', icon: TruckSolid, 
-    type: 'Accident', status: 'Open', occurrenceDate: 'Apr 18, 2024', dueDate: 'Apr 18, 2024' },
-
-    // open issues
-    { id: 81829, name: 'Moving violation, Driver #8878', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024', icon: UsersOutline },
-    { id: 99928, name: 'Parking violation, Driver #9219', type: 'Driver issue', status: 'Open', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024', icon: UsersOutline },
-    { id: 10023, name: 'Vehicle conversion to electric', type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024',icon: FileLinesOutline },
-
-    // documents, completed
-    { id: 48482, name: 'Payment from Lana Byrd', icon: FileLinesOutline, 
-    type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 15, 2024', dueDate: 'Apr 15, 2024' },
-    { id: 292, name: 'Payment refund to #00910', icon: FileLinesOutline, 
-    type: 'Documents', status: 'In progress', occurrenceDate: 'Apr 23, 2024', dueDate: 'Apr 23, 2024' },
-    { id: 79182, name: 'UCR processing error', type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024', icon: FileLinesOutline },
-    { id: 59382, name: 'Payment from Jesse Leos', 
-    type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 15, 2024', dueDate: 'Apr 15, 2024', icon: FileLinesOutline },
-    { id: 68282, name: 'Contract from Themsberg LLC', type: 'Documents', status: 'Completed', occurrenceDate: 'Apr 11, 2024', dueDate: 'Apr 11, 2024',icon: FileLinesOutline },
-  ];
-
-  function getTypeColor(type) {
-    switch (type.toLowerCase()) {
-      case 'maintenance':
-        return 'purple';
-      case 'accident':
-      case 'incident':
-        return 'red';
-      case 'in progress':
-      case 'payment':
-        return 'blue';
-      case 'completed':
-        return 'green';
-      case 'driver issue':
-        return 'yellow';
-      case 'documents':
-        return 'gray';
-      default:
-        return 'gray';
-    }
-  }
-
- function getStatusColor(status) {
-   switch (status.toLowerCase()) {
-     case 'done':
-     case 'completed':
-       return 'green';
-     case 'open':
-       return 'gray';
-     case 'in progress':
-       return 'blue';
-     case 'other status':
-       return 'blue';
-     default:
-       return 'gray';
-   }
- }
+ const categories = ['On the Road', 'Maintenance', 'Records', 'All Incident Categories', ];
+ let activeCategory = 'On the Road';
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
-  let pages = [
-    { name: 1, href: '/components/pagination?page=1' },
-    { name: 2, href: '/components/pagination?page=2' },
-    { name: 3, href: '/components/pagination?page=3' },
-    { name: 4, href: '/components/pagination?page=4' },
-    { name: 5, href: '/components/pagination?page=5' }
-  ];
+ let pages = [
+   { name: 1, href: '/components/pagination?page=1' },
+   { name: 2, href: '/components/pagination?page=2' },
+   { name: 3, href: '/components/pagination?page=3' },
+   { name: 4, href: '/components/pagination?page=4' },
+   { name: 5, href: '/components/pagination?page=5' }
+ ];
 
-  $: {
-    pages.forEach((page) => {
-      let splitUrl = page.href.split('?');
-      let queryString = splitUrl.slice(1).join('?');
-      const hrefParams = new URLSearchParams(queryString);
-      let hrefValue = hrefParams.get('page');
-      if (hrefValue === activeUrl) {
-        page.active = true;
-      } else {
-        page.active = false;
-      }
-    });
-    pages = pages;
-  }
+ $: {
+   pages.forEach((page) => {
+     let splitUrl = page.href.split('?');
+     let queryString = splitUrl.slice(1).join('?');
+     const hrefParams = new URLSearchParams(queryString);
+     let hrefValue = hrefParams.get('page');
+     if (hrefValue === activeUrl) {
+       page.active = true;
+     } else {
+       page.active = false;
+     }
+   });
+   pages = pages;
+ }
 
-  const previous = () => {
-    alert('Previous btn clicked. Make a call to your server to fetch data.');
-  };
-  const next = () => {
-    alert('Next btn clicked. Make a call to your server to fetch data.');
-  };
+ const previous = () => {
+   alert('Previous btn clicked. Make a call to your server to fetch data.');
+ };
+ const next = () => {
+   alert('Next btn clicked. Make a call to your server to fetch data.');
+ };
 </script>
 
 <!-- these don't work for some reason -->
@@ -117,49 +62,60 @@
 
 <div class="p-4">
 
-  <h1 class="text-3xl font-bold mb-4">Incident manager</h1>
+  <h1 class="text-3xl font-bold mb-4">Incidents Manager</h1>
 
-  <div class="inline-block bg-white border rounded-lg p-0">
-      {#each tabs as tab}
+  <div class="flex justify-start items-center ">
+    <div class="font-bold mr-2">Incident category:</div>
+    <div class="inline-block bg-white border rounded-lg p-0">
+      {#each categories as category}
         <Button
-          class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeTab === tab.toLowerCase() ? 'bg-gray-300' : ''}"
-          on:click={() => activeTab = tab.toLowerCase()}
+          class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeCategory.toLowerCase() === category.toLowerCase() ? 'bg-gray-300' : ''}"
+          on:click={() => activeCategory = category.toLowerCase()}
           >
-          {tab}
+          {category}
         </Button>
       {/each}
+    </div>
   </div>
-
+  
   <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
     <TableHead class="bg-gray-50 whitespace-nowrap">
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name of event</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type of event</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Occurrence Date</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name of event</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Event Type</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Occurred On</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Due On</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Priority</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
-      {#each events as event}
+      {#each getIncidentsByCategory(activeCategory) as incident}
         <TableBodyRow>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-gray-600">{event.name}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getTypeColor(event.type)}-100">
-              {#if event.icon !== undefined}
-                <svelte:component this={event.icon} class=" text-{getTypeColor(event.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+            {getIncidentTitle(incident)}
+          </TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">
+            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getTypeColor(incident.type)}-200">
+              {#if incident.icon !== undefined}
+                <svelte:component this={incident.icon} class=" text-{getTypeColor(incident.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
-                {event.type}
+                {incident.type}
+            </Badge>
+          </TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.dueDate}</TableBodyCell>
+          <TableBodyCell class="whitespace-nowrap text-sm ">
+            <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getPriorityColor(incident.priority)}-200 text-gray-700} ">
+              {incident.priority}
             </Badge>
           </TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(event.status)}-200 text-gray-700} ">
-              {event.status}
+            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(incident.status)}-200 text-gray-{incident.status.toLowerCase() === 'closed' ? '400' : '700'} ">
+              {incident.status}
             </Badge>
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.occurrenceDate}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.dueDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/incidents/incident/{event.id}" color="light" class="text-grey-600 hover:text-gray-900 p-2 min-w-32">See details →</Button>
+            <Button href="/manage/incidents/incident/{incident.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
           </TableBodyCell>
         </TableBodyRow>
       {/each}

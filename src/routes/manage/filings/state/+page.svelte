@@ -1,32 +1,12 @@
-<!-- http://svelte0.dev/ui/66e1d2bbc8a8ce12e8276942 -->
 <script lang="ts">
  import { Badge, Button,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
-  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
-  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
+ import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
+ import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
+ import { CheckCircleOutline } from 'flowbite-svelte-icons';
  import { DownloadOutline } from 'flowbite-svelte-icons';
-
-  const stateFilings = [
-  { name: "International Fuel Tax Agreement (IFTA)", dueDate: "Dec 12, 2024", status: "Incomplete" },
-  { name: "International Registration Plan (IRP)", dueDate: "Dec 3, 2024", status: "Incomplete" },
-  { name: "Heavy Highway Vehicle Use Tax (HVUT)", dueDate: "Oct 31, 2024", status: "Review details" },
-  { name: "CA MCP renewal", dueDate: "Jan 31, 2025", status: "Review details" },
-  { name: "CA DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
-  { name: "TX DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
-  { name: "CARB", dueDate: "Oct 15, 2024", status: "Complete" },
-  ];
-
-  const historicalFilings = [
-  { type: "CA MCP renewal", date: "Mar 23, 2024" },
-  { type: "Heavy Highway Vehicle Use Tax (HVUT)", date: "Aug 31, 2023" },
-  { type: "CA DOT renewal", date: "Sep 14, 2024" },
-  ];
-
- function getStatusColor(status) {
-   return (status === "Complete" ? 
-           "bg-green-100 text-green-800" : (status === "Review details" ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-800")
-   );
- }
+ import { BellActiveSolid } from 'flowbite-svelte-icons';
+ import { getStatusColor, displayDueDate, filings } from '$lib/data/filingData';
 
 </script>
 
@@ -39,22 +19,45 @@
     <p class="text-muted-foreground mb-6">Based on your business, these are all of the necessary filings. Historical filings are available for download.</p>
 
     <Table>
-      <TableHead>
+      <TableHead class="bg-gray-50 whitespace-nowrap text-gray-500">
 	<TableHeadCell>Filing name</TableHeadCell>
 	<TableHeadCell>Due date</TableHeadCell>
+	<TableHeadCell>Time left</TableHeadCell>
 	<TableHeadCell>Status</TableHeadCell>
+	<TableHeadCell >Take Action</TableHeadCell>
       </TableHead>
       <TableBody>
-	{#each stateFilings as filing}
+	{#each filings.state.main as filing}
 	<TableBodyRow>
-	  <TableBodyCell>{filing.name}</TableBodyCell>
-	  <TableBodyCell>{filing.dueDate}</TableBodyCell>
-	  <TableBodyCell>
+	  <TableBodyCell class="text-gray-500">{filing.name}</TableBodyCell>
+	  <TableBodyCell class="text-gray-500">{filing.dueDate}</TableBodyCell>
+	  <TableBodyCell class="text-gray-500">
+              {#if displayDueDate(filing).show}
+                <div class="flex font-medium text-{displayDueDate(filing).color}-400">
+                  <div>
+                    <BellActiveSolid class="mr-2 text-{displayDueDate(filing).color}-400" />
+                  </div>
+                  <div>
+                    {displayDueDate(filing).text}
+                  </div>
+                </div>
+              {/if}
+          </TableBodyCell>
+	  <TableBodyCell class="text-gray-500">
             <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
-	      <CircleAlert class="h-4 w-4 mr-2" />
+              {#if filing.status.toLowerCase() === 'complete'}
+                <CheckCircleOutline class="h-4 w-4 ml-2" />&nbsp;
+              {:else}
+	        <CircleAlert class="h-4 w-4 ml-2" />&nbsp;
+              {/if}
 	      {filing.status}
 	    </Badge>
 	  </TableBodyCell>
+
+          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <Button href="/manage/filings/state" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
+          </TableBodyCell>
+
 	</TableBodyRow>
 	{/each}
       </TableBody>
@@ -67,19 +70,19 @@
   <div class="flex-1 py-6">
     <h1 class="text-xl font-bold mb-3">Historical filings</h1>
     <Table hoverable={true}>
-      <TableHead>
-	<TableHeadCell>Filing type</TableHeadCell>
-	<TableHeadCell>Date</TableHeadCell>
-	<TableHeadCell>Action</TableHeadCell>
+      <TableHead class="bg-gray-50 whitespace-nowrap">
+	<TableHeadCell class="text-customGray">Filing type</TableHeadCell>
+	<TableHeadCell class="text-customGray">Date</TableHeadCell>
+	<TableHeadCell class="text-customGray">Action</TableHeadCell>
       </TableHead>
       <TableBody>
-	{#each historicalFilings as filing}
+	{#each filings.state.historical as filing}
 	  <TableBodyRow>
-	    <TableBodyCell>{filing.type}</TableBodyCell>
-	    <TableBodyCell>{filing.date}</TableBodyCell>
-	    <TableBodyCell >
+	    <TableBodyCell class="text-customGray">{filing.type}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">{filing.date}</TableBodyCell>
+	    <TableBodyCell class="text-customGray">
               <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		<Button class="text-gray-800 bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
+		<Button class="text-gray-500 bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
               </a>
 	    </TableBodyCell>
 	  </TableBodyRow>

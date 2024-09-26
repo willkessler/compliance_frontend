@@ -16,18 +16,39 @@
 
   const apps: App[] = [
     {
-      name: "California BAR CTP Integration",
-      logo: "bar.webp",
-      description: "Streamline smog testing and reporting for government vehicles in California",
-      tags: ["NEWLY ADDED", "COMPLIANCE"],
+      name: "Samsara",
+      logo: "samsara.png",
+      description: "Integrate with Samsara and integrate all of its various ELD data streams.",
+      tags: ["MAINTENANCE", "COMPLIANCE"],
       categories: ["Compliance"]
     },
     {
-      name: "RyderConnect eDVIR",
-      logo: "RyderConnect.webp",
-      description: "Sync defects and repairs with Ryder to stay compliant and maximize uptime.",
+      name: "Motive",
+      logo: "motive.png",
+      description: "Integrate with Motive and integrate their ELD data streams.",
       tags: ["MAINTENANCE", "COMPLIANCE"],
-      categories: ["Compliance", "Maintenance"]
+      categories: ["Compliance"]
+    },
+    {
+      name: "McLeod LoadMaster",
+      logo: "mcleod.webp",
+      description: "Enrich your transportation management with telematics data from Samsara and a full workflow integration.",
+      tags: ["COMPLIANCE"],
+      categories: ["Telematics", "Compliance"],
+    },
+    {
+      name: "Fullbay Connect",
+      logo: "Fullbay_logo.webp",
+      description: "Unlock new ways to manage your auto service business in Fullbay Connect by gaining visibility into vehicle location and diagnostics with Samsara.",
+      tags: ["COMPLIANCE", "MAINTENANCE"],
+      categories: ["Maintenance",  "Compliance"],
+    },
+    {
+      name: "LogRock",
+      logo: "logrock.webp",
+      description: "Connect your Samsara and FMCSA data to find and resolve compliance risks before they occur.",
+      tags: ["MAINTENANCE", "COMPLIANCE"],
+      categories: ["Compliance"]
     },
     {
       name: "Vusion",
@@ -37,11 +58,11 @@
       categories: ["Compliance", "Fuel Management"]
     },
     {
-      name: "Per Diem Plus",
-      logo: "PDP_logo.webp",
-      description: "Seamless integration of Samsara ELD and Per Diem Plus Fleets software.",
+      name: "RyderConnect eDVIR",
+      logo: "RyderConnect.webp",
+      description: "Sync defects and repairs with Ryder to stay compliant and maximize uptime.",
       tags: ["MAINTENANCE", "COMPLIANCE"],
-      categories: ["Maintenance"]
+      categories: ["Compliance", "Maintenance"]
     },
     {
       name: "InfoStream",
@@ -51,6 +72,13 @@
       categories: ["Safety & Coaching", "Compliance"]
     },
     {
+      name: "Per Diem Plus",
+      logo: "PDP_logo.webp",
+      description: "Seamless integration of Samsara ELD and Per Diem Plus Fleets software.",
+      tags: ["MAINTENANCE", "COMPLIANCE"],
+      categories: ["Maintenance"]
+    },
+    {
       name: "ProMiles",
       logo: "Frame-4.webp",
       description: "Simplify your fuel tax reporting with ProMiles.",
@@ -58,10 +86,10 @@
       categories: ["Fuel Management", "Compliance"]
     },
     {
-      name: "LogRock",
-      logo: "logrock.webp",
-      description: "Connect your Samsara and FMCSA data to find and resolve compliance risks before they occur.",
-      tags: ["MAINTENANCE", "COMPLIANCE"],
+      name: "California BAR CTP Integration",
+      logo: "bar.webp",
+      description: "Streamline smog testing and reporting for government vehicles in California",
+      tags: ["NEWLY ADDED", "COMPLIANCE"],
       categories: ["Compliance"]
     },
   ];
@@ -93,7 +121,7 @@
   </p>
 
   <div class="flex mb-8">
-    <div class="relative flex-grow mr-4">
+   <div class="relative flex-grow mr-4">
       <Search class="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
       <Input type="text" placeholder="Search" class="pl-10" bind:value={searchQuery} />
     </div>
@@ -121,7 +149,9 @@
       {#each filteredApps as app}
         <Card>
           <CardHeader>
-            <img style="height:120px" src={'/images/logos/' + app.logo} alt={app.name} class="h-30 mb-2" />
+            <div style="min-height:220px">
+              <img style="max-width:200px" src={'/images/logos/' + app.logo} alt={app.name} class="h-30 mb-2" />
+            </div>
             <CardTitle>{app.name}</CardTitle>
           </CardHeader>
           <CardContent>

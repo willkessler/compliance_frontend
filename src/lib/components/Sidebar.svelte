@@ -10,13 +10,15 @@
         } from 'flowbite-svelte-icons';
 
  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownWrapper, SidebarDropdownItem } from 'flowbite-svelte';
+ import { getOpenIncidentCount } from '$lib/data/incidentData';
+
  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
 
  $: activeUrl = $page.url.pathname;
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
-   { href: '/manage/incidents', label: 'Incident Manager', icon: HomeOutline, color: 'text-red-600', pillCount: 4 },
+   { href: '/manage/incidents', label: 'Incidents Manager', icon: HomeOutline, color: 'text-red-600', pillCount: getOpenIncidentCount() },
    { href: '/manage/fleet', label: 'Fleet Compliance', icon: Truck, color: 'text-inherit',
    subItems: [
      { href: '/manage/fleet/vehicles', label: 'Vehicles' },
@@ -33,7 +35,7 @@
 
  const adminItems = [
    { href: '/manage/ai', label: 'AI-Compliance Check', icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
-   { href: '/manage/integrations', label: 'Connections', icon: ShareNodesOutline, color: 'text-inherit' },
+   { href: '/manage/integrations', label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
    { href: '/help', label: 'Help', icon: QuestionCircleOutline, color: 'text-inherit' },
    { href: '/manage/organization', label: 'Admin', icon: Settings , color: 'text-inherit' },
  ];
@@ -78,10 +80,10 @@
               isOpen={true}
               >
               <svelte:fragment slot="icon">
-                <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               </svelte:fragment>
               {#each item.subItems as subItem}
-                <SidebarDropdownItem class="pl-10 text-sm hover:bg-gray-300" label={subItem.label} href={subItem.href} active={activeUrl === subItem.href} />
+                <SidebarDropdownItem class="pl-10 text-sm hover:bg-gray-300" label={subItem.label} href={subItem.href} active={activeUrl.startsWith(subItem.href)} />
               {/each}
             </SidebarDropdownWrapper>
           </div>
@@ -93,11 +95,11 @@
             class={item.label === 'Incident Manager' && activeUrl.startsWith('/manage/incidents') ? 'bg-gray-300 hover:bg-gray-300' : ''}
           >
             <svelte:fragment slot="icon">
-              <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
             </svelte:fragment>
             <svelte:fragment slot="subtext">
               {#if item.pillCount !== undefined}
-                <span class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-primary-200 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
+                <span class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
               {/if}
             </svelte:fragment>
           </SidebarItem>
@@ -108,7 +110,7 @@
       {#each adminItems as item}
         <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>>
           <svelte:fragment slot="icon">
-            <svelte:component this={item.icon} class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+            <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
           </svelte:fragment>
           <svelte:fragment slot="subtext">
             {#if item.sideLabel !== undefined}

@@ -1,4 +1,5 @@
 <script>
+ // adapted from https://svelte.dev/repl/257ba782208740038e04badd0b1c5ef5?version=4.1.1
   import { scaleOrdinal } from "d3-scale";
   import { pie, arc } from "d3-shape";
 
