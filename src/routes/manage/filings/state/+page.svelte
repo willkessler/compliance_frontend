@@ -18,8 +18,8 @@
     </div>
     <p class="text-muted-foreground mb-6">Based on your business, these are all of the necessary filings. Historical filings are available for download.</p>
 
-    <Table>
-      <TableHead class="bg-gray-50 whitespace-nowrap text-gray-500">
+    <Table hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap text-gray-500">
 	<TableHeadCell>Filing name</TableHeadCell>
 	<TableHeadCell>Due date</TableHeadCell>
 	<TableHeadCell>Time left</TableHeadCell>
@@ -28,7 +28,7 @@
       </TableHead>
       <TableBody>
 	{#each filings.state.main as filing}
-	<TableBodyRow>
+	<TableBodyRow class="cursor-pointer">
 	  <TableBodyCell class="text-gray-500">{filing.name}</TableBodyCell>
 	  <TableBodyCell class="text-gray-500">{filing.dueDate}</TableBodyCell>
 	  <TableBodyCell class="text-gray-500">
@@ -44,7 +44,7 @@
               {/if}
           </TableBodyCell>
 	  <TableBodyCell class="text-gray-500">
-            <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
+            <Badge class="{getStatusColor(filing.status)} px-2 py-2 rounded rounded-[6px] min-w-32">
               {#if filing.status.toLowerCase() === 'complete'}
                 <CheckCircleOutline class="h-4 w-4 ml-2" />&nbsp;
               {:else}
@@ -69,20 +69,20 @@
 
   <div class="flex-1 py-6">
     <h1 class="text-xl font-bold mb-3">Historical filings</h1>
-    <Table hoverable={true}>
-      <TableHead class="bg-gray-50 whitespace-nowrap">
+    <Table hoverable>
+      <TableHead class="whitespace-nowrap bg-customGray/15">
 	<TableHeadCell class="text-customGray">Filing type</TableHeadCell>
 	<TableHeadCell class="text-customGray">Date</TableHeadCell>
 	<TableHeadCell class="text-customGray">Action</TableHeadCell>
       </TableHead>
       <TableBody>
 	{#each filings.state.historical as filing}
-	  <TableBodyRow>
+	  <TableBodyRow class="cursor-pointer">
 	    <TableBodyCell class="text-customGray">{filing.type}</TableBodyCell>
 	    <TableBodyCell class="text-customGray">{filing.date}</TableBodyCell>
 	    <TableBodyCell class="text-customGray">
               <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		<Button class="text-gray-500 bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
+		<Button class="text-gray-500 bg-gray-300 hover:bg-gray-400 py-2 min-w-32 text-xs"><DownloadOutline />Download</Button>
               </a>
 	    </TableBodyCell>
 	  </TableBodyRow>

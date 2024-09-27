@@ -86,16 +86,16 @@
   <h1 class="text-lg font-bold mb-4 mt-6">Driver details</h1>
 
   <div>
-    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-      <TableHead class="bg-gray-50 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap">
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Start Date</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">End date</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each drivers.slice(0,3) as driver}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.startDate}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.endDate}</TableBodyCell>
           </TableBodyRow>

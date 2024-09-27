@@ -1,4 +1,5 @@
 <script lang="ts">
+ import { goto } from '$app/navigation';
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ExclamationCircleSolid, MapPinAltSolid, ThumbsUpSolid } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
@@ -64,6 +65,10 @@
     alert('Next btn clicked. Make a call to your server to fetch data.');
   };
 
+ function navigateToVehicleDetails(vehicleId) {
+   goto(`/manage/fleet/vehicles/vehicle/${vehicleId}`);
+ }
+
 </script>
 
 <div class="flex items-end justify-between pr-4">
@@ -78,8 +83,8 @@
   </div>
 </div>
 
-<Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
-  <TableHead class="bg-gray-50 whitespace-nowrap">
+<Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
+  <TableHead class=" bg-customGray/15 whitespace-nowrap">
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Mileage</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
@@ -89,14 +94,14 @@
   </TableHead>
   <TableBody class="bg-white divide-y divide-gray-200">
     {#each vehicles as vehicle}
-      <TableBodyRow>
+      <TableBodyRow on:click={() => navigateToVehicleDetails(vehicle.id)} class="cursor-pointer">
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">Truck #{vehicle.name}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
         <TableBodyCell>
-          <Badge color={getStatusColor(vehicle.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+          <Badge class="bg-{getStatusColor(vehicle.status)}-200 text-customGray px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {#if vehicle.icon !== undefined}
-                <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-400 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
             {upgradeStatus(vehicle)}
           </Badge>
@@ -108,7 +113,12 @@
           </div>
           </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button href="/manage/fleet/vehicles/vehicle/{vehicle.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
+          <Button 
+            on:click={() => navigateToVehicleDetails(vehicle.id)} 
+            color="light" 
+            class="text-customGray hover:text-customGray p-2 min-w-32">
+            See details →
+          </Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}

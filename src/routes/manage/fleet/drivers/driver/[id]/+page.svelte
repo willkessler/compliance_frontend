@@ -108,8 +108,8 @@
   <h1 class="text-lg font-bold mb-4 mt-6">Credentials</h1>
 
   <div>
-    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-      <TableHead class="bg-gray-50 whitespace-nowrap">
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
@@ -152,8 +152,8 @@
   <h1 class="text-lg font-bold mb-4 mt-6">Activity history</h1>
 
   <div>
-    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-      <TableHead class="bg-gray-50 whitespace-nowrap">
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
