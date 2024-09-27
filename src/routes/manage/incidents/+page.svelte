@@ -46,7 +46,7 @@
  };
 
  function navigateToIncidentDetails(incidentId) {
-   goto(`/manage/incidents/incident/${incidentId}`);
+   goto(`/manage/incidents/incident/${incidentId}`, { replaceState: false });
  }
 
 </script>
