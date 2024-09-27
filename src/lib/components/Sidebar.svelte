@@ -40,7 +40,7 @@
    { href: '/manage/organization', label: 'Admin', icon: Settings , color: 'text-inherit' },
  ];
  
- let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600';
+ let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700  dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600';
  let nonActiveClass = 'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700';
 
  let openDropdowns = new Set();
@@ -68,7 +68,7 @@
  }
 </script>
 
-<Sidebar {activeUrl} {activeClass} {nonActiveClass} >
+<Sidebar {activeUrl} {activeClass} {nonActiveClass} style="border-right:1px solid #e5e7eb;">
   <SidebarWrapper class="flex flex-col h-full">
     <div class="ml-3 mt-4 text-lg text-gray-600">Trucking Co.</div>
     <SidebarGroup class="flex-grow" border>

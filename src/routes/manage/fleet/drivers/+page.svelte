@@ -77,7 +77,7 @@
 
 <div class="flex items-end justify-between pr-4">
   <div>
-    <h1 class="text-3xl font-bold ">Drivers</h1>
+    <h1 class="px-4 text-3xl font-bold ">Drivers</h1>
   </div>
   <div>
     <Label>
