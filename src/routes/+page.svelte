@@ -16,26 +16,26 @@
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
  const csaRange = { range:15, buffer:15, today: 15};
- const safetyRange = { range:100, buffer:100, today:153};
+ const safetyRange = { range:100, buffer:100, today: 153};
 
 </script>
 
 <main class="flex-1 overflow-auto">
   <div class="grid grid-cols-2 gap-6 mb-6">
       <Card>
-	<CardContent >
+	<CardContent style="padding-top: 1rem;">
           <div class="flex items-center">
               <div class="flex items-center csa-score">
-                <div class="ml-4 mr-4" style="scale:3"><LandmarkOutline /></div>
-                <div class="score ml-4">{csaRange.today}</div>
-                <div class="score-label ml-3">Today's CSA Score</div>
+                <div class="ml-4 mr-4" style="scale:2"><LandmarkOutline /></div>
+                <div class="score-label ml-2">Today's CSA Score</div>
+                <div class="score ml-2" style="font-size: 2rem;">{csaRange.today}</div>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
                 <ComplianceHistoryChart
-                  chartTitle="Your CSA Score Over Time"
+                  chartTitle="Score by week"
                   metricType="csaScore"
                   dataRange={csaRange}
                   color="green"
@@ -46,19 +46,19 @@
 	</CardContent>
       </Card>
       <Card>
-	<CardContent >
+	<CardContent style="padding-top: 1rem;">
           <div class="flex items-center">
               <div class="flex items-center safety-score">
-                <div class="mr-4" style="scale:3"><ShieldCheckSolid /></div>
-                <div class="score">{safetyRange.today}</div>
+                <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
                 <div class="score-label pl-2">Today's Safety Score</div>
+                <div class="score" style="font-size: 2rem;">{safetyRange.today}</div>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
                 <ComplianceHistoryChart
-                  chartTitle="Your Safety Score Over Time"
+                  chartTitle="Score by week"
                   metricType="safetyScore"
                   dataRange={safetyRange}
                   color="orange"
