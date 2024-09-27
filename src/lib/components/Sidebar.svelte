@@ -1,7 +1,7 @@
 <script lang="ts">
  import { page } from '$app/stores';
  import { Separator } from "$lib/components/ui/separator";
- import { LayoutDashboard, ScrollText, Building2, Truck, Users, Link, CircleAlert, Info, WandSparkles, Settings } from "lucide-svelte";
+ import { LayoutDashboard, ScrollText, Building2, Truck, Users, Link, CircleAlert, Info, WandSparkles, Settings, Database } from "lucide-svelte";
  import { 
         HomeOutline, 
         QuestionCircleOutline,
@@ -34,6 +34,7 @@
  ];
 
  const adminItems = [
+    { href: '/manage/userFiles', label: 'Your Files', icon: Database, color: 'text-inherit' },
    { href: '/manage/ai', label: 'AI-Compliance Check', icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
    { href: '/manage/integrations', label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
    { href: '/help', label: 'Help', icon: QuestionCircleOutline, color: 'text-inherit' },
