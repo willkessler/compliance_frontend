@@ -65,7 +65,7 @@
   <h1 class="text-3xl font-bold mb-4">Incidents Manager</h1>
 
   <div class="flex justify-start items-center ">
-    <div class="font-bold mr-2">Incident category:</div>
+    <!-- <div class="font-med mr-2">Incident category</div> -->
     <div class="inline-block bg-white border rounded-lg p-0">
       {#each categories as category}
         <Button

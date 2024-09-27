@@ -84,7 +84,7 @@ export const actions = [
     items: [
       { 
         id: 1, 
-        name: "Call Tom's repair shop", 
+        name: "Repair shop", 
         totalMiles: '8,711', 
         description: 'Schedule a pickup time', 
         eventDate: 'Aug 31, 2024', 
@@ -94,9 +94,9 @@ export const actions = [
       },
       { 
         id: 2, 
-        name: "Payment from... ", 
+        name: "Replace ELD (Truck #325)", 
         totalMiles: '8,748', 
-        description: 'Payment from ...', 
+        description: 'Replace broken ELD', 
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 21, 2024',
         type: 'Onsite',
@@ -104,9 +104,9 @@ export const actions = [
       },
       { 
         id: 3, 
-        name: "Payment from... ", 
+        name: "File incident pictures", 
         totalMiles: '8,748', 
-        description: 'Payment from ...', 
+        description: 'Ask Driver #466', 
         eventDate: 'Sep 15, 2024', 
         dueDate: 'Sep 31, 2024',
         type: 'Email',
@@ -114,9 +114,9 @@ export const actions = [
       },
       { 
         id: 4, 
-        name: "Payment from... ", 
+        name: "Insurance claim", 
         totalMiles: '8,748', 
-        description: 'Payment from ...', 
+        description: 'File insurance claim', 
         eventDate: 'Sep 17, 2024', 
         dueDate: 'Nov 1, 2024',
         type: 'Call',
@@ -124,9 +124,9 @@ export const actions = [
       },
       { 
         id: 5, 
-        name: "Payment from... ", 
+        name: "Mechanic review", 
         totalMiles: '8,748', 
-        description: 'Payment from ...', 
+        description: 'Call Tom for review', 
         eventDate: 'Sep 19, 2024', 
         dueDate: 'Dec 1, 2024',
         type: 'Call',
