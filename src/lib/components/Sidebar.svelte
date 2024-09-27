@@ -18,7 +18,7 @@
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
-   { href: '/manage/incidents', label: 'Incidents Manager', icon: HomeOutline, color: 'text-red-600', pillCount: getOpenIncidentCount() },
+   { href: '/manage/incidents', label: 'Activity Manager', icon: HomeOutline, color: 'text-red-600', pillCount: getOpenIncidentCount() },
    { href: '/manage/fleet', label: 'Fleet Compliance', icon: Truck, color: 'text-inherit',
    subItems: [
      { href: '/manage/fleet/vehicles', label: 'Vehicles' },
@@ -92,7 +92,7 @@
           <SidebarItem
             label={item.label} 
             href={item.href}
-            class={item.label === 'Incident Manager' && activeUrl.startsWith('/manage/incidents') ? 'bg-gray-300 hover:bg-gray-300' : ''}
+            class={item.label === 'Activity Manager' && activeUrl.startsWith('/manage/incidents') ? 'bg-gray-300 hover:bg-gray-300' : ''}
           >
             <svelte:fragment slot="icon">
               <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />

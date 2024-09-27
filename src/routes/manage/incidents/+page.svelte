@@ -1,4 +1,5 @@
 <script>
+ import { goto } from '$app/navigation';
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ThumbsUpSolid, CheckCircleSolid, TruckSolid, UsersOutline, FileLinesOutline } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
@@ -9,8 +10,8 @@
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
- const categories = ['On the Road', 'Maintenance', 'Records', 'All Incident Categories', ];
- let activeCategory = 'On the Road';
+ const categories = ['Incidents', 'Maintenance', 'Records', 'All Types' ];
+ let activeCategory = 'All Types';
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
@@ -43,6 +44,11 @@
  const next = () => {
    alert('Next btn clicked. Make a call to your server to fetch data.');
  };
+
+ function navigateToIncidentDetails(incidentId) {
+   goto(`/manage/incidents/incident/${incidentId}`);
+ }
+
 </script>
 
 <!-- these don't work for some reason -->
@@ -62,10 +68,11 @@
 
 <div class="p-4">
 
-  <h1 class="text-3xl font-bold mb-4">Incidents Manager</h1>
+  <h1 class="text-3xl font-bold mb-4">Activity Manager</h1>
 
   <div class="flex justify-start items-center ">
-    <!-- <div class="font-med mr-2">Incident category</div> -->
+
+    <div class="font-med mr-2">Activity Type:</div>
     <div class="inline-block bg-white border rounded-lg p-0">
       {#each categories as category}
         <Button
@@ -78,8 +85,8 @@
     </div>
   </div>
   
-  <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
-    <TableHead class="bg-gray-50 whitespace-nowrap">
+  <Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
+    <TableHead class="bg-gray-50 whitespace-nowrap bg-customGray/15">
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name of event</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Event Type</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Occurred On</TableHeadCell>
@@ -90,12 +97,12 @@
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
       {#each getIncidentsByCategory(activeCategory) as incident}
-        <TableBodyRow>
+        <TableBodyRow class="cursor-pointer" on:click={() => navigateToIncidentDetails(incident.id)}>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
             {getIncidentTitle(incident)}
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">
-            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getTypeColor(incident.type)}-200">
+            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-customGray bg-{getTypeColor(incident.type)}-200">
               {#if incident.icon !== undefined}
                 <svelte:component this={incident.icon} class=" text-{getTypeColor(incident.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
@@ -105,17 +112,17 @@
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.dueDate}</TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-gray-900 bg-{getPriorityColor(incident.priority)}-200 text-gray-700} ">
+            <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-customGray bg-{getPriorityColor(incident.priority)}-200 } ">
               {incident.priority}
             </Badge>
           </TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(incident.status)}-200 text-gray-{incident.status.toLowerCase() === 'closed' ? '400' : '700'} ">
+            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(incident.status)}-200 text-gray-{incident.status.toLowerCase() === 'closed' ? '400' : '600'} ">
               {incident.status}
             </Badge>
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/incidents/incident/{incident.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
+            <Button on:click={() => navigateToIncidentDetails(incident.id)} color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
           </TableBodyCell>
         </TableBodyRow>
       {/each}

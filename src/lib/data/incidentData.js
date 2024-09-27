@@ -12,13 +12,13 @@ export function getIncidentById (id) {
 
 export function getIncidentsByCategory(category) {
   let filteredIncidents;
-  if (category.toLowerCase() === 'all incident categories') {
+  if (category.toLowerCase() === 'all types') {
     filteredIncidents = incidents;
   } else {
     filteredIncidents = incidents.filter((incident) => 
       incident.category.toLowerCase() == category.toLowerCase());
   }
-  console.log(category, JSON.stringify(filteredIncidents,null,2));
+  //console.log(category, JSON.stringify(filteredIncidents,null,2));
   return filteredIncidents;
 }
 
@@ -137,7 +137,7 @@ export const incidents = [
     id: 292,
     priority: 'High',
     type: 'Accident',
-    category: 'On the Road',
+    category: 'Incidents',
     status: 'Open',
     occurrenceDate: 'Apr 18, 2024', 
     dueDate: 'Apr 18, 2024',
@@ -151,7 +151,7 @@ export const incidents = [
     id: 33828,
     priority: 'Medium',
     type: 'Driver issue',
-    category: 'On the Road',
+    category: 'Incidents',
     status: 'Open',
     occurrenceDate: 'May 2, 2024', 
     dueDate: 'Apr 18, 2024',
@@ -165,7 +165,7 @@ export const incidents = [
     id: 48482,
     priority: 'Medium',
     type: 'Driver issue',
-    category: 'On the Road',
+    category: 'Incidents',
     status: 'Open',
     occurrenceDate: 'Jan 14, 2024', 
     dueDate: 'Apr 18, 2024',

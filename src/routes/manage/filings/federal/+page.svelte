@@ -19,8 +19,8 @@
     </div>
     <p class="text-muted-foreground mb-6">Based on your business, these are all of the necessary filings. Historical filings are available for download.</p>
 
-    <Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-      <TableHead class="bg-gray-50 whitespace-nowrap">
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap">
 	<TableHeadCell class="text-customGray">Filing name</TableHeadCell>
 	<TableHeadCell class="text-customGray">Due date</TableHeadCell>
 	<TableHeadCell class="text-customGray">Urgency</TableHeadCell>
@@ -29,7 +29,7 @@
       </TableHead>
       <TableBody>
 	{#each filings.federal.main as filing}
-	  <TableBodyRow>
+	  <TableBodyRow class="cursor-pointer">
 	    <TableBodyCell class="text-customGray">{filing.name}</TableBodyCell>
 	    <TableBodyCell class="text-customGray">{filing.dueDate}</TableBodyCell>
 	    <TableBodyCell class="text-customGray">
@@ -45,7 +45,7 @@
               {/if}
             </TableBodyCell>
 	    <TableBodyCell>
-              <Badge class="{getStatusColor(filing.status)} px-2 py-1.5 rounded rounded-[6px] min-w-32">
+              <Badge class="large {getStatusColor(filing.status)} px-2 py-2 rounded rounded-[6px] min-w-32">
                 {#if filing.status === 'Complete'}
                   <CheckCircleOutline class="h-4 w-4 ml-2" />&nbsp;
                 {:else}
@@ -70,20 +70,20 @@
 
   <div class="flex-1 py-6 overflow-auto">
     <h1 class="text-xl font-bold mb-3">Historical filings</h1>
-    <Table hoverable={true}>
-      <TableHead class="bg-gray-50 whitespace-nowrap">
+    <Table hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap">
 	<TableHeadCell class="text-customGray">Filing type</TableHeadCell>
 	<TableHeadCell class="text-customGray">Date</TableHeadCell>
 	<TableHeadCell class="text-customGray">Action</TableHeadCell>
       </TableHead>
       <TableBody>
 	{#each filings.federal.historical as filing}
-	  <TableBodyRow>
+	  <TableBodyRow class="cursor-pointer">
 	    <TableBodyCell class="text-customGray">{filing.type}</TableBodyCell>
 	    <TableBodyCell class="text-customGray">{filing.date}</TableBodyCell>
 	    <TableBodyCell class="text-customGray">
               <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		<Button class="text-customGray bg-gray-300 hover:bg-gray-400 py-1 min-w-32 text-xs"><DownloadOutline />Download</Button>
+		<Button class="text-customGray bg-gray-300 hover:bg-gray-400 py-2 min-w-32 text-xs"><DownloadOutline />Download</Button>
               </a>
 	    </TableBodyCell>
 	  </TableBodyRow>

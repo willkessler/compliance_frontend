@@ -88,12 +88,17 @@ export const filings = {
       { name: "CA MCP renewal", dueDate: "Jan 31, 2025", status: "Review details" },
       { name: "CA DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
       { name: "TX DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
+      { name: "NV DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
+      { name: "AZ DOT renewal", dueDate: "Dec 31, 2024", status: "Complete" },
       { name: "CARB", dueDate: "Oct 15, 2024", status: "Complete" },
     ],
     historical: [
       { type: "CA MCP renewal", date: "Mar 23, 2024" },
       { type: "Heavy Highway Vehicle Use Tax (HVUT)", date: "Aug 31, 2023" },
       { type: "CA DOT renewal", date: "Sep 14, 2024" },
+      { type: "TX DOT renewal", date: "Sep 12, 2024" },
+      { type: "NV DOT renewal", date: "Sep 12, 2024" },
+      { type: "AZ DOT renewal", date: "Sep 10, 2024" },
     ]
   }
 }

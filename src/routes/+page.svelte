@@ -75,7 +75,7 @@
 	<CardTitle>Important Actions to Take</CardTitle>
       </CardHeader>
       <CardContent>
-        <Table hoverable={true}>
+        <Table hoverable>
           <TableHead>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Open items</TableHeadCell>

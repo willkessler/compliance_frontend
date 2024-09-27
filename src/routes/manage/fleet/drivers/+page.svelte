@@ -1,4 +1,5 @@
 <script lang="ts">
+ import { goto } from '$app/navigation';
  import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ThumbsUpSolid, ExclamationCircleSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
@@ -67,6 +68,10 @@
     alert('Next btn clicked. Make a call to your server to fetch data.');
   };
 
+ function navigateToDriverDetails(driverId) {
+   goto(`/manage/fleet/drivers/driver/${driverId}`);
+ }
+
 </script>
 
 
@@ -82,8 +87,8 @@
   </div>
 </div>
 
-<Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable={true}>
-  <TableHead class="bg-gray-50 whitespace-nowrap">
+<Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+  <TableHead class=" bg-customGray/15 whitespace-nowrap">
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Driving Status</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Total drive time</TableHeadCell>
@@ -93,25 +98,30 @@
   </TableHead>
   <TableBody class="bg-white divide-y divide-gray-200">
     {#each drivers as driver}
-      <TableBodyRow>
+      <TableBodyRow class="cursor-pointer" on:click={() => navigateToDriverDetails(driver.id)}>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-          <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+          <Badge large rounded class="bg-{getStatusColor(driver.status)}-200 px-2 py-1.5 rounded rounded-[6px] min-w-32">
             {getDriverStatus(driver)}
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalDriveTime}</TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalMiles}</TableBodyCell>
         <TableBodyCell>
-          <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+          <Badge large rounded class="text-customGray bg-{getStatusColor(driver.status)}-200 px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {#if driver.icon !== undefined}
-                <svelte:component this={driver.icon} class=" text-{getStatusColor(driver.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <svelte:component this={driver.icon} class="mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
             {upgradeStatus(driver)}
           </Badge>
         </TableBodyCell>
         <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
+          <Button
+            on:click={() => navigateToDriverDetails(driver.id)}
+            color="light" 
+            class="text-customGray hover:text-customGray p-2 min-w-32">
+            See details →
+          </Button>
         </TableBodyCell>
       </TableBodyRow>
     {/each}
