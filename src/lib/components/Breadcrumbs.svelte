@@ -3,7 +3,7 @@
  import { ChevronRight, House, LayoutDashboard } from 'lucide-svelte';
 
  // Add an array of segments to filter out
- const filteredSegments = ['vehicle', 'driver', 'incident'];
+ const filteredSegments = ['manage', 'fleet', 'vehicle', 'driver', 'incident','filings'];
 
  // Add more mappings as needed
  // 'original': 'replacement',
@@ -11,17 +11,32 @@
    'incidents': 'Activities',
  };
 
+ const hrefMappings = {
+   'incidents' : '/manage/incidents',
+   'vehicles' :  '/manage/fleet/vehicles',
+   'drivers' :   '/manage/fleet/drivers',
+   'federal' :   '/manage/filings/federal',
+   'state' :     '/manage/filings/state',
+ };
+ 
  $: pathSegments = $page.url.pathname.split('/').filter(Boolean);
  $: breadcrumbs = pathSegments
    .filter(segment => !filteredSegments.includes(segment.toLowerCase()))
    .map((segment, index, filteredArray) => {
      const lowercaseSegment = segment.toLowerCase();
      const customLabel = labelMappings[lowercaseSegment];
+     const customHref = hrefMappings[lowercaseSegment];
+     const isLastSegment = index === filteredArray.length - 1;
+     const isIdSegment = /^\d+$/.test(segment); // Check if segment is numeric (likely an ID)
      return {
        label: customLabel 
          ? customLabel 
          : segment.charAt(0).toUpperCase() + segment.slice(1),
-       href: '/' + filteredArray.slice(0, index + 1).join('/')
+       href: isIdSegment || isLastSegment
+         ? $page.url.pathname // Use full current path for IDs or last segment
+         : customHref 
+           ? customHref 
+           : '/' + filteredArray.slice(0, index + 1).join('/')
      };
    });
 
