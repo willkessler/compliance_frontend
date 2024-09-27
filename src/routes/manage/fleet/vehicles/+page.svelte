@@ -71,7 +71,7 @@
 
 </script>
 
-<div class="flex items-end justify-between pr-4">
+<div class="flex items-end justify-between pl-4 pr-4">
   <div>
     <h1 class="text-3xl font-bold ">Vehicles</h1>
   </div>
@@ -83,48 +83,49 @@
   </div>
 </div>
 
-<Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
-  <TableHead class=" bg-customGray/15 whitespace-nowrap">
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Mileage</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
-  </TableHead>
-  <TableBody class="bg-white divide-y divide-gray-200">
-    {#each vehicles as vehicle}
-      <TableBodyRow on:click={() => navigateToVehicleDetails(vehicle.id)} class="cursor-pointer">
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">Truck #{vehicle.name}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
-        <TableBodyCell>
-          <Badge class="bg-{getStatusColor(vehicle.status)}-200 text-customGray px-2 py-1.5 rounded rounded-[6px] min-w-32">
+<div class="ml-4 mr-4">
+  <Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5">
+    <TableHead class=" bg-customGray/15 whitespace-nowrap">
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Mileage</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
+    </TableHead>
+    <TableBody class="bg-white divide-y divide-gray-200">
+      {#each vehicles as vehicle}
+        <TableBodyRow on:click={() => navigateToVehicleDetails(vehicle.id)} class="cursor-pointer">
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">Truck #{vehicle.name}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
+          <TableBodyCell class="pl-2">
+            <Badge class="bg-{getStatusColor(vehicle.status)}-200 text-customGray px-2 py-1.5 rounded rounded-[6px] min-w-32">
               {#if vehicle.icon !== undefined}
                 <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-400 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               {/if}
-            {upgradeStatus(vehicle)}
-          </Badge>
-        </TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-          <div class="flex cursor-pointer">
-            <div>{vehicle.city}, {vehicle.state}</div>
-            <div><MapPinAltSolid class="ml-2" /></div>
-          </div>
+              {upgradeStatus(vehicle)}
+            </Badge>
           </TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button 
-            on:click={() => navigateToVehicleDetails(vehicle.id)} 
-            color="light" 
-            class="text-customGray hover:text-customGray p-2 min-w-32">
-            See details →
-          </Button>
-        </TableBodyCell>
-      </TableBodyRow>
-    {/each}
-  </TableBody>
-</Table>
-
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
+            <div class="flex cursor-pointer">
+              <div>{vehicle.city}, {vehicle.state}</div>
+              <div><MapPinAltSolid class="ml-2" /></div>
+            </div>
+          </TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
+            <Button 
+              on:click={() => navigateToVehicleDetails(vehicle.id)} 
+              color="light" 
+              class="text-customGray hover:text-customGray p-2 min-w-32">
+              See details →
+            </Button>
+          </TableBodyCell>
+        </TableBodyRow>
+      {/each}
+    </TableBody>
+  </Table>
+</div>
 
 <div class="w-full flex justify-end pr-4 mt-4">
   <Pagination {pages} on:previous={previous} on:next={next} icon>

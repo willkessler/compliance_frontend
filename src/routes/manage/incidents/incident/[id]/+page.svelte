@@ -73,7 +73,7 @@
 <IncidentLayout>
   <div>
     <h1 class="text-customGray text-sm">Incident #{id}</h1>
-    <h1 class="text-3xl font-bold mb-2">{vehicle.name}</h1>
+    <h1 class="text-3xl font-bold mt-2 mb-2">{vehicle.name}</h1>
   </div>
 
 
