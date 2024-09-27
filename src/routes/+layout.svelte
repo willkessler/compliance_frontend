@@ -2,7 +2,7 @@
  import { fly } from 'svelte/transition';
  import { cubicOut } from 'svelte/easing';
  import { page } from '$app/stores';
- import { onMount, afterUpdate, tick } from 'svelte';
+ import { onMount, tick } from 'svelte';
  import { writable } from 'svelte/store';
  import Sidebar from '$lib/components/Sidebar.svelte';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
@@ -11,13 +11,17 @@
 
  const contentVisible = writable(false);
 
- let previousPath: string;
+ let previousPath: string | null = null;
  let isTransitioning = false;
- let isIncidentDetailsPage: boolean;
+ let isDetailsPage = false;
+ let slideDirection: 1 | -1 | 0 = 0;  // 1 for right, -1 for left, 0 for no transition
+ let shouldTransition = false;
 
  $: {
-   isIncidentDetailsPage = $page.url.pathname.includes('/incidents/incident/');
-   console.log('Path updated:', $page.url.pathname, 'Is incident details:', isIncidentDetailsPage);
+   isDetailsPage = $page.url.pathname.includes('/incidents/incident/') ||
+                   $page.url.pathname.includes('/fleet/drivers/driver/') ||
+                   $page.url.pathname.includes('/fleet/vehicles/vehicle/');
+   console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
  }
 
  onMount(() => {
@@ -35,6 +39,31 @@
    isTransitioning = true;
    contentVisible.set(false);
    await tick();
+
+   // Determine if we should transition
+   shouldTransition = isDetailsPage || (
+     previousPath !== null && (
+       previousPath.includes('/incident/') ||
+       previousPath.includes('/driver/') ||
+       previousPath.includes('/vehicle/')
+     )
+   );
+
+   if (shouldTransition && previousPath !== null) {
+     // Determine slide direction only if we're transitioning
+     if (!isDetailsPage && (
+       previousPath.includes('/incident/') ||
+       previousPath.includes('/driver/') ||
+       previousPath.includes('/vehicle/')
+     )) {
+       slideDirection = -1;  // Default left slide for other transitions
+     } else {
+       slideDirection = 1;  // Slide to right for exiting details page
+     }
+   } else {
+     slideDirection = 0;  // No transition for direct navigation to top-level pages or initial load
+   }
+
    previousPath = $page.url.pathname;
    contentVisible.set(true);
  }
@@ -44,16 +73,17 @@
    isTransitioning = false;
  }
 
- function transitionFn(node, { x, duration }) {
-   console.log('Transition starting with x:', x, 'and duration:', duration);
+ function transitionFn(node, { duration }) {
+   if (slideDirection === 0) return {}; // No transition
+
+   console.log('Transition starting with direction:', slideDirection, 'and duration:', duration);
    return {
      duration,
      css: t => {
        const eased = cubicOut(t);
-       console.log('Transition progress:', t, 'Eased value:', eased);
        return `
          opacity: ${eased};
-         transform: translateX(${(1-eased) * x}px);
+         transform: translateX(${(1-eased) * slideDirection * window.innerWidth}px);
        `;
      }
    };
@@ -70,8 +100,8 @@
       {#if $contentVisible}
         <div 
           class="absolute inset-0 overflow-auto"
-          in:transitionFn="{{ x: isIncidentDetailsPage ? window.innerWidth : -window.innerWidth, duration: 300 }}"
-          out:transitionFn="{{ x: isIncidentDetailsPage ? -window.innerWidth : window.innerWidth, duration: 300 }}"
+          in:transitionFn="{{ duration: 200 }}"
+          out:transitionFn="{{ duration: 200 }}"
           on:introstart={() => console.log('Transition intro started')}
           on:outrostart={() => console.log('Transition outro started')}
           on:introend={() => console.log('Transition intro ended')}
