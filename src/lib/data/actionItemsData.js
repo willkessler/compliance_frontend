@@ -112,16 +112,16 @@ export const actions = [
         type: 'Email',
         status: 'Closed'
       },
-      { 
-        id: 4, 
-        name: "Insurance claim", 
-        totalMiles: '8,748', 
-        description: 'File insurance claim', 
-        eventDate: 'Sep 17, 2024', 
-        dueDate: 'Nov 1, 2024',
-        type: 'Call',
-        status: 'Closed'
-      },
+      // { 
+      //   id: 4, 
+      //   name: "Insurance claim", 
+      //   totalMiles: '8,748', 
+      //   description: 'File insurance claim', 
+      //   eventDate: 'Sep 17, 2024', 
+      //   dueDate: 'Nov 1, 2024',
+      //   type: 'Call',
+      //   status: 'Closed'
+      // },
       { 
         id: 5, 
         name: "Mechanic review", 

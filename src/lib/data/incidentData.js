@@ -126,7 +126,7 @@ export const incidents = [
     category: 'Maintenance',
     status: 'Open',
     occurrenceDate: 'Apr 23, 2024', 
-    dueDate: 'Apr 23, 2024',
+    dueDate: 'Dec 23, 2024',
     title: 'Tire rotation needed',
     driverId: 1922,
     vehicleId: 4396,
