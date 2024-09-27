@@ -2,11 +2,29 @@
  import { page } from '$app/stores';
  import { ChevronRight, House, LayoutDashboard } from 'lucide-svelte';
 
+ // Add an array of segments to filter out
+ const filteredSegments = ['vehicle', 'driver', 'incident'];
+
+ // Add more mappings as needed
+ // 'original': 'replacement',
+ const labelMappings = {
+   'incidents': 'Activities',
+ };
+
  $: pathSegments = $page.url.pathname.split('/').filter(Boolean);
- $: breadcrumbs = pathSegments.map((segment, index) => ({
-   label: segment.charAt(0).toUpperCase() + segment.slice(1),
-   href: '/' + pathSegments.slice(0, index + 1).join('/')
- }));
+ $: breadcrumbs = pathSegments
+   .filter(segment => !filteredSegments.includes(segment.toLowerCase()))
+   .map((segment, index, filteredArray) => {
+     const lowercaseSegment = segment.toLowerCase();
+     const customLabel = labelMappings[lowercaseSegment];
+     return {
+       label: customLabel 
+         ? customLabel 
+         : segment.charAt(0).toUpperCase() + segment.slice(1),
+       href: '/' + filteredArray.slice(0, index + 1).join('/')
+     };
+   });
+
 </script>
 
 <nav class="flex mb-4" aria-label="Breadcrumb">
