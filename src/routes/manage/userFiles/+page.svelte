@@ -14,28 +14,6 @@
     ];
     let selectedFilter;
    
-    // function getStatusColor(status) {
-    //   switch (status.toLowerCase()) {
-    //     case 'clear':
-    //     case 'completed':
-    //       return 'green';
-    //     case 'in progress':
-    //       return 'blue';
-    //     case 'blocked':
-    //       return 'red';
-    //     default:
-    //       return 'gray';
-    //   }
-    // }
-   
-    // function upgradeStatus(file) {
-    //   if (file.status.toLowerCase() === 'blocked') {
-    //     return '4 Blockers';
-    //   }
-    //   return file.status;
-    // }
-    
-    // boilerplate from https://flowbite-svelte.com/docs/components/pagination
     $: activeUrl = $page.url.searchParams.get('page');
      let pages = [
        { name: 1, href: '/components/pagination?page=1' },
@@ -86,7 +64,6 @@
        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">File</TableHeadCell>
        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Type</TableHeadCell>
        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Category</TableHeadCell>
-       <!-- <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell> -->
        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Date added</TableHeadCell>
        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
      </TableHead>
@@ -96,14 +73,6 @@
            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.name}</TableBodyCell>
            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.type}</TableBodyCell>
            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.category}</TableBodyCell>
-           <!-- <TableBodyCell>
-             <Badge color={getStatusColor(file.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
-                 {#if file.icon !== undefined}
-                   <svelte:component this={file.icon} class=" text-{getStatusColor(file.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                 {/if}
-               {upgradeStatus(file)}
-             </Badge>
-           </TableBodyCell> -->
            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
              <div class="flex cursor-pointer">
                <div>{file.acquisitionDate}</div>

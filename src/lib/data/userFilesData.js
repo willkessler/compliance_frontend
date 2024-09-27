@@ -1,5 +1,4 @@
 import { ClockSolid, ExclamationCircleSolid, ThumbsUpSolid } from 'flowbite-svelte-icons';
-// import { drivers } from '$lib/data/driverData';
 
 export function getFileById (id) {
   for (let file of files) {
@@ -9,15 +8,6 @@ export function getFileById (id) {
   }
   return null;
 }
-
-// export function getFileeDriver (vehicleId) {
-//   for (let driver of drivers) {
-//     if (driver.vehicleId === parseInt(vehicleId)) {
-//       return driver;
-//     }
-//   }
-//   return null;
-// }
 
 export const userFiles = [
   {
