@@ -5,6 +5,7 @@
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
  import { drivers, getDriverStatus } from '$lib/data/driverData';
+ import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 
  let sortColumn = "";
  let sortDirection = "asc";
@@ -74,6 +75,9 @@
 
 </script>
 
+<header class="pt-4 pl-4">
+  <Breadcrumbs />
+</header>
 
 <div class="flex items-end justify-between pr-4">
   <div>

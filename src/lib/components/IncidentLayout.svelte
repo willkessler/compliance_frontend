@@ -6,6 +6,9 @@
 <div class="flex h-full">
   <div class="flex-1 flex flex-col">
     <div class="flex-1 overflow-y-auto p-4">
+      <header class="pt-4 pl-4">
+        <Breadcrumbs />
+      </header>
       <slot />
     </div>
   </div>

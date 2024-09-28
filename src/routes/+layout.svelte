@@ -5,7 +5,6 @@
  import { onMount, tick } from 'svelte';
  import { writable } from 'svelte/store';
  import Sidebar from '$lib/components/Sidebar.svelte';
- import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import 'flowbite/dist/flowbite.css';
  import "../app.postcss";
 
@@ -93,9 +92,6 @@
 <div class="flex h-screen bg-background overflow-hidden">
   <Sidebar />
   <div class="flex-1 flex flex-col">
-    <header class="pt-4 pl-4">
-      <Breadcrumbs />
-    </header>
     <div class="flex-1 relative overflow-hidden">
       {#if $contentVisible}
         <div 

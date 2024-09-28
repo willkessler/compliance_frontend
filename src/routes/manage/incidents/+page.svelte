@@ -4,6 +4,7 @@
  import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ThumbsUpSolid, CheckCircleSolid, TruckSolid, UsersOutline, FileLinesOutline } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
+ import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 
  import { incidents, getIncidentById, getIncidentsByCategory, 
         getIncidentTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/incidentData';
@@ -65,6 +66,11 @@
  }
 </style>
 
+
+
+<header class="pt-4 pl-4">
+  <Breadcrumbs />
+</header>
 
 <div class="p-4">
 

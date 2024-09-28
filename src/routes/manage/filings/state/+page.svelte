@@ -7,11 +7,16 @@
  import { DownloadOutline } from 'flowbite-svelte-icons';
  import { BellActiveSolid } from 'flowbite-svelte-icons';
  import { getStatusColor, displayDueDate, filings } from '$lib/data/filingData';
+ import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 
 </script>
 
+<header class="pt-4 pl-4">
+  <Breadcrumbs />
+</header>
+
 <div class="flex h-screen bg-background">
-  <main class="flex-1 p-8 pl-4">
+  <main class="flex-1 p-2 pl-4">
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-3xl font-bold">State filings</h1>
       <Button class="bg-blue-500 hover:bg-blue-600 text-white">Start Review</Button>

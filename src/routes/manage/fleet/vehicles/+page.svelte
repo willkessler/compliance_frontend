@@ -5,6 +5,7 @@
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
+ import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 
  let filters = [
    { value: 'filter1', name: 'Local' },
@@ -70,6 +71,10 @@
  }
 
 </script>
+
+<header class="pt-4 pl-4">
+  <Breadcrumbs />
+</header>
 
 <div class="flex items-end justify-between pl-4 pr-4">
   <div>
