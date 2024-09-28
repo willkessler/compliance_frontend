@@ -20,7 +20,7 @@
 
 </script>
 
-<main class="flex-1 overflow-auto">
+<main class="flex-1 overflow-auto m-4">
   <div class="grid grid-cols-2 gap-6 mb-6">
       <Card>
 	<CardContent style="padding-top: 1rem;">
