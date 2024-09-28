@@ -98,6 +98,13 @@
  
 </script>
 
+<style>
+  .right-panel {
+   margin-left:12px; 
+   box-shadow: 0px 0 12px -5px rgba(0,0,0,.7);
+ }
+</style>
+
 <IncidentLayout>
   <div>
     <h1 class="text-3xl font-bold mb-2">Driver: {driver.name}</h1>
@@ -200,71 +207,68 @@
                             ]}
   />
 
-  <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden">
-    <div class="{styles.customOuterShadow} h-full overflow-auto">
-      <div class={styles.contentWrapper}>
-        <div class="flex justify-between items-center mb-0">
-          <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Basic information</h2>
-        </div>
-        <Card class="shadow-none">
-          <div class="relative pt-[95%] overflow-hidden">
-            <img 
-              src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
-              alt="driver.name"
-              class="absolute inset-0 w-full h-full object-cover object-top border"
-            />
-            <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
-              <PenOutline class="w-4 h-4 text-gray-700" />
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
-            <div class="font-semibold">Name</div>
-            <div class="text-gray-800 font-bold">
-              {driver.name}
-            </div>
-            <div class="font-semibold">License</div>
-            <div class="text-gray-800">{driver.license}</div>
-
-            <div class="font-semibold">Lic. Expiration</div>
-            <div class="text-gray-800"> {driver.licenseExpiration}</div>
-            
-            <div class="font-semibold">SSN/EIN</div>
-            <div class="text-gray-800 ">{driver.ssn}</div>
-            
-            <div class="font-semibold">Total Drive time</div>
-            <div class="text-gray-800"> {driver.totalDriveTime}</div>
-            
-            <div class="font-semibold">Mileage</div>
-            <div class="text-gray-800">{driver.totalMiles}</div>
-            
-            <div class="font-semibold">Vehicle</div>
-            <div>
-              <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
-                <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
-              </a>
-            </div>
-
-            <div class="font-semibold">Driving status</div>
-            <div class="text-gray-800">
-              <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
-                {getDriverStatus(driver)}
-              </Badge>
-            </div>
-
-          </div>
-        </Card>
-
-        <div class="mt-6">Notes</div>
-        <Card class="mt-0 divide-y shadow-none">
-          <p class="text-md">{driver.notes}</p>
-          <div class="flex justify-end items-center mt-2 pt-2 ml-2">
-            <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
-            <div class="cursor-pointer"><FileImageSolid /></div>
-          </div>
-        </Card>
-        <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-11/12 mt-4 mr-8">
-          <FloppyDiskOutline class="mr-2" />Save Changes
-        </Button>
-      </div>
+  <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden right-panel">
+    <div class="flex justify-between items-center mb-0">
+      <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Basic information</h2>
     </div>
+    <Card class="shadow-none">
+      <div class="relative pt-[95%] overflow-hidden">
+        <img 
+          src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
+          alt="driver.name"
+          class="absolute inset-0 w-full h-full object-cover object-top border"
+        />
+        <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
+          <PenOutline class="w-4 h-4 text-gray-700" />
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+        <div class="font-semibold">Name</div>
+        <div class="text-gray-800 font-bold">
+          {driver.name}
+        </div>
+        <div class="font-semibold">License</div>
+        <div class="text-gray-800">{driver.license}</div>
+
+        <div class="font-semibold">Lic. Expiration</div>
+        <div class="text-gray-800"> {driver.licenseExpiration}</div>
+        
+        <div class="font-semibold">SSN/EIN</div>
+        <div class="text-gray-800 ">{driver.ssn}</div>
+        
+        <div class="font-semibold">Total Drive time</div>
+        <div class="text-gray-800"> {driver.totalDriveTime}</div>
+        
+        <div class="font-semibold">Mileage</div>
+        <div class="text-gray-800">{driver.totalMiles}</div>
+        
+        <div class="font-semibold">Vehicle</div>
+        <div>
+          <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
+            <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+          </a>
+        </div>
+
+        <div class="font-semibold">Driving status</div>
+        <div class="text-gray-800">
+          <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
+            {getDriverStatus(driver)}
+          </Badge>
+        </div>
+
+      </div>
+    </Card>
+
+    <div class="mt-6">Notes</div>
+    <Card class="mt-0 divide-y shadow-none">
+      <p class="text-md">{driver.notes}</p>
+      <div class="flex justify-end items-center mt-2 pt-2 ml-2">
+        <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
+        <div class="cursor-pointer"><FileImageSolid /></div>
+      </div>
+    </Card>
+    <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-11/12 mt-4 mr-8">
+      <FloppyDiskOutline class="mr-2" />Save Changes
+    </Button>
+
 </IncidentLayout>
