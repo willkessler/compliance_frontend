@@ -83,10 +83,10 @@
   </div>
 
   <!-- driver details -->
-  <h1 class="text-lg font-bold mb-4 mt-6">Driver details</h1>
+  <h1 class="text-lg font-bold mb-0 mt-5">Driver details</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-3 ml-0" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Start Date</TableHeadCell>

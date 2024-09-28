@@ -10,9 +10,9 @@
  ];
 </script>
 
-<h1 class="text-lg font-bold mb-4 mt-5">Uploaded Files</h1>
+<h1 class="text-lg font-bold mb-2 mt-5">Uploaded Files</h1>
 
-<Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+<Table class="relative overflow-x-auto sm:rounded-lg ml-0" hoverable>
   <TableHead class="bg-customGray/15 whitespace-nowrap">
     <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
     <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Date added</TableHeadCell>

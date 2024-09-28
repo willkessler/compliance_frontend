@@ -11,7 +11,7 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
 
- import { incidents, getIncidentById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/incidentData';
+ import { incidents, getIncidentTitle, getIncidentById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/incidentData';
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
@@ -72,8 +72,7 @@
 
 <IncidentLayout>
   <div>
-    <h1 class="text-customGray text-sm">Incident #{id}</h1>
-    <h1 class="text-3xl font-bold mt-2 mb-2">{vehicle.name}</h1>
+    <h1 class="text-3xl font-bold mt-2 mb-2">{getIncidentTitle(incident)}</h1>
   </div>
 
 

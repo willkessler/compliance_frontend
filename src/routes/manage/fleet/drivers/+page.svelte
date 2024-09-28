@@ -75,7 +75,7 @@
 
 </script>
 
-<header class="pt-4 pl-4">
+<header class="pt-6 pl-4">
   <Breadcrumbs />
 </header>
 

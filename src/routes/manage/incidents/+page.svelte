@@ -68,7 +68,7 @@
 
 
 
-<header class="pt-4 pl-4">
+<header class="pt-6 pl-4">
   <Breadcrumbs />
 </header>
 
@@ -78,7 +78,6 @@
 
   <div class="flex justify-start items-center ">
 
-    <div class="font-med mr-2">Activity Type:</div>
     <div class="inline-block bg-white border rounded-lg p-0">
       {#each categories as category}
         <Button

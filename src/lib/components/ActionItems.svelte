@@ -174,7 +174,7 @@
   }
 </style>
 
-<div class="flex justify-between items-center mb-0 ml-2 mt-3">
+<div class="flex justify-between items-end mb-0 ml-0 mt-3">
   <h1 class="text-xl font-bold">Action Items History</h1>
   <Button on:click={() => { defaultModal = true; uploadedFiles = []; }}
     class="bg-blue-500 hover:bg-blue-600 text-white text-sm "><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
@@ -182,7 +182,7 @@
 
 <div>
   {#if environment === 'incident' } <!-- incidents -->
-    <Table class="relative overflow-x-auto  mt-5 ml-0" hoverable>
+    <Table class="relative overflow-x-auto mt-3 ml-0" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
