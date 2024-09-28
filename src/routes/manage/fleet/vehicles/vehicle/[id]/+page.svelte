@@ -21,6 +21,8 @@
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
 
+ export const layout = 'details';
+
  //
  // Date handler
  //

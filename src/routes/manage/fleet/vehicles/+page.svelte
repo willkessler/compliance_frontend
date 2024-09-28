@@ -6,6 +6,8 @@
  import { page } from '$app/stores';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
 
+ export const layout = 'list';
+
  let filters = [
    { value: 'filter1', name: 'Local' },
    { value: 'filter2', name: 'All' },

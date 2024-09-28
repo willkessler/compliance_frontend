@@ -10,6 +10,8 @@
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
+ export const layout = 'list';
+ 
  const categories = ['Incidents', 'Maintenance', 'Records', 'All Types' ];
  let activeCategory = 'All Types';
 

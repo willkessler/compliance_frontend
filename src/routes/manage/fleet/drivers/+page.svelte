@@ -6,6 +6,8 @@
  import { page } from '$app/stores';
  import { drivers, getDriverStatus } from '$lib/data/driverData';
 
+ export const layout = 'list';
+
  let sortColumn = "";
  let sortDirection = "asc";
 
