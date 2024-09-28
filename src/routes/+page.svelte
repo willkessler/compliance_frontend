@@ -1,4 +1,5 @@
 <script lang="ts">
+ import { goto } from '$app/navigation';
  import { onMount, afterUpdate } from 'svelte';
  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
  import { Badge, Button, Modal, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
@@ -17,6 +18,10 @@
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
  const csaRange = { range:15, buffer:15, today: 15};
  const safetyRange = { range:100, buffer:100, today: 153};
+
+ function navigateToRelevantActionPage(url) {
+   goto(url, { replaceState: false });
+ }
 
 </script>
 
@@ -85,7 +90,7 @@
           </TableHead>
           <TableBody>
             {#each reviewItems as item}
-              <TableBodyRow>
+              <TableBodyRow class="cursor-pointer" on:click={() => navigateToRelevantActionPage(item.url)}>
                 <TableBodyCell class="whitespace-nowrap text-sm font-large text-gray-600 p-2">{item.name}</TableBodyCell>
                 <TableBodyCell class="whitespace-nowrap text-sm font-large text-gray-600 p-2p-2">{item.openItems}</TableBodyCell>
                 <TableBodyCell class="whitespace-nowrap text-sm font-large font-bold text-red-600 m-0">
