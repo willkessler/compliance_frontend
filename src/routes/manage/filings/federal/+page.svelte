@@ -21,9 +21,9 @@
       <h1 class="text-3xl font-bold">Federal filings</h1>
       <Button class="bg-blue-500 hover:bg-blue-600 text-white">Start Review</Button>
     </div>
-    <p class="text-muted-foreground mb-6">Based on your business, these are all of the necessary filings. Historical filings are available for download.</p>
+    <div class="text-muted-foreground mb-2">Based on your business, these are all of the necessary filings. Historical filings are available for download.</div>
 
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-0 ml-0" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
 	<TableHeadCell class="text-customGray">Filing name</TableHeadCell>
 	<TableHeadCell class="text-customGray">Due date</TableHeadCell>
@@ -68,7 +68,7 @@
       </TableBody>
     </Table>
 
-  <div class="w-full mt-20">
+  <div class="w-full mt-20 mb-4">
     <hr />
   </div>
 

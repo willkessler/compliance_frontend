@@ -21,7 +21,7 @@
       <h1 class="text-3xl font-bold">State filings</h1>
       <Button class="bg-blue-500 hover:bg-blue-600 text-white">Start Review</Button>
     </div>
-    <p class="text-muted-foreground mb-6">Based on your business, these are all of the necessary filings. Historical filings are available for download.</p>
+    <p class="text-muted-foreground mb-2">Based on your business, these are all of the necessary filings. Historical filings are available for download.</p>
 
     <Table hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap text-gray-500">
@@ -68,7 +68,7 @@
       </TableBody>
     </Table>
 
-  <div class="w-full mt-20">
+  <div class="w-full mt-20 mb-4">
     <hr />
   </div>
 
