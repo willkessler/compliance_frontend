@@ -98,6 +98,7 @@
  
 </script>
 
+<!-- cf https://htmlcssfreebies.com/box-shadow-left/ -->
 <style>
   .right-panel {
    margin-left:12px; 

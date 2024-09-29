@@ -6,6 +6,7 @@
  import { page } from '$app/stores';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
 
  let filters = [
    { value: 'filter1', name: 'Local' },
@@ -105,12 +106,12 @@
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
           <TableBodyCell class="pl-2">
-            <Badge class="bg-{getStatusColor(vehicle.status)}-200 text-customGray px-2 py-1.5 rounded rounded-[6px] min-w-32">
-              {#if vehicle.icon !== undefined}
-                <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-400 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              {/if}
-              {upgradeStatus(vehicle)}
-            </Badge>
+            <CustomBadge 
+              context="status"
+              secondaryContext="general"
+              data={vehicle} 
+              dataField="status"
+            />
           </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
             <div class="flex cursor-pointer">
