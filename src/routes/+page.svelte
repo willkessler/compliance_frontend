@@ -56,7 +56,7 @@
               <div class="flex items-center safety-score">
                 <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
                 <div class="score-label pl-2">Today's Safety Score</div>
-                <div class="score" style="font-size: 2rem;">{safetyRange.today}</div>
+                <div class="score ml-2" style="font-size: 2rem;">{safetyRange.today}</div>
               </div>
           </div>
           <div>

@@ -41,8 +41,8 @@
    priority: {
      'critical':                  { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
      'high':                      { color: 'orange', icon: ExclamationCircleSolid, iconLibrary: 'fb' },
-     'medium':                    { color: 'blue',   icon: null },
-     'low':                       { color: 'yellow', icon: null },
+     'medium':                    { color: 'yellow', icon: ExclamationCircleSolid, iconLibrary: 'fb' },
+     'low':                       { color: 'blue',   icon: ExclamationCircleSolid, iconLibrary: 'fb' },
    },
    incidentType: {
      'maintenance':               { color: 'blue',   icon: Wrench, iconLibrary: 'lu' },
