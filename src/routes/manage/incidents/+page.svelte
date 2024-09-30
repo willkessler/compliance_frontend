@@ -1,10 +1,11 @@
 <script>
  import { goto } from '$app/navigation';
- import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ThumbsUpSolid, CheckCircleSolid, TruckSolid, UsersOutline, FileLinesOutline } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
 
  import { incidents, getIncidentById, getIncidentsByCategory, 
         getIncidentTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/incidentData';
@@ -107,24 +108,28 @@
             {getIncidentTitle(incident)}
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">
-            <Badge rounded class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-customGray bg-{getTypeColor(incident.type)}-200">
-              {#if incident.icon !== undefined}
-                <svelte:component this={incident.icon} class=" text-{getTypeColor(incident.type)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              {/if}
-                {incident.type}
-            </Badge>
+            <CustomBadge
+              context="incidentType"
+              data={incident}
+              dataField="type"
+            />
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.dueDate}</TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-1.5 rounded rounded-[6px] min-w-32 text-customGray bg-{getPriorityColor(incident.priority)}-200 } ">
-              {incident.priority}
-            </Badge>
+            <CustomBadge
+              context="priority"
+              data={incident}
+              dataField="priority"
+            />
           </TableBodyCell>
           <TableBodyCell class="whitespace-nowrap text-sm ">
-            <Badge class="px-2 py-2 rounded rounded-[6px] min-w-32 bg-{getStatusColor(incident.status)}-200 text-gray-{incident.status.toLowerCase() === 'closed' ? '400' : '600'} ">
-              {incident.status}
-            </Badge>
+            <CustomBadge
+              context="status"
+              secondaryContext="general"
+              data={incident}
+              dataField="status"
+            />
           </TableBodyCell>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <Button on:click={() => navigateToIncidentDetails(incident.id)} color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>

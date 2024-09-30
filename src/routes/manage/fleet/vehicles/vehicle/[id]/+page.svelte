@@ -66,11 +66,6 @@
     cursor: pointer;
   }
 
- .right-panel {
-   margin-left:12px; 
-   box-shadow: 0px 0 12px -5px rgba(0,0,0,.7);
- }
-
 </style>
 
 <IncidentLayout>

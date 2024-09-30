@@ -171,7 +171,7 @@ export function getDriverById (id) {
   return null;
 }
 
-export function getDriverStatus(driver) {
+export function injectDriverStatus(driver) {
   const driverStatuses = [
     'Driving',
     'Available',
@@ -184,5 +184,14 @@ export function getDriverStatus(driver) {
   // const minute = now.getMinutes();
   // const choice = parseInt(minute % driverStatuses.length);
   const choice = driver.id % driverStatuses.length;
-  return driverStatuses[choice];     
+  const statusedDriver = { ... driver, drivingStatus:driverStatuses[choice] };
+  return statusedDriver;
+}
+
+export function injectDriverBlockers(driver) {
+  const driverWithBlockers = { ... driver, upgradedStatus: driver.status };
+  if (driver.status.toLowerCase() === 'blocked') {
+    driverWithBlockers.upgradedStatus = '2 Blockers';
+  }    
+  return driverWithBlockers;
 }

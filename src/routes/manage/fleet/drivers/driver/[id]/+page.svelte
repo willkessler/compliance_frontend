@@ -14,7 +14,8 @@
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
- import { drivers, getDriverById, getDriverStatus } from '$lib/data/driverData';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
+ import { drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
 
  import { page } from '$app/stores';
@@ -97,14 +98,6 @@
  }
  
 </script>
-
-<!-- cf https://htmlcssfreebies.com/box-shadow-left/ -->
-<style>
-  .right-panel {
-   margin-left:12px; 
-   box-shadow: 0px 0 12px -5px rgba(0,0,0,.7);
- }
-</style>
 
 <IncidentLayout>
   <div>
@@ -252,9 +245,12 @@
 
         <div class="font-semibold">Driving status</div>
         <div class="text-gray-800">
-          <Badge large rounded color={getStatusColor(driver.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
-            {getDriverStatus(driver)}
-          </Badge>
+            <CustomBadge
+              context="status"
+              secondaryContext="driving"
+              data={injectDriverStatus(driver)}
+              dataField="drivingStatus"
+            />
         </div>
 
       </div>

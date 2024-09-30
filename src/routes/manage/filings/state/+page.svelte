@@ -1,5 +1,5 @@
 <script lang="ts">
- import { Badge, Button,
+ import { Button,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
  import { CircleAlert, LayoutDashboard, FileText, Truck, Network, Settings } from "lucide-svelte";;
@@ -8,6 +8,7 @@
  import { BellActiveSolid } from 'flowbite-svelte-icons';
  import { getStatusColor, displayDueDate, filings } from '$lib/data/filingData';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
 
 </script>
 
@@ -49,14 +50,12 @@
               {/if}
           </TableBodyCell>
 	  <TableBodyCell class="text-gray-500">
-            <Badge class="{getStatusColor(filing.status)} px-2 py-2 rounded rounded-[6px] min-w-32">
-              {#if filing.status.toLowerCase() === 'complete'}
-                <CheckCircleOutline class="h-4 w-4 ml-2" />&nbsp;
-              {:else}
-	        <CircleAlert class="h-4 w-4 ml-2" />&nbsp;
-              {/if}
-	      {filing.status}
-	    </Badge>
+              <CustomBadge
+                context="status"
+                secondaryContext="general"
+                data={filing}
+                dataField="status"
+              />
 	  </TableBodyCell>
 
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -87,7 +86,12 @@
 	    <TableBodyCell class="text-customGray">{filing.date}</TableBodyCell>
 	    <TableBodyCell class="text-customGray">
               <a href={'/documents/' + filing.filename} target="_blank" rel="noopener noreferrer">
-		<Button class="text-gray-500 bg-gray-300 hover:bg-gray-400 py-2 min-w-32 text-xs"><DownloadOutline />Download</Button>
+		<Button class="text-gray-500 bg-gray-300 hover:bg-gray-400 py-2 min-w-32 text-xs">
+                  <span class="mr-2">
+                    <DownloadOutline />
+                  </span>
+                  Download
+                </Button>
               </a>
 	    </TableBodyCell>
 	  </TableBodyRow>

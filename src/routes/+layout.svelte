@@ -75,7 +75,7 @@
  function transitionFn(node, { duration }) {
    if (slideDirection === 0) return {}; // No transition
 
-   console.log('Transition starting with direction:', slideDirection, 'and duration:', duration);
+   //console.log('Transition starting with direction:', slideDirection, 'and duration:', duration);
    return {
      duration,
      css: t => {

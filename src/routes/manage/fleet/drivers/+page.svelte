@@ -4,8 +4,9 @@
  import { ClockSolid, ThumbsUpSolid, ExclamationCircleSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
- import { drivers, getDriverStatus } from '$lib/data/driverData';
+ import { drivers, injectDriverStatus, injectDriverBlockers } from '$lib/data/driverData';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
 
  let sortColumn = "";
  let sortDirection = "asc";
@@ -28,13 +29,6 @@
      default:
        return 'gray';
    }
- }
-
- function upgradeStatus(driver) {
-   if (driver.status.toLowerCase() === 'blocked') {
-     return '2 Blockers';
-   }
-   return driver.status;
  }
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
@@ -106,19 +100,23 @@
         <TableBodyRow class="cursor-pointer" on:click={() => navigateToDriverDetails(driver.id)}>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-            <Badge large rounded class="bg-{getStatusColor(driver.status)}-200 px-2 py-1.5 rounded rounded-[6px] min-w-32">
-              {getDriverStatus(driver)}
-            </Badge>
+            <CustomBadge
+              context="status"
+              secondaryContext="driving"
+              data={injectDriverStatus(driver)}
+              dataField="drivingStatus"
+            />
           </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalDriveTime}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalMiles}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-            <Badge large rounded class="text-customGray bg-{getStatusColor(driver.status)}-200 px-2 py-1.5 rounded rounded-[6px] min-w-32">
-              {#if driver.icon !== undefined}
-                <svelte:component this={driver.icon} class="mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              {/if}
-              {upgradeStatus(driver)}
-            </Badge>
+            <CustomBadge
+              context="status"
+              secondaryContext="general"
+              data={injectDriverBlockers(driver)}
+              dataField="status"
+              specialFieldOverride={{field: 'status', check: 'Blocked', replaceWith: '2 Blockers'}}
+            />
           </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
             <Button
