@@ -1,7 +1,23 @@
 <script lang="ts">
  import { Badge } from 'flowbite-svelte';
- import { ClockSolid, ExclamationCircleSolid, ThumbsUpSolid, CheckCircleSolid } from 'flowbite-svelte-icons';
- import { Files, Truck, User, Wrench } from 'lucide-svelte';
+ import { 
+        ClockSolid, 
+        ExclamationCircleSolid, 
+        ThumbsUpSolid, 
+        CheckCircleOutline, 
+        CheckCircleSolid,
+        PhoneSolid, 
+        MailBoxOutline, 
+        MapPinAltOutline,
+        } from 'flowbite-svelte-icons';
+ import { 
+        CirclePause,
+        Files, 
+        PackageOpen,
+        Truck, 
+        User, 
+        Wrench
+        } from 'lucide-svelte';
 
  export let context = null;
  export let secondaryContext = null;
@@ -18,9 +34,10 @@
  const colorIconMap = {
    status: {
      general: {
-       'open':                    { color: 'green',  icon: null, },
-       'closed':                  { color: 'gray',   icon: null, },
+       'open':                    { color: 'green',  icon: PackageOpen, iconLibrary: 'lu' },
+       'closed':                  { color: 'gray',   icon: CheckCircleOutline, iconLibrary: 'fb' },
        'blocked':                 { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
+       'hold':                    { color: 'blue',   icon: CirclePause, iconLibrary: 'lu' },
        'in progress':             { color: 'blue',   icon: ClockSolid, iconLibrary: 'fb' },
        'clear':                   { color: 'green',  icon: ThumbsUpSolid, iconLibrary: 'fb' },
        'incomplete':              { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
@@ -34,8 +51,6 @@
        'off duty':                { color: 'blue',   icon: ClockSolid, iconLibrary: 'fb' },
        'on break':                { color: 'blue',   icon: ClockSolid, iconLibrary: 'fb' },
        'other':                   { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
-     },
-     activityHistory: {
      },
    },
    priority: {
@@ -51,6 +66,10 @@
      'documents':                 { color: 'gray',   icon: Files, iconLibrary: 'lu' },
    },
    actionType: {
+     'call':                       { color: 'gray',   icon: PhoneSolid, iconLibrary: 'fb' },
+     'onsite':                     { color: 'gray',   icon: MapPinAltOutline, iconLibrary: 'fb' },
+     'email':                      { color: 'gray',   icon: MailBoxOutline, iconLibrary: 'fb' },
+     'sms':                        { color: 'gray',   icon: PhoneSolid, iconLibrary: 'fb' },
    },
  };
 
@@ -84,7 +103,7 @@
 
  $: badgeClasses = `px-2 py-1.5 rounded-[6px] min-w-32 min-h-9 text-${colorAndIcon.color}-${textSaturation} bg-${colorAndIcon.color}-${bgSaturation}`;
 
- $: iconClasses = `text-${colorAndIcon.color}-${iconSaturation} mr-2 w-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize} h-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize}`;
+ $: iconClasses = `text-${colorAndIcon.color}-${iconSaturation} mr-1 w-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize} h-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize}`;
 
 </script>
 

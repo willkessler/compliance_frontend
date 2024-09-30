@@ -109,7 +109,7 @@
   <h1 class="text-lg font-bold mb-4 mt-6">Credentials</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
@@ -122,16 +122,12 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{certification.item}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{certification.expiry}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <Badge 
-                large
-                rounded 
-                id="status-{certification.id}"
-                color={getStatusColor(certification.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
-                {#if certification.icon !== undefined}
-                  <svelte:component this={certification.icon} class=" text-{getStatusColor(certification.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                {/if}
-                {certification.status}
-              </Badge>
+              <CustomBadge 
+                context="status"
+                secondaryContext="general"
+                data={certification} 
+                dataField="status"
+              />
               <Tooltip placement="bottom" triggeredBy="#status-{certification.id}">{getToolTipText(certification.status)}</Tooltip>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
@@ -153,7 +149,7 @@
   <h1 class="text-lg font-bold mb-4 mt-6">Activity history</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
@@ -166,16 +162,12 @@
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{historyItem.item}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{historyItem.expiry}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <Badge 
-                large
-                rounded
-                id="history-{historyItem.id}"
-                color={getStatusColor(historyItem.status)} class="px-2 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32">
-                {#if historyItem.icon !== undefined}
-                  <svelte:component this={historyItem.icon} class=" text-{getStatusColor(historyItem.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                {/if}
-                {historyItem.status}
-              </Badge>
+              <CustomBadge 
+                context="status"
+                secondaryContext="general"
+                data={historyItem} 
+                dataField="status"
+              />
               <Tooltip placement="bottom" triggeredBy="#history-{historyItem.id}">{getToolTipText(historyItem.status)}</Tooltip>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">

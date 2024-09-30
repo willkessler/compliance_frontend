@@ -78,9 +78,9 @@
     <h1 class="px-4 text-3xl font-bold ">Drivers</h1>
   </div>
   <div>
-    <Label>
+    <Label class="text-customGray">
       Filter selections:
-      <Select class="text-xs mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
+      <Select class="text-xs text-gray-400 mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
     </Label>
   </div>
 </div>

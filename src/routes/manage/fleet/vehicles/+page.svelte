@@ -82,9 +82,9 @@
     <h1 class="text-3xl font-bold ">Vehicles</h1>
   </div>
   <div>
-    <Label>
+    <Label class="text-customGray">
       Filter selections:
-      <Select class="text-xs mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
+      <Select class="text-xs text-gray-400 mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
     </Label>
   </div>
 </div>
@@ -102,7 +102,7 @@
     <TableBody class="bg-white divide-y divide-gray-200">
       {#each vehicles as vehicle}
         <TableBodyRow on:click={() => navigateToVehicleDetails(vehicle.id)} class="cursor-pointer">
-          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">Truck #{vehicle.name}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">Vehicle #{vehicle.name}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
           <TableBodyCell class="pl-2">

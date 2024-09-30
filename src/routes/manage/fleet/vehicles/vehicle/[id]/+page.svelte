@@ -14,6 +14,7 @@
  import IncidentLayout from '$lib/components/IncidentLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
 
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
@@ -86,7 +87,7 @@
   <h1 class="text-lg font-bold mb-0 mt-5">Driver details</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-3 ml-0" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-3 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Start Date</TableHeadCell>

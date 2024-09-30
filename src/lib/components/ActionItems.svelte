@@ -2,10 +2,25 @@
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileDrop } from 'svelte-droplet';
- import { CheckCircleOutline, CheckCircleSolid, CirclePlusSolid, ExclamationCircleOutline, PenOutline, ChevronLeftOutline, ChevronRightOutline,  FileSolid, FileImageSolid, PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-icons';
+ import { 
+        CheckCircleOutline, 
+        CheckCircleSolid, 
+        CirclePlusSolid, 
+        ExclamationCircleOutline, 
+        PenOutline, 
+        ChevronLeftOutline, 
+        ChevronRightOutline,  
+        FileSolid, 
+        FileImageSolid, 
+        PhoneSolid, 
+        MailBoxOutline, 
+        MapPinAltOutline
+        } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
  import { actions, getTypeIcon, getActionItems, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
+
  //
  // Modal related
  //
@@ -182,7 +197,7 @@
 
 <div>
   {#if environment === 'incident' } <!-- incidents -->
-    <Table class="relative overflow-x-auto mt-3 ml-0" hoverable>
+    <Table class="relative overflow-x-auto mt-3 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
@@ -196,24 +211,19 @@
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.description}</TableBodyCell>
             <TableBodyCell class="px-1">
-              <Badge large rounded class="px-0 py-1.5 rounded rounded-[6px] cursor-pointer min-w-32 text-gray-{getTypeColor(action.type, 'text')} bg-gray-{getTypeColor(action.type, 'bg')}" >
-                {#if getTypeIcon(action.type)}
-                  <svelte:component this={getTypeIcon(action.type)} class="mr-2 inline" />
-                {/if}
-                {action.type}
-              </Badge>
+              <CustomBadge 
+                context="actionType"
+                data={action} 
+                dataField="type"
+              />
             </TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
-                {#if action.status.toLowerCase() === 'open'}
-                  <ExclamationCircleOutline class="text-{getStatusColor(action.status)}-500 mr-2 inline" />
-                {:else if action.status.toLowerCase() === 'hold'}
-                  <PenOutline class="text-yellow-500 mr-2 inline" />
-                {:else if action.status.toLowerCase() === 'closed'}
-                  <CheckCircleOutline class="text-green-500 mr-2 inline" />
-                {/if}
-                {action.status}
-              </Badge>
+              <CustomBadge 
+                context="status"
+                secondaryContext="general"
+                data={action} 
+                dataField="status"
+              />
             </TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
               <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
@@ -223,7 +233,7 @@
       </TableBody>
     </Table>
 {:else} <!-- vehicles -->
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-2 text-xs font-medium text-customGray uppercase">Event Date</TableHeadCell>
@@ -239,20 +249,19 @@
             <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.eventDate}</TableBodyCell>
             <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.dueDate}</TableBodyCell>
             <TableBodyCell class="px-0 py-4">
-              <Badge class="ml-2 py-1.5 pl-4 rounded-[6px] cursor-pointer min-w-28 text-gray-{getTypeColor(action.type,'text')} bg-gray-{getTypeColor(action.type, 'bg')} text-sm">
-                {#if getTypeIcon(action.type)}
-                  <svelte:component this={getTypeIcon(action.type)} class="mr-2 inline" />
-                {/if}
-                {action.type}
-              </Badge>
+              <CustomBadge 
+                context="actionType"
+                data={action} 
+                dataField="type"
+              />
             </TableBodyCell>
             <TableBodyCell class="px-0 pl-2">
-              <Badge color={getStatusColor(action.status)} class="px-2 py-1.5 rounded-[6px] min-w-28 text-sm">
-                {#if action.icon !== undefined}
-                  <svelte:component this={getTypeIcon(action.icon)} class=" text-{getStatusColor(action.status)}-500 mr-2 transition duration-75 dark:text-customGray group-hover:text-gray-900 dark:group-hover:text-white" />
-                {/if}
-                {action.status}
-              </Badge>
+              <CustomBadge 
+                context="status"
+                secondaryContext="general"
+                data={action} 
+                dataField="status"
+              />
             </TableBodyCell>
             <TableBodyCell class="pl-2 whitespace-nowrap text-sm font-medium">
               <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-24 p-2"><PenOutline/>&nbsp;Edit</Button>
