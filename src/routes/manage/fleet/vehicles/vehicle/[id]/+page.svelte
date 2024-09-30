@@ -123,6 +123,11 @@
           alt="vehicle.name"
           class="absolute inset-0 w-full h-full object-cover object-top border"
         />
+        <img
+          src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
+          alt="driver.name"
+          class="absolute bottom-2 right-2 w-1/4 h-1/4 object-cover border-4 border-gray-300 rounded-lg"
+        />
         <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
           <PenOutline class="w-4 h-4 text-gray-700" />
         </div>
