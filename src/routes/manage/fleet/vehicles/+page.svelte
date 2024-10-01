@@ -97,7 +97,7 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
-      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
       {#each vehicles as vehicle}
