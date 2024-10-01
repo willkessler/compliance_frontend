@@ -1,6 +1,7 @@
 <script lang="ts">
  import { Label } from 'flowbite-svelte';
  import { FileDrop } from 'svelte-droplet';
+ import { FileSolid } from 'flowbite-svelte-icons';
 
  export let uploadedFiles = [];
  
