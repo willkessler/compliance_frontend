@@ -7,8 +7,8 @@
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
 
- import { incidents, getIncidentById, getIncidentsByCategory, 
-        getIncidentTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/incidentData';
+ import { activities, getActivityById, getActivityByCategory, 
+        getActivityTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/activityData';
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
@@ -47,8 +47,8 @@
    alert('Next btn clicked. Make a call to your server to fetch data.');
  };
 
- function navigateToIncidentDetails(incidentId) {
-   goto(`/manage/incidents/incident/${incidentId}`, { replaceState: false });
+ function navigateToActivityDetails(activityId) {
+   goto(`/manage/activities/activity/${activityId}`, { replaceState: false });
  }
 
 </script>
@@ -101,24 +101,24 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
-      {#each getIncidentsByCategory(activeCategory) as incident}
-        <TableBodyRow class="cursor-pointer" on:click={() => navigateToIncidentDetails(incident.id)}>
-          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-            {getIncidentTitle(incident)}
+      {#each getActivityByCategory(activeCategory) as activity}
+        <TableBodyRow class="cursor-pointer" on:click={() => navigateToActivityDetails(activity.id)}>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">
+            {getActivityTitle(activity)}
           </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">
             <CustomBadge
-              context="incidentType"
-              data={incident}
+              context="activityType"
+              data={activity}
               dataField="type"
             />
           </TableBodyCell>
-          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
-          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">{incident.dueDate}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">{activity.type.toLowerCase() === 'maintenance' ? '--' : activity.occurrenceDate}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">{activity.dueDate}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm ">
             <CustomBadge
               context="priority"
-              data={incident}
+              data={activity}
               dataField="priority"
             />
           </TableBodyCell>
@@ -126,12 +126,12 @@
             <CustomBadge
               context="status"
               secondaryContext="general"
-              data={incident}
+              data={activity}
               dataField="status"
             />
           </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
-            <Button on:click={() => navigateToIncidentDetails(incident.id)} color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
+            <Button on:click={() => navigateToActivityDetails(activity.id)} color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
           </TableBodyCell>
         </TableBodyRow>
       {/each}

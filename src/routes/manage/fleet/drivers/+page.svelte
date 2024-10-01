@@ -100,7 +100,7 @@
     <TableBody class="bg-white divide-y divide-gray-200">
       {#each drivers as driver}
         <TableBodyRow class="cursor-pointer" on:click={() => navigateToDriverDetails(driver.id)}>
-          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
             <CustomBadge
               context="status"

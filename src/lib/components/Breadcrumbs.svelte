@@ -3,16 +3,16 @@
  import { ChevronRight, House, LayoutDashboard } from 'lucide-svelte';
 
  // Add an array of segments to filter out
- const filteredSegments = ['manage', 'fleet', 'vehicle', 'driver', 'incident','filings'];
+ const filteredSegments = ['manage', 'fleet', 'vehicle', 'driver', 'activity','filings'];
 
  // Add more mappings as needed
  // 'original': 'replacement',
  const labelMappings = {
-   'incidents': 'Activities',
+   'activities': 'Activities',
  };
 
  const hrefMappings = {
-   'incidents' : '/manage/incidents',
+   'activities' : '/manage/activities',
    'vehicles' :  '/manage/fleet/vehicles',
    'drivers' :   '/manage/fleet/drivers',
    'federal' :   '/manage/filings/federal',

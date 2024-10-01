@@ -25,9 +25,9 @@
  // Modal related
  //
 
- export let environment; // where the modal is being used, either 'incident' or 'vehicle'
- export let incidentId; // which incident id was passed in
- export let vehicleId; // which incident id was passed in
+ export let environment; // where the modal is being used, either 'activity' or 'vehicle'
+ export let activityId; // which activity id was passed in
+ export let vehicleId; // which vehicle id was passed in
 
  let defaultModal = false; // whether the modal is visible
  let actionType = '';
@@ -196,7 +196,7 @@
 </div>
 
 <div>
-  {#if environment === 'incident' } <!-- incidents -->
+  {#if environment === 'activity' } <!-- activities -->
     <Table class="relative overflow-x-auto mt-3 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
@@ -206,7 +206,7 @@
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
+        {#each getActionItems(environment, (environment === 'activity' ? activityId : vehicleId)) as action}
           <TableBodyRow>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.description}</TableBodyCell>
@@ -243,7 +243,7 @@
         <TableHeadCell class="text-xs font-medium text-customGray uppercase">Action</TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each getActionItems(environment, (environment === 'incident' ? incidentId : vehicleId)) as action}
+        {#each getActionItems(environment, (environment === 'activity' ? activityId : vehicleId)) as action}
           <TableBodyRow>
             <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.name}</TableBodyCell>
             <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.eventDate}</TableBodyCell>
@@ -306,7 +306,7 @@
     {selectedAction ? 'Edit Action' : 'Create New Action'}
   </h3>
   <form class="space-y-6">
-    {#if environment === 'incident'}
+    {#if environment === 'activity'}
       <div>
         <Label for="actionType" class="mb-2">Type of action</Label>
         <Select 

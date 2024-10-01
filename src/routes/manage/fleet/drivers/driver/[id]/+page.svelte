@@ -11,9 +11,8 @@
         ThumbsUpSolid,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
  import styles from '$lib/css/rightPanel.module.css';
- import IncidentLayout from '$lib/components/IncidentLayout.svelte';
+ import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
- import ActionItems from '$lib/components/ActionItems.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import { drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
@@ -99,7 +98,7 @@
  
 </script>
 
-<IncidentLayout>
+<ActivityLayout>
   <div>
     <h1 class="text-3xl font-bold mb-2">Driver: {driver.name}</h1>
   </div>
@@ -266,4 +265,4 @@
       <FloppyDiskOutline class="mr-2" />Save Changes
     </Button>
 
-</IncidentLayout>
+</ActivityLayout>

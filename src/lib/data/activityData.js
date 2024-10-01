@@ -1,32 +1,32 @@
 import { TruckSolid, FileLinesOutline } from 'flowbite-svelte-icons';
 
 // needs refactor to use id's as keyss vs stupid loop lookups, dumb AI code
-export function getIncidentById (id) {
-  for (let incident of incidents) {
-    if(incident.id === id) {
-      return incident;
+export function getActivityById (id) {
+  for (let activity of activities) {
+    if(activity.id === id) {
+      return activity;
     }
   }
   return null;
 }
 
-export function getIncidentsByCategory(category) {
-  let filteredIncidents;
+export function getActivityByCategory(category) {
+  let filteredActivities;
   if (category.toLowerCase() === 'all types') {
-    filteredIncidents = incidents;
+    filteredActivities = activities;
   } else {
-    filteredIncidents = incidents.filter((incident) => 
-      incident.category.toLowerCase() == category.toLowerCase());
+    filteredActivities = activities.filter((activity) => 
+      activity.category.toLowerCase() == category.toLowerCase());
   }
-  //console.log(category, JSON.stringify(filteredIncidents,null,2));
-  return filteredIncidents;
+  //console.log(category, JSON.stringify(filteredActivities,null,2));
+  return filteredActivities;
 }
 
-export function getIncidentIdForVehicleId (vehicleId) {
-  for (let incident of incidents) {
-    if(incident.vehicleId === parseInt(vehicleId)) {
-      //console.log(`returning ${incident.id}`);
-      return incident.id;
+export function getActivityIdForVehicleId (vehicleId) {
+  for (let activity of activities) {
+    if(activity.vehicleId === parseInt(vehicleId)) {
+      //console.log(`returning ${activity.id}`);
+      return activity.id;
     }
   }
   return null;
@@ -84,8 +84,8 @@ export function getPriorityColor(priority) {
   }
 }
 
-export function getIncidentIcon (incident) {
-  switch (incident.type) {
+export function getActivityIcon (activity) {
+  switch (activity.type) {
   case 'Driver Issue':
   case 'Maintenance':
     return TruckSolid;
@@ -95,30 +95,30 @@ export function getIncidentIcon (incident) {
   return FileLinesOutline;
 }
 
-export function getIncidentTitle (incident) {
-  let title = incident.title;
-  switch (incident.type) {
+export function getActivityTitle (activity) {
+  let title = activity.title;
+  switch (activity.type) {
   case 'Maintenance':
-    title += ' (Truck #' + incident.vehicleId + ')';
+    title += ' (Truck #' + activity.vehicleId + ')';
     break;
   case 'Driver issue':
   case 'Accident':
-    title += ' (Driver #' + incident.driverId + ')';
+    title += ' (Driver #' + activity.driverId + ')';
     break;
   }
   return title;
 }
 
-export function getOpenIncidentCount() {
+export function getOpenActivityCount() {
   let count = 0;
-  for (let incident of incidents) {
-    count += (incident.status.toLowerCase() !== 'closed' ? 1 : 0);
+  for (let activity of activities) {
+    count += (activity.status.toLowerCase() !== 'closed' ? 1 : 0);
   }
   return count;
 }
 
 
-export const incidents = [
+export const activities = [
   {
     id: 1292,
     priority: 'Critical',

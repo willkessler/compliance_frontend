@@ -11,7 +11,7 @@
         ThumbsUpSolid,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
  import styles from '$lib/css/rightPanel.module.css';
- import IncidentLayout from '$lib/components/IncidentLayout.svelte';
+ import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
@@ -69,7 +69,7 @@
 
 </style>
 
-<IncidentLayout>
+<ActivityLayout>
   <div>
     <h1 class="text-3xl font-bold mb-2">Vehicle #{getVehicleById(id).name}</h1>
   </div>
@@ -197,4 +197,4 @@
       </div>
     </div>
 
-</IncidentLayout>
+</ActivityLayout>

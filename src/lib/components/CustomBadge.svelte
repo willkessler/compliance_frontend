@@ -59,7 +59,7 @@
      'medium':                    { color: 'yellow', icon: ExclamationCircleSolid, iconLibrary: 'fb' },
      'low':                       { color: 'blue',   icon: ExclamationCircleSolid, iconLibrary: 'fb' },
    },
-   incidentType: {
+   activityType: {
      'maintenance':               { color: 'blue',   icon: Wrench, iconLibrary: 'lu' },
      'accident':                  { color: 'red',    icon: Truck, iconLibrary: 'lu' },
      'driver issue':              { color: 'red',    icon: User, iconLibrary: 'lu' },

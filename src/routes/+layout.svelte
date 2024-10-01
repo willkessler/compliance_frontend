@@ -17,7 +17,7 @@
  let shouldTransition = false;
 
  $: {
-   isDetailsPage = $page.url.pathname.includes('/incidents/incident/') ||
+   isDetailsPage = $page.url.pathname.includes('/activities/activity/') ||
                    $page.url.pathname.includes('/fleet/drivers/driver/') ||
                    $page.url.pathname.includes('/fleet/vehicles/vehicle/');
    console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
@@ -42,7 +42,7 @@
    // Determine if we should transition
    shouldTransition = isDetailsPage || (
      previousPath !== null && (
-       previousPath.includes('/incident/') ||
+       previousPath.includes('/activity/') ||
        previousPath.includes('/driver/') ||
        previousPath.includes('/vehicle/')
      )
@@ -51,7 +51,7 @@
    if (shouldTransition && previousPath !== null) {
      // Determine slide direction only if we're transitioning
      if (!isDetailsPage && (
-       previousPath.includes('/incident/') ||
+       previousPath.includes('/activity/') ||
        previousPath.includes('/driver/') ||
        previousPath.includes('/vehicle/')
      )) {

@@ -7,11 +7,11 @@
         UsersOutline,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
  import styles from '$lib/css/rightPanel.module.css';
- import IncidentLayout from '$lib/components/IncidentLayout.svelte';
+ import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
 
- import { incidents, getIncidentTitle, getIncidentById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/incidentData';
+ import { activities, getActivityTitle, getActivityById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/activityData';
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
@@ -42,17 +42,17 @@
  // Table data
  $: id = parseInt($page.params.id); // get the page id from the url
 
- let incidentId, incident, vehicle, driver;
+ let activityId, activity, vehicle, driver;
 
  $: if ($page.params.id) {
-   incidentId = parseInt($page.params.id);
-   //console.log(`incidentId: ${incidentId}`);
-   incident = getIncidentById(incidentId);
-   // console.log(`incident: ${JSON.stringify(incident)}`);
-   vehicle = getVehicleById(incident.vehicleId);
-   // console.log(`vehicle: ${JSON.stringify(vehicle)}`);
+   activityId = parseInt($page.params.id);
+   console.log(`activityId: ${activityId}`);
+   activity = getActivityById(activityId);
+   console.log(`activity: ${JSON.stringify(activity)}`);
+   vehicle = getVehicleById(activity.vehicleId);
+   console.log(`vehicle: ${JSON.stringify(vehicle)}`);
    driver =  getVehicleDriver(vehicle.id);
-   //console.log(`got driver ${driver.id} for incident ${incident.id}` );
+   console.log(`got driver ${driver.id} for activity ${activity.id}` );
  }
 
 </script>
@@ -69,15 +69,15 @@
   }
 </style>
 
-<IncidentLayout>
+<ActivityLayout>
   <div>
-    <h1 class="text-3xl font-bold mt-2 mb-2">{getIncidentTitle(incident)}</h1>
+    <h1 class="text-3xl font-bold mt-2 mb-2">{getActivityTitle(activity)}</h1>
   </div>
 
 
   <ActionItems 
-    environment="incident"
-    incidentId={incident.id}
+    environment="activity"
+    activityId={activity.id}
   />
 
   <div class="w-full mt-24">
@@ -89,20 +89,20 @@
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold text-customGray uppercase">Details</h2>
-      <p class="font-semibold text-customGray">{incident.occurrenceDate}</p>
+      <p class="font-semibold text-customGray">{activity.occurrenceDate}</p>
     </div>
     <div class="space-x-2 mb-2">
-      <Badge class="py-1 cursor-pointer bg-{getTypeColor(incident.type)}-200 text-gray-700">{incident.type}</Badge>
-      <Badge class="py-1 cursor-pointer bg-{getPriorityColor(incident.priority)}-200 text-gray-700">{incident.priority}</Badge>
-      <Badge class="py-1 cursor-pointer bg-{getStatusColor(incident.status)}-200 text-gray-700">{incident.status}</Badge>
+      <Badge class="py-1 cursor-pointer bg-{getTypeColor(activity.type)}-200 text-gray-700">{activity.type}</Badge>
+      <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
+      <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
     </div>
     <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
       <div class="font-semibold">Level</div>
-      <div>{incident.level}</div>
+      <div>{activity.level}</div>
     </div>
     <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-1">
       <div class="font-semibold">Occurred on</div>
-      <div>{incident.occurrenceDate}</div>
+      <div>{activity.occurrenceDate}</div>
     </div>
     <div class="grid grid-cols-2 gap-y-2 mt-2">
       <div class="font-semibold">Driver</div>
@@ -142,7 +142,7 @@
       <div>
         <div class="mt-6">Description and notes</div>
         <div class="p-4 mt-2 divide-y shadow-none border rounded">
-          <p class="text-md text-gray-600">{incident.description}</p>
+          <p class="text-md text-gray-600">{activity.description}</p>
           <div class="text-customGray flex justify-end items-center mt-2 pt-2 ml-2">
             <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
             <div class="cursor-pointer"><FileImageSolid /></div>
@@ -154,4 +154,5 @@
       </div>
     </div>
   </div>
-</IncidentLayout>
+
+</ActivityLayout>

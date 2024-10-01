@@ -1,19 +1,19 @@
-import { incidents, getIncidentIdForVehicleId } from '$lib/data/incidentData';
+import { activities, getActivityIdForVehicleId } from '$lib/data/activityData';
 import { PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-icons';
 
 
 export function getActionItems (environment, id) {
   //console.log(`id ${id} environment ${environment}`);
-  let incidentId;
-  if (environment === 'incident') {
-    incidentId = parseInt(id);
+  let activityId;
+  if (environment === 'activity') {
+    activityId = parseInt(id);
   } else {
-    incidentId = getIncidentIdForVehicleId(id);
-    //console.log(`got incidentId ${incidentId}`);
+    activityId = getActivityIdForVehicleId(id);
+    //console.log(`got activityId ${activityId}`);
   }
 
   for (let action of actions) {
-    if(action.incidentId === incidentId) {
+    if(action.activityId === activityId) {
       return action.items;
     }
   }
@@ -80,7 +80,7 @@ export function getTypeIcon(type) {
 
 export const actions = [
   { 
-    incidentId: 1292,
+    activityId: 1292,
     items: [
       { 
         id: 1, 
@@ -135,7 +135,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 292,
+    activityId: 292,
     items: [
       { 
         id: 1, 
@@ -150,7 +150,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 33828,
+    activityId: 33828,
     items: [
       { 
         id: 1, 
@@ -165,7 +165,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 48482,
+    activityId: 48482,
     items: [
       { 
         id: 1, 
@@ -180,7 +180,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 59382,
+    activityId: 59382,
     items: [
       { 
         id: 1, 
@@ -195,7 +195,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 68292,
+    activityId: 68292,
     items: [
       { 
         id: 1, 
@@ -210,7 +210,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 79182,
+    activityId: 79182,
     items: [
       { 
         id: 1, 
@@ -225,7 +225,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 81829,
+    activityId: 81829,
     items: [
       { 
         id: 1, 
@@ -240,7 +240,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 99928,
+    activityId: 99928,
     items: [
       { 
         id: 1, 
@@ -255,7 +255,7 @@ export const actions = [
     ],
   },
   { 
-    incidentId: 10023,
+    activityId: 10023,
     items: [
       { 
         id: 1, 
