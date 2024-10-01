@@ -73,8 +73,7 @@
   <Breadcrumbs />
 </header>
 
-<div class="p-4">
-
+<div class="pl-4 pt-4 mr-0">
   <h1 class="text-3xl font-bold mb-4">Activity Manager</h1>
 
   <div class="flex justify-start items-center ">
@@ -93,37 +92,37 @@
   
   <Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
     <TableHead class="bg-gray-50 whitespace-nowrap bg-customGray/15">
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Name of event</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Event Type</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Occurred On</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Due On</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Priority</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
-      <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name of event</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Event Type</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Occurred On</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Due On</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Priority</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
     </TableHead>
     <TableBody class="bg-white divide-y divide-gray-200">
       {#each getIncidentsByCategory(activeCategory) as incident}
         <TableBodyRow class="cursor-pointer" on:click={() => navigateToIncidentDetails(incident.id)}>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
             {getIncidentTitle(incident)}
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">
             <CustomBadge
               context="incidentType"
               data={incident}
               dataField="type"
             />
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm text-customGray">{incident.dueDate}</TableBodyCell>
-          <TableBodyCell class="whitespace-nowrap text-sm ">
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">{incident.type.toLowerCase() === 'maintenance' ? '--' : incident.occurrenceDate}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm text-customGray">{incident.dueDate}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm ">
             <CustomBadge
               context="priority"
               data={incident}
               dataField="priority"
             />
           </TableBodyCell>
-          <TableBodyCell class="whitespace-nowrap text-sm ">
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm ">
             <CustomBadge
               context="status"
               secondaryContext="general"
@@ -131,7 +130,7 @@
               dataField="status"
             />
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
             <Button on:click={() => navigateToIncidentDetails(incident.id)} color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
           </TableBodyCell>
         </TableBodyRow>

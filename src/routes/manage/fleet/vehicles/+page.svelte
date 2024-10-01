@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<div class="ml-4 mr-4">
+<div class="ml-4 mr-0">
   <Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5">
     <TableHead class=" bg-customGray/15 whitespace-nowrap">
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
