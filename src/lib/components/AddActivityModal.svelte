@@ -1,6 +1,9 @@
 <script>
- import { Button, Input, Label, Helper, Textarea } from  'flowbite-svelte';
+ import { Button, Input, Label, Helper, Select, Textarea } from  'flowbite-svelte';
  import { onMount } from 'svelte';
+ import { drivers } from '$lib/data/driverData';
+ import { vehicles } from '$lib/data/vehicleData';
+ import Uploader from '$lib/components/Uploader.svelte';
 
  export let mode = 'accident';
 
@@ -12,6 +15,11 @@
    placeholder: 'Enter everything about the accident that you know. You can edit this informaion later.'
  };
 
+ let selectedDriver;
+ let selectedVehicle;
+ let driverSelections = drivers.map((driver) => ({ value: driver.id, name: driver.name }));
+ let vehicleSelections = vehicles.map((vehicle) => ({ value: vehicle.id, name: vehicle.name }));
+ 
  // date picker stuff
  let accidentDate = new Date('2024-08-31');
  let formattedDate;
@@ -49,9 +57,9 @@
 
 <div>
   {#if (mode === 'accident')}
-
+    <div class="text-gray-800 font-semibold text-lg mb-4">Add New Activity: Accident</div>
     <div class="w-1/3">
-      <Label for="accidentDate" class="mb-2">Date of accident</Label>
+      <Label for="accidentDate">Date of accident:</Label>
       <div class="relative w-full">
         <input
           id="accidentDate"
@@ -69,8 +77,25 @@
       </div>
     </div>
 
-    <Label class="block mb-2">Description of accident</Label>
+    <Label class="block mt-4">Description of accident:</Label>
     <Textarea {...accidentDetailsProps } />
+
+    <div class="flex justify-between">
+      <div class="w-1/2">
+        <Label for="vehicleSelection" class="mt-4">
+          Vehicle involved:
+        </Label>
+        <Select id="vehicleSelection" class="mt-2" items={vehicleSelections} bind:value={selectedVehicle} />
+      </div>
+      <div class="w-full ml-4">
+        <Label for="driverSelection" class="mt-4">
+          Driver at the time of the accident:
+        </Label>
+        <Select id="driverSelection" class="mt-2" items={driverSelections} bind:value={selectedDriver} />
+      </div>
+    </div>
+    <Uploader />
+
   {/if}
   {#if (mode === 'maintenance')}
     this is maintenance
@@ -82,4 +107,3 @@
     this is other
   {/if}
 </div>
-
