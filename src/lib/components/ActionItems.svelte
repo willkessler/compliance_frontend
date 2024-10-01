@@ -29,7 +29,7 @@
  export let activityId; // which activity id was passed in
  export let vehicleId; // which vehicle id was passed in
 
- let defaultModal = false; // whether the modal is visible
+ let showModal = false; // whether the modal is visible
  let actionType = '';
  let actionName = '';
  let actionNotes = '';
@@ -83,7 +83,7 @@
     selectedActionTypeValue = action.type.toLowerCase();
     actionName = action.name;
     actionNotes = action.description;
-    defaultModal = true;
+    showModal = true;
     uploadedFiles = [ { name: 'receipt_382.pdf'}, {name: 'bol_9_9_24.pdf'} ];
   }
 
@@ -102,7 +102,7 @@
   function updateAction() {
     // Handle action update logic here
     console.log('Updating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
-    defaultModal = false;
+    showModal = false;
     selectedAction = null;
     selectedActionTypeValue = '';
     uploadedFiles = [];
@@ -111,7 +111,7 @@
   function createAction() {
     // Handle action creation logic here
     console.log('Creating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
-    defaultModal = false;
+    showModal = false;
     selectedActionTypeValue = '';
     uploadedFiles = [];
   }
@@ -156,7 +156,7 @@
     currentPage = event.detail;
   }
  
- // date picker junk
+ // date picker stuff
  let dueDate = new Date('2024-08-31');
  let formattedDate;
 
@@ -191,8 +191,11 @@
 
 <div class="flex justify-between items-end mb-0 ml-0 mt-3">
   <h1 class="text-xl font-bold">Action Items History</h1>
-  <Button on:click={() => { defaultModal = true; uploadedFiles = []; }}
-    class="bg-blue-500 hover:bg-blue-600 text-white text-sm "><CirclePlusSolid />&nbsp;&nbsp;Action Item</Button>
+  <Button on:click={() => { showModal = true; uploadedFiles = []; }}
+    class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
+    <CirclePlusSolid />
+    &nbsp;&nbsp;Action Item
+  </Button>
 </div>
 
 <div>
@@ -298,7 +301,7 @@
 
 
 
-<Modal bind:open={defaultModal} autoclose outsideclose 
+<Modal bind:open={showModal} autoclose outsideclose 
   backdropClass="fixed inset-0 z-40 bg-white/80"
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
 >
@@ -412,7 +415,7 @@
     <div class="w-full flex justify-end">
       <Button class="bg-white-900 hover:bg-gray-100 text-customGray mr-2" 
         on:click={() => {
-                 defaultModal = false;
+                 showModal = false;
                  actionName = null;
                  actionNotes = null;
                  selectedAction = null;

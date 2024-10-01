@@ -1,11 +1,15 @@
 <script>
  import { goto } from '$app/navigation';
- import { Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
- import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ThumbsUpSolid, CheckCircleSolid, TruckSolid, UsersOutline, FileLinesOutline } from 'flowbite-svelte-icons';
+ import { Button, Card, Dropdown, DropdownItem, Modal, Input,
+          Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { CirclePlusSolid, ClockSolid, ChevronLeftOutline, ChevronRightOutline, ChevronDownOutline,
+          ThumbsUpSolid, CheckCircleSolid, TruckSolid, UsersOutline, FileLinesOutline,
+          UserAddSolid, InboxFullSolid, InfoCircleSolid, EditSolid, SearchOutline } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
+ import AddActivityModal from '$lib/components/AddActivityModal.svelte';
 
  import { activities, getActivityById, getActivityByCategory, 
         getActivityTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/activityData';
@@ -14,6 +18,13 @@
 
  const categories = ['Incidents', 'Maintenance', 'Records', 'All Types' ];
  let activeCategory = 'All Types';
+
+ //
+ // Modal related
+ //
+
+ let showModal = false; // whether the modal is visible
+ let modalMode = 'accident'; // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
@@ -51,22 +62,13 @@
    goto(`/manage/activities/activity/${activityId}`, { replaceState: false });
  }
 
+ function openModal(mode) {
+   modalMode = mode;
+   showModal = !showModal;
+ }
+ 
+   
 </script>
-
-<!-- these don't work for some reason -->
-<style>
- :global(.flowbite-table) {
-   @apply shadow overflow-hidden border-b border-gray-200 sm:rounded-lg;
- }
- :global(.flowbite-table-head) {
-   @apply bg-gray-50;
- }
- :global(.badge-purple) {
-   background-color: #f3e8ff !important;
-   color: #6b21a8 !important;
- }
-</style>
-
 
 
 <header class="pt-6 pl-4">
@@ -76,20 +78,43 @@
 <div class="pl-4 pt-4 mr-0">
   <h1 class="text-3xl font-bold mb-4">Activity Manager</h1>
 
-  <div class="flex justify-start items-center ">
+  <div class="flex justify-between">
+    <div class="flex items-center justify-start">
+      <div class="inline-block bg-white border rounded-lg p-0">
+        {#each categories as category}
+          <Button
+            class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeCategory.toLowerCase() === category.toLowerCase() ? 'bg-gray-300' : ''}"
+            on:click={() => activeCategory = category.toLowerCase()}
+            >
+            {category}
+          </Button>
+        {/each}
+      </div>
 
-    <div class="inline-block bg-white border rounded-lg p-0">
-      {#each categories as category}
+      <div class="ml-4">
         <Button
-          class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeCategory.toLowerCase() === category.toLowerCase() ? 'bg-gray-300' : ''}"
-          on:click={() => activeCategory = category.toLowerCase()}
-          >
-          {category}
+          class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
+          <CirclePlusSolid />
+          &nbsp;&nbsp;Add Activity!
+          <ChevronDownOutline class="w-6 h-6 ms-2 text-white dark:text-white" />
         </Button>
-      {/each}
+        <Dropdown class="min-w-48">
+          <DropdownItem on:click={() => { openModal('accident') }}><div class="flex text-customGray"><UserAddSolid class="mr-2"/>Accident</div></DropdownItem>
+          <DropdownItem on:click={() => { openModal('maintenance') }}><div class="flex text-customGray"><InboxFullSolid class="mr-2"/>Maintenance</div></DropdownItem>
+          <DropdownItem on:click={() => { openModal('record') }}><div class="flex text-customGray"><InfoCircleSolid class="mr-2"/>Record/Doc</div></DropdownItem>
+          <DropdownItem on:click={() => { openModal('other') }}><div class="flex text-customGray"><EditSolid class="mr-2"/>Other</div></DropdownItem>
+        </Dropdown>
+      </div>
     </div>
-  </div>
-  
+
+    <div class="ml-6 minw-64 mr-4">
+      <Input id="search" placeholder="Search">
+      <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
+        </Input>
+    </div>
+
+  </div>  
+
   <Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
     <TableHead class="bg-gray-50 whitespace-nowrap bg-customGray/15">
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name of event</TableHeadCell>
@@ -151,3 +176,11 @@
     </svelte:fragment>
   </Pagination>
 </div>
+
+<Modal bind:open={showModal} autoclose outsideclose 
+  backdropClass="fixed inset-0 z-40 bg-white/80"
+  class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
+  <AddActivityModal
+    mode={modalMode}
+  />
+</Modal>
