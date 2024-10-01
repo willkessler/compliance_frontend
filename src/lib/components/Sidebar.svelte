@@ -102,7 +102,7 @@
             </svelte:fragment>
             <svelte:fragment slot="subtext">
               {#if item.pillCount !== undefined}
-                <span class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
+                <span class="inline-flex justify-center items-center p-3 ms-4 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
               {/if}
             </svelte:fragment>
           </SidebarItem>

@@ -197,7 +197,7 @@
     <div class="flex justify-between items-center mb-0">
       <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Basic information</h2>
     </div>
-    <Card class="shadow-none">
+    <Card class="shadow-none border-none">
       <div class="relative pt-[95%] overflow-hidden">
         <img 
           src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
@@ -208,31 +208,10 @@
           <PenOutline class="w-4 h-4 text-gray-700" />
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+      <div class="grid grid-cols-2 gap-y-3 gap-x-8 mt-4 items-center">
         <div class="font-semibold">Name</div>
         <div class="text-gray-800 font-bold">
           {driver.name}
-        </div>
-        <div class="font-semibold">License</div>
-        <div class="text-gray-800">{driver.license}</div>
-
-        <div class="font-semibold">Lic. Expiration</div>
-        <div class="text-gray-800"> {driver.licenseExpiration}</div>
-        
-        <div class="font-semibold">SSN/EIN</div>
-        <div class="text-gray-800 ">{driver.ssn}</div>
-        
-        <div class="font-semibold">Total Drive time</div>
-        <div class="text-gray-800"> {driver.totalDriveTime}</div>
-        
-        <div class="font-semibold">Mileage</div>
-        <div class="text-gray-800">{driver.totalMiles}</div>
-        
-        <div class="font-semibold">Vehicle</div>
-        <div>
-          <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
-            <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
-          </a>
         </div>
 
         <div class="font-semibold">Driving status</div>
@@ -245,6 +224,33 @@
             />
         </div>
 
+        <div class="font-semibold">License</div>
+        <div class="text-gray-800 p-1 border">{driver.license}</div>
+
+        <div class="font-semibold">License expiration</div>
+        <div class="text-gray-800"> {driver.licenseExpiration}</div>
+        
+        <div class="font-semibold">SSN/EIN</div>
+        <div class="text-gray-800 ">{driver.ssn}</div>
+        
+        <div class="font-semibold">Total drive time</div>
+        <div class="text-gray-800"> {driver.totalDriveTime}</div>
+        
+        <div class="font-semibold">Total miles driven</div>
+        <div class="text-gray-800">{driver.totalMiles}</div>
+        
+        <div class="font-semibold">Miles remaining</div>
+        <div class="text-gray-800">{driver.milesRemaining}</div>
+
+        <div class="font-semibold">HOS remaining</div>
+        <div class="text-gray-800">{driver.hosRemaining}</div>
+        
+        <div class="font-semibold">Vehicle</div>
+        <div>
+          <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
+            <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+          </a>
+        </div>
       </div>
     </Card>
 

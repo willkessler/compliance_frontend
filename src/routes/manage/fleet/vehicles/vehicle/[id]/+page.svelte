@@ -134,9 +134,9 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
-        <div class="font-semibold">Plate</div>
-        <div>{vehicle.licensePlate}</div>
+      <div class="grid grid-cols-2 gap-y-3 gap-x-8 mt-4 items-center">
+        <div class="font-semibold">License Plate</div>
+        <div class="p-1 border">{vehicle.licensePlate}</div>
 
         <div class="font-semibold">VIN</div>
         <div title="Full VIN: 2345034948345890549">{vehicle.vin}</div>

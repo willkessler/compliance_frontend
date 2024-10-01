@@ -92,6 +92,8 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Driving Status</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Total drive time</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Total miles driven</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Miles remaining</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">HOS remaining</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
@@ -109,6 +111,8 @@
           </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalDriveTime}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.totalMiles}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.milesRemaining}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.hosRemaining}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
             <CustomBadge
               context="status"
