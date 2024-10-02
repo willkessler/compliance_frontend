@@ -121,20 +121,27 @@
 </script>
 
 <ActivityLayout>
-  <div>
+  <div class="flex gap-x-4 justify-start mb-4">
     <h1 class="text-3xl font-bold mb-2">Driver: {driver.name}</h1>
+    <div class="text-gray-800">
+      <CustomBadge
+        context="status"
+        secondaryContext="driving"
+        data={injectDriverStatus(driver)}
+        dataField="drivingStatus"
+      />
+    </div>
   </div>
-
 
   <!-- Driver's Personal info -->
   <div>
-    <div class="grid grid-cols-2 gap-x-5 gap-y-0 items-start mt-0">
-      <div>
-        <div class="relative pt-[95%] overflow-hidden">
+    <div class="flex flex-col md:flex-row gap-x-5 items-stretch mt-0">
+      <div class="relative md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[355px] max-h-[355px]">
+        <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
           <img 
             src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
             alt="driver.name"
-            class="absolute inset-0 w-full h-full object-cover object-top border"
+            class="w-full h-full object-cover object-top border"
           />
           <div
             on:mouseenter={handleDLMouseEnter}
@@ -168,48 +175,72 @@
           </div>
         </div>
       </div>
-      <div>
-        <div class="grid grid-cols-2 gap-y-3 gap-x-6 mt-2 items-center">
-          <div class="font-semibold">License</div>
-          <div class="text-gray-800 p-1 border">{driver.license}</div>
 
-          <div class="font-semibold">License expiration</div>
-          <div class="text-gray-800"> {driver.licenseExpiration}</div>
-          
-          <div class="font-semibold">SSN/EIN</div>
-          <div class="text-gray-800 ">{driver.ssn}</div>
-          
-          <div class="font-semibold">Total drive time</div>
-          <div class="text-gray-800"> {driver.totalDriveTime}</div>
-          
-          <div class="font-semibold">Total miles driven</div>
-          <div class="text-gray-800">{driver.totalMiles}</div>
-          
-          <div class="font-semibold">Miles remaining</div>
-          <div class="text-gray-800">{driver.milesRemaining}</div>
-
-          <div class="font-semibold">HOS remaining</div>
-          <div class="text-gray-800">{driver.hosRemaining}</div>
-          
-          <div class="font-semibold">Current Vehicle</div>
-          <div>
-            <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
-              <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
-            </a>
+      <div class="w-full md:w-1/2 max-w-[340px]"> <!-- driver specific details -->
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Phone</div>
+            <div class="w-1/2 text-gray-800">{driver.phone}</div>
           </div>
-          <div class="font-semibold">Driving status</div>
-          <div class="text-gray-800">
-            <CustomBadge
-              context="status"
-              secondaryContext="driving"
-              data={injectDriverStatus(driver)}
-              dataField="drivingStatus"
-            />
+
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">License</div>
+            <div class="w-1/2 text-gray-800 p-1 border">{driver.license}</div>
+          </div>
+
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">License expiration</div>
+            <div class="w-1/2 text-gray-800">{driver.licenseExpiration}</div>
+          </div>
+          
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Issue date</div>
+            <div class="w-1/2 text-gray-800">{driver.issueDate}</div>
+          </div>
+
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Years of Experience</div>
+            <div class="w-1/2 text-gray-800">{driver.yearsOfExperience}</div>
+          </div>
+
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">SSN/EIN</div>
+            <div class="w-1/2 text-gray-800">{driver.ssn}</div>
+          </div>
+          
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Total drive time</div>
+            <div class="w-1/2 text-gray-800">{driver.totalDriveTime}</div>
+          </div>
+          
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Total miles driven</div>
+            <div class="w-1/2 text-gray-800">{driver.totalMiles}</div>
+          </div>
+          
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Miles remaining</div>
+            <div class="w-1/2 text-gray-800">{driver.milesRemaining}</div>
+          </div>
+
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">HOS remaining</div>
+            <div class="w-1/2 text-gray-800">{driver.hosRemaining}</div>
+          </div>
+          
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Current Vehicle</div>
+            <div class="w-1/2">
+              <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
+                <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <Accordion flush class="pb-2 ml-0">
     <AccordionItem open paddingFlush="py-0 pt-4 pb-0">
       <span class="font-semibold" slot="header">Driver Notes</span>

@@ -82,76 +82,97 @@
     <h1 class="text-3xl font-bold mb-2">Vehicle #{getVehicleById(id).name}</h1>
   </div>
 
-  <div class="grid grid-cols-2 gap-x-5 gap-y-0 items-start mt-0">
-    <div>
-      <div class="relative pt-[95%] overflow-hidden">
-        <img 
-          src="{vehicle.photo ? '/images/vehicles/' + vehicle.photo : '/images/vehicles/default.jpg'}" 
-          alt="vehicle.name"
-          class="absolute inset-0 w-full h-full object-cover object-top border"
-        />
-        <img
-          on:mouseenter={() => { zoomedDriverPic = true; }}
+  <div>
+
+    <!-- Vehicle photo -->
+
+    <div class="flex flex-col md:flex-row gap-x-5 items-stretch mt-0">
+      <div class="relative md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[355px] max-h-[355px]">
+        <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
+          <img 
+            src="{vehicle.photo ? '/images/vehicles/' + vehicle.photo : '/images/vehicles/default.jpg'}" 
+            alt="vehicle.name"
+            class="w-full h-full object-cover object-top border"
+          />
+          <img
+            on:mouseenter={() => { zoomedDriverPic = true; }}
           src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
           alt="driver.name"
           class="absolute bottom-2 right-2 w-1/4 h-1/4 object-cover border-4 border-gray-300 rounded-lg"
-        />
-        {#if zoomedDriverPic}
-          <img
-            on:mouseleave={() => { zoomedDriverPic = false; }}
-          on:click={() => { navigateToDriverDetails(driver.id) }}
-          src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
-          alt="driver.name"
-          class="absolute bottom-2 right-2 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
           />
-        {/if}
+          {#if zoomedDriverPic}
+            <img
+              on:mouseleave={() => { zoomedDriverPic = false; }}
+            on:click={() => { navigateToDriverDetails(driver.id) }}
+            src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
+            alt="driver.name"
+            class="absolute bottom-2 right-2 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
+            />
+          {/if}
 
-        <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
-          <PenOutline class="w-4 h-4 text-gray-700" />
+          <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
+            <PenOutline class="w-4 h-4 text-gray-700" />
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div class="grid grid-cols-2 gap-y-3 gap-x-6 mt-2 items-center">
-        <div class="font-semibold">License Plate</div>
-        <div class="p-1 border text-customGray">{vehicle.licensePlate}</div>
 
-        <div class="font-semibold">VIN</div>
-        <div class="text-customGray" title="Full VIN: 2345034948345890549">{vehicle.vin}</div>
+      <!-- Vehicle details -->
+      <div class="w-full md:w-1/2 max-w-[340px]">
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">License Plate</div>
+            <div class="w-1/2 p-1 border text-customGray">{vehicle.licensePlate}</div>
+          </div>
 
-        <div class="font-semibold">Driver</div>
-        <a href="/manage/fleet/drivers/driver/{driver.id}">
-          <Badge class="bg-gray-100 text-gray-800">
-            <UsersOutline class="inline-block mr-1" />
-            {driver.name}
-          </Badge>
-        </a>
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">VIN</div>
+            <div class="w-1/2 text-customGray" title="Full VIN: 2345034948345890549">{vehicle.vin}</div>
+          </div>
 
-        <div class="font-semibold mt-2">Current Location</div>
-        <div class="cursor-pointer mt-2 text-md text-nowrap">
-          <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>
-        </div>
-        <div class="flex justify-start items-middle mb-0">
-          <div class="mt-4 font-semibold text-nowrap mr-2">Registration</div>
-        </div>
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Driver</div>
+            <div class="w-1/2">
+              <a href="/manage/fleet/drivers/driver/{driver.id}">
+                <Badge class="bg-gray-100 text-gray-800">
+                  <UsersOutline class="inline-block mr-1" />
+                  {driver.name}
+                </Badge>
+              </a>
+            </div>
+          </div>
 
-        <div class="mt-3">
-          <div class="flex items-center">
-            <div class="relative inline-block">
-              <input
-                type="date"
-                bind:value={dueDate}
-                on:input={handleInput}
-                class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
-              />
-              <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
-                <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-                </svg>
-                <span class="text-sm text-gray-700">{formattedDate}</span>
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold mt-2">Current Location</div>
+            <div class="w-1/2 cursor-pointer mt-2 text-md text-nowrap">
+              <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 flex justify-start items-middle mb-0">
+              <div class="mt-4 font-semibold text-nowrap mr-2">Registration</div>
+            </div>
+
+            <div class="w-1/2 mt-3">
+              <div class="flex items-center">
+                <div class="relative inline-block">
+                  <input
+                    type="date"
+                    bind:value={dueDate}
+                    on:input={handleInput}
+                    class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
+                  />
+                  <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
+                    <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-sm text-gray-700">{formattedDate}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
