@@ -3,12 +3,16 @@
  import { 
         ClockSolid, 
         ExclamationCircleSolid, 
+        ExclamationCircleOutline,
         ThumbsUpSolid, 
         CheckCircleOutline, 
         CheckCircleSolid,
-        PhoneSolid, 
-        MailBoxOutline, 
+        PhoneOutline, 
+        MailBoxOutline,
         MapPinAltOutline,
+        TruckOutline,
+        ThumbsUpOutline,
+        CirclePauseOutline,
         } from 'flowbite-svelte-icons';
  import { 
         CirclePause,
@@ -16,7 +20,12 @@
         PackageOpen,
         Truck, 
         User, 
-        Wrench
+        Wrench,
+        Mail,
+        CirclePlay,
+        Pencil,
+        Utensils,
+        UserCheck
         } from 'lucide-svelte';
 
  export let context = null;
@@ -25,8 +34,8 @@
  export let specialFieldOverride = null;
  export let data = {};
 
- const fbIconSize = 6;
- const luIconSize = 6;
+ const fbIconSize = 5;
+ const luIconSize = 5;
  const textSaturation = 500;
  const bgSaturation = 100;
  const iconSaturation = 125;
@@ -34,23 +43,23 @@
  const colorIconMap = {
    status: {
      general: {
-       'open':                    { color: 'green',  icon: PackageOpen, iconLibrary: 'lu' },
-       'closed':                  { color: 'gray',   icon: CheckCircleOutline, iconLibrary: 'fb' },
+       'open':                    { color: 'gray',  icon: CheckCircleOutline, iconLibrary: 'lu' },
+       'closed':                  { color: 'green',   icon: CheckCircleSolid, iconLibrary: 'fb' },
        'blocked':                 { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
        'hold':                    { color: 'blue',   icon: CirclePause, iconLibrary: 'lu' },
        'in progress':             { color: 'blue',   icon: ClockSolid, iconLibrary: 'fb' },
-       'clear':                   { color: 'green',  icon: ThumbsUpSolid, iconLibrary: 'fb' },
+       'clear':                   { color: 'green',  icon: CheckCircleSolid, iconLibrary: 'fb' },
        'incomplete':              { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
        'review details':          { color: 'yellow', icon: ExclamationCircleSolid, iconLibrary: 'fb' },
        'complete':                { color: 'green',  icon: CheckCircleSolid, iconLibrary: 'fb' },
      },
      driving: {
-       'driving':                 { color: 'green',  icon: CheckCircleSolid, iconLibrary: 'fb' },
-       'available':               { color: 'green',  icon: CheckCircleSolid, iconLibrary: 'fb' },
-       'out of service':          { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
-       'off duty':                { color: 'blue',   icon: ClockSolid, iconLibrary: 'fb' },
-       'on break':                { color: 'blue',   icon: ClockSolid, iconLibrary: 'fb' },
-       'other':                   { color: 'red',    icon: ExclamationCircleSolid, iconLibrary: 'fb' },
+       'driving':                 { color: 'green',  icon: CirclePlay, iconLibrary: 'fb' },
+       'available':               { color: 'green',  icon: UserCheck, iconLibrary: 'fb' },
+       'out of service':          { color: 'red',    icon: ExclamationCircleOutline, iconLibrary: 'fb' },
+       'off duty':                { color: 'blue',   icon: CirclePauseOutline, iconLibrary: 'fb' },
+       'on break':                { color: 'blue',   icon: CirclePauseOutline, iconLibrary: 'fb' },
+       'other':                   { color: 'red',    icon: ExclamationCircleOutline, iconLibrary: 'fb' },
      },
    },
    priority: {
@@ -66,10 +75,10 @@
      'documents':                 { color: 'gray',   icon: Files, iconLibrary: 'lu' },
    },
    actionType: {
-     'call':                       { color: 'gray',   icon: PhoneSolid, iconLibrary: 'fb' },
+     'call':                       { color: 'gray',   icon: PhoneOutline, iconLibrary: 'fb' },
      'onsite':                     { color: 'gray',   icon: MapPinAltOutline, iconLibrary: 'fb' },
-     'email':                      { color: 'gray',   icon: MailBoxOutline, iconLibrary: 'fb' },
-     'sms':                        { color: 'gray',   icon: PhoneSolid, iconLibrary: 'fb' },
+     'email':                      { color: 'gray',   icon: Mail, iconLibrary: 'fb' },
+     'sms':                        { color: 'gray',   icon: PhoneOutline, iconLibrary: 'fb' },
    },
  };
 
