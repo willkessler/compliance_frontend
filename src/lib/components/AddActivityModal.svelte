@@ -33,7 +33,6 @@
   }
 
   function handleDateInput(event) {
-    debugger;
     accidentDate = event.target.value;
     formattedDate = formatDate(accidentDate);
   }

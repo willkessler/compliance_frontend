@@ -1,5 +1,5 @@
 <script lang="ts">
- import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
+ import { Accordion, AccordionItem, Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Tooltip } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid, 
         TruckSolid, 
@@ -104,8 +104,81 @@
   </div>
 
 
+  <!-- Driver's Personal info -->
+  <div class="text-lg font-bold mb-0 mt-4">Personal Information</div>
+      <div class="grid grid-cols-2 gap-x-5 gap-y-0 items-start mt-0">
+        <div>
+          <div class="relative pt-[95%] overflow-hidden">
+            <img 
+              src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
+              alt="driver.name"
+              class="absolute inset-0 w-full h-full object-cover object-top border"
+            />
+            <img
+              src="/images/drivers/drivers_license.png"
+              alt="drivers_license"
+              class="absolute bottom-4 right-4 w-1/3 h-1/5 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
+            />
+            <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
+              <PenOutline class="w-4 h-4 text-gray-700" />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="grid grid-cols-2 gap-y-3 gap-x-6 mt-2 items-center">
+            <div class="font-semibold">License</div>
+            <div class="text-gray-800 p-1 border">{driver.license}</div>
+
+            <div class="font-semibold">License expiration</div>
+            <div class="text-gray-800"> {driver.licenseExpiration}</div>
+            
+            <div class="font-semibold">SSN/EIN</div>
+            <div class="text-gray-800 ">{driver.ssn}</div>
+            
+            <div class="font-semibold">Total drive time</div>
+            <div class="text-gray-800"> {driver.totalDriveTime}</div>
+            
+            <div class="font-semibold">Total miles driven</div>
+            <div class="text-gray-800">{driver.totalMiles}</div>
+            
+            <div class="font-semibold">Miles remaining</div>
+            <div class="text-gray-800">{driver.milesRemaining}</div>
+
+            <div class="font-semibold">HOS remaining</div>
+            <div class="text-gray-800">{driver.hosRemaining}</div>
+            
+            <div class="font-semibold">Current Vehicle</div>
+            <div>
+              <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
+                <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
+              </a>
+            </div>
+            <div class="font-semibold">Driving status</div>
+            <div class="text-gray-800">
+              <CustomBadge
+                context="status"
+                secondaryContext="driving"
+                data={injectDriverStatus(driver)}
+                dataField="drivingStatus"
+              />
+            </div>
+          </div>
+      </div>
+      </div>
+      <Accordion flush class="pb-2 ml-0">
+        <AccordionItem open paddingFlush="py-0 pt-4 pb-0">
+          <span class="font-semibold" slot="header">Driver Notes</span>
+            <p class="text-md">{driver.notes}</p>
+          <div class="flex justify-end items-center mt-2 pt-2 ml-2">
+          </div>
+        </AccordionItem>
+      </Accordion>
+
+  
+  
+
   <!-- Credentials details -->
-  <h1 class="text-lg font-bold mb-4 mt-6">Credentials</h1>
+  <h1 class="text-lg font-bold mb-0 mt-6">Credentials</h1>
 
   <div>
     <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
@@ -144,8 +217,16 @@
     <hr />
   </div>
 
+  <Uploads 
+    previouslyUploadedFiles={[
+                            { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
+                            { filename: 'CDL (pdf)', date: 'Feb 12, 2024' },
+                            { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' }
+                            ]}
+  />
+
   <!-- Activity history -->
-  <h1 class="text-lg font-bold mb-4 mt-6">Activity history</h1>
+  <h1 class="text-lg font-bold mb-0 mt-6">Activity history</h1>
 
   <div>
     <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
@@ -184,83 +265,10 @@
     <hr />
   </div>
 
-  <Uploads 
-    previouslyUploadedFiles={[
-                            { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
-                            { filename: 'CDL (pdf)', date: 'Feb 12, 2024' },
-                            { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' }
-                            ]}
-  />
-
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden right-panel">
     <div class="flex justify-between items-center mb-0">
-      <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Basic information</h2>
+      <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>
     </div>
-    <Card class="shadow-none border-none">
-      <div class="relative pt-[95%] overflow-hidden">
-        <img 
-          src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
-          alt="driver.name"
-          class="absolute inset-0 w-full h-full object-cover object-top border"
-        />
-        <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
-          <PenOutline class="w-4 h-4 text-gray-700" />
-        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-y-3 gap-x-8 mt-4 items-center">
-        <div class="font-semibold">Name</div>
-        <div class="text-gray-800 font-bold">
-          {driver.name}
-        </div>
-
-        <div class="font-semibold">Driving status</div>
-        <div class="text-gray-800">
-            <CustomBadge
-              context="status"
-              secondaryContext="driving"
-              data={injectDriverStatus(driver)}
-              dataField="drivingStatus"
-            />
-        </div>
-
-        <div class="font-semibold">License</div>
-        <div class="text-gray-800 p-1 border">{driver.license}</div>
-
-        <div class="font-semibold">License expiration</div>
-        <div class="text-gray-800"> {driver.licenseExpiration}</div>
-        
-        <div class="font-semibold">SSN/EIN</div>
-        <div class="text-gray-800 ">{driver.ssn}</div>
-        
-        <div class="font-semibold">Total drive time</div>
-        <div class="text-gray-800"> {driver.totalDriveTime}</div>
-        
-        <div class="font-semibold">Total miles driven</div>
-        <div class="text-gray-800">{driver.totalMiles}</div>
-        
-        <div class="font-semibold">Miles remaining</div>
-        <div class="text-gray-800">{driver.milesRemaining}</div>
-
-        <div class="font-semibold">HOS remaining</div>
-        <div class="text-gray-800">{driver.hosRemaining}</div>
-        
-        <div class="font-semibold">Vehicle</div>
-        <div>
-          <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
-            <Badge class="text-gray-800 bg-gray-100"><TruckSolid class="mr-2" />Truck #{getVehicleById(driver.vehicleId).name}</Badge>
-          </a>
-        </div>
-      </div>
-    </Card>
-
-    <div class="mt-6">Notes</div>
-    <Card class="mt-0 divide-y shadow-none">
-      <p class="text-md">{driver.notes}</p>
-      <div class="flex justify-end items-center mt-2 pt-2 ml-2">
-        <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
-        <div class="cursor-pointer"><FileImageSolid /></div>
-      </div>
-    </Card>
     <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-11/12 mt-4 mr-8">
       <FloppyDiskOutline class="mr-2" />Save Changes
     </Button>
