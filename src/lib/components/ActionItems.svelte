@@ -32,8 +32,9 @@
  export let mode;        // either 'all' or 'single' (all action items or a single one whose id is passed in)
  export let activityId = null;  // which activity id was passed in
  export let vehicleId = null;   // which vehicle id was passed in
- export let actionItemId;    // which action item id
+ export let actionItemId = null;    // which action item id
  export let setActionItem = () => {}; // passed in callback
+ export let showChrome = true; // whether to show all 
 
  let showModal = false; // whether the modal is visible
  let actionType = '';
@@ -198,19 +199,21 @@
 
 <div>
   {#if mode === 'all' } <!-- all action items, displays in central panel -->
-    <div class="flex justify-between items-end mb-0 ml-0 mt-8">
-      <h1 class="text-xl font-bold">Actions Taken</h1>
-      <Button on:click={() => { showModal = true; uploadedFiles = []; }}
-        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
-        <CirclePlusSolid />
-        &nbsp;&nbsp;New Action Item
-      </Button>
-    </div>
+    {#if showChrome}
+      <div class="flex justify-between items-end mb-0 ml-0 mt-8">
+        <h1 class="text-xl font-bold">Actions Taken</h1>
+        <Button on:click={() => { showModal = true; uploadedFiles = []; }}
+          class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
+          <CirclePlusSolid />
+          &nbsp;&nbsp;New Action Item
+        </Button>
+      </div>
+    {/if}
 
-    <Table class="relative overflow-x-auto mt-3 ml-0 cursor-pointer" hoverable>
+    <Table class="relative overflow-x-auto ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Event Date</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Date</TableHeadCell>
         <TableHeadCell class="px-1 py-3 text-xs font-medium text-customGray uppercase">Due Date</TableHeadCell>
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"><!-- cta --></TableHeadCell>
@@ -232,9 +235,11 @@
                   dataField="status"
                 />
               </TableBodyCell>
-              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
-                <Button color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
-              </TableBodyCell>
+              {#if showChrome}
+                <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
+                  <Button color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
+                </TableBodyCell>
+              {/if}
             </TableBodyRow>
           {/each}
         {/if}

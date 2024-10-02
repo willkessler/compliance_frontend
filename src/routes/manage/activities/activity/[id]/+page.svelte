@@ -75,7 +75,7 @@
   }
 </style>
 
-<ActivityLayout>
+<ActivityLayout showRightPanel={true}>
   <div>
     <h1 class="text-2xl font-bold mt-2 mb-2">Activity Details</h1>
   </div>
@@ -144,17 +144,19 @@
     setActionItem={setSelectedActionId}
   />
 
-  <div class="w-full mt-24">
+  <div class="w-full mt-10">
     <hr />
   </div>
 
-  <Uploads />
+  <div class="w-full mt-5">
+    <Uploads />
+  </div>
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
-      <ActionItems
-        mode="single"
-        actionItemId={selectedActionId}
-      />
+    <ActionItems
+      mode="single"
+      actionItemId={selectedActionId}
+    />
   </div>
 
 </ActivityLayout>

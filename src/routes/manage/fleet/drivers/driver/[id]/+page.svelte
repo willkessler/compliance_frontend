@@ -120,7 +120,7 @@
  
 </script>
 
-<ActivityLayout>
+<ActivityLayout showRightPanel={false}>
   <div class="flex gap-x-4 justify-start mb-2 items-start">
     <div class="text-nowrap min-w-[355px]">
       <h1 class="text-3xl font-bold mb-0">Driver: {driver.name}</h1>

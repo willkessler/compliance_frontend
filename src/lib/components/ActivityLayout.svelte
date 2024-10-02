@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ export let showRightPanel = false;
 </script>
 
 <!-- cf https://htmlcssfreebies.com/box-shadow-left/ -->
@@ -19,7 +20,9 @@
       <slot />
     </div>
   </div>
-  <div class="w-100 bg-gray-100 overflow-y-auto right-panel"  style="min-width:455px">
-    <slot name="right-panel" />
-  </div>
+  {#if showRightPanel }
+    <div class="w-100 bg-gray-100 overflow-y-auto right-panel"  style="min-width:455px">
+      <slot name="right-panel" />
+    </div>
+  {/if}
 </div>

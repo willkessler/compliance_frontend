@@ -3,8 +3,10 @@
  import { Button, Card, Dropdown, DropdownItem, Modal, Input,
           Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { CirclePlusSolid, ClockSolid, ChevronLeftOutline, ChevronRightOutline, ChevronDownOutline,
-          ThumbsUpSolid, CheckCircleSolid, TruckSolid, UsersOutline, FileLinesOutline,
+          ThumbsUpSolid, CheckCircleSolid, TruckSolid, UsersOutline, FileLinesOutline, FileDocOutline,
           UserAddSolid, InboxFullSolid, InfoCircleSolid, EditSolid, SearchOutline } from 'flowbite-svelte-icons';
+ import { LayoutDashboard, Landmark, Building2, Truck, Users, Link, CircleAlert, Info, WandSparkles, Settings, Database } from "lucide-svelte";
+
  import { page } from '$app/stores';
  import { Pagination, PaginationItem } from 'flowbite-svelte';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
@@ -96,7 +98,6 @@
           class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
           <CirclePlusSolid />
           &nbsp;&nbsp;Add Activity!
-          <ChevronDownOutline class="w-6 h-6 ms-2 text-white dark:text-white" />
         </Button>
         <Dropdown class="min-w-48">
           <DropdownItem on:click={() => { openModal('accident') }}><div class="flex text-customGray"><UserAddSolid class="mr-2"/>Accident</div></DropdownItem>
@@ -107,10 +108,25 @@
       </div>
     </div>
 
-    <div class="ml-6 minw-64 mr-4">
-      <Input id="search" placeholder="Search">
-      <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
+    <div class="ml-6 min-w-64 mr-4">
+      <div class="flex">
+        <Button
+          class="bg-gray-300 hover:bg-gray-500 text-white text-md mr-4 min-w-[200px]">
+          &nbsp;&nbsp;Filter
+          <ChevronDownOutline class="w-6 h-6 ms-2 text-white dark:text-white" />
+        </Button>
+
+        <Dropdown class="min-w-[200px]">
+          <DropdownItem><div class="flex text-customGray"><UserAddSolid class="mr-2"/>Drivers</div></DropdownItem>
+          <DropdownItem><div class="flex text-customGray"><TruckSolid class="mr-2"/>Vehicles</div></DropdownItem>
+          <DropdownItem><div class="flex text-customGray"><FileDocOutline class="mr-2"/>Documents</div></DropdownItem>
+          <DropdownItem><div class="flex text-customGray"><Landmark class="mr-2"/>Federal</div></DropdownItem>
+          <DropdownItem><div class="flex text-customGray"><Building2 class="mr-2"/>State</div></DropdownItem>
+        </Dropdown>
+        <Input id="search" placeholder="Search">
+          <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
         </Input>
+      </div>
     </div>
 
   </div>  

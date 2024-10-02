@@ -77,7 +77,7 @@
 
 </style>
 
-<ActivityLayout>
+<ActivityLayout showRightPanel={false}>
   <div>
     <h1 class="text-3xl font-bold mb-0">Vehicle #{getVehicleById(id).name}</h1>
     <div class="italic text-sm">Last updated: {vehicle.acquisitionDate}</div>
@@ -118,7 +118,13 @@
       </div>
 
       <!-- Vehicle details -->
-      <div class="w-full md:w-1/2 max-w-[340px]">
+      <div class="w-full md:w-1/2 max-w-[340px] mb-4">
+        <div class="flex flex-wrap items-center">
+          <div class="w-1/2 font-semibold mt-2">Current Location</div>
+          <div class="w-1/2 cursor-pointer mt-2 text-md text-nowrap">
+            <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>
+          </div>
+        </div>
         <div class="space-y-2">
           <div class="flex flex-wrap items-center">
             <div class="w-1/2 font-semibold">License Plate</div>
@@ -131,6 +137,16 @@
           </div>
 
           <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Miles until EOL</div>
+            <div class="w-1/2 text-customGray">{vehicle.milesLeftToEol}</div>
+          </div>
+
+          <div class="flex flex-wrap items-center">
+            <div class="w-1/2 font-semibold">Time until EOL</div>
+            <div class="w-1/2 text-customGray">{vehicle.timeLeftToEol}</div>
+          </div>
+
+          <div class="flex flex-wrap items-center">
             <div class="w-1/2 font-semibold">Driver</div>
             <div class="w-1/2">
               <a href="/manage/fleet/drivers/driver/{driver.id}">
@@ -139,13 +155,6 @@
                   {driver.name}
                 </Badge>
               </a>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center">
-            <div class="w-1/2 font-semibold mt-2">Current Location</div>
-            <div class="w-1/2 cursor-pointer mt-2 text-md text-nowrap">
-              <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>
             </div>
           </div>
 
@@ -179,24 +188,10 @@
     </div>
   </div>
 
-  <Accordion flush class="pb-2 ml-0">
-    <AccordionItem open paddingFlush="py-0 pt-4 pb-0">
-      <span class="font-semibold" slot="header">Description and Notes</span>
+  <div class="font-semibold mt-4">Description and Notes</div>
+  <div class="border p-4 w-1/2 min-h-24">
       <p class="text-md">{vehicle.description}</p>
-      <div class="flex justify-end items-center mt-2 pt-2 ml-2">
-      </div>
-    </AccordionItem>
-  </Accordion>
-
-  <!-- Activity history -->
-  <h1 class="text-lg font-bold mb-0 mt-6">Activity history</h1>
-  <FilteredActivitiesList
-    mode="vehicle"
-    vehicleId={vehicle.id}
-    onlyOpen={false}
-    showMoreFields={true}
-  />
-
+  </div>
 
   <div class="w-full mt-10">
     <hr />
@@ -240,4 +235,13 @@
     />
   </div>
   
+  <!-- Activity history -->
+  <h1 class="text-lg font-bold mb-0 mt-6">Activity history</h1>
+  <FilteredActivitiesList
+    mode="vehicle"
+    vehicleId={vehicle.id}
+    onlyOpen={false}
+    showMoreFields={true}
+  />
+
 </ActivityLayout>
