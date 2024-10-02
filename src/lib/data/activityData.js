@@ -32,6 +32,18 @@ export function getActivityIdForVehicleId (vehicleId) {
   return null;
 }
 
+export function getOpenActivitiesForDriver(driverId) {
+  return activities.filter((activity) =>
+    activity.driverId === driverId && 
+      activity.status.toLowerCase() === 'open');
+}
+
+export function getOpenActivitiesForVehicle(vehicleId) {
+  return activities.filter((activity) =>
+    activity.vehicleId === vehicleId &&
+      activity.status.toLowerCase() === 'open');
+}
+
 export function getTypeColor(type) {
   switch (type.toLowerCase()) {
   case 'maintenance':
@@ -131,7 +143,7 @@ export const activities = [
     driverId: 1922,
     vehicleId: 4396,
     level: 'State',
-    description:'Tom called this one in.',
+    description:'Thom called this one in after feeling some rear wobble on Highway 64.',
   },
   {
     id: 292,
@@ -145,7 +157,7 @@ export const activities = [
     driverId: 1923,
     vehicleId: 4385,
     level: 'State',
-    description:'Mark called this one in.',
+    description:'Mark caught this during a routine pre-trip insp.',
   },
   {
     id: 33828,
@@ -159,7 +171,7 @@ export const activities = [
     driverId: 1924,
     vehicleId: 2348,
     level: 'State',
-    description:'Sid called this one in.',
+    description:'Sid got this on return after freight transfer from shipper X828.',
   },
   {
     id: 48482,

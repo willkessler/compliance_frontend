@@ -1,24 +1,27 @@
 <script lang="ts">
- import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
+ import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileDrop } from 'svelte-droplet';
- import { 
-        CheckCircleOutline, 
-        CheckCircleSolid, 
-        CirclePlusSolid, 
-        ExclamationCircleOutline, 
-        PenOutline, 
-        ChevronLeftOutline, 
-        ChevronRightOutline,  
-        FileSolid, 
-        FileImageSolid, 
-        PhoneSolid, 
-        MailBoxOutline, 
+ import {
+        ArrowRightOutline,
+        CheckCircleOutline,
+        CheckCircleSolid,
+        CirclePlusSolid,
+        ExclamationCircleOutline,
+        PenOutline,
+        ChevronLeftOutline,
+        ChevronRightOutline,
+        FileSolid,
+        FileImageSolid,
+        UsersOutline,
+        FloppyDiskOutline,
+        PhoneSolid,
+        MailBoxOutline,
         MapPinAltOutline
         } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
- import { actions, getTypeIcon, getActionItems, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
+ import { actions, getTypeIcon, getActionItems, getActionItemById, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
 
  //
@@ -26,8 +29,12 @@
  //
 
  export let environment; // where the modal is being used, either 'activity' or 'vehicle'
- export let activityId; // which activity id was passed in
- export let vehicleId; // which vehicle id was passed in
+ export let mode;        // either 'all' or 'single' (all action items or a single one whose id is passed in)
+ export let activityId;  // which activity id was passed in
+ debugger;
+ export let vehicleId;   // which vehicle id was passed in
+ export let actionItemId;    // which action item id
+ export let setActionItem = () => {}; // passed in callback
 
  let showModal = false; // whether the modal is visible
  let actionType = '';
@@ -39,7 +46,7 @@
 
  let selectedStatus = null;
  let selectedStatusType = null;
- 
+
  let uploadedFiles = [];
 
  let selectedActionTypeValue = '';
@@ -155,7 +162,7 @@
   function pageChange(event) {
     currentPage = event.detail;
   }
- 
+
  // date picker stuff
  let dueDate = new Date('2024-08-31');
  let formattedDate;
@@ -189,119 +196,105 @@
   }
 </style>
 
-<div class="flex justify-between items-end mb-0 ml-0 mt-3">
-  <h1 class="text-xl font-bold">Action Items History</h1>
-  <Button on:click={() => { showModal = true; uploadedFiles = []; }}
-    class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
-    <CirclePlusSolid />
-    &nbsp;&nbsp;Action Item
-  </Button>
-</div>
 
 <div>
-  {#if environment === 'activity' } <!-- activities -->
+  {#if mode === 'all' } <!-- all action items, displays in central panel -->
+    <div class="flex justify-between items-end mb-0 ml-0 mt-8">
+      <h1 class="text-xl font-bold">Actions Taken</h1>
+      <Button on:click={() => { showModal = true; uploadedFiles = []; }}
+        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
+        <CirclePlusSolid />
+        &nbsp;&nbsp;New Action Item
+      </Button>
+    </div>
+
     <Table class="relative overflow-x-auto mt-3 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
-        <TableHeadCell class="px-1 py-3 text-xs font-medium text-customGray uppercase">Type of action</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Event Date</TableHeadCell>
+        <TableHeadCell class="px-1 py-3 text-xs font-medium text-customGray uppercase">Due Date</TableHeadCell>
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"><!-- cta --></TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each getActionItems(environment, (environment === 'activity' ? activityId : vehicleId)) as action}
-          <TableBodyRow>
+        {#each getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)) as action}
+          <TableBodyRow on:click={() => setActionItem(action.id) }>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
-            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.description}</TableBodyCell>
-            <TableBodyCell class="px-1">
-              <CustomBadge 
-                context="actionType"
-                data={action} 
-                dataField="type"
-              />
-            </TableBodyCell>
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.eventDate}</TableBodyCell>
+            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.dueDate}</TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <CustomBadge 
+              <CustomBadge
                 context="status"
                 secondaryContext="general"
-                data={action} 
+                data={action}
                 dataField="status"
               />
             </TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
-              <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-32 p-2"><PenOutline/>&nbsp;Edit</Button>
+              <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>
     </Table>
-{:else} <!-- vehicles -->
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
-      <TableHead class="bg-customGray/15 whitespace-nowrap">
-        <TableHeadCell class="px-2 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
-        <TableHeadCell class="px-2 text-xs font-medium text-customGray uppercase">Event Date</TableHeadCell>
-        <TableHeadCell class="px-1 text-xs font-medium text-customGray uppercase">Due Date</TableHeadCell>
-        <TableHeadCell class="px-0 text-xs font-medium text-customGray uppercase">Type of Action</TableHeadCell>
-        <TableHeadCell class="text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
-        <TableHeadCell class="text-xs font-medium text-customGray uppercase">Action</TableHeadCell>
-      </TableHead>
-      <TableBody>
-        {#each getActionItems(environment, (environment === 'activity' ? activityId : vehicleId)) as action}
-          <TableBodyRow>
-            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.name}</TableBodyCell>
-            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.eventDate}</TableBodyCell>
-            <TableBodyCell class="px-1 py-4 whitespace-nowrap text-customGray">{action.dueDate}</TableBodyCell>
-            <TableBodyCell class="px-0 py-4">
-              <CustomBadge 
-                context="actionType"
-                data={action} 
-                dataField="type"
-              />
-            </TableBodyCell>
-            <TableBodyCell class="px-0 pl-2">
-              <CustomBadge 
-                context="status"
-                secondaryContext="general"
-                data={action} 
-                dataField="status"
-              />
-            </TableBodyCell>
-            <TableBodyCell class="pl-2 whitespace-nowrap text-sm font-medium">
-              <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-24 p-2"><PenOutline/>&nbsp;Edit</Button>
-            </TableBodyCell>
-          </TableBodyRow>
-        {/each}
-      </TableBody>
-    </Table>
+    <div class="w-full flex justify-end mt-2">
+      <Pagination
+        bind:currentPage
+        {totalPages}
+        {pages}
+        on:previous={previous}
+        on:next={next}
+        on:pageChange={pageChange}
+        icon
+      >
+        <svelte:fragment slot="prev">
+          <span class="sr-only">Previous</span>
+          <ChevronLeftOutline class="w-6 h-6" />
+        </svelte:fragment>
+        <svelte:fragment slot="next">
+          <span class="sr-only">Next</span>
+          <ChevronRightOutline class="w-6 h-6" />
+        </svelte:fragment>
+      </Pagination>
+    </div>
+
+  {:else} <!-- individual action item, shows in right panels -->
+    <div class=" mb-4">
+      <h2 class="text-xl font-bold text-customGray uppercase">Action Details</h2>
+    </div>
+    {#if (actionItemId !== null) }
+      <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+        <div class="font-semibold">Type:</div>
+        <CustomBadge
+          context="actionType"
+          data={getActionItemById(actionItemId)}
+          dataField="type"
+        />
+
+        <div class="font-semibold">Action:</div>
+        <div class="text-customGray">{getActionItemById(actionItemId).name}</div>
+
+        <div class="font-semibold">Taken:</div>
+        <div class="text-customGray">{getActionItemById(actionItemId).eventDate}</div>
+
+      </div>
+      <div>
+        <div class="font-semibold mt-2">Notes:</div>
+        <div class="text-customGray border p-4 mt-2 italic w-full">{getActionItemById(actionItemId).description}</div>
+      </div>
+      <Button on:click={() => { openModalWithAction(getActionItemById(actionItemId))  }} class="bg-gray-400 hover:bg-blue text-white text-sm px-4 py-2 mt-4">
+        <PenOutline class="mr-2" />Edit This Action
+      </Button>
+    {:else}
+      <div class="italic">Please select an action taken to see details here.</div>
+    {/if}
+
 
   {/if}
 </div>
 
 
-<div class="w-full flex justify-end mt-2">
-  <Pagination 
-    bind:currentPage
-    {totalPages}
-    {pages} 
-    on:previous={previous} 
-    on:next={next} 
-    on:pageChange={pageChange}
-    icon
-  >
-    <svelte:fragment slot="prev">
-      <span class="sr-only">Previous</span>
-      <ChevronLeftOutline class="w-6 h-6" />
-    </svelte:fragment>
-    <svelte:fragment slot="next">
-      <span class="sr-only">Next</span>
-      <ChevronRightOutline class="w-6 h-6" />
-    </svelte:fragment>
-  </Pagination>
-</div>
-
-
-
-<Modal bind:open={showModal} autoclose outsideclose 
+<Modal bind:open={showModal} autoclose outsideclose
   backdropClass="fixed inset-0 z-40 bg-white/80"
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
 >
@@ -312,10 +305,10 @@
     {#if environment === 'activity'}
       <div>
         <Label for="actionType" class="mb-2">Type of action</Label>
-        <Select 
+        <Select
           id="actionType"
-          bind:value={selectedActionTypeValue} 
-          items={actionTypes} 
+          bind:value={selectedActionTypeValue}
+          items={actionTypes}
           on:change={handleTypeChange}
           placeholder="Select one"
         />
@@ -332,20 +325,20 @@
         <div class="flex gap-4 w-full mb-4">
           <div class="w-1/2">
             <Label for="actionType" class="mb-2">Type of Action</Label>
-            <Select 
+            <Select
               id="actionType"
-              bind:value={selectedActionTypeValue} 
-              items={actionTypes} 
+              bind:value={selectedActionTypeValue}
+              items={actionTypes}
               on:change={handleTypeChange}
               placeholder="Select one"
             />
           </div>
           <div class="w-1/2">
             <Label for="status" class="mb-2">Status</Label>
-            <Select 
+            <Select
               id="status"
               bind:value={selectedStatusTypeValue}
-              items={statusTypes} 
+              items={statusTypes}
               on:change={handleStatusChange}
               placeholder="Select one"
             />
@@ -413,7 +406,7 @@
 
   <svelte:fragment slot="footer">
     <div class="w-full flex justify-end">
-      <Button class="bg-white-900 hover:bg-gray-100 text-customGray mr-2" 
+      <Button class="bg-white-900 hover:bg-gray-100 text-customGray mr-2"
         on:click={() => {
                  showModal = false;
                  actionName = null;
@@ -430,3 +423,15 @@
   </svelte:fragment>
 </Modal>
 
+
+<!--
+             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.description}</TableBodyCell>
+            <TableBodyCell class="px-1">
+              <CustomBadge
+                context="actionType"
+                data={action}
+                dataField="type"
+              />
+            </TableBodyCell>
+
+ -->

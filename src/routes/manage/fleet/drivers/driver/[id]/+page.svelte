@@ -16,6 +16,7 @@
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import { drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
+ import { getOpenActivitiesForDriver } from '$lib/data/activityData';
 
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
@@ -269,8 +270,27 @@
     <div class="flex justify-between items-center mb-0">
       <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>
     </div>
-    <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-11/12 mt-4 mr-8">
-      <FloppyDiskOutline class="mr-2" />Save Changes
-    </Button>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap">
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Priority</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Details</TableHeadCell>
+      </TableHead>
+      <TableBody>
+        {#each getOpenActivitiesForDriver(driver.id) as activity}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+              <CustomBadge 
+                context="priority"
+                data={activity} 
+                dataField="priority"
+              />
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{activity.title}</TableBodyCell>
+          </TableBodyRow>
+        {/each}
+      </TableBody>
+    </Table>
+
+  </div>
 
 </ActivityLayout>

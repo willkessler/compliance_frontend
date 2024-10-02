@@ -43,6 +43,7 @@
  $: id = parseInt($page.params.id); // get the page id from the url
 
  let activityId, activity, vehicle, driver;
+ let selectedActionId = null;
 
  $: if ($page.params.id) {
    activityId = parseInt($page.params.id);
@@ -55,6 +56,11 @@
    console.log(`got driver ${driver.id} for activity ${activity.id}` );
  }
 
+ function setSelectedActionId (actionId) {
+   selectedActionId = actionId;
+   console.log(`set current action id to ${selectedActionId}`);
+ }
+ 
 </script>
 
 <style>
@@ -71,53 +77,43 @@
 
 <ActivityLayout>
   <div>
-    <h1 class="text-3xl font-bold mt-2 mb-2">{getActivityTitle(activity)}</h1>
+    <h1 class="text-2xl font-bold mt-2 mb-2">Activity Details</h1>
   </div>
 
-
-  <ActionItems 
-    environment="activity"
-    activityId={activity.id}
-  />
-
-  <div class="w-full mt-24">
-    <hr />
-  </div>
-
-  <Uploads />
-
-  <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold text-customGray uppercase">Details</h2>
-      <p class="font-semibold text-customGray">{activity.occurrenceDate}</p>
+  <div class="p-4 mt-2 shadow-none border rounded">
+    <div class="flex justify-between">
+      <h1 class="text-xl font-bold mt-2 mb-2">{getActivityTitle(activity)}</h1>
+      <div>
+        {activity.occurrenceDate}
+      </div>
     </div>
-    <div class="space-x-2 mb-2">
+    <div class="italic">
+      {activity.description}
+    </div>
+    <div class="space-x-2 space-y-2 mb-2">
       <Badge class="py-1 cursor-pointer bg-{getTypeColor(activity.type)}-200 text-gray-700">{activity.type}</Badge>
       <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
       <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
     </div>
-    <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
-      <div class="font-semibold">Level</div>
-      <div>{activity.level}</div>
-    </div>
-    <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-1">
-      <div class="font-semibold">Occurred on</div>
-      <div>{activity.occurrenceDate}</div>
-    </div>
-    <div class="grid grid-cols-2 gap-y-2 mt-2">
-      <div class="font-semibold">Driver</div>
-      <div>
-        <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
+    <div class="w-1/2">
+      <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+        <div class="font-semibold">Level:</div>
+        <div>{activity.level}</div>
       </div>
-    </div>
-    <div>
       <div class="grid grid-cols-2 gap-y-2 mt-2">
-        <div class="font-semibold">Vehicle</div>
+        <div class="font-semibold">Driver:</div>
         <div>
-          <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
+          <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
         </div>
       </div>
       <div>
+        <div class="grid grid-cols-2 gap-y-2 mt-2">
+          <div class="font-semibold">Vehicle:</div>
+          <div>
+            <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
+          </div>
+        </div>
+      </div>
         <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-3">
           <div class="font-semibold">Due Date</div>
           <div class="flex items-center">
@@ -137,22 +133,28 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div>
-        <div class="mt-6">Description and notes</div>
-        <div class="p-4 mt-2 divide-y shadow-none border rounded">
-          <p class="text-md text-gray-600">{activity.description}</p>
-          <div class="text-customGray flex justify-end items-center mt-2 pt-2 ml-2">
-            <div class="pr-3 cursor-pointer"><MapPinAltSolid /></div>
-            <div class="cursor-pointer"><FileImageSolid /></div>
-          </div>
-        </div>
-        <Button class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-4 py-2 w-full mt-4">
-          <FloppyDiskOutline class="mr-2" />Save Changes
-        </Button>
-      </div>
     </div>
+  </div>
+
+  <ActionItems 
+    environment="activity"
+    mode="all"
+    activityId={activity.id}
+    setActionItem={setSelectedActionId}
+  />
+
+  <div class="w-full mt-24">
+    <hr />
+  </div>
+
+  <Uploads />
+
+  <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
+      <ActionItems
+        mode="single"
+        actionItemId={selectedActionId}
+      />
   </div>
 
 </ActivityLayout>

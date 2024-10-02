@@ -101,6 +101,10 @@
     <Uploader />
 
     <div class="flex justify-end">
+      <Button class="mr-2 hover:text-customGray" on:click={() => { 
+                       submitForm() 
+                       }}
+        outline>Cancel</Button>
       <Button on:click={() => { 
                        submitForm() 
                        }}
