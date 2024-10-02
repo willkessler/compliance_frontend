@@ -11,15 +11,20 @@
         ThumbsUpSolid,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
  import styles from '$lib/css/rightPanel.module.css';
+
  import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
+ import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
+
  import { drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
  import { getOpenActivitiesForDriver } from '$lib/data/activityData';
 
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
+
+ let zoomedDriverLicense = false;
 
  //
  // Date handler
@@ -116,10 +121,19 @@
               class="absolute inset-0 w-full h-full object-cover object-top border"
             />
             <img
+              on:mouseenter={() => { zoomedDriverLicense = true; }}
               src="/images/drivers/drivers_license.png"
               alt="drivers_license"
               class="absolute bottom-4 right-4 w-1/3 h-1/5 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
             />
+            {#if zoomedDriverLicense}
+              <img
+                on:mouseleave={() => { zoomedDriverLicense = false; }}
+                src="/images/drivers/drivers_license.png"
+                alt="drivers_license"
+                class="absolute bottom-4 right-4 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
+              />
+            {/if}
             <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
               <PenOutline class="w-4 h-4 text-gray-700" />
             </div>
@@ -228,69 +242,26 @@
 
   <!-- Activity history -->
   <h1 class="text-lg font-bold mb-0 mt-6">Activity history</h1>
+  <FilteredActivitiesList
+    mode="driver"
+    driverId={driver.id}
+    onlyOpen={false}
+    showMoreFields={true}
+  />
 
-  <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
-      <TableHead class="bg-customGray/15 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">action</TableHeadCell>
-      </TableHead>
-      <TableBody>
-        {#each historyItems as historyItem}
-          <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{historyItem.item}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{historyItem.expiry}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <CustomBadge 
-                context="status"
-                secondaryContext="general"
-                data={historyItem} 
-                dataField="status"
-              />
-              <Tooltip placement="bottom" triggeredBy="#history-{historyItem.id}">{getToolTipText(historyItem.status)}</Tooltip>
-            </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2">
-                {historyItem.action} →
-              </Button>
-            </TableBodyCell>
-          </TableBodyRow>
-        {/each}
-      </TableBody>
-    </Table>
-  </div>
 
   <div class="w-full mt-10 text-gray-100">
     <hr />
   </div>
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden right-panel">
-    <div class="flex justify-between items-center mb-0">
-      <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>
-    </div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
-      <TableHead class="bg-customGray/15 whitespace-nowrap">
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Priority</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Details</TableHeadCell>
-      </TableHead>
-      <TableBody>
-        {#each getOpenActivitiesForDriver(driver.id) as activity}
-          <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <CustomBadge 
-                context="priority"
-                data={activity} 
-                dataField="priority"
-              />
-            </TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{activity.title}</TableBodyCell>
-          </TableBodyRow>
-        {/each}
-      </TableBody>
-    </Table>
-
+    <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>
+    <FilteredActivitiesList
+      mode="driver"
+      driverId={driver.id}
+      onlyOpen={true}
+      showMoreFields={false}
+    />
   </div>
 
 </ActivityLayout>

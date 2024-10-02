@@ -32,6 +32,26 @@ export function getActivityIdForVehicleId (vehicleId) {
   return null;
 }
 
+export function getActivitiesForDriver(driverId, onlyOpen) {
+  if (onlyOpen) {
+    return activities.filter((activity) =>
+      activity.driverId === driverId && 
+        activity.status.toLowerCase() === 'open');
+  }
+  return activities.filter((activity) =>
+    activity.driverId === driverId);
+}
+
+export function getActivitiesForVehicle(vehicleId, onlyOpen) {
+  if (onlyOpen) {
+    return activities.filter((activity) =>
+      activity.vehicleId === vehicle && 
+        activity.status.toLowerCase() === 'open');
+  }
+  return activities.filter((activity) =>
+    activity.vehicleId === vehicleId);
+}
+
 export function getOpenActivitiesForDriver(driverId) {
   return activities.filter((activity) =>
     activity.driverId === driverId && 
@@ -144,6 +164,62 @@ export const activities = [
     vehicleId: 4396,
     level: 'State',
     description:'Thom called this one in after feeling some rear wobble on Highway 64.',
+  },
+  {
+    id: 1293,
+    priority: 'Medium',
+    type: 'Maintenance',
+    category: 'Maintenance',
+    status: 'Closed',
+    occurrenceDate: 'Feb 13, 2024', 
+    dueDate: 'Jun 13, 2024',
+    title: 'Spark plugs replacement needed',
+    driverId: 1922,
+    vehicleId: 4396,
+    level: 'State',
+    description:'Thom says the weigh station mechanic explained weak power on this vehicle is due to old spark plugs.',
+  },
+  {
+    id: 1294,
+    priority: 'Medium',
+    type: 'Documents',
+    category: 'Records',
+    status: 'Closed',
+    occurrenceDate: 'Feb 28, 2024', 
+    dueDate: 'Apr 30, 2024',
+    title: 'DOT medical card',
+    driverId: 1922,
+    vehicleId: 4396,
+    level: 'State',
+    description:'Make sure we get Thom\'s DOT medical test done.',
+  },
+  {
+    id: 1295,
+    priority: 'Medium',
+    type: 'Documents',
+    category: 'Records',
+    status: 'Closed',
+    occurrenceDate: 'Feb 28, 2024', 
+    dueDate: 'Apr 30, 2024',
+    title: 'Drug and alcohol test',
+    driverId: 1922,
+    vehicleId: 4396,
+    level: 'State',
+    description:'Hope he passes this time around.',
+  },
+  {
+    id: 1296,
+    priority: 'Low',
+    type: 'Documents',
+    category: 'Records',
+    status: 'Closed',
+    occurrenceDate: 'Feb 28, 2024', 
+    dueDate: 'Apr 30, 2024',
+    title: 'Clearinghouse registration',
+    driverId: 1922,
+    vehicleId: 4396,
+    level: 'State',
+    description:'Don\'t forget!',
   },
   {
     id: 292,

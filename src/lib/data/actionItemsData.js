@@ -3,9 +3,9 @@ import { PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-ic
 
 
 export function getActionItems (environment, id) {
-  //console.log(`id ${id} environment ${environment}`);
+  console.log(`id ${id} environment ${environment}`);
   let activityId;
-  debugger;
+
   if (environment === 'activity') {
     activityId = parseInt(id);
   } else {
@@ -19,7 +19,7 @@ export function getActionItems (environment, id) {
     }
   }
 
-  return null;
+  return [];
 }
 
 export function getActionItemById (actionItemId) {
@@ -94,7 +94,7 @@ export const actions = [
     items: [
       {
         id: 5891,
-        name: "Repair shop",
+        name: "Repair shop visit",
         totalMiles: '8,711',
         description: 'Schedule a pickup time',
         eventDate: 'Aug 31, 2024',

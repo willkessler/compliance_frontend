@@ -95,7 +95,7 @@
       <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
       <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
     </div>
-    <div class="w-1/2">
+    <div >
       <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
         <div class="font-semibold">Level:</div>
         <div>{activity.level}</div>

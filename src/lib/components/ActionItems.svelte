@@ -30,9 +30,8 @@
 
  export let environment; // where the modal is being used, either 'activity' or 'vehicle'
  export let mode;        // either 'all' or 'single' (all action items or a single one whose id is passed in)
- export let activityId;  // which activity id was passed in
- debugger;
- export let vehicleId;   // which vehicle id was passed in
+ export let activityId = null;  // which activity id was passed in
+ export let vehicleId = null;   // which vehicle id was passed in
  export let actionItemId;    // which action item id
  export let setActionItem = () => {}; // passed in callback
 
@@ -217,24 +216,28 @@
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"><!-- cta --></TableHeadCell>
       </TableHead>
       <TableBody>
-        {#each getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)) as action}
-          <TableBodyRow on:click={() => setActionItem(action.id) }>
-            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
-            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.eventDate}</TableBodyCell>
-            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.dueDate}</TableBodyCell>
-            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <CustomBadge
-                context="status"
-                secondaryContext="general"
-                data={action}
-                dataField="status"
-              />
-            </TableBodyCell>
-            <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
-              <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
-            </TableBodyCell>
-          </TableBodyRow>
-        {/each}
+        {#if getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)).length === 0}
+          <div class="p-4 italic">No actions recorded to date.</div>
+        {:else}
+          {#each getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)) as action}
+            <TableBodyRow on:click={() => setActionItem(action.id) }>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.eventDate}</TableBodyCell>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.dueDate}</TableBodyCell>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
+                <CustomBadge
+                  context="status"
+                  secondaryContext="general"
+                  data={action}
+                  dataField="status"
+                />
+              </TableBodyCell>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
+                <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
+              </TableBodyCell>
+            </TableBodyRow>
+          {/each}
+        {/if}
       </TableBody>
     </Table>
     <div class="w-full flex justify-end mt-2">
