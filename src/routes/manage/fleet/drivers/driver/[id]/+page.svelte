@@ -121,8 +121,11 @@
 </script>
 
 <ActivityLayout>
-  <div class="flex gap-x-4 justify-start mb-4">
-    <h1 class="text-3xl font-bold mb-2">Driver: {driver.name}</h1>
+  <div class="flex gap-x-4 justify-start mb-2 items-start">
+    <div class="text-nowrap min-w-[355px]">
+      <h1 class="text-3xl font-bold mb-0">Driver: {driver.name}</h1>
+      <div class="italic text-sm">Latest update: 10/01/24</div>
+    </div>
     <div class="text-gray-800">
       <CustomBadge
         context="status"
@@ -294,7 +297,9 @@
     previouslyUploadedFiles={[
                             { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
                             { filename: 'CDL (pdf)', date: 'Feb 12, 2024' },
-                            { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' }
+                            { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' },
+                            { filename: 'Driver Qualifications File (DQ) (pdf)', date: 'Jan 8, 2024' },
+                            { filename: 'Driver Records File (zip)', date: 'Mar 23, 2024' },
                             ]}
   />
 

@@ -240,26 +240,28 @@
         {/if}
       </TableBody>
     </Table>
-    <div class="w-full flex justify-end mt-2">
-      <Pagination
-        bind:currentPage
-        {totalPages}
-        {pages}
-        on:previous={previous}
-        on:next={next}
-        on:pageChange={pageChange}
-        icon
-      >
-        <svelte:fragment slot="prev">
-          <span class="sr-only">Previous</span>
-          <ChevronLeftOutline class="w-6 h-6" />
-        </svelte:fragment>
-        <svelte:fragment slot="next">
-          <span class="sr-only">Next</span>
-          <ChevronRightOutline class="w-6 h-6" />
-        </svelte:fragment>
-      </Pagination>
-    </div>
+    {#if getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)).length > 0}
+      <div class="w-full flex justify-end mt-2">
+        <Pagination
+          bind:currentPage
+          {totalPages}
+          {pages}
+          on:previous={previous}
+          on:next={next}
+          on:pageChange={pageChange}
+          icon
+        >
+          <svelte:fragment slot="prev">
+            <span class="sr-only">Previous</span>
+            <ChevronLeftOutline class="w-6 h-6" />
+          </svelte:fragment>
+          <svelte:fragment slot="next">
+            <span class="sr-only">Next</span>
+            <ChevronRightOutline class="w-6 h-6" />
+          </svelte:fragment>
+        </Pagination>
+      </div>
+    {/if}
 
   {:else} <!-- individual action item, shows in right panels -->
     <div class=" mb-4">
