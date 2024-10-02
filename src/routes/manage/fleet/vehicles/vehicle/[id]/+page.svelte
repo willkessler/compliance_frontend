@@ -79,7 +79,8 @@
 
 <ActivityLayout>
   <div>
-    <h1 class="text-3xl font-bold mb-2">Vehicle #{getVehicleById(id).name}</h1>
+    <h1 class="text-3xl font-bold mb-0">Vehicle #{getVehicleById(id).name}</h1>
+    <div class="italic text-sm">Last updated: {vehicle.acquisitionDate}</div>
   </div>
 
   <div>

@@ -124,7 +124,7 @@
   <div class="flex gap-x-4 justify-start mb-2 items-start">
     <div class="text-nowrap min-w-[355px]">
       <h1 class="text-3xl font-bold mb-0">Driver: {driver.name}</h1>
-      <div class="italic text-sm">Latest update: 10/01/24</div>
+      <div class="italic text-sm">Last updated: 10/01/24</div>
     </div>
     <div class="text-gray-800">
       <CustomBadge
