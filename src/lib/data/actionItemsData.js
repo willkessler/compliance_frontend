@@ -90,7 +90,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
       { 
         id: 2, 
@@ -100,7 +101,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 21, 2024',
         type: 'Onsite',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
       { 
         id: 3, 
@@ -110,7 +112,8 @@ export const actions = [
         eventDate: 'Sep 15, 2024', 
         dueDate: 'Sep 31, 2024',
         type: 'Email',
-        status: 'Closed'
+        status: 'Closed',
+        area: 'Truck',
       },
       // { 
       //   id: 4, 
@@ -130,7 +133,8 @@ export const actions = [
         eventDate: 'Sep 19, 2024', 
         dueDate: 'Dec 1, 2024',
         type: 'Call',
-        status: 'Closed'
+        status: 'Closed',
+        area: 'Truck',
       },
     ],
   },
@@ -145,7 +149,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -160,7 +165,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -175,7 +181,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -190,7 +197,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -205,7 +213,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -220,7 +229,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -235,7 +245,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -250,7 +261,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },
@@ -265,7 +277,8 @@ export const actions = [
         eventDate: 'Aug 31, 2024', 
         dueDate: 'Sep 14, 2024',
         type: 'Call',
-        status: 'Open'
+        status: 'Open',
+        area: 'Truck',
       },
     ],
   },

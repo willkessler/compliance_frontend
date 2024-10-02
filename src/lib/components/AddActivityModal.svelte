@@ -4,6 +4,7 @@
  import { drivers } from '$lib/data/driverData';
  import { vehicles } from '$lib/data/vehicleData';
  import Uploader from '$lib/components/Uploader.svelte';
+ import ActionItemsTable from '$lib/components/ActionItemsTable.svelte';
 
  export let mode = 'accident';
 
@@ -80,21 +81,31 @@
     <Label class="block mt-4">Description of accident:</Label>
     <Textarea {...accidentDetailsProps } />
 
-    <div class="flex justify-between">
+    <div class="flex justify-between w-3/4">
       <div class="w-1/2">
         <Label for="vehicleSelection" class="mt-4">
           Vehicle involved:
         </Label>
         <Select id="vehicleSelection" class="mt-2" items={vehicleSelections} bind:value={selectedVehicle} />
       </div>
-      <div class="w-full ml-4">
+      <div class="w-1/2 ml-4">
         <Label for="driverSelection" class="mt-4">
           Driver at the time of the accident:
         </Label>
         <Select id="driverSelection" class="mt-2" items={driverSelections} bind:value={selectedDriver} />
       </div>
     </div>
+
+    <ActionItemsTable />
+    
     <Uploader />
+
+    <div class="flex justify-end">
+      <Button on:click={() => { showModal = false; uploadedFiles = []; }}
+        class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
+        Save Activity
+      </Button>      
+    </div>
 
   {/if}
   {#if (mode === 'maintenance')}

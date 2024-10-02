@@ -23,7 +23,7 @@
  // Modal related
  //
 
- let showModal = false; // whether the modal is visible
+ let showModal = true; // whether the modal is visible
  let modalMode = 'accident'; // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
@@ -179,6 +179,7 @@
 
 <Modal bind:open={showModal} autoclose outsideclose 
   backdropClass="fixed inset-0 z-40 bg-white/80"
+  size="lg"
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
   <AddActivityModal
     mode={modalMode}
