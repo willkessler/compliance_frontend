@@ -45,7 +45,7 @@ export function getActivitiesForDriver(driverId, onlyOpen) {
 export function getActivitiesForVehicle(vehicleId, onlyOpen) {
   if (onlyOpen) {
     return activities.filter((activity) =>
-      activity.vehicleId === vehicle && 
+      activity.vehicleId === vehicleId && 
         activity.status.toLowerCase() === 'open');
   }
   return activities.filter((activity) =>

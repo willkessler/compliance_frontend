@@ -233,7 +233,7 @@
                 />
               </TableBodyCell>
               <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
-                <Button on:click={() => openModalWithAction(action)} color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
+                <Button color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
               </TableBodyCell>
             </TableBodyRow>
           {/each}

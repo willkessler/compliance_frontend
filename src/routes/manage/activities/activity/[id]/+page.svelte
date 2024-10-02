@@ -95,7 +95,7 @@
       <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
       <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
     </div>
-    <div >
+    <div class="max-w-64">
       <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
         <div class="font-semibold">Level:</div>
         <div>{activity.level}</div>
@@ -103,18 +103,18 @@
       <div class="grid grid-cols-2 gap-y-2 mt-2">
         <div class="font-semibold">Driver:</div>
         <div>
-          <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
+          <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
         </div>
       </div>
       <div>
         <div class="grid grid-cols-2 gap-y-2 mt-2">
           <div class="font-semibold">Vehicle:</div>
           <div>
-            <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
+            <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
           </div>
         </div>
       </div>
-        <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-3">
+        <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-3 text-nowrap">
           <div class="font-semibold">Due Date</div>
           <div class="flex items-center">
             <div class="relative inline-block">
