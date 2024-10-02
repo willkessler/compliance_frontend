@@ -28,6 +28,8 @@
    email: "info@truckingco.com",
    dotNumber: "1234567",
    dotPin: '****',
+   mcNumber: '1234567',
+   iftaNumber: '1234567',
  };
 
  let editingInfo: typeof companyInfo & { state: StateOption } = { ...companyInfo, state: { value: companyInfo.state, label: "", disabled: false } };
@@ -204,6 +206,14 @@
 		<strong>Email:</strong>
 		{companyInfo.email}
 	      </p>
+        <p>
+          <strong>MC Number:</strong>
+          {companyInfo.mcNumber}
+              </p>
+        <p>
+              <strong>IFTA Number:</strong>
+              {companyInfo.iftaNumber}
+       </p>
 	      <p>
 		<strong>DOT Number:</strong>
 		{companyInfo.dotNumber}
