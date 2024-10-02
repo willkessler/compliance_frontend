@@ -7,13 +7,14 @@
  import ActionItemsTable from '$lib/components/ActionItemsTable.svelte';
 
  export let mode = 'accident';
+ export let submitForm = () => { console.log('form submitted'); };
 
  const accidentDetailsProps = {
    id: 'description',
    name: 'description',
    label: 'Accident description',
    rows: 8,
-   placeholder: 'Enter everything about the accident that you know. You can edit this informaion later.'
+   placeholder: 'Enter everything about the accident that you know. You can edit this information later.'
  };
 
  let selectedDriver;
@@ -101,7 +102,9 @@
     <Uploader />
 
     <div class="flex justify-end">
-      <Button on:click={() => { showModal = false; uploadedFiles = []; }}
+      <Button on:click={() => { 
+                       submitForm() 
+                       }}
         class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
         Save Activity
       </Button>      
