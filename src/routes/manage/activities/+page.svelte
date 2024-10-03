@@ -108,8 +108,11 @@
       </div>
     </div>
 
-    <div class="ml-6 min-w-64 mr-4">
-      <div class="flex">
+    <div class="ml-6 min-w-64 mr-4 ">
+      <div class="flex gap-x-4">
+        <Input id="search" placeholder="Search">
+          <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
+        </Input>
         <Button
           class="bg-gray-300 hover:bg-gray-500 text-white text-md mr-4 min-w-[200px]">
           &nbsp;&nbsp;Filter
@@ -123,9 +126,6 @@
           <DropdownItem><div class="flex text-customGray"><Landmark class="mr-2"/>Federal</div></DropdownItem>
           <DropdownItem><div class="flex text-customGray"><Building2 class="mr-2"/>State</div></DropdownItem>
         </Dropdown>
-        <Input id="search" placeholder="Search">
-          <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
-        </Input>
       </div>
     </div>
 

@@ -1,9 +1,10 @@
 <script lang="ts">
- import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, 
+ import { Badge, Button, Modal, Label, Input, Textarea,  Select, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,
         FloppyDiskOutline,
+        PenOutline,
         UsersOutline,
         ChevronLeftOutline, ChevronRightOutline, MapPinAltSolid } from 'flowbite-svelte-icons';
  import styles from '$lib/css/rightPanel.module.css';
@@ -80,60 +81,92 @@
     <h1 class="text-2xl font-bold mt-2 mb-2">Activity Details</h1>
   </div>
 
-  <div class="p-4 mt-2 shadow-none border rounded">
-    <div class="flex justify-between">
-      <h1 class="text-xl font-bold mt-2 mb-2">{getActivityTitle(activity)}</h1>
-      <div>
-        {activity.occurrenceDate}
-      </div>
-    </div>
-    <div class="italic">
-      {activity.description}
-    </div>
-    <div class="space-x-2 space-y-2 mb-2">
-      <Badge class="py-1 cursor-pointer bg-{getTypeColor(activity.type)}-200 text-gray-700">{activity.type}</Badge>
-      <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
-      <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
-    </div>
-    <div class="max-w-64">
-      <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
-        <div class="font-semibold">Level:</div>
-        <div>{activity.level}</div>
-      </div>
-      <div class="grid grid-cols-2 gap-y-2 mt-2">
-        <div class="font-semibold">Driver:</div>
+  <div class="rounded-lg shadow-md overflow-hidden">
+    <div class="border-b border-gray-200 p-4 bg-gray-100">
+      <div class="flex justify-between items-center">
         <div>
-          <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
+	  <h2 class="text-2xl font-bold">{getActivityTitle(activity)}</h2>
+	  <p class="text-sm text-muted-foreground">Last updated: Jan 24, 2024</p>
+        </div>
+        <div>
+          <Button outline class="text-sm text-black/60 hover:bg-gray-400"><PenOutline />&nbsp;Edit</Button>
         </div>
       </div>
+    </div>
+
+    <div class="p-4">
+      <div class="flex gap-2 ">
+        <Badge class="py-1 cursor-pointer bg-{getTypeColor(activity.type)}-200 text-gray-700">{activity.type}</Badge>
+        <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
+        <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
+      </div>
+
+
       <div>
-        <div class="grid grid-cols-2 gap-y-2 mt-2">
-          <div class="font-semibold">Vehicle:</div>
+        <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
-          </div>
-        </div>
-      </div>
-        <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-3 text-nowrap">
-          <div class="font-semibold">Due Date</div>
-          <div class="flex items-center">
-            <div class="relative inline-block">
-              <input
-                type="date"
-                bind:value={dueDate}
-                on:input={handleInput}
-                class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
-              />
-              <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
-                <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-                </svg>
-                <span class="text-sm text-gray-700">{formattedDate}</span>
+	    <div>
+
+              <div class="w-full">
+                <div class="max-w-64">
+                  <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+                    <div class="font-semibold">Occurred:</div>
+                    <div>{activity.occurrenceDate}</div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-3 text-nowrap">
+                    <div class="font-semibold">Due Date:</div>
+                    <div class="flex items-center">
+                      <div class="relative inline-block">
+                        <input
+                          type="date"
+                          bind:value={dueDate}
+                          on:input={handleInput}
+                          class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
+                        />
+                        <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
+                          <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                          </svg>
+                          <span class="text-sm text-gray-700">{formattedDate}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-y-2 mt-2">
+                    <div class="font-semibold">Driver:</div>
+                    <div>
+                      <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="grid grid-cols-2 gap-y-2 mt-2">
+                      <div class="font-semibold">Vehicle:</div>
+                      <div>
+                        <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
+                    <div class="font-semibold">Level:</div>
+                    <div>{activity.level}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
+          <div class="mb-4">
+	    <Label for="description" class="block text-sm font-medium mb-1">Description</Label>
+	    <Textarea id="description"  placeholder="Description of the tire rotation needed" rows="4" />
+          </div>
+        </div>
+        <div class="flex justify-end">
+	  <Button variant="outline">Edit</Button>
+        </div>
+      </div>
     </div>
   </div>
 
