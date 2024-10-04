@@ -4,7 +4,7 @@
  import { drivers } from '$lib/data/driverData';
  import { vehicles } from '$lib/data/vehicleData';
  import Uploader from '$lib/components/Uploader.svelte';
- import ActionItemsTable from '$lib/components/ActionItemsTable.svelte';
+ import ActionItemsTable2 from '$lib/components/ActionItemsTable2.svelte';
 
  export let mode = 'accident';
  export let submitForm = () => { console.log('form submitted'); };
@@ -96,7 +96,8 @@
       </div>
     </div>
 
-    <ActionItemsTable />
+    <Label class="block mt-4">Action items:</Label>
+    <ActionItemsTable2 />
     
     <Uploader />
 
