@@ -145,7 +145,9 @@
                   <div class="grid grid-cols-2 gap-y-2 mt-2">
                     <div class="font-semibold">Driver:</div>
                     <div>
-                      <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="text-nowrap text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
+                      <a href="/manage/fleet/drivers/driver/{driver.id}">
+                        <Badge class="text-nowrap text-gray-800 bg-gray-100 text-md px-2 py-1"><UsersOutline />{driver.name}</Badge>
+                      </a>
                     </div>
                   </div>
 
@@ -153,7 +155,11 @@
                     <div class="grid grid-cols-2 gap-y-2 mt-2">
                       <div class="font-semibold">Vehicle:</div>
                       <div>
-                        <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="text-nowrap text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
+                        <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}">
+                          <Badge class="text-nowrap text-gray-800 bg-gray-100 text-md px-2 py-1">
+                            <TruckSolid />Truck #{vehicle.name}
+                          </Badge>
+                        </a>
                       </div>
                     </div>
                   </div>

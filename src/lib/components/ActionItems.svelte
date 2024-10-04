@@ -313,8 +313,8 @@ ul li:before {
         <div class="font-semibold mt-2">Notes:</div>
         <div class="text-customGray rounded-md border p-4 mt-2 italic w-full">{getActionItemById(actionItemId).description}</div>
       </div>
-      <Button on:click={() => { openModalWithAction(getActionItemById(actionItemId))  }} class="bg-gray-400 hover:bg-blue text-white text-sm px-4 py-2 mt-4">
-        <PenOutline class="mr-2" />Edit This Action Item
+      <Button on:click={() => { openModalWithAction(getActionItemById(actionItemId))  }} class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300 mt-2">
+        <PenOutline class="mr-2" />Edit
       </Button>
     {:else}
       <div class="italic">Please select an action taken to see details here.</div>

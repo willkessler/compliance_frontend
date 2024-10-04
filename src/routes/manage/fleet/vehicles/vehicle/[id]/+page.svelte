@@ -78,118 +78,128 @@
 
 <ActivityLayout showRightPanel={false}>
   <div>
-    <h1 class="text-3xl font-bold mb-0">Vehicle #{getVehicleById(id).name}</h1>
-    <div class="italic text-sm">Last updated: {vehicle.acquisitionDate}</div>
-  </div>
 
-  <div>
-
-    <!-- Vehicle photo -->
-
-    <div class="flex flex-col md:flex-row gap-x-5 items-stretch mt-0">
-      <div class="relative md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[355px] max-h-[355px]">
-        <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
-          <img 
-            src="{vehicle.photo ? '/images/vehicles/' + vehicle.photo : '/images/vehicles/default.jpg'}" 
-            alt="vehicle.name"
-            class="w-full h-full object-cover object-top border"
-          />
-          <img
-            on:mouseenter={() => { zoomedDriverPic = true; }}
-          src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
-          alt="driver.name"
-          class="absolute bottom-2 right-2 w-1/4 h-1/4 object-cover border-4 border-gray-300 rounded-lg"
-          />
-          {#if zoomedDriverPic}
-            <img
-              on:mouseleave={() => { zoomedDriverPic = false; }}
-            on:click={() => { navigateToDriverDetails(driver.id) }}
-            src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
-            alt="driver.name"
-            class="absolute bottom-2 right-2 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
-            />
-          {/if}
-
-          <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
-            <PenOutline class="w-4 h-4 text-gray-700" />
+    <!-- Vehicle "card" -->
+    <div class="rounded-md shadow-md overflow-hidden">
+      <div class="border-b border-gray-200 p-4 bg-gray-100">
+        <div class="flex justify-between items-center">
+          <div>
+	    <h2 class="text-2xl font-bold">Vehicle #{getVehicleById(id).name}</h2>
+	    <p class="text-sm text-muted-foreground">Last updated: {vehicle.acquisitionDate}</p>
+          </div>
+          <div>
+            <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
           </div>
         </div>
       </div>
 
-      <!-- Vehicle details -->
-      <div class="w-full md:w-1/2 max-w-[340px] mb-4">
-        <div class="flex flex-wrap items-center">
-          <div class="w-1/2 font-semibold mt-2">Current Location</div>
-          <div class="w-1/2 cursor-pointer mt-2 text-md text-nowrap">
-            <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>
+      <div class="flex flex-col md:flex-row gap-x-5 items-stretch p-4">
+        <div class="relative md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[300px] max-h-[300px]">
+          <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
+            <img 
+              src="{vehicle.photo ? '/images/vehicles/' + vehicle.photo : '/images/vehicles/default.jpg'}" 
+              alt="vehicle.name"
+              class="w-full h-full object-cover object-top border"
+            />
+            <img
+              on:mouseenter={() => { zoomedDriverPic = true; }}
+            src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
+            alt="driver.name"
+            class="absolute bottom-2 right-2 w-1/4 h-1/4 object-cover border-4 border-gray-300 rounded-lg"
+            />
+            {#if zoomedDriverPic}
+              <img
+                on:mouseleave={() => { zoomedDriverPic = false; }}
+              on:click={() => { navigateToDriverDetails(driver.id) }}
+              src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
+              alt="driver.name"
+              class="absolute bottom-2 right-2 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
+              />
+            {/if}
+
+            <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
+              <PenOutline class="w-4 h-4 text-gray-700" />
+            </div>
           </div>
         </div>
-        <div class="space-y-2">
-          <div class="flex flex-wrap items-center">
-            <div class="w-1/2 font-semibold">License Plate</div>
-            <div class="w-1/2 p-1 border text-customGray">{vehicle.licensePlate}</div>
-          </div>
 
-          <div class="flex flex-wrap items-center">
-            <div class="w-1/2 font-semibold">VIN</div>
-            <div class="w-1/2 text-customGray" title="Full VIN: 2345034948345890549">{vehicle.vin}</div>
-          </div>
-
-          <div class="flex flex-wrap items-center">
-            <div class="w-1/2 font-semibold">Miles until EOL</div>
-            <div class="w-1/2 text-customGray">{vehicle.milesLeftToEol}</div>
-          </div>
-
-          <div class="flex flex-wrap items-center">
-            <div class="w-1/2 font-semibold">Time until EOL</div>
-            <div class="w-1/2 text-customGray">{vehicle.timeLeftToEol}</div>
-          </div>
-
-          <div class="flex flex-wrap items-center">
-            <div class="w-1/2 font-semibold">Driver</div>
-            <div class="w-1/2">
-              <a href="/manage/fleet/drivers/driver/{driver.id}">
-                <Badge class="bg-gray-100 text-gray-800">
-                  <UsersOutline class="inline-block mr-1" />
-                  {driver.name}
-                </Badge>
-              </a>
+        <!-- Vehicle details -->
+        <div class="w-full md:w-1/2 max-w-[340px] min-w-[340px]">
+          <div class="flex flex-wrap items-center mb-2">
+            <div class="w-1/2 font-semibold ">Current Location:</div>
+            <div class="w-1/2 cursor-pointer text-md text-nowrap">
+              <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>
             </div>
           </div>
-
-          <div class="flex flex-wrap items-center">
-            <div class="w-1/2 flex justify-start items-middle mb-0">
-              <div class="mt-4 font-semibold text-nowrap mr-2">Registration</div>
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center">
+              <div class="w-1/2 font-semibold">License Plate:</div>
+              <div class="w-1/2 p-1 border text-customGray">{vehicle.licensePlate}</div>
             </div>
 
-            <div class="w-1/2 mt-3">
-              <div class="flex items-center">
-                <div class="relative inline-block">
-                  <input
-                    type="date"
-                    bind:value={dueDate}
-                    on:input={handleInput}
-                    class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
-                  />
-                  <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
-                    <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-sm text-gray-700">{formattedDate}</span>
+            <div class="flex flex-wrap items-center">
+              <div class="w-1/2 font-semibold">VIN:</div>
+              <div class="w-1/2 text-customGray" title="Full VIN: 2345034948345890549">{vehicle.vin}</div>
+            </div>
+
+            <div class="flex flex-wrap items-center">
+              <div class="w-1/2 font-semibold">Miles until EOL:</div>
+              <div class="w-1/2 text-customGray">{vehicle.milesLeftToEol}</div>
+            </div>
+
+            <div class="flex flex-wrap items-center">
+              <div class="w-1/2 font-semibold">Time until EOL:</div>
+              <div class="w-1/2 text-customGray">{vehicle.timeLeftToEol}</div>
+            </div>
+
+            <div class="flex flex-wrap items-center">
+              <div class="w-1/2 font-semibold">Driver:</div>
+              <div class="w-1/2">
+                <a href="/manage/fleet/drivers/driver/{driver.id}">
+                  <Badge class="bg-gray-100 text-gray-800 p-2">
+                    <UsersOutline class="inline-block mr-1" />
+                    {driver.name}
+                  </Badge>
+                </a>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center">
+              <div class="w-1/2 flex justify-start items-middle mb-0">
+                <div class="mt-1 font-semibold text-nowrap mr-2">Registration:</div>
+              </div>
+
+              <div class="w-1/2 mt-1">
+                <div class="flex items-center">
+                  <div class="relative inline-block">
+                    <input
+                      type="date"
+                      bind:value={dueDate}
+                      on:input={handleInput}
+                      class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
+                    />
+                    <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
+                      <svg class="w-4 h-4 text-customGray mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-sm text-gray-700">{formattedDate}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
+
+        <div class="w-full">
+          <div class="font-semibold mb-2">Description:</div>
+          <div class="rounded-lg border p-2 min-h-32 max-w-[400px]">
+	    {vehicle.description}
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-
-  <div class="font-semibold mt-4">Description and Notes</div>
-  <div class="border p-4 w-1/2 min-h-24">
-      <p class="text-md">{vehicle.description}</p>
   </div>
 
   <div class="w-full mt-10">
