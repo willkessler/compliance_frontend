@@ -184,6 +184,7 @@
   <ActionItems 
     environment="activity"
     mode="all"
+    showChrome={true}
     activityId={activity.id}
     hideRightPanelCb={hideRightPanel}
     setActionItemCb={setSelectedActionId}
@@ -200,6 +201,7 @@
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
     <ActionItems
       environment="activity"
+      showChrome={false}
       mode="single"
       actionItemId={selectedActionId}
       hideRightPanelCb={hideRightPanel}

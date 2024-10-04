@@ -36,7 +36,7 @@
  export let actionItemId = null;    // which action item id
  export let setActionItemCb = () => { };  // stub for passed in callback
  export let hideRightPanelCb = () => { }; // stub for passed in callback
- export let showChrome = true; // whether to show all 
+ export let showChrome = true; // whether to show all controls
 
   onMount(() => {
     formattedDate = formatDate(dueDate);
@@ -227,23 +227,18 @@ ul li:before {
 
 
 <div>
-<!-- 
-  <div on:click={() => hideRightPanelCb() }>
-    click
-  </div>
- -->
-  {#if mode === 'limited' }
-    {#if showChrome}
-      <div class="flex justify-between items-end mb-4 ml-0 mt-8">
-        <h1 class="text-xl font-bold">Actions Taken</h1>
-        <Button on:click={() => { showModal = true; uploadedFiles = []; }}
-          class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
-          <CirclePlusSolid />
-          &nbsp;&nbsp;New Action Item
-        </Button>
-      </div>
-    {/if}
+  {#if showChrome}
+    <div class="flex justify-between items-end mb-4 ml-0 mt-8">
+      <h1 class="text-xl font-bold">Actions Taken</h1>
+      <Button on:click={() => { showModal = true; uploadedFiles = []; }}
+        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
+        <CirclePlusSolid />
+        &nbsp;&nbsp;New Action Item
+      </Button>
+    </div>
+  {/if}
 
+  {#if mode === 'limited' }
     {#if getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)).length === 0}
       <div class="p-4 italic">No actions entered so far.</div>
     {:else}
@@ -319,7 +314,7 @@ ul li:before {
         <div class="text-customGray rounded-md border p-4 mt-2 italic w-full">{getActionItemById(actionItemId).description}</div>
       </div>
       <Button on:click={() => { openModalWithAction(getActionItemById(actionItemId))  }} class="bg-gray-400 hover:bg-blue text-white text-sm px-4 py-2 mt-4">
-        <PenOutline class="mr-2" />Edit This Action
+        <PenOutline class="mr-2" />Edit This Action Item
       </Button>
     {:else}
       <div class="italic">Please select an action taken to see details here.</div>

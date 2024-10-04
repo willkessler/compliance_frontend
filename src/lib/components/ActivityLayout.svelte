@@ -6,7 +6,7 @@
 <!-- cf https://htmlcssfreebies.com/box-shadow-left/ -->
 <style>
  .right-panel {
-   margin-left:12px; 
+   margin-left:12px;
    box-shadow: 0px 0 12px -5px rgba(0,0,0,.7);
   }
 </style>
@@ -21,7 +21,7 @@
     </div>
   </div>
   {#if showRightPanel }
-    <div class="w-100 bg-gray-100 overflow-y-auto right-panel"  style="min-width:455px">
+    <div class="w-100 bg-gray-100 overflow-y-auto right-panel min-w-[455px] max-w-[455px]">
       <slot name="right-panel" />
     </div>
   {/if}
