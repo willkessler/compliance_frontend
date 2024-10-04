@@ -20,17 +20,17 @@
    isDetailsPage = $page.url.pathname.includes('/activities/activity/') ||
                    $page.url.pathname.includes('/fleet/drivers/driver/') ||
                    $page.url.pathname.includes('/fleet/vehicles/vehicle/');
-   console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
+   //console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
  }
 
  onMount(() => {
    previousPath = $page.url.pathname;
    contentVisible.set(true);
-   console.log('Initial path:', previousPath);
+   //console.log('Initial path:', previousPath);
  });
 
  $: if ($page.url.pathname !== previousPath) {
-   console.log('Path changed. Previous:', previousPath, 'New:', $page.url.pathname);
+   //console.log('Path changed. Previous:', previousPath, 'New:', $page.url.pathname);
    handleRouteChange();
  }
 
@@ -68,7 +68,7 @@
  }
 
  function handleTransitionEnd() {
-   console.log('Transition ended');
+   //console.log('Transition ended');
    isTransitioning = false;
  }
 

@@ -3,7 +3,7 @@ import { PhoneSolid, MailBoxOutline, MapPinAltOutline } from 'flowbite-svelte-ic
 
 
 export function getActionItems (environment, id) {
-  console.log(`id ${id} environment ${environment}`);
+  //console.log(`id ${id} environment ${environment}`);
   let activityId;
 
   if (environment === 'activity') {
@@ -104,19 +104,8 @@ export const actions = [
         area: 'Truck',
       },
       {
-        id: 8936,
-        name: "Replace ELD (Truck #325)",
-        totalMiles: '8,748',
-        description: 'Replace broken ELD',
-        eventDate: 'Aug 31, 2024',
-        dueDate: 'Sep 21, 2024',
-        type: 'Onsite',
-        status: 'Open',
-        area: 'Truck',
-      },
-      {
         id: 7870,
-        name: "Emailed incident pictures",
+        name: "Email incident pictures",
         totalMiles: '8,748',
         description: 'Sent emailed pics to support@geicoinsurance.com, case #848228A',
         eventDate: 'Sep 15, 2024',
@@ -292,4 +281,20 @@ export const actions = [
       },
     ],
   },
+  {
+    activityId: 1299,
+    items: [
+      {
+        id: 8936,
+        name: "Replace ELD (Truck #325)",
+        totalMiles: '8,748',
+        description: 'Replace broken ELD',
+        eventDate: 'Aug 31, 2024',
+        dueDate: 'Sep 21, 2024',
+        type: 'Onsite',
+        status: 'Open',
+        area: 'Truck',
+      },
+    ],
+  },      
 ];

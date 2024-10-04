@@ -2,6 +2,8 @@
  import { goto } from '$app/navigation';
  import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { getActivitiesForVehicle, getActivitiesForDriver } from '$lib/data/activityData';
+ import { AngleRightOutline, AngleDownOutline } from 'flowbite-svelte-icons';
+
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
 
@@ -56,7 +58,15 @@
     <TableBody>
       {#each filteredActivities as activity}
         <TableBodyRow on:click={() => { toggleRow(activity.id)}}>
-          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{activity.title}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
+            <div class="flex justify-start">
+              {#if expandedRows[activity.id]}
+                <AngleDownOutline class="mr-2" />{activity.title}
+              {:else}
+                <AngleRightOutline class="mr-2" />{activity.title}
+              {/if}
+            </div>
+          </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{activity.occurrenceDate}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
             <CustomBadge
@@ -88,7 +98,7 @@
                   environment="activity"
                   mode="limited"
                   activityId={activity.id}
-                  setActionItem={() => {}}
+                  setActionItemCb={() => {}}
                   showChrome={false}
                   />
               </div>

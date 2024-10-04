@@ -1,6 +1,6 @@
 <script lang="ts">
  import { goto } from '$app/navigation';
- import { Accordion, AccordionItem, Badge, Button, Card, Label, Input, Textarea,  Select, Pagination, PaginationItem,
+ import { Badge, Button, Card, Label, Input, Textarea,  Select, Pagination, PaginationItem,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,
@@ -54,7 +54,7 @@
    vehicleId = parseInt($page.params.id);
    vehicle = getVehicleById(vehicleId);
    driver =  getVehicleDriver(vehicleId);
-   console.log(`got driver ${driver.id} for vehicle ${vehicle.id}` );
+   //console.log(`got driver ${driver.id} for vehicle ${vehicle.id}` );
  }
 
  function navigateToDriverDetails(driverId) {

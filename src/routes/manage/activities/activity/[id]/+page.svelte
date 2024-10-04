@@ -26,11 +26,6 @@
  let formattedDate;
  let showRightPanel = false;
 
- function hideRightPanel () {
-   debugger; 
-   showRightPanel = false;
- }
-
  function formatDate(date) {
    const d = new Date(date);
    const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -54,13 +49,13 @@
 
  $: if ($page.params.id) {
    activityId = parseInt($page.params.id);
-   console.log(`activityId: ${activityId}`);
+   //console.log(`activityId: ${activityId}`);
    activity = getActivityById(activityId);
-   console.log(`activity: ${JSON.stringify(activity)}`);
+   //console.log(`activity: ${JSON.stringify(activity)}`);
    vehicle = getVehicleById(activity.vehicleId);
-   console.log(`vehicle: ${JSON.stringify(vehicle)}`);
+   //console.log(`vehicle: ${JSON.stringify(vehicle)}`);
    driver =  getVehicleDriver(vehicle.id);
-   console.log(`got driver ${driver.id} for activity ${activity.id}` );
+   //console.log(`got driver ${driver.id} for activity ${activity.id}` );
  }
 
  function setSelectedActionId (actionId) {
@@ -69,6 +64,11 @@
    showRightPanel = true;
  }
  
+ function hideRightPanel () {
+   console.log('inside hideRightPanel');
+   showRightPanel = false;
+ }
+
 </script>
 
 <style>
@@ -185,8 +185,8 @@
     environment="activity"
     mode="all"
     activityId={activity.id}
-    setActionItem={setSelectedActionId}
-    hideRightPanel={hideRightPanel}
+    hideRightPanelCb={hideRightPanel}
+    setActionItemCb={setSelectedActionId}
   />
 
   <div class="w-full mt-10">
@@ -199,6 +199,7 @@
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
     <ActionItems
+      environment="activity"
       mode="single"
       actionItemId={selectedActionId}
     />

@@ -1,5 +1,5 @@
 <script lang="ts">
- import { Accordion, AccordionItem, Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
+ import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Tooltip } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid, 
         TruckSolid, 
@@ -244,14 +244,10 @@
     </div>
   </div>
 
-  <Accordion flush class="pb-2 ml-0">
-    <AccordionItem open paddingFlush="py-0 pt-4 pb-0">
-      <span class="font-semibold" slot="header">Driver Notes</span>
+  <div class="font-semibold mt-4">Description and Notes</div>
+  <div class="border p-4 w-1/2 min-h-24">
       <p class="text-md">{driver.notes}</p>
-      <div class="flex justify-end items-center mt-2 pt-2 ml-2">
-      </div>
-    </AccordionItem>
-  </Accordion>
+  </div>
 
   <!-- Credentials details -->
   <h1 class="text-lg font-bold mb-0 mt-6">Credentials</h1>

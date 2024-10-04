@@ -34,9 +34,16 @@
  export let activityId = null;  // which activity id was passed in
  export let vehicleId = null;   // which vehicle id was passed in
  export let actionItemId = null;    // which action item id
- export let setActionItem = () => {}; // passed in callback
- export let hideRightPanel = () => {};
+ export let setActionItemCb = () => {console.log('fake_setA') }; // passed in callback
+ export let hideRightPanelCb = () => { console.log('fake_hideR1')};
+ let currentHideRightPanelCb = () => { console.log('fake_hideR2')};
  export let showChrome = true; // whether to show all 
+
+  onMount(() => {
+    formattedDate = formatDate(dueDate);
+    currentHideRightPanelCb = hideRightPanelCb;
+    currentHideRightPanelCb();
+  });
 
  let showModal = false; // whether the modal is visible
  let actionType = '';
@@ -180,10 +187,6 @@
     formattedDate = formatDate(dueDate);
   }
 
-  onMount(() => {
-    formattedDate = formatDate(dueDate);
-  });
-
 </script>
 
 <style>
@@ -227,6 +230,11 @@ ul li:before {
 
 
 <div>
+<!-- 
+  <div on:click={() => currentHideRightPanelCb() }>
+    click
+  </div>
+ -->
   {#if mode === 'limited' }
     {#if showChrome}
       <div class="flex justify-between items-end mb-4 ml-0 mt-8">
@@ -264,7 +272,7 @@ ul li:before {
           <div class="p-4 italic">No actions recorded to date.</div>
         {:else}
           {#each getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)) as action}
-            <TableBodyRow on:click={() => setActionItem(action.id) }>
+            <TableBodyRow on:click={() => setActionItemCb(action.id) }>
               <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
               <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.eventDate}</TableBodyCell>
               <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.dueDate}</TableBodyCell>
@@ -289,7 +297,7 @@ ul li:before {
   {:else} <!-- individual action item, shows in right panels -->
     <div class=" mb-4 flex justify-between">
       <h2 class="text-xl font-bold text-customGray uppercase">Action Details</h2>
-      <div on:click={() => { hideRightPanel() }} 
+      <div on:click={() => { setActionItemCb(1); }}
         class="border rounded-xs px-2 cursor-pointer bg-customGray/10 hover: hover:bg-customGray/20">
         X
       </div>
