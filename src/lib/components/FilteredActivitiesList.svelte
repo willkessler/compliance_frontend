@@ -2,10 +2,6 @@
  import { goto } from '$app/navigation';
  import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { getActivitiesForVehicle, getActivitiesForDriver } from '$lib/data/activityData';
- import {
-   CornerDownRight,
- } from 'lucide-svelte';
-
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
 
@@ -35,7 +31,7 @@
    goto(`/manage/activities/activity/${activityId}`, { replaceState: false });
  }
 
- let expandedRows = {};
+ let expandedRows = { };
 
  const toggleRow = (id) => {
    for (let clearId of Object.keys(expandedRows)) {
@@ -85,20 +81,16 @@
         </TableBodyRow>
         {#if expandedRows[activity.id]}
           <TableBodyRow class="pb-2">
-            <TableBodyCell colspan="5" class="pl-8 pb-2 pt-2 pr-6 w-full">
-              <div class="flex items-bottom gap-x-2">
-                <div>
-                  <CornerDownRight />
-                </div>
-                <div>
-                  <ActionItems 
-                    environment="activity"
-                    mode="all"
-                    activityId={activity.id}
-                    setActionItem={() => {}}
-                    showChrome={false}
-                    />
-                </div>
+            <TableBodyCell colspan="5" class="pl-12 pb-2 pt-2 pr-6 w-full">
+              <div class="w-1/3 border-b pt-2 pb-2 mb-4">Action Items:</div>
+              <div class="w-1/3 ml-14 mt-2 mb-2" on:click={(e) => { e.preventDefault(); navigateToActivityDetails(activity.id) }} >
+                <ActionItems 
+                  environment="activity"
+                  mode="all"
+                  activityId={activity.id}
+                  setActionItem={() => {}}
+                  showChrome={false}
+                  />
               </div>
             </TableBodyCell>
           </TableBodyRow>

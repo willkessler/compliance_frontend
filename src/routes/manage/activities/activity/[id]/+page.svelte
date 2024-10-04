@@ -81,6 +81,7 @@
     <h1 class="text-2xl font-bold mt-2 mb-2">Activity Details</h1>
   </div>
 
+  <!-- Activity "card" -->
   <div class="rounded-lg shadow-md overflow-hidden">
     <div class="border-b border-gray-200 p-4 bg-gray-100">
       <div class="flex justify-between items-center">
@@ -89,13 +90,13 @@
 	  <p class="text-sm text-muted-foreground">Last updated: Jan 24, 2024</p>
         </div>
         <div>
-          <Button outline class="text-sm text-black/60 hover:bg-gray-400"><PenOutline />&nbsp;Edit</Button>
+          <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
         </div>
       </div>
     </div>
 
-    <div class="p-4">
-      <div class="flex gap-2 ">
+    <div class="p-4 ">
+      <div class="flex gap-2 mt-2 mb-5">
         <Badge class="py-1 cursor-pointer bg-{getTypeColor(activity.type)}-200 text-gray-700">{activity.type}</Badge>
         <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
         <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
@@ -103,18 +104,18 @@
 
 
       <div>
-        <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mb-4">
+        <div class="flex gap-4 mb-0 mt-4">
           <div>
 	    <div>
 
               <div class="w-full">
-                <div class="max-w-64">
-                  <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
+                <div class="min-w-80 max-w-64">
+                  <div class="grid grid-cols-2">
                     <div class="font-semibold">Occurred:</div>
                     <div>{activity.occurrenceDate}</div>
                   </div>
 
-                  <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-3 text-nowrap">
+                  <div class="grid grid-cols-2 mt-3 text-nowrap">
                     <div class="font-semibold">Due Date:</div>
                     <div class="flex items-center">
                       <div class="relative inline-block">
@@ -137,19 +138,20 @@
                   <div class="grid grid-cols-2 gap-y-2 mt-2">
                     <div class="font-semibold">Driver:</div>
                     <div>
-                      <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
+                      <a href="/manage/fleet/drivers/driver/{driver.id}"><Badge class="text-nowrap text-gray-800 bg-gray-100 text-md"><UsersOutline />{driver.name}</Badge></a>
                     </div>
                   </div>
+
                   <div>
                     <div class="grid grid-cols-2 gap-y-2 mt-2">
                       <div class="font-semibold">Vehicle:</div>
                       <div>
-                        <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="text-nowrap ml-2 text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
+                        <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}"><Badge class="text-nowrap text-gray-800 bg-gray-100 text-md"><TruckSolid />Truck #{vehicle.name}</Badge></a>
                       </div>
                     </div>
                   </div>
 
-                  <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
+                  <div class="grid grid-cols-2 gap-y-2 mt-2">
                     <div class="font-semibold">Level:</div>
                     <div>{activity.level}</div>
                   </div>
@@ -158,9 +160,11 @@
             </div>
           </div>
 
-          <div class="mb-4">
-	    <Label for="description" class="block text-sm font-medium mb-1">Description</Label>
-	    <Textarea id="description"  placeholder="Description of the tire rotation needed" rows="4" />
+          <div class="w-full">
+            <div class="font-semibold">Description:</div>
+            <div class="rounded-lg border p-2 min-h-32">
+	      {activity.description}
+            </div>
           </div>
         </div>
         <div class="flex justify-end">

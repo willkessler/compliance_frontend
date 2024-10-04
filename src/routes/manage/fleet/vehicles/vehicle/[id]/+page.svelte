@@ -14,7 +14,6 @@
  import styles from '$lib/css/rightPanel.module.css';
  import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
- import ActionItems from '$lib/components/ActionItems.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
 

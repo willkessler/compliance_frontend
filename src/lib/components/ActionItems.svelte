@@ -194,13 +194,40 @@
     left: 0;
     cursor: pointer;
   }
+
+ul {
+  display: block;
+  margin-left: -10px;
+}
+
+ul li {
+  display: block;
+  position: relative;
+}
+
+ul li:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+ul li:before {
+  content: "";
+  position: absolute;
+  top: 1.2em;
+  left: -30px;
+  margin-top: -.9em;
+  background: #ccc;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
+ 
 </style>
 
 
 <div>
   {#if mode === 'all' } <!-- all action items, displays in central panel -->
     {#if showChrome}
-      <div class="flex justify-between items-end mb-0 ml-0 mt-8">
+      <div class="flex justify-between items-end mb-4 ml-0 mt-8">
         <h1 class="text-xl font-bold">Actions Taken</h1>
         <Button on:click={() => { showModal = true; uploadedFiles = []; }}
           class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
@@ -210,62 +237,16 @@
       </div>
     {/if}
 
-    <Table class="relative overflow-x-auto ml-0 cursor-pointer" hoverable>
-      <TableHead class="bg-customGray/15 whitespace-nowrap">
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Date</TableHeadCell>
-        <TableHeadCell class="px-1 py-3 text-xs font-medium text-customGray uppercase">Due Date</TableHeadCell>
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
-        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"><!-- cta --></TableHeadCell>
-      </TableHead>
-      <TableBody>
-        {#if getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)).length === 0}
-          <div class="p-4 italic">No actions recorded to date.</div>
-        {:else}
-          {#each getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)) as action}
-            <TableBodyRow on:click={() => setActionItem(action.id) }>
-              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
-              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.eventDate}</TableBodyCell>
-              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.dueDate}</TableBodyCell>
-              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-                <CustomBadge
-                  context="status"
-                  secondaryContext="general"
-                  data={action}
-                  dataField="status"
-                />
-              </TableBodyCell>
-              {#if showChrome}
-                <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
-                  <Button color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
-                </TableBodyCell>
-              {/if}
-            </TableBodyRow>
-          {/each}
-        {/if}
-      </TableBody>
-    </Table>
-    {#if getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)).length > 0}
-      <div class="w-full flex justify-end mt-2">
-        <Pagination
-          bind:currentPage
-          {totalPages}
-          {pages}
-          on:previous={previous}
-          on:next={next}
-          on:pageChange={pageChange}
-          icon
-        >
-          <svelte:fragment slot="prev">
-            <span class="sr-only">Previous</span>
-            <ChevronLeftOutline class="w-6 h-6" />
-          </svelte:fragment>
-          <svelte:fragment slot="next">
-            <span class="sr-only">Next</span>
-            <ChevronRightOutline class="w-6 h-6" />
-          </svelte:fragment>
-        </Pagination>
-      </div>
+    {#if getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)).length === 0}
+      <div class="p-4 italic">No actions entered so far.</div>
+    {:else}
+      <ul>
+        {#each getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)) as action}
+          <li>
+            {action.name}
+          </li>
+        {/each}
+      </ul>
     {/if}
 
   {:else} <!-- individual action item, shows in right panels -->
@@ -432,16 +413,3 @@
     </div>
   </svelte:fragment>
 </Modal>
-
-
-<!--
-             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.description}</TableBodyCell>
-            <TableBodyCell class="px-1">
-              <CustomBadge
-                context="actionType"
-                data={action}
-                dataField="type"
-              />
-            </TableBodyCell>
-
- -->
