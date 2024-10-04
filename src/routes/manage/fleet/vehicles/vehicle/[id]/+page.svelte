@@ -94,7 +94,7 @@
       </div>
 
       <div class="flex flex-col md:flex-row gap-x-5 items-stretch p-4">
-        <div class="relative md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[300px] max-h-[300px]">
+        <div class="relative md:w-1/2 flex-shrink-0 max-w-[280px] max-h-[300px]">
           <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
             <img 
               src="{vehicle.photo ? '/images/vehicles/' + vehicle.photo : '/images/vehicles/default.jpg'}" 

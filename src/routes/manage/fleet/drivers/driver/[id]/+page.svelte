@@ -150,7 +150,7 @@
 
     <div>
       <div class="flex flex-col md:flex-row gap-x-5 items-stretch p-4">
-        <div class="relative  mr-1 md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[280px] max-h-[300px]">
+        <div class="relative  mr-1 md:w-1/2 flex-shrink-0 max-w-[280px] max-h-[300px]">
           <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
             <img 
               src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
