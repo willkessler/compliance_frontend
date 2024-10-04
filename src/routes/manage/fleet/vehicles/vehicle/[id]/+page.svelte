@@ -124,7 +124,7 @@
         </div>
 
         <!-- Vehicle details -->
-        <div class="w-full md:w-1/2 max-w-[340px] min-w-[340px]">
+        <div class="w-full md:w-1/2 max-w-[340px] min-w-[340px] mt-2">
           <div class="flex flex-wrap items-center mb-2">
             <div class="w-1/2 font-semibold ">Current Location:</div>
             <div class="w-1/2 cursor-pointer text-md text-nowrap">
@@ -192,8 +192,8 @@
         </div>
 
         <div class="w-full">
-          <div class="font-semibold mb-2">Description:</div>
-          <div class="rounded-lg border p-2 min-h-32 max-w-[400px]">
+          <div class="font-semibold mt-1">Description:</div>
+          <div class="mt-2 rounded-lg border p-2 min-h-48 max-w-[400px]">
 	    {vehicle.description}
           </div>
         </div>

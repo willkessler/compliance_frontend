@@ -157,7 +157,7 @@
                       <div>
                         <a href="/manage/fleet/vehicles/vehicle/{vehicle.id}">
                           <Badge class="text-nowrap text-gray-800 bg-gray-100 text-md px-2 py-1">
-                            <TruckSolid />Truck #{vehicle.name}
+                            <TruckSolid />Vehicle #{vehicle.name}
                           </Badge>
                         </a>
                       </div>
