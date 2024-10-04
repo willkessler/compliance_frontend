@@ -192,8 +192,8 @@
         </div>
 
         <div class="w-full">
-          <div class="font-semibold mt-1">Description:</div>
-          <div class="mt-2 rounded-lg border p-2 min-h-48 max-w-[400px]">
+          <div class="font-semibold mt-1">Description/Notes:</div>
+          <div class="italic mt-2 rounded-lg border p-2 min-h-[220px] max-w-[400px]">
 	    {vehicle.description}
           </div>
         </div>

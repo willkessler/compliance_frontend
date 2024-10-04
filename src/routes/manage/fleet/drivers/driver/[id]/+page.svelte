@@ -150,7 +150,7 @@
 
     <div>
       <div class="flex flex-col md:flex-row gap-x-5 items-stretch p-4">
-        <div class="relative md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[300px] max-h-[300px]">
+        <div class="relative  mr-1 md:w-1/2 flex-shrink-0 w-full max-w-md max-w-[280px] max-h-[300px]">
           <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
             <img 
               src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}" 
@@ -160,7 +160,7 @@
             <div
               on:mouseenter={handleDLMouseEnter}
               on:mouseleave={handleDLMouseLeave}
-              class="absolute bottom-4 right-4 w-1/3 h-1/5"
+              class="absolute bottom-4 right-4 w-1/2 h-1/3"
             >
               <img
                 src="/images/drivers/ca_drivers_license.png"
@@ -168,7 +168,7 @@
                 class="w-full h-full object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
               />
               {#if zoomedDriverLicense}
-                <div class="absolute bottom-0 right-0 w-[300px] h-[200px] z-10">
+                <div class="absolute bottom-0 right-0 w-[280px] h-[180px] z-10">
                   <img
                     src="/images/drivers/ca_drivers_license.png"
                     alt="drivers_license"
@@ -261,8 +261,8 @@
           </div>
         </div>
         <div class="w-full">
-          <div class="font-semibold mt-1">Description:</div>
-          <div class="mt-2 rounded-lg border p-2 min-h-48 max-w-[400px]">
+          <div class="font-semibold mt-1">Description/Notes:</div>
+          <div class="italic mt-2 rounded-lg border p-2 min-h-[220px] max-w-[400px]">
 	    {driver.notes}
           </div>
         </div>
