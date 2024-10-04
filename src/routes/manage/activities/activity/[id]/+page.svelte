@@ -24,6 +24,12 @@
  //
  let dueDate = new Date('2024-08-31');
  let formattedDate;
+ let showRightPanel = false;
+
+ function hideRightPanel () {
+   debugger; 
+   showRightPanel = false;
+ }
 
  function formatDate(date) {
    const d = new Date(date);
@@ -60,6 +66,7 @@
  function setSelectedActionId (actionId) {
    selectedActionId = actionId;
    console.log(`set current action id to ${selectedActionId}`);
+   showRightPanel = true;
  }
  
 </script>
@@ -76,13 +83,13 @@
   }
 </style>
 
-<ActivityLayout showRightPanel={true}>
+<ActivityLayout showRightPanel={showRightPanel}>
   <div>
     <h1 class="text-2xl font-bold mt-2 mb-2">Activity Details</h1>
   </div>
 
   <!-- Activity "card" -->
-  <div class="rounded-lg shadow-md overflow-hidden">
+  <div class="rounded-md shadow-md overflow-hidden">
     <div class="border-b border-gray-200 p-4 bg-gray-100">
       <div class="flex justify-between items-center">
         <div>
@@ -97,9 +104,9 @@
 
     <div class="p-4 ">
       <div class="flex gap-2 mt-2 mb-5">
-        <Badge class="py-1 cursor-pointer bg-{getTypeColor(activity.type)}-200 text-gray-700">{activity.type}</Badge>
-        <Badge class="py-1 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
-        <Badge class="py-1 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
+        <Badge class="min-w-24 px-4 py-2 cursor-pointer bg-{getTypeColor(activity.type)}-200 text-gray-700">{activity.type}</Badge>
+        <Badge class="min-w-24 px-4 py-2 cursor-pointer bg-{getPriorityColor(activity.priority)}-200 text-gray-700">{activity.priority}</Badge>
+        <Badge class="min-w-24 px-4 py-2 cursor-pointer bg-{getStatusColor(activity.status)}-200 text-gray-700">{activity.status}</Badge>
       </div>
 
 
@@ -161,8 +168,8 @@
           </div>
 
           <div class="w-full">
-            <div class="font-semibold">Description:</div>
-            <div class="rounded-lg border p-2 min-h-32">
+            <div class="font-semibold mb-2">Description:</div>
+            <div class="rounded-lg border p-2 min-h-32 max-w-[600px]">
 	      {activity.description}
             </div>
           </div>
@@ -179,6 +186,7 @@
     mode="all"
     activityId={activity.id}
     setActionItem={setSelectedActionId}
+    hideRightPanel={hideRightPanel}
   />
 
   <div class="w-full mt-10">

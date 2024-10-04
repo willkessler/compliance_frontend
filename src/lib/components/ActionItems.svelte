@@ -29,11 +29,13 @@
  //
 
  export let environment; // where the modal is being used, either 'activity' or 'vehicle'
- export let mode;        // either 'all' or 'single' (all action items or a single one whose id is passed in)
+ export let mode;        // one of: 'all', 'limited' or 'single' (all action items in a table, clickable, just a bulleted short list,
+                         // or a single one whose id is passed in)
  export let activityId = null;  // which activity id was passed in
  export let vehicleId = null;   // which vehicle id was passed in
  export let actionItemId = null;    // which action item id
  export let setActionItem = () => {}; // passed in callback
+ export let hideRightPanel = () => {};
  export let showChrome = true; // whether to show all 
 
  let showModal = false; // whether the modal is visible
@@ -225,7 +227,7 @@ ul li:before {
 
 
 <div>
-  {#if mode === 'all' } <!-- all action items, displays in central panel -->
+  {#if mode === 'limited' }
     {#if showChrome}
       <div class="flex justify-between items-end mb-4 ml-0 mt-8">
         <h1 class="text-xl font-bold">Actions Taken</h1>
@@ -248,30 +250,68 @@ ul li:before {
         {/each}
       </ul>
     {/if}
-
+  {:else if mode === 'all' }
+    <Table class="mt-4 relative overflow-x-auto ml-0 cursor-pointer" hoverable>
+      <TableHead class="bg-customGray/15 whitespace-nowrap">
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Date</TableHeadCell>
+        <TableHeadCell class="px-1 py-3 text-xs font-medium text-customGray uppercase">Due Date</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+        <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
+      </TableHead>
+      <TableBody>
+        {#if getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)).length === 0}
+          <div class="p-4 italic">No actions recorded to date.</div>
+        {:else}
+          {#each getActionItems(environment, (vehicleId !== null ? vehicleId: activityId)) as action}
+            <TableBodyRow on:click={() => setActionItem(action.id) }>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.name}</TableBodyCell>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.eventDate}</TableBodyCell>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{action.dueDate}</TableBodyCell>
+              <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
+                <CustomBadge
+                  context="status"
+                  secondaryContext="general"
+                  data={action}
+                  dataField="status"
+                />
+              </TableBodyCell>
+              {#if showChrome}
+                <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
+                  <Button color="light" class="text-customGray hover:text-customGray min-w-32 p-2">Details&nbsp;<ArrowRightOutline /></Button>
+                </TableBodyCell>
+              {/if}
+            </TableBodyRow>
+          {/each}
+        {/if}
+      </TableBody>
+    </Table>
   {:else} <!-- individual action item, shows in right panels -->
-    <div class=" mb-4">
+    <div class=" mb-4 flex justify-between">
       <h2 class="text-xl font-bold text-customGray uppercase">Action Details</h2>
+      <div on:click={() => { hideRightPanel() }} 
+        class="border rounded-xs px-2 cursor-pointer bg-customGray/10 hover: hover:bg-customGray/20">
+        X
+      </div>
     </div>
     {#if (actionItemId !== null) }
       <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
-        <div class="font-semibold">Type:</div>
-        <CustomBadge
-          context="actionType"
-          data={getActionItemById(actionItemId)}
-          dataField="type"
-        />
-
         <div class="font-semibold">Action:</div>
         <div class="text-customGray">{getActionItemById(actionItemId).name}</div>
 
         <div class="font-semibold">Taken:</div>
         <div class="text-customGray">{getActionItemById(actionItemId).eventDate}</div>
 
+        <div class="font-semibold">Action type:</div>
+        <CustomBadge
+          context="actionType"
+          data={getActionItemById(actionItemId)}
+          dataField="type"
+        />
       </div>
       <div>
         <div class="font-semibold mt-2">Notes:</div>
-        <div class="text-customGray border p-4 mt-2 italic w-full">{getActionItemById(actionItemId).description}</div>
+        <div class="text-customGray rounded-md border p-4 mt-2 italic w-full">{getActionItemById(actionItemId).description}</div>
       </div>
       <Button on:click={() => { openModalWithAction(getActionItemById(actionItemId))  }} class="bg-gray-400 hover:bg-blue text-white text-sm px-4 py-2 mt-4">
         <PenOutline class="mr-2" />Edit This Action

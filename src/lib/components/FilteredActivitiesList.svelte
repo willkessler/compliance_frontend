@@ -86,7 +86,7 @@
               <div class="w-1/3 ml-14 mt-2 mb-2" on:click={(e) => { e.preventDefault(); navigateToActivityDetails(activity.id) }} >
                 <ActionItems 
                   environment="activity"
-                  mode="all"
+                  mode="limited"
                   activityId={activity.id}
                   setActionItem={() => {}}
                   showChrome={false}
