@@ -202,6 +202,7 @@
       environment="activity"
       mode="single"
       actionItemId={selectedActionId}
+      hideRightPanelCb={hideRightPanel}
     />
   </div>
 

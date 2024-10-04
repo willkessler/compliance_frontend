@@ -34,15 +34,12 @@
  export let activityId = null;  // which activity id was passed in
  export let vehicleId = null;   // which vehicle id was passed in
  export let actionItemId = null;    // which action item id
- export let setActionItemCb = () => {console.log('fake_setA') }; // passed in callback
- export let hideRightPanelCb = () => { console.log('fake_hideR1')};
- let currentHideRightPanelCb = () => { console.log('fake_hideR2')};
+ export let setActionItemCb = () => { };  // stub for passed in callback
+ export let hideRightPanelCb = () => { }; // stub for passed in callback
  export let showChrome = true; // whether to show all 
 
   onMount(() => {
     formattedDate = formatDate(dueDate);
-    currentHideRightPanelCb = hideRightPanelCb;
-    currentHideRightPanelCb();
   });
 
  let showModal = false; // whether the modal is visible
@@ -231,7 +228,7 @@ ul li:before {
 
 <div>
 <!-- 
-  <div on:click={() => currentHideRightPanelCb() }>
+  <div on:click={() => hideRightPanelCb() }>
     click
   </div>
  -->
@@ -297,7 +294,7 @@ ul li:before {
   {:else} <!-- individual action item, shows in right panels -->
     <div class=" mb-4 flex justify-between">
       <h2 class="text-xl font-bold text-customGray uppercase">Action Details</h2>
-      <div on:click={() => { setActionItemCb(1); }}
+      <div on:click={() => { hideRightPanelCb(); }}
         class="border rounded-xs px-2 cursor-pointer bg-customGray/10 hover: hover:bg-customGray/20">
         X
       </div>
