@@ -2,89 +2,200 @@
  import { Button } from "$lib/components/ui/button";
  import { Input } from "$lib/components/ui/input";
  import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "$lib/components/ui/select";
- import { Plus, Trash2 } from "lucide-svelte";
+ import { Plus, Trash2, X } from "lucide-svelte";
  import { PenOutline, CheckOutline } from 'flowbite-svelte-icons';
  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import * as z from "zod";
 
  const ActionItemSchema = z.object({
-   name: z.string(),
+   name: z.string().min(1),
    type: z.enum(["call", "email", "onsite"]),
-   dueDate: z.coerce.date(),
    area: z.enum(["vehicle", "driver", "document"]),
-   status: z.enum(["to-do", "in-progress", "completed"]),
    totalMiles: z.number(),
  });
 
  type ActionItem = z.infer<typeof ActionItemSchema>;   
- let actionItems = <ActionItem>([
-   { name: "The first action item", type: "Call", area: 'Vehicle', totalMiles: '1,203' },
-   { name: "The second best action item", type: "Onsite", area: 'Driver', totalMiles: '23,492' },
-   { name: "The very last pre-existing action item ", type: "Email", area: 'Document', totalMiles: '98,382' },
- ]);
+ let actionItems: ActionItem[] = [
+   { name: "The first action item", type: "call", area: 'vehicle', totalMiles: 1203 },
+   { name: "The second best action item", type: "onsite", area: 'driver', totalMiles: 23492 },
+   { name: "The very last pre-existing action item ", type: "email", area: 'document', totalMiles: 98382 },
+ ];
 
- function addActionItem() {
-   actionItems = [...actionItems, { name: "", type: "call", area: 'vehicle' }];
+ let currentActionItem: ActionItem & { totalMiles: string } = { name: "", type: "call", area: 'vehicle', totalMiles: '' };
+ let editingIndex: number | null = null;
+ let originalActionItem: ActionItem | null = null;
+ let isEditing = false;
+ let hasChanges = false;
+
+ function formatNumber(num: number): string {
+   return num.toLocaleString('en-US');
  }
 
- function removeActionItem(index: number) {
-   console.log(`index: ${index}`);
-   if (actionItems.length > 1) {
-     actionItems = actionItems.filter((_, i) => i !== index);
+ function unformatNumber(str: string): number {
+   const parsedNumber = parseFloat(str.replace(/,/g, ""));
+   return isNaN(parsedNumber) ? 0 : parsedNumber;
+ }
+
+ function addOrUpdateActionItem() {
+   const validatedItem = {
+     name: currentActionItem.name,
+     type: currentActionItem.type || "call",
+     area: currentActionItem.area || "vehicle",
+     totalMiles: unformatNumber(currentActionItem.totalMiles)
+   };
+   
+   if (editingIndex !== null) {
+     actionItems[editingIndex] = validatedItem;
+     finishEditing();
+   } else {
+     actionItems = [...actionItems, validatedItem];
+     resetCurrentActionItem();
    }
  }
 
- function handleSubmit(event: Event) {
-   event.preventDefault();
-   const validActionItems = actionItems.filter((actionItem) => actionItemSchema.safeParse(actionItem).success);
-   console.log("Valid submissions:", validActionItems);
+ function editActionItem(index: number) {
+   currentActionItem = { 
+     ...actionItems[index], 
+     totalMiles: formatNumber(actionItems[index].totalMiles)
+   };
+   originalActionItem = { ...actionItems[index] };
+   editingIndex = index;
+   isEditing = true;
+   hasChanges = false;
  }
+
+ function cancelEditing() {
+   finishEditing();
+ }
+
+ function finishEditing() {
+   resetCurrentActionItem();
+   editingIndex = null;
+   originalActionItem = null;
+   isEditing = false;
+   hasChanges = false;
+ }
+
+ function removeActionItem(index: number) {
+   actionItems = actionItems.filter((_, i) => i !== index);
+   if (editingIndex === index) {
+     finishEditing();
+   }
+ }
+
+ function resetCurrentActionItem() {
+   currentActionItem = { name: "", type: "call", area: 'vehicle', totalMiles: '' };
+ }
+
+ function isFormValid() {
+   return currentActionItem.name.trim() !== "";
+ }
+
+ function handleInputChange() {
+   if (isEditing && originalActionItem) {
+     const currentForComparison = {
+       ...currentActionItem,
+       totalMiles: currentActionItem.totalMiles === '' ? null : unformatNumber(currentActionItem.totalMiles)
+     };
+     hasChanges = JSON.stringify(currentForComparison) !== JSON.stringify(originalActionItem);
+   }
+   // Trigger reactivity for new items
+   currentActionItem = { ...currentActionItem };
+   isButtonDisabled = isEditing ? !hasChanges || !isFormValid() : !isFormValid();
+ }
+
+
+ function handleMileageInput(event: Event) {
+   const input = event.target as HTMLInputElement;
+   const cursorPosition = input.selectionStart;
+   const unformattedValue = input.value.replace(/,/g, '');
+   const numericValue = unformattedValue.replace(/[^0-9.]/g, '');
+   const formattedValue = numericValue ? formatNumber(parseFloat(numericValue)) : '';
+   
+   currentActionItem.totalMiles = formattedValue;
+   handleInputChange();
+
+   // Restore cursor position
+   setTimeout(() => {
+     const newCursorPosition = cursorPosition + (formattedValue.length - input.value.length);
+     input.setSelectionRange(newCursorPosition, newCursorPosition);
+   }, 0);
+ }
+
+ function handleKeyDown(event: KeyboardEvent) {
+   if (event.key === 'Enter' && isFormValid()) {
+     addOrUpdateActionItem();
+   }
+ }
+
+ $: visibleActionItems = actionItems.filter((_, index) => index !== editingIndex);
+ $: isButtonDisabled = isEditing ? !hasChanges : !isFormValid();
 
 </script>
 
 <div class="flex items-end space-x-4">
   <div class="flex-1 space-y-2 min-w-80">
-    <Input type="text" id="actionName" placeholder="Enter details of an action item" />
+    <Input 
+      type="text" 
+      id="actionName" 
+      placeholder="Enter details of an action item" 
+      bind:value={currentActionItem.name} 
+      on:input={handleInputChange}
+      on:keydown={handleKeyDown}
+    />
   </div>
   <div class="flex-1 space-y-2">
-    <Select>
+    <Select bind:value={currentActionItem.type} on:change={handleInputChange}>
       <SelectTrigger>
-	<SelectValue placeholder="Action type" />
+        <SelectValue placeholder="Action type" />
       </SelectTrigger>
       <SelectContent>
-	<SelectItem value="call">Call</SelectItem>
-	<SelectItem value="email">Email</SelectItem>
-	<SelectItem value="onsite">Onsite</SelectItem>
+        <SelectItem value="call">Call</SelectItem>
+        <SelectItem value="email">Email</SelectItem>
+        <SelectItem value="onsite">Onsite</SelectItem>
       </SelectContent>
     </Select>
   </div>
 
   <div class="flex-1 space-y-2">
-    <Select>
+    <Select bind:value={currentActionItem.area} on:change={handleInputChange}>
       <SelectTrigger>
-	<SelectValue placeholder="Action relates to.." />
+        <SelectValue placeholder="Action relates to.." />
       </SelectTrigger>
       <SelectContent>
-	<SelectItem value="vehicle">Vehicle</SelectItem>
-	<SelectItem value="driver">Driver</SelectItem>
-	<SelectItem value="document">Document</SelectItem>
+        <SelectItem value="vehicle">Vehicle</SelectItem>
+        <SelectItem value="driver">Driver</SelectItem>
+        <SelectItem value="document">Document</SelectItem>
       </SelectContent>
     </Select>
   </div>
 
   <div class="flex-1 space-y-2">
-    <Input type="text" id="totalMiles" placeholder="Mileage" />
+    <Input 
+      type="text" 
+      id="totalMiles" 
+      placeholder="Mileage" 
+      bind:value={currentActionItem.totalMiles} 
+      on:input={handleMileageInput}
+      on:keydown={handleKeyDown}
+    />
   </div>
 
-  <Button class="bg-green-400" size="icon" onclick={() => addActionItem(index)} disabled={actionItems.length <= 1}>
+  {#if isEditing}
+    <Button class="bg-red-400" size="icon" on:click={cancelEditing}>
+      <X class="h-4 w-4" />
+    </Button>
+  {/if}
+
+  <Button class="bg-green-400" size="icon" on:click={addOrUpdateActionItem} disabled={isButtonDisabled}>
     <CheckOutline class="h-4 w-4" />
   </Button>
 </div>
 
 <div class="ml-2 mr-2">
-<Table class="relative overflow-x-auto sm:rounded-lg mt-3 ml-0" >
+<Table class="relative overflow-x-auto sm:rounded-lg mt-3 ml-0">
   <TableBody>
-    {#each actionItems as actionItem, index}
+    {#each visibleActionItems as actionItem, index}
       <TableBodyRow>
         <TableBodyCell class="pl-4 px-2 py-4 whitespace-nowrap text-sm font-large text-customGray w-full">
           {actionItem.name}
@@ -96,13 +207,13 @@
           {actionItem.area}
         </TableBodyCell>
         <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-          {actionItem.totalMiles} miles
+          {formatNumber(actionItem.totalMiles)} miles
         </TableBodyCell>
         <TableBodyCell class="px-2 py-4 text-sm font-large text-customGray/50 cursor-pointer hover:text-customGray/80">
-          <PenOutline />
+          <div on:click={() => editActionItem(index)}><PenOutline /></div>
         </TableBodyCell>
         <TableBodyCell class="px-2 py-4 text-sm font-large text-customGray/50 cursor-pointer hover:text-customGray/80">
-          <div on:click={() => removeActionItem(index) }><Trash2 size={18} /></div>
+          <div on:click={() => removeActionItem(index)}><Trash2 size={18} /></div>
         </TableBodyCell>
       </TableBodyRow>
     {/each}
