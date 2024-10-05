@@ -1,6 +1,6 @@
 <script lang="ts">
  import { goto } from '$app/navigation';
- import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { Accordion, AccordionItem, Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ThumbsUpSolid, ExclamationCircleSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
@@ -69,6 +69,35 @@
 
 </script>
 
+<style>
+ul {
+  display: block;
+  margin-left: 10px;
+  line-height:10px;
+}
+
+ul li {
+  display: block;
+  position: relative;
+}
+
+ul li:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+ul li:before {
+  content: "";
+  position: absolute;
+  top: 0.9em;
+  left: -14px;
+  margin-top: -.9em;
+  background: #aaa;
+  height: 8px;
+  width:  8px;
+  border-radius: 50%;
+}
+</style>
+
 <header class="pt-6 pl-4">
   <Breadcrumbs />
 </header>
@@ -95,6 +124,7 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Miles remaining</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">HOS remaining</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Block Reasons</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
     <TableBody>
@@ -121,6 +151,17 @@
               dataField="status"
               specialFieldOverride={{field: 'status', check: 'Blocked', replaceWith: '2 Blockers'}}
             />
+          </TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium text-customGray">
+            {#if driver.status.toLowerCase() === 'blocked'}
+              <ul>
+                {#each driver.blockReasons as blockReason}
+                  <li>{blockReason}</li>
+                {/each}
+              </ul>
+            {:else}
+              &nbsp;
+            {/if}
           </TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
             <Button

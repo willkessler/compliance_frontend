@@ -235,6 +235,11 @@
             </div>
             
             <div class="flex flex-wrap items-center">
+              <div class="w-1/2 font-semibold">Physical expiring on:</div>
+              <div class="w-1/2 text-gray-800">{driver.physicalExpiration}</div>
+            </div>
+
+            <div class="flex flex-wrap items-center">
               <div class="w-1/2 font-semibold">Current Vehicle</div>
               <div class="w-1/2">
                 <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
