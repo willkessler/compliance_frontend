@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <Label class="block mt-4">Action items:</Label>
+    <Label class="block mt-4 mb-2">Action items:</Label>
     <ActionItemsTable2 />
     
     <Uploader />

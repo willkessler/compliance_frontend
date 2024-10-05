@@ -3,9 +3,11 @@
  import { Input } from "$lib/components/ui/input";
  import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "$lib/components/ui/select";
  import { Plus, Trash2, X } from "lucide-svelte";
- import { PenOutline, CheckOutline } from 'flowbite-svelte-icons';
+ import { TruckSolid, PenOutline, CheckOutline } from 'flowbite-svelte-icons';
  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
  import * as z from "zod";
+
 
  const ActionItemSchema = z.object({
    name: z.string().min(1),
@@ -201,10 +203,18 @@
           {actionItem.name}
         </TableBodyCell>
         <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-          {actionItem.type}
+          <CustomBadge
+            context="actionType"
+            data={actionItem}
+            dataField="type"
+          />
         </TableBodyCell>
         <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-          {actionItem.area}
+          <CustomBadge
+            context="actionArea"
+            data={actionItem}
+            dataField="area"
+          />
         </TableBodyCell>
         <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
           {formatNumber(actionItem.totalMiles)} miles

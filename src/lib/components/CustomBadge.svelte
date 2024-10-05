@@ -80,6 +80,11 @@
      'email':                      { color: 'gray',   icon: Mail, iconLibrary: 'fb' },
      'sms':                        { color: 'gray',   icon: PhoneOutline, iconLibrary: 'fb' },
    },
+   actionArea: {
+     'vehicle':                    { color: 'gray',   icon: Truck, iconLibrary: 'lu' },
+     'driver':                     { color: 'gray',   icon: User, iconLibrary: 'lu' },
+     'document':                   { color: 'gray',   icon: Files, iconLibrary: 'lu' },
+   },
  };
 
  function getColorAndIcon(context, secondaryContext, value) {
@@ -92,6 +97,7 @@
    if (secondaryContext !== null) {
      return colorIconMap[context]?.[secondaryContext]?.[value] || null;
    }
+
    let result = colorIconMap[context]?.[value] || null;
    return result;
  }

@@ -97,7 +97,7 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
-    <TableBody class="bg-white divide-y divide-gray-200">
+    <TableBody>
       {#each drivers as driver}
         <TableBodyRow class="cursor-pointer" on:click={() => navigateToDriverDetails(driver.id)}>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">{driver.name}</TableBodyCell>

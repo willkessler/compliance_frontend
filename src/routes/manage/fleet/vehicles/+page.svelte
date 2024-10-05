@@ -99,7 +99,7 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
-    <TableBody class="bg-white divide-y divide-gray-200">
+    <TableBody>
       {#each vehicles as vehicle}
         <TableBodyRow on:click={() => navigateToVehicleDetails(vehicle.id)} class="cursor-pointer">
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">Vehicle #{vehicle.name}</TableBodyCell>
