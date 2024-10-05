@@ -1,5 +1,58 @@
 import { ClockSolid, ExclamationCircleSolid, ThumbsUpSolid } from 'flowbite-svelte-icons';
 
+export const certifications = [
+  {
+    id: 1,
+    item: 'DOT registration',
+    expiry: 'Sep 15, 2024',
+    status: 'Blocked',
+    lastNotified: 'Sep 12, 2024',
+    notifyCount: 1,
+    action: 'Notify driver',
+    icon: ExclamationCircleSolid 
+  },
+  {
+    id: 2,
+    item: 'DOT medical card',
+    expiry: 'Aug 31, 2024',
+    status: 'Blocked',
+    lastNotified: 'Sep 12, 2024',
+    notifyCount: 2,
+    action: 'Notify driver',
+    icon: ExclamationCircleSolid 
+  },
+  {
+    id: 3,
+    item: 'CDL',
+    expiry: 'Sep 17, 2024',
+    status: 'Clear',
+    lastNotified: 'Feb 22, 2024',
+    notifyCount: 0,
+    action: 'Auto-file',
+    icon: ThumbsUpSolid 
+  },
+  {
+    id: 4,
+    item: 'Drug and alcohol test',
+    expiry: 'Sep 19, 2024',
+    status: 'Clear',
+    lastNotified: 'Feb 11, 2024',
+    notifyCount: 1,
+    action: 'Auto-file',
+    icon: ThumbsUpSolid 
+  },
+  {
+    id: 5,
+    item: 'Clearinghouse registration',
+    expiry: 'Jan 31, 2025',
+    status: 'Clear',
+    lastNotified: 'Mar 25, 2024',
+    notifyCount: 0,
+    action: 'Auto-file', 
+    icon: ThumbsUpSolid 
+  },
+];
+
 export const drivers = [
   {
     id: 1922,
