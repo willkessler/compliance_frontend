@@ -1,9 +1,12 @@
 <script lang="ts">
- import { Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+ import { goto } from '$app/navigation';
+ import { Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ChevronLeftOutline, ChevronRightOutline, ExclamationCircleSolid, MapPinAltSolid, ThumbsUpSolid } from 'flowbite-svelte-icons';
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
+ import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+ import CustomBadge from '$lib/components/CustomBadge.svelte';
 
  let filters = [
    { value: 'filter1', name: 'Local' },
@@ -64,57 +67,71 @@
     alert('Next btn clicked. Make a call to your server to fetch data.');
   };
 
+ function navigateToVehicleDetails(vehicleId) {
+   goto(`/manage/fleet/vehicles/vehicle/${vehicleId}`);
+ }
+
 </script>
 
-<div class="flex items-end justify-between pr-4">
+<header class="pt-6 pl-4">
+  <Breadcrumbs />
+</header>
+
+<div class="flex items-end justify-between pl-4 pr-4">
   <div>
     <h1 class="text-3xl font-bold ">Vehicles</h1>
   </div>
   <div>
-    <Label>
+    <Label class="text-customGray">
       Filter selections:
-      <Select class="text-xs mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
+      <Select class="text-xs text-gray-400 mt-2 min-w-64" items={filters} bind:value={selectedFilter} />
     </Label>
   </div>
 </div>
 
-<Table divClass="relative overflow-x-auto sm:rounded-lg mt-5 ml-0">
-  <TableHead class="bg-gray-50 whitespace-nowrap">
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Mileage</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
-    <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
-  </TableHead>
-  <TableBody class="bg-white divide-y divide-gray-200">
-    {#each vehicles as vehicle}
-      <TableBodyRow>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">Truck #{vehicle.name}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
-        <TableBodyCell>
-          <Badge color={getStatusColor(vehicle.status)} class="px-2 py-1.5 rounded rounded-[6px] min-w-32">
-              {#if vehicle.icon !== undefined}
-                <svelte:component this={vehicle.icon} class=" text-{getStatusColor(vehicle.status)}-500 mr-2 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              {/if}
-            {upgradeStatus(vehicle)}
-          </Badge>
-        </TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-          <div class="flex cursor-pointer">
-            <div>{vehicle.city}, {vehicle.state}</div>
-            <div><MapPinAltSolid class="ml-2" /></div>
-          </div>
+<div class="ml-4 mr-0">
+  <Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5">
+    <TableHead class=" bg-customGray/15 whitespace-nowrap">
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Mileage</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
+    </TableHead>
+    <TableBody>
+      {#each vehicles as vehicle}
+        <TableBodyRow on:click={() => navigateToVehicleDetails(vehicle.id)} class="cursor-pointer">
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">Vehicle #{vehicle.name}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
+          <TableBodyCell class="pl-2">
+            <CustomBadge 
+              context="status"
+              secondaryContext="general"
+              data={vehicle} 
+              dataField="status"
+            />
           </TableBodyCell>
-        <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          <Button href="/manage/fleet/vehicles/vehicle/{vehicle.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
-        </TableBodyCell>
-      </TableBodyRow>
-    {/each}
-  </TableBody>
-</Table>
-
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
+            <div class="flex cursor-pointer">
+              <div>{vehicle.city}, {vehicle.state}</div>
+              <div><MapPinAltSolid class="ml-2" /></div>
+            </div>
+          </TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-medium">
+            <Button 
+              on:click={() => navigateToVehicleDetails(vehicle.id)} 
+              color="light" 
+              class="text-customGray hover:text-customGray p-2 min-w-32">
+              See details →
+            </Button>
+          </TableBodyCell>
+        </TableBodyRow>
+      {/each}
+    </TableBody>
+  </Table>
+</div>
 
 <div class="w-full flex justify-end pr-4 mt-4">
   <Pagination {pages} on:previous={previous} on:next={next} icon>

@@ -28,6 +28,8 @@
    email: "info@truckingco.com",
    dotNumber: "1234567",
    dotPin: '****',
+   mcNumber: '1234567',
+   iftaNumber: '1234567',
  };
 
  let editingInfo: typeof companyInfo & { state: StateOption } = { ...companyInfo, state: { value: companyInfo.state, label: "", disabled: false } };
@@ -97,42 +99,49 @@
  }
 </script>
 
-<div class="flex h-screen bg-background">
-  <main class="flex-1 p-8 pl-4 overflow-auto">
+<div class="flex h-screen bg-gray-50">
+  <main class="flex-1 p-6 overflow-auto">
 
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">Organization Administration</h1>
-      {#if !isEditing}
-	<Button class="bg-blue-600" on:click={handleEdit}>Edit</Button>
-      {/if}
-    </div>
-    
-    <div>
-      <Card class="w-full">
-	<CardContent class="pt-4">
-	  {#if isEditing}
-	    <form class="space-y-4">
-	      <div class="space-y-2">
-		<Label for="name">Company Name *</Label>
-		<Input id="name" bind:value={editingInfo.name} placeholder="Company Name" 
-                  on:input={() => validateField("name", companyInfo.name)} class={errors.name ? "border-red-500" : ""} />
-		{#if errors.name}
-		  <p class="text-red-500 text-sm">{errors.name}</p>
-		{/if}
-	      </div>
+    <!-- Main Card -->
+    <Card class="w-full">
+      <CardHeader>
+          <div class="flex justify-between items-center">  
+          <CardTitle class="text-2xl font-semibold text-gray-900">Company Information</CardTitle>
+            {#if !isEditing}
+            <Button class="bg-primary-600 hover:bg-primary-700 text-gray-700" on:click={handleEdit}>Edit</Button>
+          {/if}
+        </div>
+      </CardHeader>
+      <Separator />
+      <CardContent class="p-6">
+        {#if isEditing}
+          <form class="space-y-6">
+            <!-- Company Name -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label for="name">Company Name *</Label>
+                <Input id="name" bind:value={editingInfo.name} placeholder="Company Name" 
+                  on:input={() => validateField("name", companyInfo.name)} 
+                  class={errors.name ? "border-red-500" : ""} />
+                {#if errors.name}
+                  <p class="text-red-500 text-sm">{errors.name}</p>
+                {/if}
+              </div>
+              <!-- Address -->
+              <div>
+                <Label for="address">Address</Label>
+                <Input id="address" bind:value={editingInfo.address} placeholder="Address" />
+              </div>
+            </div>
 
-	      <div class="space-y-2">
-		<Label for="address">Address</Label>
-		<Input id="address" bind:value={editingInfo.address} placeholder="Address" />
-	      </div>
-
-	      <div class="space-y-2">
-		<Label for="city">City</Label>
-		<Input id="city" bind:value={editingInfo.city} placeholder="City" />
-	      </div>
-
-	      <div class="space-y-2">
-		<Label for="state">State</Label>
+            <!-- City, State, Zipcode -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <Label for="city">City</Label>
+                <Input id="city" bind:value={editingInfo.city} placeholder="City" />
+              </div>
+              <div>
+                <Label for="state">State</Label>
                 <Select.Root bind:selected={editingInfo.state}>
                   <Select.Trigger class="w-full">
                     <Select.Value placeholder="Select a state" />
@@ -145,79 +154,83 @@
                     {/each}
                   </Select.Content>
                 </Select.Root>
-	      </div>
+              </div>
+              <div>
+                <Label for="zipcode">Zipcode *</Label>
+                <Input id="zipcode" bind:value={editingInfo.zipcode} placeholder="Zipcode" maxlength="5" pattern="\d{5}" 
+                  on:input={() => validateField("zipcode", companyInfo.zipcode)} 
+                  class={errors.zipcode ? "border-red-500" : ""} />
+                {#if errors.zipcode}
+                  <p class="text-red-500 text-sm">{errors.zipcode}</p>
+                {/if}
+              </div>
+            </div>
 
-	      <div class="space-y-2">
-		<Label for="zipcode">Zipcode *</Label>
-		<Input id="zipcode" bind:value={editingInfo.zipcode} placeholder="Zipcode" maxlength="5" pattern="\d{5}" 
-                  on:input={() => validateField("zipcode", companyInfo.zipcode)} class={errors.zipcode ? "border-red-500" : ""} />
-		{#if errors.zipcode}
-		  <p class="text-red-500 text-sm">{errors.zipcode}</p>
-		{/if}
-	      </div>
+            <!-- Phone, Email -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label for="phone">Phone Number *</Label>
+                <Input id="phone" bind:value={editingInfo.phone} placeholder="Phone Number" 
+                  on:input={() => validateField("phone", companyInfo.phone)} 
+                  class={errors.phone ? "border-red-500" : ""} />
+                {#if errors.phone}
+                  <p class="text-red-500 text-sm">{errors.phone}</p>
+                {/if}
+              </div>
+              <div>
+                <Label for="email">Email Address</Label>
+                <Input id="email" bind:value={editingInfo.email} type="email" placeholder="Email Address" />
+              </div>
+            </div>
 
-	      <div class="space-y-2">
-		<Label for="phone">Phone Number *</Label>
-		<Input id="phone" bind:value={editingInfo.phone} placeholder="Phone Number" 
-                  on:input={() => validateField("phone", companyInfo.phone)} class={errors.phone ? "border-red-500" : ""} />
-		{#if errors.phone}
-		  <p class="text-red-500 text-sm">{errors.phone}</p>
-		{/if}
-	      </div>
+            <!-- DOT Information -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label for="dotNumber">DOT Numddber</Label>
+                <Input id="dotNumber" bind:value={editingInfo.dotNumber} placeholder="DOT Number" />
+              </div>
+              <div>
+                <Label for="dotPin">DOT PIN</Label>
+                <div class="relative">
+                  <Input id="dotPin" bind:value={editingInfo.dotPin} placeholder="DOT PIN" />
+                  <EyeSolid class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" />
 
-	      <div class="space-y-2">
-		<Label for="email">Email Address</Label>
-		<Input id="email" bind:value={editingInfo.email} type="email" placeholder="Email Address" />
-	      </div>
-
-	      <div class="space-y-2">
-		<Label for="dotNumber">DOT Number</Label>
-		<Input id="dotNumber" bind:value={editingInfo.dotNumber} placeholder="DOT Number" />
-	      </div>
-
-	      <div class="space-y-2">
-		<Label for="dotNumber">DOT PIN</Label>
-		<Input id="dotNumber" bind:value={editingInfo.dotPin} placeholder="DOT PIN" />
-	      </div>
-
-	      <div class="flex justify-end space-x-2">
-		<Button variant="outline" on:click={handleCancel}>Cancel</Button>
-		<Button class="bg-blue-500" on:click={handleSave} disabled={!isFormValid}>Save</Button>
-	      </div>
-	    </form>
-	  {:else}
-	    <div class="space-y-2">
-	      <p>
-		<strong>Company Name:</strong>
-		{companyInfo.name}
-	      </p>
-	      <p>
-		<strong>Address:</strong>
-		{companyInfo.address}, {companyInfo.city}, {companyInfo.state}
-		{companyInfo.zipcode}
-	      </p>
-	      <p>
-		<strong>Phone:</strong>
-		{companyInfo.phone}
-	      </p>
-	      <p>
-		<strong>Email:</strong>
-		{companyInfo.email}
-	      </p>
-	      <p>
-		<strong>DOT Number:</strong>
-		{companyInfo.dotNumber}
-	      </p>
-                <div class="flex">
-		  <strong>DOT PIN:</strong>
-                  &nbsp;
-		  {companyInfo.dotPin}
-                  &nbsp; <EyeSolid class="cursor-pointer" />
                 </div>
-	    </div>
-	  {/if}
-	</CardContent>
-      </Card>
-    </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-4">
+              <Button variant="outline" class="text-gray-500" on:click={handleCancel}>Cancel</Button>
+              <Button class="bg-customGray/20 hover:bg-customGray/40 text-black/80" on:click={handleSave} disabled={!isFormValid}>Save</Button>
+            </div>
+          </form>
+        {:else}
+          <!-- Display Information Section: Two-column layout -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Left Column: Company Name, Address, Phone, Email -->
+            <div class="space-y-4">
+              <p><strong>Company Name</strong> {companyInfo.name}</p>
+              <p><strong>Address</strong> {companyInfo.address}, {companyInfo.city}, {companyInfo.state} {companyInfo.zipcode}</p>
+              <p><strong>Phone</strong> {companyInfo.phone}</p>
+              <p><strong>Email</strong> {companyInfo.email}</p>
+            </div>
+
+            <!-- Right Column: MC Number, IFTA Number, DOT Number, DOT PIN -->
+            <div class="space-y-4">
+              <p><strong>MC Number</strong> {companyInfo.mcNumber}</p>
+              <p><strong>IFTA Number</strong> {companyInfo.iftaNumber}</p>
+              <p><strong>DOT Number</strong> {companyInfo.dotNumber}</p>
+              <div class="flex items-center">
+                <strong>DOT PIN</strong>
+                &nbsp;
+                <span>{companyInfo.dotPin}</span>
+                <EyeSolid class="ml-2 cursor-pointer" />
+              </div>
+            </div>
+          </div>
+        {/if}
+      </CardContent>
+    </Card>
   </main>
 </div>

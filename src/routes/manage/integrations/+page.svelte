@@ -32,21 +32,28 @@
     {
       name: "McLeod LoadMaster",
       logo: "mcleod.webp",
-      description: "Enrich your transportation management with telematics data from Samsara and a full workflow integration.",
+      description: "Enrich your transportation management with telematics data and a full workflow integration.",
       tags: ["COMPLIANCE"],
       categories: ["Telematics", "Compliance"],
     },
     {
       name: "Fullbay Connect",
       logo: "Fullbay_logo.webp",
-      description: "Unlock new ways to manage your auto service business in Fullbay Connect by gaining visibility into vehicle location and diagnostics with Samsara.",
+      description: "Unlock new ways to manage your auto service business in Fullbay Connect by gaining visibility into vehicle location and diagnostics.",
+      tags: ["COMPLIANCE", "MAINTENANCE"],
+      categories: ["Maintenance",  "Compliance"],
+    },
+    {
+      name: "Samba Safety",
+      logo: "SambaSafety.webp",
+      description: "Synchronize your synchronized telematics data with SambaSafety’s industry leading driver risk management solutions to easily access, analyze and take action on risk.",
       tags: ["COMPLIANCE", "MAINTENANCE"],
       categories: ["Maintenance",  "Compliance"],
     },
     {
       name: "LogRock",
       logo: "logrock.webp",
-      description: "Connect your Samsara and FMCSA data to find and resolve compliance risks before they occur.",
+      description: "Connect your FMCSA data to find and resolve compliance risks before they occur.",
       tags: ["MAINTENANCE", "COMPLIANCE"],
       categories: ["Compliance"]
     },

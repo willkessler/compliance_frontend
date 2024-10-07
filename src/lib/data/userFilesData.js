@@ -1,35 +1,23 @@
 import { ClockSolid, ExclamationCircleSolid, ThumbsUpSolid } from 'flowbite-svelte-icons';
-import { drivers } from '$lib/data/driverData';
 
-export function getVehicleById (id) {
-  for (let vehicle of vehicles) {
-    if(vehicle.id === parseInt(id)) {
-      return vehicle;
+export function getFileById (id) {
+  for (let file of files) {
+    if(file.id === parseInt(id)) {
+      return file;
     }
   }
   return null;
 }
 
-export function getVehicleDriver (vehicleId) {
-  for (let driver of drivers) {
-    if (driver.vehicleId === parseInt(vehicleId)) {
-      return driver;
-    }
-  }
-  return null;
-}
-
-export const vehicles = [
+export const userFiles = [
   {
     id: 4396,
-    name: "4396",
+    name: "Unified Carrier Registration (UCR)",
     acquisitionDate: 'Aug 29, 2024',
-    operatingTime: "100h 52m",
+    category: "Federal",
     vin: '2345034948...',
     licensePlate: 'UDH3823',
-    mileage: "75,743",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "pdf",
     status: "Blocked",
     icon: ExclamationCircleSolid,
     city: 'San Anselmo',
@@ -39,14 +27,12 @@ export const vehicles = [
   },
   {
     id: 4385,
-    name: "4385",
-    acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "97h 46m",
+    name: "BOC-3",
+    category: "Federal",
     vin: '8345034948...',
     licensePlate: 'AMR8233',
-    mileage: "47,573", 
-    milesLeftToEol: '80,283',
-    timeLeftToEol: '1 years, 4 months',
+    acquisitionDate: 'Aug 31, 2024',
+    type: "pdf", 
     status: "In progress",
     icon: ClockSolid,
     city: 'San Leandro',
@@ -56,14 +42,12 @@ export const vehicles = [
   },
   {
     id: 2348,
-    name: "2348",
+    name: "MCS-150",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "89h 02m",
+    category: "Federal",
     vin: '9284434948...',
     licensePlate: 'XYE8211',
-    mileage: "83,543",
-    milesLeftToEol: '500,238',
-    timeLeftToEol: '5 years, 9 months',
+    type: "pdf",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'Austin',
@@ -73,14 +57,12 @@ export const vehicles = [
   },
   {
     id: 6354,
-    name: "6354",
+    name: "US DOT renewal",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "110h 33m",
+    category: "Federal",
     vin: '1115034948...',
     licensePlate: '9FGH2022',
-    mileage: "95,322",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "pdf",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'Dallas',
@@ -90,14 +72,12 @@ export const vehicles = [
   },  
   {
     id: 5322,
-    name: "5322",
+    name: "Drug & Alcohol Test Results - Mark Antony",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "10h 02m",
+    category: "Driver",
     vin: '9985034948...',
     licensePlate: '2EU84822',
-    mileage: "7,433",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "pdf",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'Los Angeles',
@@ -107,14 +87,12 @@ export const vehicles = [
   },  
   {
     id: 5323,
-    name: "5323",
+    name: "CDL Renewal - Steve Scharzmann",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "50h 55m",
+    category: "Driver",
     vin: '2348984948...',
     licensePlate: '3FG84822',
-    mileage: "28,009",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "image",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'San Diego',
@@ -124,14 +102,12 @@ export const vehicles = [
   },  
   {
     id: 5331,
-    name: "5331",
+    name: "CA DOT Renewal",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "10h 52m",
+    category: "State",
     vin: '2345039298...',
     licensePlate: '8YY29392',
-    mileage: "1,431",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "pdf",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'San Bernadino',
@@ -140,14 +116,12 @@ export const vehicles = [
   },  
   {
     id: 9822,
-    name: "9822",
+    name: "Driver License Renewal - Matt Lock",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "70h 12m",
+    category: "Driver",
     vin: '1398034948...',
     licensePlate: '9AAFJ298',
-    mileage: "7,743",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "image",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'Santa Monica',
@@ -156,14 +130,12 @@ export const vehicles = [
   },  
   {
     id: 9282,
-    name: "9282",
+    name: "International Registration Plan (IRP)",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "1,040h 14m",
+    category: "State",
     vin: '2347778947...',
     licensePlate: '6TRARUE',
-    mileage: "115,098",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "pdf",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'Oxnard',
@@ -172,14 +144,12 @@ export const vehicles = [
   },  
   {
     id: 9283,
-    name: "9283",
+    name: "International Fuel Tax Agreement (IFTA)",
     acquisitionDate: 'Aug 31, 2024',
-    operatingTime: "1,382h 49m",
+    category: "State",
     vin: '8982232323...',
     licensePlate: '7YRTY32',
-    mileage: "153,887",
-    milesLeftToEol: '100,823',
-    timeLeftToEol: '2 years, 3 months',
+    type: "pdf",
     status: "Clear",
     icon: ThumbsUpSolid,
     city: 'Houston',

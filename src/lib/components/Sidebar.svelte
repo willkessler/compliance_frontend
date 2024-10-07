@@ -1,7 +1,8 @@
 <script lang="ts">
  import { page } from '$app/stores';
  import { Separator } from "$lib/components/ui/separator";
- import { LayoutDashboard, ScrollText, Building2, Truck, Users, Link, CircleAlert, Info, WandSparkles, Settings } from "lucide-svelte";
+
+ import { LayoutDashboard, ListCheck, Landmark, Building2, Truck, Users, Link, CircleAlert, Info, WandSparkles, Settings, Database } from "lucide-svelte";
  import { 
         HomeOutline, 
         QuestionCircleOutline,
@@ -10,7 +11,7 @@
         } from 'flowbite-svelte-icons';
 
  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownWrapper, SidebarDropdownItem } from 'flowbite-svelte';
- import { getOpenIncidentCount } from '$lib/data/incidentData';
+ import { getOpenActivityCount } from '$lib/data/activityData';
 
  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
 
@@ -18,14 +19,14 @@
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
-   { href: '/manage/incidents', label: 'Incidents Manager', icon: HomeOutline, color: 'text-red-600', pillCount: getOpenIncidentCount() },
+   { href: '/manage/activities', label: 'Activity Manager', icon: ListCheck, color: 'text-red-600', pillCount: getOpenActivityCount() },
    { href: '/manage/fleet', label: 'Fleet Compliance', icon: Truck, color: 'text-inherit',
    subItems: [
      { href: '/manage/fleet/vehicles', label: 'Vehicles' },
      { href: '/manage/fleet/drivers', label: 'Drivers' }
    ]
    },
-   { href: '/manage/filings', label: 'Company Compliance', icon: ScrollText , color: 'text-inherit', 
+   { href: '/manage/filings', label: 'Gov\'t Compliance', icon: Landmark , color: 'text-inherit', 
    subItems: [
      { href: '/manage/filings/federal', label: 'Federal' },
      { href: '/manage/filings/state', label: 'State' }
@@ -34,14 +35,15 @@
  ];
 
  const adminItems = [
+    { href: '/manage/userFiles', label: 'Your Files', icon: Database, color: 'text-inherit' },
    { href: '/manage/ai', label: 'AI-Compliance Check', icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
    { href: '/manage/integrations', label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
    { href: '/help', label: 'Help', icon: QuestionCircleOutline, color: 'text-inherit' },
    { href: '/manage/organization', label: 'Admin', icon: Settings , color: 'text-inherit' },
  ];
  
- let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600';
- let nonActiveClass = 'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700';
+ let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700  dark:text-white hover:bg-gray-300 dark:hover:bg-gray-300';
+ let nonActiveClass = 'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700';
 
  let openDropdowns = new Set();
 
@@ -68,8 +70,8 @@
  }
 </script>
 
-<Sidebar {activeUrl} {activeClass} {nonActiveClass} >
-  <SidebarWrapper class="flex flex-col h-full">
+<Sidebar {activeUrl} {activeClass} {nonActiveClass} style="border-right:1px solid #e5e7eb;">
+  <SidebarWrapper class="flex flex-col h-full text-nowrap">
     <div class="ml-3 mt-4 text-lg text-gray-600">Trucking Co.</div>
     <SidebarGroup class="flex-grow" border>
       {#each menuItems as item}
@@ -78,6 +80,7 @@
             <SidebarDropdownWrapper 
               label={item.label} 
               isOpen={true}
+              class="hover:bg-gray-300"
               >
               <svelte:fragment slot="icon">
                 <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
@@ -92,14 +95,14 @@
           <SidebarItem
             label={item.label} 
             href={item.href}
-            class={item.label === 'Incident Manager' && activeUrl.startsWith('/manage/incidents') ? 'bg-gray-300 hover:bg-gray-300' : ''}
+            class={item.label === 'Activity Manager' && activeUrl.startsWith('/manage/activities') ? 'bg-gray-300 hover:bg-gray-300' : ''}
           >
             <svelte:fragment slot="icon">
               <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
             </svelte:fragment>
             <svelte:fragment slot="subtext">
               {#if item.pillCount !== undefined}
-                <span class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
+                <span class="inline-flex justify-center items-center p-3 ms-4 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
               {/if}
             </svelte:fragment>
           </SidebarItem>
@@ -108,7 +111,7 @@
     </SidebarGroup>
     <SidebarGroup border class="mt-auto mb-2">
       {#each adminItems as item}
-        <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>>
+        <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>
           <svelte:fragment slot="icon">
             <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
           </svelte:fragment>
