@@ -93,7 +93,7 @@
           <TableBodyRow class="pb-2">
             <TableBodyCell colspan="5" class="pl-12 pb-2 pt-2 pr-6 w-full">
               <div class="w-1/3 border-b pt-2 pb-2 mb-4">Action Items:</div>
-              <div class="w-1/3 ml-14 mt-2 mb-2" on:click={(e) => { e.preventDefault(); navigateToActivityDetails(activity.id) }} >
+              <button class="w-1/3 ml-14 mt-2 mb-2" on:click={(e) => { e.preventDefault(); navigateToActivityDetails(activity.id) }} >
                 <ActionItems 
                   environment="activity"
                   mode="limited"
@@ -101,7 +101,7 @@
                   setActionItemCb={() => {}}
                   showChrome={false}
                   />
-              </div>
+              </button>
             </TableBodyCell>
           </TableBodyRow>
         {/if}
