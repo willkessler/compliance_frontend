@@ -98,9 +98,6 @@
           class="absolute inset-0 overflow-auto"
           in:transitionFn="{{ duration: 200 }}"
           out:transitionFn="{{ duration: 200 }}"
-          on:introstart={() => console.log('Transition intro started')}
-          on:outrostart={() => console.log('Transition outro started')}
-          on:introend={() => console.log('Transition intro ended')}
           on:outroend={handleTransitionEnd}
         >
           <slot />

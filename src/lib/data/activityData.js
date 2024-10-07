@@ -163,7 +163,7 @@ export const activities = [
     driverId: 1922,
     vehicleId: 4396,
     level: 'State',
-    description:'Thom called this one in after feeling some rear wobble on Highway 64.',
+    description:'Tom called this one in after feeling some rear wobble on Highway 64.',
   },
   {
     id: 1298,
@@ -205,7 +205,7 @@ export const activities = [
     driverId: 1922,
     vehicleId: 4396,
     level: 'State',
-    description:'Thom says the weigh station mechanic explained weak power on this vehicle is due to old spark plugs.',
+    description:'Tom says the weigh station mechanic explained weak power on this vehicle is due to old spark plugs.',
   },
   {
     id: 1294,
@@ -219,7 +219,7 @@ export const activities = [
     driverId: 1922,
     vehicleId: 4396,
     level: 'State',
-    description:'Make sure we get Thom\'s DOT medical test done.',
+    description:'Make sure we get Tom\'s DOT medical test done.',
   },
   {
     id: 1295,

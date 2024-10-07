@@ -135,16 +135,18 @@
               class="absolute bottom-2 right-2 w-1/4 h-1/4 object-cover border-4 border-gray-300 rounded-lg"
               />
               {#if zoomedDriverPic}
-                <div
+                <button
                   on:mouseleave={() => { zoomedDriverPic = false; }}
                   on:click={() => { navigateToDriverDetails(driver.id) }}
+                  aria-label="driver_photo_reveal"
+                  tabindex=0
                   >
                   <img
                     src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
                   alt="driver.name"
                   class="absolute bottom-2 right-2 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
                   />
-                </div>
+                </button>
               {/if}
 
               <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">

@@ -200,6 +200,7 @@
 ul {
   display: block;
   margin-left: -10px;
+  text-align:left;
 }
 
 ul li {

@@ -99,8 +99,8 @@
         </div>
       </div>
 
-      <div class="flex flex-col md:flex-row gap-x-5 items-stretch p-4">
-        <div class="relative md:w-1/2 flex-shrink-0 max-w-[280px] max-h-[300px]">
+      <div class="flex gap-4 mb-0 mt-4 mb-4">
+        <div class="relative md:w-1/2 flex-shrink-0 max-w-[280px] max-h-[270px]">
           <div class="aspect-w-3 aspect-h-4 md:aspect-none md:h-full">
             <img 
               src="{vehicle.photo ? '/images/vehicles/' + vehicle.photo : '/images/vehicles/default.jpg'}" 
@@ -114,13 +114,18 @@
             class="absolute bottom-2 right-2 w-1/4 h-1/4 object-cover border-4 border-gray-300 rounded-lg"
             />
             {#if zoomedDriverPic}
-              <img
-                on:mouseleave={() => { zoomedDriverPic = false; }}
-              on:click={() => { navigateToDriverDetails(driver.id) }}
-              src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
-              alt="driver.name"
-              class="absolute bottom-2 right-2 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
-              />
+              <button
+                on:click={() => { navigateToDriverDetails(driver.id) }}
+                aria-label="driver_photo_reveal"
+                tabindex=0
+                >
+                <img
+                  on:mouseleave={() => { zoomedDriverPic = false; }}
+                src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
+                alt="driver.name"
+                class="absolute bottom-2 right-2 w-2/3 h-1/2 object-cover border-2 border-orange-300 rounded-lg cursor-pointer"
+                />
+              </button>
             {/if}
 
             <div class="absolute top-2 right-2 p-3 bg-gray-200 rounded-full cursor-pointer">
@@ -130,8 +135,8 @@
         </div>
 
         <!-- Vehicle details -->
-        <div class="w-full md:w-1/2 max-w-[340px] min-w-[340px] mt-2">
-          <div class="flex flex-wrap items-center mb-2">
+        <div class="">
+            <div class="min-w-80 max-w-64">
             <div class="w-1/2 font-semibold ">Current Location:</div>
             <div class="w-1/2 cursor-pointer text-md text-nowrap">
               <div class="flex">{vehicle.city}, {vehicle.state}&nbsp;<MapPinAltSolid /></div>

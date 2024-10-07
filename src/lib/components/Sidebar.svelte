@@ -71,7 +71,7 @@
 </script>
 
 <Sidebar {activeUrl} {activeClass} {nonActiveClass} style="border-right:1px solid #e5e7eb;">
-  <SidebarWrapper class="flex flex-col h-full">
+  <SidebarWrapper class="flex flex-col h-full text-nowrap">
     <div class="ml-3 mt-4 text-lg text-gray-600">Trucking Co.</div>
     <SidebarGroup class="flex-grow" border>
       {#each menuItems as item}
@@ -111,7 +111,7 @@
     </SidebarGroup>
     <SidebarGroup border class="mt-auto mb-2">
       {#each adminItems as item}
-        <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>>
+        <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>
           <svelte:fragment slot="icon">
             <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
           </svelte:fragment>

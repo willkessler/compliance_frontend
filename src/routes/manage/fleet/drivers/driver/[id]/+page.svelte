@@ -142,6 +142,9 @@
               class="w-full h-full object-cover object-top border"
             />
             <div
+              role="button"
+              aria-label="reveal_drivers_license"
+              tabindex=0
               on:mouseenter={handleDLMouseEnter}
               on:mouseleave={handleDLMouseLeave}
               class="absolute bottom-4 right-4 w-1/2 h-1/3"
