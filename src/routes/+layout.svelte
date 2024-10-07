@@ -17,20 +17,20 @@
  let shouldTransition = false;
 
  $: {
-   isDetailsPage = $page.url.pathname.includes('/incidents/incident/') ||
+   isDetailsPage = $page.url.pathname.includes('/activities/activity/') ||
                    $page.url.pathname.includes('/fleet/drivers/driver/') ||
                    $page.url.pathname.includes('/fleet/vehicles/vehicle/');
-   console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
+   //console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
  }
 
  onMount(() => {
    previousPath = $page.url.pathname;
    contentVisible.set(true);
-   console.log('Initial path:', previousPath);
+   //console.log('Initial path:', previousPath);
  });
 
  $: if ($page.url.pathname !== previousPath) {
-   console.log('Path changed. Previous:', previousPath, 'New:', $page.url.pathname);
+   //console.log('Path changed. Previous:', previousPath, 'New:', $page.url.pathname);
    handleRouteChange();
  }
 
@@ -42,7 +42,7 @@
    // Determine if we should transition
    shouldTransition = isDetailsPage || (
      previousPath !== null && (
-       previousPath.includes('/incident/') ||
+       previousPath.includes('/activity/') ||
        previousPath.includes('/driver/') ||
        previousPath.includes('/vehicle/')
      )
@@ -51,7 +51,7 @@
    if (shouldTransition && previousPath !== null) {
      // Determine slide direction only if we're transitioning
      if (!isDetailsPage && (
-       previousPath.includes('/incident/') ||
+       previousPath.includes('/activity/') ||
        previousPath.includes('/driver/') ||
        previousPath.includes('/vehicle/')
      )) {
@@ -68,7 +68,7 @@
  }
 
  function handleTransitionEnd() {
-   console.log('Transition ended');
+   //console.log('Transition ended');
    isTransitioning = false;
  }
 

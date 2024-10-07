@@ -68,7 +68,7 @@
      'medium':                    { color: 'yellow', icon: ExclamationCircleSolid, iconLibrary: 'fb' },
      'low':                       { color: 'blue',   icon: ExclamationCircleSolid, iconLibrary: 'fb' },
    },
-   incidentType: {
+   activityType: {
      'maintenance':               { color: 'blue',   icon: Wrench, iconLibrary: 'lu' },
      'accident':                  { color: 'red',    icon: Truck, iconLibrary: 'lu' },
      'driver issue':              { color: 'red',    icon: User, iconLibrary: 'lu' },
@@ -79,6 +79,11 @@
      'onsite':                     { color: 'gray',   icon: MapPinAltOutline, iconLibrary: 'fb' },
      'email':                      { color: 'gray',   icon: Mail, iconLibrary: 'fb' },
      'sms':                        { color: 'gray',   icon: PhoneOutline, iconLibrary: 'fb' },
+   },
+   actionArea: {
+     'vehicle':                    { color: 'gray',   icon: Truck, iconLibrary: 'lu' },
+     'driver':                     { color: 'gray',   icon: User, iconLibrary: 'lu' },
+     'document':                   { color: 'gray',   icon: Files, iconLibrary: 'lu' },
    },
  };
 
@@ -92,6 +97,7 @@
    if (secondaryContext !== null) {
      return colorIconMap[context]?.[secondaryContext]?.[value] || null;
    }
+
    let result = colorIconMap[context]?.[value] || null;
    return result;
  }
@@ -110,7 +116,7 @@
    
  $: colorAndIcon = getColorAndIcon(context, secondaryContext, data[dataField].toLowerCase());
 
- $: badgeClasses = `px-2 py-1.5 rounded-[6px] min-w-32 min-h-9 text-${colorAndIcon.color}-${textSaturation} bg-${colorAndIcon.color}-${bgSaturation}`;
+ $: badgeClasses = `px-2 py-1.5 rounded-[6px] min-w-32 min-h-9 text-${colorAndIcon.color}-${textSaturation} bg-${colorAndIcon.color}-${bgSaturation} cursor-pointer`;
 
  $: iconClasses = `text-${colorAndIcon.color}-${iconSaturation} mr-1 w-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize} h-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize}`;
 

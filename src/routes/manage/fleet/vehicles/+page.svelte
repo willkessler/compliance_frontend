@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<div class="ml-4 mr-4">
+<div class="ml-4 mr-0">
   <Table hoverable class="relative overflow-x-auto sm:rounded-lg mt-5">
     <TableHead class=" bg-customGray/15 whitespace-nowrap">
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle</TableHeadCell>
@@ -97,12 +97,12 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Operating time</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Vehicle Location</TableHeadCell>
-      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
+      <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
-    <TableBody class="bg-white divide-y divide-gray-200">
+    <TableBody>
       {#each vehicles as vehicle}
         <TableBodyRow on:click={() => navigateToVehicleDetails(vehicle.id)} class="cursor-pointer">
-          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">Vehicle #{vehicle.name}</TableBodyCell>
+          <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">Vehicle #{vehicle.name}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.mileage}</TableBodyCell>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{vehicle.operatingTime}</TableBodyCell>
           <TableBodyCell class="pl-2">

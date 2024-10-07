@@ -11,7 +11,7 @@
         } from 'flowbite-svelte-icons';
 
  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownWrapper, SidebarDropdownItem } from 'flowbite-svelte';
- import { getOpenIncidentCount } from '$lib/data/incidentData';
+ import { getOpenActivityCount } from '$lib/data/activityData';
 
  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
 
@@ -19,7 +19,7 @@
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
-   { href: '/manage/incidents', label: 'Activity Manager', icon: ListCheck, color: 'text-red-600', pillCount: getOpenIncidentCount() },
+   { href: '/manage/activities', label: 'Activity Manager', icon: ListCheck, color: 'text-red-600', pillCount: getOpenActivityCount() },
    { href: '/manage/fleet', label: 'Fleet Compliance', icon: Truck, color: 'text-inherit',
    subItems: [
      { href: '/manage/fleet/vehicles', label: 'Vehicles' },
@@ -95,14 +95,14 @@
           <SidebarItem
             label={item.label} 
             href={item.href}
-            class={item.label === 'Activity Manager' && activeUrl.startsWith('/manage/incidents') ? 'bg-gray-300 hover:bg-gray-300' : ''}
+            class={item.label === 'Activity Manager' && activeUrl.startsWith('/manage/activities') ? 'bg-gray-300 hover:bg-gray-300' : ''}
           >
             <svelte:fragment slot="icon">
               <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
             </svelte:fragment>
             <svelte:fragment slot="subtext">
               {#if item.pillCount !== undefined}
-                <span class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
+                <span class="inline-flex justify-center items-center p-3 ms-4 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
               {/if}
             </svelte:fragment>
           </SidebarItem>

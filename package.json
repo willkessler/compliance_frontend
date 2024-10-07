@@ -36,6 +36,7 @@
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
 		"@sveltejs/kit": "^2.0.0",
+		"active-table": "^1.1.5",
 		"bits-ui": "^0.21.13",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
