@@ -19,7 +19,7 @@
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
 
- import { drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
+ import { certifications, drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
  import { getOpenActivitiesForDriver } from '$lib/data/activityData';
 
@@ -71,22 +71,6 @@
    //console.log(`got driver ${driver} for ${driverId}` );
  }
 
- let certifications = [
-   { id: 1, item: 'DOT registration', expiry: 'Sep 15, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
-   { id: 2, item: 'DOT medical card', expiry: 'Aug 31, 2024', status: 'Blocked', action: 'Notify driver', icon: ExclamationCircleSolid },
-   { id: 3, item: 'CDL', expiry: 'Sep 17, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
-   { id: 4, item: 'Drug and alcohol test', expiry: 'Sep 19, 2024', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
-   { id: 5, item: 'Clearinghouse registration', expiry: 'Jan 31, 2025', status: 'Clear', action: 'Auto-file', icon: ThumbsUpSolid },
- ];
- 
- let historyItems = [
-   { id: 1, item: 'Violation: tire wear', expiry: 'Jan 11, 2023', status: 'Open', action: 'See details', icon: ExclamationCircleSolid },
-   { id: 2, item: 'CDL', expiry: 'Jun 3, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { id: 3, item: 'DOT medical card', expiry: 'May 14, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { id: 4, item: 'Drug and alcohol test', expiry: 'May 29, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
-   { id: 5, item: 'Clearinghouse registration', expiry: 'August 7, 2024', status: 'Closed', action: 'See details', icon: ThumbsUpSolid },
- ];
- 
  function getStatusColor(status) {
    switch (status.toLowerCase()) {
      case 'clear':
@@ -251,6 +235,11 @@
             </div>
             
             <div class="flex flex-wrap items-center">
+              <div class="w-1/2 font-semibold">Physical expiring on:</div>
+              <div class="w-1/2 text-gray-800">{driver.physicalExpiration}</div>
+            </div>
+
+            <div class="flex flex-wrap items-center">
               <div class="w-1/2 font-semibold">Current Vehicle</div>
               <div class="w-1/2">
                 <a href="/manage/fleet/vehicles/vehicle/{driver.vehicleId}">
@@ -280,21 +269,37 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">when notified?</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">action</TableHeadCell>
       </TableHead>
       <TableBody>
         {#each certifications as certification}
           <TableBodyRow>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{certification.item}</TableBodyCell>
-            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{certification.expiry}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <CustomBadge 
-                context="status"
-                secondaryContext="general"
-                data={certification} 
-                dataField="status"
-              />
-              <Tooltip placement="bottom" triggeredBy="#status-{certification.id}">{getToolTipText(certification.status)}</Tooltip>
+              {certification.item}
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+              {certification.expiry}
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+              <div id="status-{certification.id}">
+                <CustomBadge 
+                  context="status"
+                  secondaryContext="general"
+                  data={certification} 
+                  dataField="status"
+                />
+              </div>
+              <Tooltip placement="left" triggeredBy="#status-{certification.id}">{getToolTipText(certification.status)}</Tooltip>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+              {#if certification.notifyCount > 1}
+                ... {certification.lastNotified} ({certification.notifyCount} times)
+              {:else if certification.notifyCount == 0}
+                Never notified
+              {:else}
+                {certification.lastNotified} ({certification.notifyCount} time)
+              {/if}
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
               <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">
@@ -313,9 +318,11 @@
 
   <Uploads 
     previouslyUploadedFiles={[
+                            { filename: 'Pre-hire Drug & Alcohol Test -- PASSED (pdf)', date: 'Feb 15, 2024' },
                             { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
                             { filename: 'CDL (pdf)', date: 'Feb 12, 2024' },
                             { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' },
+                            { filename: 'Latest Drug & Alcohol Test -- PASSED (pdf)', date: 'May 15, 2024' },
                             { filename: 'Driver Qualifications File (DQ) (pdf)', date: 'Jan 8, 2024' },
                             { filename: 'Driver Records File (zip)', date: 'Mar 23, 2024' },
                             ]}

@@ -68,7 +68,7 @@
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Date added</TableHeadCell>
       <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Take Action</TableHeadCell>
     </TableHead>
-    <TableBody class="bg-white divide-y divide-gray-200">
+    <TableBody>
       {#each userFiles as file}
         <TableBodyRow>
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.name}</TableBodyCell>

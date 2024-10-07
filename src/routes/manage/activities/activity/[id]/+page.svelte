@@ -1,6 +1,6 @@
 <script lang="ts">
  import { goto } from '$app/navigation';
- import { Badge, Button, Modal, Label, Input, Textarea,  Select, 
+ import { Badge, Button, Label, Input, Textarea,  Select, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,

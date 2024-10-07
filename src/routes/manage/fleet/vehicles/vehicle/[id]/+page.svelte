@@ -25,6 +25,12 @@
 
  let zoomedDriverPic = false;
 
+ let previouslyUploadedFiles = [
+   { filename: "90-day-inspection-report.pdf",     date: 'Sep 3, 2024'},
+   { filename: "Insurance-log-and-report-8-31-24.pdf",    date: 'Aug 31, 2024'},
+   { filename: "ManufacturersWarranty.docx",         date: 'Jan 31, 2024'},
+ ];
+
  //
  // Date handler
  //
@@ -232,17 +238,9 @@
     <hr />
   </div>
 
-  <Uploads />
-
-  <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden right-panel">
-    <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>
-    <FilteredActivitiesList
-      mode="vehicle"
-      vehicleId={vehicle.id}
-      onlyOpen={true}
-      showMoreFields={false}
-    />
-  </div>
+  <Uploads 
+    previouslyUploadedFiles={previouslyUploadedFiles}
+  />
   
   <!-- Activity history -->
   <h1 class="text-lg font-bold mb-0 mt-6">Activity history</h1>

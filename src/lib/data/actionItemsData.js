@@ -282,11 +282,11 @@ export const actions = [
     ],
   },
   {
-    activityId: 1299,
+    activityId: 1298,
     items: [
       {
         id: 8936,
-        name: "Replace ELD (Truck #325)",
+        name: "Replace unresponsive ELD (Vehicle #4396)",
         totalMiles: '8,748',
         description: 'Replace broken ELD',
         eventDate: 'Aug 31, 2024',

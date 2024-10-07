@@ -141,7 +141,7 @@
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Status</TableHeadCell>
       <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase"></TableHeadCell>
     </TableHead>
-    <TableBody class="bg-white divide-y divide-gray-200">
+    <TableBody>
       {#each getActivityByCategory(activeCategory) as activity}
         <TableBodyRow class="cursor-pointer" on:click={() => navigateToActivityDetails(activity.id)}>
           <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-gray-600">
@@ -180,7 +180,7 @@
   </Table>
 </div>
 
-<div class="w-full flex justify-end pr-4">
+<div class="w-full flex justify-end pr-4 mb-4">
   <Pagination {pages} on:previous={previous} on:next={next} icon>
     <svelte:fragment slot="prev">
       <span class="sr-only">Previous</span>
@@ -193,7 +193,7 @@
   </Pagination>
 </div>
 
-<Modal bind:open={showModal} autoclose outsideclose 
+<Modal bind:open={showModal} outsideclose
   backdropClass="fixed inset-0 z-40 bg-white/80"
   size="lg"
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
