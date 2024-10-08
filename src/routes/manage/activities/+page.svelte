@@ -12,6 +12,7 @@
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import AddActivityModal from '$lib/components/AddActivityModal.svelte';
+ import CourtsMap from '$lib/components/CourtsMap.svelte';
 
  import { activities, getActivityById, getActivityByCategory, 
         getActivityTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/activityData';
@@ -26,6 +27,7 @@
  //
 
  let showModal = false; // whether the modal is visible
+ let showCourtsModal = true;
  let modalMode = 'accident'; // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
@@ -201,3 +203,14 @@
     mode={modalMode}
   />
 </Modal>
+
+
+<Modal bind:open={showCourtsModal} outsideclose
+  backdropClass="fixed inset-0 z-40 bg-white/80"
+  size="lg"
+  class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
+  <CourtsMap
+    zipcode="85001"
+  />
+</Modal>
+
