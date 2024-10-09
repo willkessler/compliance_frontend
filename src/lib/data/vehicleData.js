@@ -19,6 +19,22 @@ export function getVehicleDriver (vehicleId) {
   return null;
 }
 
+export function getVehicleTrips (vehicleId) {
+  let legs = [];
+  for (let vehicle of vehicles) {
+    if (vehicle.id === parseInt(vehicleId)) {
+      if (vehicle.trips !== undefined) {
+        for (let trip of vehicle.trips) {
+          for (let leg of trip.legs) {
+            legs.push({ tripId: trip.id, ...leg});
+          }
+        }
+      }
+    }
+  }
+  return legs;
+}
+
 export const vehicles = [
   {
     id: 4396,
@@ -36,6 +52,53 @@ export const vehicles = [
     state: 'CA',
     description: 'This truck is a diesel vehicle that Eric puchased second-hand.',
     photo: '360_F_653378267_CEGxV4MvGGTTRpugGVgGzGJij2v0g0YF.jpg',
+    trips: [
+      {
+        id: 193282,
+        legs: [
+          {
+            id: 1,
+            startDate: '9/11/24',
+            endDate: '9/11/24',
+            preTrip: 'XJ18YW_1',
+            postTrip: 'XJ18YW_2',
+          },
+          {
+            id: 2,
+            startDate: '9/12/24',
+            endDate: '9/12/24',
+            preTrip: 'XJ18YW_3',
+            postTrip: 'XJ18YW_4',
+          },
+        ],
+      },
+      {
+        id: 193283,
+        legs: [
+          {
+            id: 1,
+            startDate: '10/01/24',
+            endDate: '10/01/24',
+            preTrip: 'AUEHF_1',
+            postTrip: 'AUEHF_2',
+          },
+          {
+            id: 2,
+            startDate: '10/01/24',
+            endDate: '10/02/24',
+            preTrip: 'AUEHF_3',
+            postTrip: 'AUEHF_4',
+          },
+          {
+            id: 3,
+            startDate: '10/02/24',
+            endDate: '10/03/24',
+            preTrip: 'AUEHF_5',
+            postTrip: 'AUEHF_6',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 4385,
@@ -53,6 +116,20 @@ export const vehicles = [
     state: 'CA',
     description: 'Truck bought new. Ready for rehaul in 2025.',
     photo: 'basic-white-modern-semi-trailer-truck-closeup-shot-135825237.webp',
+    trips: [
+      {
+        id: 193288,
+        legs: [
+          {
+            id: 1,
+            startDate: '2/22/24',
+            endDate: '2/23/24',
+            preTrip: 'UWNDFU_1',
+            postTrip: 'UWNDFU_2',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 2348,

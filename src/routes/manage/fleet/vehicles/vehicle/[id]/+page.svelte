@@ -16,6 +16,7 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
+ import TripList from '$lib/components/TripList.svelte';
 
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
@@ -254,6 +255,11 @@
     vehicleId={vehicle.id}
     onlyOpen={false}
     showMoreFields={true}
+  />
+
+  <h1 class="text-lg font-bold mb-0 mt-6">Trip history</h1>
+  <TripList 
+    vehicleId={vehicle.id}
   />
 
 </ActivityLayout>
