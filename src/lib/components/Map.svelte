@@ -85,8 +85,9 @@
 
   // Dynamically add Google Maps API
   function loadGoogleMapsScript() {
+    const key='GOOGLE_MAP_API_KEY';
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDygv6AHcu52-8mmHRgid42HJFX6Au9Y-E&libraries=places,marker&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${key}}&libraries=places,marker&callback=initMap`;
     script.async = true;
     document.head.appendChild(script);
   }
