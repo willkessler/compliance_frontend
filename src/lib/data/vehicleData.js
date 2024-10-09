@@ -35,6 +35,26 @@ export function getVehicleTrips (vehicleId) {
   return legs;
 }
 
+export function getVehicleDvir (vehicleId, tripId, legId, whichInsp) {
+  let legs = [];
+  for (let vehicle of vehicles) {
+    if (vehicle.id === parseInt(vehicleId)) {
+      if (vehicle.trips !== undefined) {
+        for (let trip of vehicle.trips) {
+          if (trip.id === parseInt(tripId)) {
+            for (let leg of trip.legs) {
+              if (leg.id === parseInt(legId)) {
+                return leg.dvir[whichInsp];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
 export const vehicles = [
   {
     id: 4396,
@@ -62,6 +82,30 @@ export const vehicles = [
             endDate: '9/11/24',
             preTrip: 'XJ18YW_1',
             postTrip: 'XJ18YW_2',
+            dvir: {
+              pre: {
+                authorName: 'Anthony Rolard',
+                location: 'T-A truckstop, Santa Nella',
+                duration: '1m 19s',
+                trailerId: 'B341',
+                odometer: '110,485',
+                defects: [
+                  'Dome light fail',
+                  'Mill spec light on',
+                ],
+              },
+              post: {
+                authorName: 'Frank Novil',
+                location: 'Pleasant Truckstop, Santa Rosa',
+                duration: '2m 19s',
+                trailerId: 'B341',
+                odometer: '111,201',
+                defects: [
+                  'Rear brake light fail',
+                  'Mill spec light on',
+                ],
+              },
+            },
           },
           {
             id: 2,
