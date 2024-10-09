@@ -27,7 +27,7 @@
  //
 
  let showModal = false; // whether the modal is visible
- let showCourtsModal = true;
+ let showCourtsModal = false;
  let modalMode = 'accident'; // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
@@ -201,5 +201,15 @@
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
   <AddActivityModal
     mode={modalMode}
+  />
+</Modal>
+
+
+<Modal bind:open={showCourtsModal} outsideclose
+  backdropClass="fixed inset-0 z-40 bg-white/80"
+  size="lg"
+  class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
+  <Map
+    zipcode="85001"
   />
 </Modal>

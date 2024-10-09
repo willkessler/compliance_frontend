@@ -44,7 +44,9 @@ export function getVehicleDvir (vehicleId, tripId, legId, whichInsp) {
           if (trip.id === parseInt(tripId)) {
             for (let leg of trip.legs) {
               if (leg.id === parseInt(legId)) {
-                return leg.dvir[whichInsp];
+                if (leg.dvir !== undefined) {
+                  return leg.dvir[whichInsp];
+                }
               }
             }
           }
