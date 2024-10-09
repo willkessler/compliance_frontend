@@ -300,6 +300,38 @@ ul li:before {
       </button>
     </div>
     {#if (actionItemId !== null) }
+        {#if (getActionItemById(actionItemId).type.toLowerCase() === 'payment') }
+          <div class="font-semibold">
+            Violation files on record:
+          </div>
+          <div class="flex justify-start ">
+            <div class="cursor-pointer w-1/3">
+              <img class="max-w-[150px] min-w-[150px] p-2" src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
+            </div>
+            <div class="cursor-pointer">
+              <img class="max-w-[150px] min-w-[150px] p-2" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+            </div>
+          </div>
+          <div class="font-semibold">
+            Court Information :
+          </div>
+          <div class="w-full text-sm">
+            <div >
+              <div>{getActionItemById(actionItemId).courtDetails.name}</div>
+              <div>{getActionItemById(actionItemId).courtDetails.street}</div>
+              <div>{getActionItemById(actionItemId).courtDetails.city},
+                {getActionItemById(actionItemId).courtDetails.state}
+                {getActionItemById(actionItemId).courtDetails.zip}
+              </div>
+              <div>
+                {getActionItemById(actionItemId).courtDetails.phone}
+              </div>
+              <div>
+                <Button outline size="xs" target="_blank" href={getActionItemById(actionItemId).courtDetails.site}>Go to court's website</Button>
+              </div>
+            </div>
+          </div>
+        {/if}
       <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
         <div class="font-semibold">Action:</div>
         <div class="text-customGray">{getActionItemById(actionItemId).name}</div>

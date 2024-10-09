@@ -157,6 +157,28 @@ export const actions = [
     activityId: 33828,
     items: [
       {
+        id: 5116,
+        name: "Pay violation fee",
+        totalMiles: '8,711',
+        description: 'Pay violation fee at AZ court',
+        eventDate: 'Aug 31, 2024',
+        dueDate: 'Sep 14, 2024',
+        type: 'Payment',
+        courtDetails: {
+          name: 'Kingman Justice Court',
+          street: '524 W Beale St',
+          city: 'Kingman',
+          state: 'AZ',
+          zip: '86401',
+          phone: '(928)753-0710',
+          site: 'https://www.mohavecourts.com/kingmancerbat-justice-court',
+        },
+        violationImage: 'ticket_raw.jpg',
+        courtImage: 'courtsite.png',
+        status: 'Open',
+        area: 'Truck',
+      },
+      {
         id: 5117,
         name: "Call Mary's repair shop",
         totalMiles: '8,711',
@@ -296,5 +318,5 @@ export const actions = [
         area: 'Truck',
       },
     ],
-  },      
+  },
 ];
