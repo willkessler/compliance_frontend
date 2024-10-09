@@ -275,7 +275,7 @@ export const activities = [
     driverId: 1923,
     vehicleId: 4385,
     level: 'State',
-    description:'Mark got this on return after freight transfer from shipper Xantive.',
+    description:'Mark got slapped with this violation on return after freight transfer from shipper Xantive.',
   },
   {
     id: 48482,

@@ -42,6 +42,8 @@
     formattedDate = formatDate(dueDate);
   });
 
+ let zoomedViolationPic = false;
+ let zoomedCourtPic = false;
  let showModal = false; // whether the modal is visible
  let actionType = '';
  let actionName = '';
@@ -302,21 +304,43 @@ ul li:before {
     {#if (actionItemId !== null) }
         {#if (getActionItemById(actionItemId).type.toLowerCase() === 'payment') }
           <div class="font-semibold">
-            Violation files on record:
+            Related incident images:
           </div>
           <div class="flex justify-start ">
-            <div class="cursor-pointer w-1/3">
-              <img class="max-w-[150px] min-w-[150px] p-2" src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
+            <div class="cursor-pointer">
+              <img 
+                on:mouseenter={() => { zoomedViolationPic = true; }}
+                class="max-w-[180px] min-w-[150px] p-2" 
+                src="/images/violations/{getActionItemById(actionItemId).violationImage}" 
+              />
+              {#if zoomedViolationPic}
+                <div 
+                  on:mouseleave={() => { zoomedViolationPic = false; }}
+                  >
+                  <img class="top-10 right-12 absolute max-w-[500px] border rounded" src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
+                </div>
+              {/if}
             </div>
             <div class="cursor-pointer">
-              <img class="max-w-[150px] min-w-[150px] p-2" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+              <div
+                on:mouseenter={() => { zoomedCourtPic = true; }}
+                >
+                <img class=" min-w-[150px] p-2" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+                {#if zoomedCourtPic}
+                <div 
+                  on:mouseleave={() => { zoomedCourtPic = false; }}
+                  >
+                  <img class="top-10 right-12 absolute max-w-[500px] border rounded" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+                </div>
+                {/if}
+              </div>
             </div>
           </div>
-          <div class="font-semibold">
-            Court Information :
+          <div class="font-semibold pt-2">
+            Traffic Court Information :
           </div>
           <div class="w-full text-sm">
-            <div >
+            <div class="pt-1">
               <div>{getActionItemById(actionItemId).courtDetails.name}</div>
               <div>{getActionItemById(actionItemId).courtDetails.street}</div>
               <div>{getActionItemById(actionItemId).courtDetails.city},
@@ -326,8 +350,8 @@ ul li:before {
               <div>
                 {getActionItemById(actionItemId).courtDetails.phone}
               </div>
-              <div>
-                <Button outline size="xs" target="_blank" href={getActionItemById(actionItemId).courtDetails.site}>Go to court's website</Button>
+              <div class="pt-2 text-customGray">
+                <Button class="hover:text-gray-800" outline size="xs" target="_blank" href={getActionItemById(actionItemId).courtDetails.site}>Jump to traffic court's website</Button>
               </div>
             </div>
           </div>
