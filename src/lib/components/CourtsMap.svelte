@@ -4,22 +4,28 @@
   export let zipcode;
 
   let mapElement;
-  let map;
-  let markers = [];
-  let infoWindow;
 
-  onMount(() => {
-    loadGoogleMapsScript();
+  onMount(async () => {
+    try {
+      // Load the Google Maps JavaScript API without the API key
+      const script = document.createElement('script');
+      script.src = "https://maps.googleapis.com/maps/api/js?libraries=places&v=weekly";
+      script.defer = true;
+      script.async = true;
+      document.head.appendChild(script);
+
+      // Wait for the script to load
+      await new Promise((resolve, reject) => {
+        script.onload = resolve;
+        script.onerror = reject;
+      });
+
+      // Now that the script is loaded, we can initialize the map
+      await initMap();
+    } catch (error) {
+      console.error('Error setting up map:', error);
+    }
   });
-
-  function loadGoogleMapsScript() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?libraries=places&loading=async`;
-    script.async = true;
-    script.defer = true;
-    script.onload = initMap;
-    document.head.appendChild(script);
-  }
 
   async function initMap() {
     try {
@@ -36,28 +42,34 @@
         throw new Error(data.error);
       }
 
-      const location = { lat: data.lat, lng: data.lng };
-      map = new google.maps.Map(mapElement, {
-        center: location,
-        zoom: 12
+      const position = { lat: data.lat, lng: data.lng };
+
+      const { Map } = await google.maps.importLibrary("maps");
+      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+      const map = new Map(mapElement, {
+        zoom: 12,
+        center: position,
+        mapId: "DEMO_MAP_ID",
       });
 
-      infoWindow = new google.maps.InfoWindow();
-      
-      searchNearbyPlaces(location);
+      const marker = new AdvancedMarkerElement({
+        map: map,
+        position: position,
+        title: "Center",
+      });
 
+      // Add event listener for idle event to search for nearby places
       map.addListener('idle', () => {
         const center = map.getCenter();
-        searchNearbyPlaces({ lat: center.lat(), lng: center.lng() });
+        searchNearbyPlaces(map, { lat: center.lat(), lng: center.lng() });
       });
     } catch (error) {
       console.error('Error initializing map:', error);
     }
   }
 
-  async function searchNearbyPlaces(location) {
-    clearMarkers();
-
+  async function searchNearbyPlaces(map, location) {
     try {
       const response = await fetch('/api/courts', {
         method: 'POST',
@@ -65,8 +77,8 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          lat: location.lat, 
-          lng: location.lng, 
+          lat: location.lat(), 
+          lng: location.lng(), 
           action: 'search' 
         })
       });
@@ -76,75 +88,26 @@
         throw new Error(data.error);
       }
 
-      data.results.forEach(createMarker);
+      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+      data.results.forEach(place => {
+        new AdvancedMarkerElement({
+          map,
+          position: { lat: place.geometry.location.lat, lng: place.geometry.location.lng },
+          title: place.name,
+        });
+      });
     } catch (error) {
       console.error('Error searching nearby places:', error);
     }
   }
-
-  function createMarker(place) {
-    const marker = new google.maps.Marker({
-      map: map,
-      position: { lat: place.geometry.location.lat, lng: place.geometry.location.lng },
-      title: place.name
-    });
-
-    marker.addListener('click', () => {
-      const content = `
-        <div>
-          <h3>${place.name}</h3>
-          <p>${place.vicinity}</p>
-          ${place.rating ? `<p>Rating: ${place.rating} / 5</p>` : ''}
-        </div>
-      `;
-      infoWindow.setContent(content);
-      infoWindow.open(map, marker);
-
-      fetchPlaceDetails(place.place_id);
-    });
-
-    markers.push(marker);
-  }
-
-  async function fetchPlaceDetails(placeId) {
-    try {
-      const response = await fetch('/api/courts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ placeId, action: 'details' })
-      });
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error);
-      }
-
-      const placeDetails = data.result;
-      const updatedContent = `
-        <div>
-          <h3>${placeDetails.name}</h3>
-          <p>${placeDetails.formatted_address}</p>
-          ${placeDetails.formatted_phone_number ? `<p>Phone: ${placeDetails.formatted_phone_number}</p>` : ''}
-          ${placeDetails.website ? `<p><a href="${placeDetails.website}" target="_blank">Website</a></p>` : ''}
-          ${placeDetails.rating ? `<p>Rating: ${placeDetails.rating} / 5</p>` : ''}
-        </div>
-      `;
-      infoWindow.setContent(updatedContent);
-    } catch (error) {
-      console.error('Error fetching place details:', error);
-    }
-  }
-
-  function clearMarkers() {
-    markers.forEach(marker => marker.setMap(null));
-    markers = [];
-  }
 </script>
 
-<div bind:this={mapElement} style="width: 100%; height: 400px;"></div>
+<div bind:this={mapElement} id="map"></div>
 
 <style>
-  /* Add any additional styles here */
+  #map {
+    width: 100%;
+    height: 400px;
+  }
 </style>

@@ -12,7 +12,7 @@
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import AddActivityModal from '$lib/components/AddActivityModal.svelte';
- import CourtsMap from '$lib/components/CourtsMap.svelte';
+ import Map from '$lib/components/Map.svelte';
 
  import { activities, getActivityById, getActivityByCategory, 
         getActivityTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/activityData';
@@ -209,7 +209,7 @@
   backdropClass="fixed inset-0 z-40 bg-white/80"
   size="lg"
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
-  <CourtsMap
+  <Map
     zipcode="85001"
   />
 </Modal>
