@@ -272,10 +272,10 @@ export const activities = [
     occurrenceDate: 'May 2, 2024', 
     dueDate: 'Apr 18, 2024',
     title: 'Moving violation',
-    driverId: 1924,
-    vehicleId: 2348,
+    driverId: 1923,
+    vehicleId: 4385,
     level: 'State',
-    description:'Sid got this on return after freight transfer from shipper X828.',
+    description:'Mark got slapped with this violation on return after freight transfer from shipper Xantive.',
   },
   {
     id: 48482,
