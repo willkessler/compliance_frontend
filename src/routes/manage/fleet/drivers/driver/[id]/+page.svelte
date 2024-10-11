@@ -272,7 +272,7 @@
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">when notified?</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">last notified</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">action</TableHeadCell>
       </TableHead>
       <TableBody>
@@ -297,11 +297,11 @@
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
               {#if certification.notifyCount > 1}
-                ... {certification.lastNotified} ({certification.notifyCount} times)
+                {certification.lastNotified} ({certification.notifyCount}x times)
               {:else if certification.notifyCount == 0}
                 Never notified
               {:else}
-                {certification.lastNotified} ({certification.notifyCount} time)
+                {certification.lastNotified} ({certification.notifyCount}x time)
               {/if}
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
