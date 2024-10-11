@@ -47,7 +47,7 @@
 
 <style>
   .chart-container {
-    padding-top:30px;
+    padding-top:10px;
     width: 100%;
     height: 100%;
   }
