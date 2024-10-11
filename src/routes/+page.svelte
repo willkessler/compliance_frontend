@@ -7,7 +7,7 @@
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
 
- import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
+ import CSAScoreHistoryChart from '$lib/components/CSAScoreHistoryChart.svelte';
  import SafetyScoreHistoryChart from '$lib/components/SafetyScoreHistoryChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
 
@@ -36,15 +36,14 @@
               <div class="flex items-center csa-score">
                 <div class="ml-4 mr-4" style="scale:2"><LandmarkOutline /></div>
                 <div class="score-label ml-2">Today's CSA Score</div>
-                <div class="score ml-2" style="font-size: 2rem;">{csaRange.today}</div>
+                <div class="score ml-2 font-semibold">{csaRange.today}</div>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
-                <ComplianceHistoryChart
+                <CSAScoreHistoryChart
                   chartTitle="CSA Score by week"
-                  metricType="csaScore"
                   dataRange={csaRange}
                   color="green"
                 />
@@ -59,7 +58,7 @@
               <div class="flex items-center safety-score">
                 <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
                 <div class="score-label pl-2 text-nowrap">Today's Safety Score</div>
-                <div class="score ml-2 text-nowrap" style="font-size: 2rem;">{todaysSafetyScore}</div>
+                <div class="score ml-2 font-semibold text-nowrap">{todaysSafetyScore}</div>
               </div>
           </div>
           <div>
@@ -180,7 +179,7 @@
 
 <style>
  .score {
-   font-size: 60px;
+   font-size: 45px;
  }
  .score-label {
    font-size: 25px;
@@ -190,7 +189,7 @@
    color: green;
  }
  .safety-score {
-   color: orange;
+   color: green;
  }
 
  .chart {
