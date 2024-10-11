@@ -20,7 +20,7 @@
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
  const csaRange = { range:15, buffer:15, today: 15};
- const todaysSafetyScore = 'Acceptable';
+ const todaysSafetyScore = 'Satisfactory';
 
  function navigateToRelevantActionPage(url) {
    goto(url, { replaceState: false });
