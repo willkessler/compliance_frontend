@@ -12,7 +12,7 @@
  const generateSampleData = () => {
    const data = [];
    const today = new Date();
-   for (let i = 7; i > 0; i--) {
+   for (let i = 10; i > 0; i--) {
      const date = new Date(today);
      date.setDate(today.getDate() - i * 7);
      data.push({
