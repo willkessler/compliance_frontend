@@ -3,6 +3,7 @@
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
 
  import { FileSolid } from 'flowbite-svelte-icons';
+ import { page } from '$app/stores';
 
  export let previouslyUploadedFiles = [
    { filename: "Document_name_incident_report",    date: 'Aug 31, 2024'},
@@ -21,7 +22,7 @@
     {#each previouslyUploadedFiles as uploadedFile}
       <TableBodyRow>
         <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
-          <a href="/" >
+          <a href={$page.url.pathname} >
             <div class="flex items-top">
               {uploadedFile.filename} &nbsp;
               <FileSolid />

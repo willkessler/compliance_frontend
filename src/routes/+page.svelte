@@ -6,8 +6,11 @@
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
- import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
+
+ import CSAScoreHistoryChart from '$lib/components/CSAScoreHistoryChart.svelte';
+ import SafetyScoreHistoryChart from '$lib/components/SafetyScoreHistoryChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
+
  import { filings, reviewItems, getReviewCounts, getSoonestDaysRemaining } from '$lib/data/filingData';
  import { newsItems } from '$lib/data/newsItemsData';
  import { X, WandSparkles } from 'lucide-svelte';
@@ -17,7 +20,7 @@
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
  const csaRange = { range:15, buffer:15, today: 15};
- const safetyRange = { range:100, buffer:100, today: 153};
+ const todaysSafetyScore = 'Acceptable';
 
  function navigateToRelevantActionPage(url) {
    goto(url, { replaceState: false });
@@ -33,15 +36,14 @@
               <div class="flex items-center csa-score">
                 <div class="ml-4 mr-4" style="scale:2"><LandmarkOutline /></div>
                 <div class="score-label ml-2">Today's CSA Score</div>
-                <div class="score ml-2" style="font-size: 2rem;">{csaRange.today}</div>
+                <div class="score ml-2 font-semibold">{csaRange.today}</div>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
-                <ComplianceHistoryChart
-                  chartTitle="Score by week"
-                  metricType="csaScore"
+                <CSAScoreHistoryChart
+                  chartTitle="CSA Score by week"
                   dataRange={csaRange}
                   color="green"
                 />
@@ -55,17 +57,15 @@
           <div class="flex items-center">
               <div class="flex items-center safety-score">
                 <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
-                <div class="score-label pl-2">Today's Safety Score</div>
-                <div class="score ml-2" style="font-size: 2rem;">{safetyRange.today}</div>
+                <div class="score-label pl-2 text-nowrap">Today's Safety Score</div>
+                <div class="score ml-2 font-semibold text-nowrap">{todaysSafetyScore}</div>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
-                <ComplianceHistoryChart
-                  chartTitle="Score by week"
-                  metricType="safetyScore"
-                  dataRange={safetyRange}
+                <SafetyScoreHistoryChart
+                  chartTitle="Safety rating by week"
                   color="orange"
                 />
               </div>
@@ -179,7 +179,7 @@
 
 <style>
  .score {
-   font-size: 60px;
+   font-size: 45px;
  }
  .score-label {
    font-size: 25px;
@@ -189,7 +189,7 @@
    color: green;
  }
  .safety-score {
-   color: orange;
+   color: green;
  }
 
  .chart {

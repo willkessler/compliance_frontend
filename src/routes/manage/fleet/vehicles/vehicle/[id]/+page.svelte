@@ -230,7 +230,9 @@
       </TableHead>
       <TableBody>
         {#each drivers.slice(0,3) as driver}
-          <TableBodyRow>
+          <TableBodyRow 
+            on:click={() => { navigateToDriverDetails(driver.id) }}
+            >
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.startDate}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.endDate}</TableBodyCell>

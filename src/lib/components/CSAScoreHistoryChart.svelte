@@ -6,9 +6,11 @@
  import { mean } from "d3-array";
 
  export let chartTitle = "CSA Score Over Time";
- export let metricType = "csaScore"; // or "safetyScore"
  export let color = "var(--color-primary)";
  export let dataRange = {range:50, buffer:50, today:100};
+
+ const parseDate = timeParse('%Y-%m-%d');
+ const formatDate = timeFormat('%b %d');
 
  // Generate sample data for the past 8 weeks
  const generateSampleData = () => {
@@ -22,25 +24,20 @@
      data.push({
        date: date.toISOString().split('T')[0],
        csaScore: Math.max(0, dataRange.today * i / 6 + csaVariance + dataRange.today),
-       safetyScore: Math.max(Math.round(Math.random() * 15 + 15), dataRange.today * (7 - i) / 7 + safetyVariance),
      });
    }
    data.push({
      date: today.toISOString().split('T')[0],
      csaScore: dataRange.today,
-     safetyScore: dataRange.today,
    });
    return data;
  };
-
- const parseDate = timeParse('%Y-%m-%d');
- const formatDate = timeFormat('%b %d');
 
  let data = generateSampleData();
 
  $: chartData = data.map(d => ({
    date: parseDate(d.date),
-   value: d[metricType]
+   value: d['csaScore']
  }));
 
  $: avgScore = mean(chartData, d => d.value);
@@ -83,7 +80,7 @@
         />
         <Rule
           y={avgScore}
-          class="stroke-2 {metricType === 'csaScore' ? 'stroke-[#008000]' : 'stroke-[#ffa500]'} [stroke-dasharray:4] [stroke-linecap:round]"
+          class="stroke-2 stroke-[#008000]} [stroke-dasharray:4] [stroke-linecap:round]"
         />
         <Text
           x={width}
@@ -92,11 +89,11 @@
           value="Average: {parseInt(avgScore)}"
           textAnchor="end"
           verticalAnchor="baseline"
-          class="text-sm {metricType === 'csaScore' ? 'fill-[#008000]' : 'fill-[#ffa500]'} stroke-white stroke-2 paint-order-stroke"
+          class="text-sm fill-[#008000] stroke-white stroke-2 paint-order-stroke"
         />
       </Svg>
     </Chart>
-    <div class="font-semibold ml-4 text-center {metricType === 'csaScore' ? 'text-green-600' : 'text-[#ffa500]'}">{chartTitle}</div>
+    <div class="font-semibold ml-4 text-center text-green-600">{chartTitle}</div>
   </div>
 </div>
 

@@ -27,7 +27,7 @@
  //
 
  let showModal = false; // whether the modal is visible
- let showCourtsModal = true;
+ let showCourtsModal = false;
  let modalMode = 'accident'; // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
@@ -84,7 +84,7 @@
 
   <div class="flex justify-between">
     <div class="flex items-center justify-start">
-      <div class="inline-block bg-white border rounded-lg p-0">
+      <div class="inline-block bg-white border rounded-lg p-0 text-nowrap">
         {#each categories as category}
           <Button
             class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeCategory.toLowerCase() === category.toLowerCase() ? 'bg-gray-300' : ''}"
@@ -97,7 +97,7 @@
 
       <div class="ml-4">
         <Button
-          class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
+          class="bg-blue-500 hover:bg-blue-600 text-white text-sm text-nowrap">
           <CirclePlusSolid />
           &nbsp;&nbsp;Add Activity!
         </Button>
@@ -201,5 +201,15 @@
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
   <AddActivityModal
     mode={modalMode}
+  />
+</Modal>
+
+
+<Modal bind:open={showCourtsModal} outsideclose
+  backdropClass="fixed inset-0 z-40 bg-white/80"
+  size="lg"
+  class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
+  <Map
+    zipcode="85001"
   />
 </Modal>
