@@ -205,11 +205,15 @@
 </Modal>
 
 
-<Modal bind:open={showCourtsModal} outsideclose
+<Modal 
+  bind:open={showCourtsModal} 
+  outsideclose
   backdropClass="fixed inset-0 z-40 bg-white/80"
-  size="lg"
-  class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
-  <Map
-    zipcode="85001"
-  />
+  size="xl"
+  bodyClass="p-4 md:p-5 space-y-4 flex-1 overflow:hidden overscroll-contain"
+  class="w-[80vw] h-[80vh] max-w-none max-h-[80vh] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
+>
+  <div class="w-full h-full p-6">
+    <Map zipcode="85001" />
+  </div>
 </Modal>

@@ -1,39 +1,48 @@
 <script>
-  import { onMount } from "svelte";
-  export let zipcode = "10001";
-  let map;
-  let mapElement;
-  let markers = [];
-  let errorMessage = '';
-  let apiKey = ''; // We'll fetch this from the server
+ import { onMount, afterUpdate } from "svelte";
+ export let zipcode = "10001";
+ let map;
+ let mapElement;
+ let markers = [];
+ let errorMessage = '';
+ let apiKey = ''; // We'll fetch this from the server
 
-  async function fetchApiKey() {
-    try {
-      const response = await fetch('/api/maps-key');
-      const data = await response.json();
-      return data.apiKey;
-    } catch (error) {
-      console.error('Failed to fetch API key:', error);
-      errorMessage = 'Failed to load map configuration';
-    }
-  }
+ function updateMapSize() {
+   if (mapElement && map) {
+     google.maps.event.trigger(map, 'resize');
+   }
+ }
 
-  async function loadGoogleMapsScript(apiKey) {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap`;
-      script.async = true;
-      script.defer = true;
-      script.onerror = reject;
-      script.onload = resolve;
-      document.head.appendChild(script);
-    });
-  }
+ afterUpdate(updateMapSize);
 
-  async function initMap() {
+ async function fetchApiKey() {
+   try {
+     const response = await fetch('/api/maps-key');
+     const data = await response.json();
+     return data.apiKey;
+   } catch (error) {
+     console.error('Failed to fetch API key:', error);
+     errorMessage = 'Failed to load map configuration';
+   }
+ }
+
+ async function loadGoogleMapsScript(apiKey) {
+   return new Promise((resolve, reject) => {
+     const script = document.createElement("script");
+     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap`;
+     script.async = true;
+     script.defer = true;
+     script.onerror = reject;
+     window.initMap = initMap;
+     script.onload = resolve;
+     document.head.appendChild(script);
+   });
+ }
+
+async function initMap() {
     try {
       const { Map } = await google.maps.importLibrary("maps");
-      const { Marker } = await google.maps.importLibrary("marker");
+      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     
       const geocoder = new google.maps.Geocoder();
       const service = new google.maps.places.PlacesService(document.createElement('div'));
@@ -70,7 +79,9 @@
         });
       });
 
-      placesResult.forEach(place => createMarker(place, Marker));
+      placesResult.forEach(place => createMarker(place, AdvancedMarkerElement));
+
+      updateMapSize();
 
     } catch (error) {
       console.error('Error initializing map:', error);
@@ -78,13 +89,19 @@
     }
   }
 
-  function createMarker(place, Marker) {
+  function createMarker(place, AdvancedMarkerElement) {
     if (!place.geometry || !place.geometry.location) return;
 
-    const marker = new Marker({
+    const marker = new AdvancedMarkerElement({
       map,
       position: place.geometry.location,
       title: place.name,
+      content: new google.maps.marker.PinElement({
+        glyph: place.name[0],
+        glyphColor: "#ffffff",
+        background: "#1a73e8",
+        borderColor: "#ffffff",
+      }).element,
     });
 
     markers.push(marker);
@@ -112,22 +129,32 @@
     });
   }
 
-  onMount(async () => {
-    try {
-      apiKey = await fetchApiKey();
-      window.initMap = initMap;
-      await loadGoogleMapsScript(apiKey);
-    } catch (error) {
-      console.error('Failed to load Google Maps:', error);
-      errorMessage = 'Failed to load Google Maps';
-    }
-  });
+ onMount(async () => {
+   try {
+     apiKey = await fetchApiKey();
+     await loadGoogleMapsScript(apiKey);
+     window.addEventListener('resize', updateMapSize);
+   } catch (error) {
+     console.error('Failed to load Google Maps:', error);
+     errorMessage = 'Failed to load Google Maps';
+   }
+
+   return () => {
+     window.removeEventListener('resize', updateMapSize);
+   };
+ });
+
 </script>
 
 <style>
-  #map {
-    height: 800px;
+  .map-container {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  #map {
+    flex-grow: 1;
     border: 2px solid black;
   }
   .error {
@@ -138,7 +165,9 @@
   }
 </style>
 
-<div id="map" bind:this={mapElement}></div>
-{#if errorMessage}
-  <div class="error">{errorMessage}</div>
-{/if}
+<div class="map-container">
+  <div id="map" bind:this={mapElement}></div>
+  {#if errorMessage}
+    <div class="error">{errorMessage}</div>
+  {/if}
+</div>
