@@ -27,7 +27,7 @@
  //
 
  let showModal = false; // whether the modal is visible
- let showCourtsModal = false;
+ let showCourtsModal = true;
  let modalMode = 'accident'; // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
