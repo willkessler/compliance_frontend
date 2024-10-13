@@ -1,6 +1,6 @@
 <script lang="ts">
  import { goto } from '$app/navigation';
- import { Badge, Button, Label, Input, Textarea,  Select, 
+ import { Badge, Button, Label, Input, Textarea,  Select, Modal,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,
@@ -12,6 +12,7 @@
  import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
+ import Map from '$lib/components/Map.svelte';
 
  import { activities, getActivityTitle, getActivityById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/activityData';
  import { drivers, getDriverById } from '$lib/data/driverData';
@@ -21,6 +22,7 @@
  import { onMount } from 'svelte';
 
  let zoomedDriverPic = false;
+ let showCourtModal = false;
 
  //
  // Date handler
@@ -35,6 +37,10 @@
    return d.toLocaleDateString('en-US', options);
   }
 
+ function showCourtMap () {
+   showCourtModal = true;
+ }
+ 
   function handleInput(event) {
     dueDate = event.target.value;
     formattedDate = formatDate(dueDate);
@@ -246,6 +252,7 @@
     <ActionItems
       environment="activity"
       showChrome={false}
+      showCourtMapCb={showCourtMap}
       mode="single"
       actionItemId={selectedActionId}
       hideRightPanelCb={hideRightPanel}
@@ -253,3 +260,16 @@
   </div>
 
 </ActivityLayout>
+
+<Modal 
+  bind:open={showCourtModal} 
+  outsideclose
+  backdropClass="fixed inset-0 z-40 bg-white/80"
+  size="xl"
+  bodyClass="p-4 md:p-5 space-y-4 flex-1 overflow:hidden overscroll-contain"
+  class="w-[80vw] h-[80vh] max-w-none max-h-[80vh] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
+>
+  <div class="w-full h-full p-6">
+    <Map zipcode="86401" preOpenLocation="Kingman Cerbat" />
+  </div>
+</Modal>
