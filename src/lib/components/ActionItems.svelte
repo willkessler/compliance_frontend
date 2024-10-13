@@ -36,6 +36,7 @@
  export let actionItemId = null;    // which action item id
  export let setActionItemCb = () => { };  // stub for passed in callback
  export let hideRightPanelCb = () => { }; // stub for passed in callback
+ export let showCourtMapCb = () => {}; // stub for passed in callback to show court map
  export let showChrome = true; // whether to show all controls
 
   onMount(() => {
@@ -341,7 +342,12 @@ ul li:before {
           </div>
           <div class="w-full text-sm">
             <div class="pt-1">
-              <div>{getActionItemById(actionItemId).courtDetails.name}</div>
+              <div class="flex items-center">
+                <div>
+                  {getActionItemById(actionItemId).courtDetails.name}
+                </div>
+                <div on:click={() => showCourtMapCb() } class="cursor-pointer ml-2" outline><MapPinAltOutline /></div>
+              </div>
               <div>{getActionItemById(actionItemId).courtDetails.street}</div>
               <div>{getActionItemById(actionItemId).courtDetails.city},
                 {getActionItemById(actionItemId).courtDetails.state}
@@ -350,7 +356,7 @@ ul li:before {
               <div>
                 {getActionItemById(actionItemId).courtDetails.phone}
               </div>
-              <div class="pt-2 text-customGray">
+              <div class="flex pt-2 items-center text-customGray">
                 <Button class="hover:text-gray-800" outline size="xs" target="_blank" href={getActionItemById(actionItemId).courtDetails.site}>Jump to traffic court's website</Button>
               </div>
             </div>
