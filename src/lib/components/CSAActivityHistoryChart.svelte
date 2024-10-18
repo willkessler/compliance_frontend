@@ -1,5 +1,5 @@
 <script lang="ts">
- import { Chart, Svg, Bars, Axis, Tooltip, TooltipContext, Rule, Text, } from "layerchart";
+ import { Chart, Svg, Bars, Axis, Tooltip, Rule, Text, } from "layerchart";
  import { scaleBand, scaleLinear } from "d3-scale";
  import { timeFormat, timeParse } from "d3-time-format";
  import { mean } from "d3-array";
@@ -110,7 +110,7 @@
       </Tooltip.Root>
 
     </Chart>
-    <div class="font-semibold ml-4 text-center text-green-600">{chartTitle}</div>
+    <div class="font-semibold ml-4 text-center text-green-700">{chartTitle}</div>
   </div>
 </div>
 
@@ -119,4 +119,13 @@
    width: 100%;
    height: 100%;
  }
+
+:global(.layerchart-tooltip) {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  backdrop-filter: none;
+}
+
 </style>

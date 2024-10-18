@@ -5,9 +5,10 @@
  import { Badge, Button, Modal, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
- import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
+ import { ClipboardListSolid, LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
 
  import CSAScoreHistoryChart from '$lib/components/CSAScoreHistoryChart.svelte';
+ import CSAActivityHistoryChart from '$lib/components/CSAActivityHistoryChart.svelte';
  import CSABasicChart from '$lib/components/CSABasicChart.svelte';
  import SafetyScoreHistoryChart from '$lib/components/SafetyScoreHistoryChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
@@ -33,28 +34,6 @@
   <div class="grid grid-cols-2 gap-6 mb-6">
       <Card>
 	<CardContent style="padding-top: 1rem;">
-          <div class="flex items-center">
-              <div class="flex items-center csa-score">
-                <div class="ml-4 mr-4" style="scale:2"><LandmarkOutline /></div>
-                <div class="score-label ml-2">Today's CSA Score</div>
-                <div class="score ml-2 font-semibold">{csaRange.today}</div>
-              </div>
-          </div>
-          <div>
-            <div class="flex items-center">
-              <div class="chart">
-                <CSAScoreHistoryChart
-                  chartTitle="CSA Score by week"
-                  dataRange={csaRange}
-                  color="green"
-                />
-              </div>
-            </div>
-          </div>
-	</CardContent>
-      </Card>
-      <Card>
-	<CardContent style="padding-top: 1rem;">
           <div class="safety-score flex items-center mt-4">
               <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
               <div class="score-label pl-2 text-nowrap">Current Safety Score</div>
@@ -70,6 +49,26 @@
             <div class="flex items-center">
               <div class="chart">
                 <CSABasicChart />
+              </div>
+            </div>
+          </div>
+	</CardContent>
+      </Card>
+      <Card>
+	<CardContent style="padding-top: 1rem;">
+          <div class="flex items-center mt-4 mb-2">
+              <div class="flex items-center csa-score">
+                <div class="ml-4 mr-4" style="scale:2"><ClipboardListSolid /></div>
+                <div class="score-label ml-2">Activities History</div>
+              </div>
+          </div>
+          <div>
+            <div class="flex items-center">
+              <div class="chart">
+                <CSAActivityHistoryChart
+                  chartTitle="Activity counts, by week"
+                  dataRange={csaRange}
+                />
               </div>
             </div>
           </div>
