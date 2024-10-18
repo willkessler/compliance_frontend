@@ -131,7 +131,7 @@
      case 'in progress':
        return 'Check details to learn more';
      case 'blocked':
-       return 'Pending signed paperwork to be turned into to the company by this driver.';
+       return 'Pending';
      default:
        return 'gray';
    }
