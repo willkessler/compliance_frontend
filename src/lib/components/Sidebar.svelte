@@ -39,8 +39,8 @@
    { href: 'https://chat.regulis.ai', newTab: true, disabled: false, label: 'AI-Compliance Check',
      icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
    { href: '/manage/integrations', newTab: false, disabled: false, label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
-   { href: '/help', newTab: false, label: 'Help', disabled: true, icon: QuestionCircleOutline, color: 'text-inherit' },
    { href: '/manage/organization', newTab: false, disabled: false, label: 'Admin', icon: Settings , color: 'text-inherit' },
+   { href: '/help', newTab: false, label: 'Help', disabled: true, icon: QuestionCircleOutline, color: 'text-inherit' },
  ];
  
  let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700  dark:text-white hover:bg-gray-300 dark:hover:bg-gray-300';
