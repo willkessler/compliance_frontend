@@ -71,6 +71,9 @@
    showModal = !showModal;
  }
  
+ function closeModal() {
+   showModal = false;
+ }
    
 </script>
 
@@ -201,6 +204,7 @@
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
   <AddActivityModal
     mode={modalMode}
+    closeCb={closeModal}
   />
 </Modal>
 

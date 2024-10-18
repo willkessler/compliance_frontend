@@ -7,6 +7,7 @@
  import ActionItemsTable from '$lib/components/ActionItemsTable.svelte';
 
  export let mode = 'accident';
+ export let closeCb = () => {};
  export let submitForm = () => { console.log('form submitted'); };
 
  const accidentDetailsProps = {
@@ -103,11 +104,13 @@
 
     <div class="flex justify-end">
       <Button class="mr-2 hover:text-customGray" on:click={() => { 
-                       submitForm() 
+                                                          submitForm(); 
+                                                          closeCb();
                        }}
         outline>Cancel</Button>
       <Button on:click={() => { 
-                       submitForm() 
+                       submitForm();
+                       closeCb();
                        }}
         class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
         Save Activity
