@@ -6,13 +6,13 @@
  import { userFiles, getFileById } from '$lib/data/userFilesData';
  
  let filters = [
-   { value: 'filter1', name: 'Federal files' },
-   { value: 'filter2', name: 'State files' },
-   { value: 'filter3', name: 'Vehicle files' },
-   { value: 'filter4', name: 'Driver files' },
-   { value: 'filter5', name: 'All' },
+   { value: 'federal', name: 'Federal files' },
+   { value: 'state', name: 'State files' },
+   { value: 'vehicle', name: 'Vehicle files' },
+   { value: 'driver', name: 'Driver files' },
+   { value: 'all', name: 'All' },
  ];
- let selectedFilter;
+ let selectedFilter = 'all';
  
  $: activeUrl = $page.url.searchParams.get('page');
  const paginatorJumpPage = '/manage/userFiles';
@@ -70,20 +70,22 @@
     </TableHead>
     <TableBody>
       {#each userFiles as file}
-        <TableBodyRow>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.name}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.type}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.category}</TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-            <div class="flex cursor-pointer">
-              <div>{file.acquisitionDate}</div>
-              <!-- <div><MapPinAltSolid class="ml-2" /></div> -->
-            </div>
-          </TableBodyCell>
-          <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/fleet/files/file/{file.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">View file</Button>
-          </TableBodyCell>
-        </TableBodyRow>
+        {#if selectedFilter === 'all' || file.category.toLowerCase() == selectedFilter}
+          <TableBodyRow>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.name}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.type}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{file.category}</TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
+              <div class="flex cursor-pointer">
+                <div>{file.acquisitionDate}</div>
+                <!-- <div><MapPinAltSolid class="ml-2" /></div> -->
+              </div>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <Button href="/manage/fleet/files/file/{file.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">View file</Button>
+            </TableBodyCell>
+          </TableBodyRow>
+        {/if}
       {/each}
     </TableBody>
   </Table>
