@@ -8,6 +8,7 @@
  import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
 
  import CSAScoreHistoryChart from '$lib/components/CSAScoreHistoryChart.svelte';
+ import CSABasicChart from '$lib/components/CSABasicChart.svelte';
  import SafetyScoreHistoryChart from '$lib/components/SafetyScoreHistoryChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
 
@@ -54,20 +55,21 @@
       </Card>
       <Card>
 	<CardContent style="padding-top: 1rem;">
-          <div class="flex items-center">
-              <div class="flex items-center safety-score">
-                <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
-                <div class="score-label pl-2 text-nowrap">Today's Safety Score</div>
-                <div class="score ml-2 font-semibold text-nowrap">{todaysSafetyScore}</div>
+          <div class="safety-score flex items-center mt-4">
+              <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
+              <div class="score-label pl-2 text-nowrap">Current Safety Score</div>
+              <div class="ml-4">
+                <Badge class="px-2 py-3 rounded rounded-[6px] min-w-32 bg-green-500 text-[#000]} cursor-pointer uppercase">
+                  <span class="font-semibold text-md text-yellow-200">
+                    Satisfactory
+                  </span>
+                </Badge>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
-                <SafetyScoreHistoryChart
-                  chartTitle="Safety rating by week"
-                  color="orange"
-                />
+                <CSABasicChart />
               </div>
             </div>
           </div>
