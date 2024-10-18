@@ -33,13 +33,13 @@
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
-  let pages = [
-    { name: 1, href: '/components/pagination?page=1' },
-    { name: 2, href: '/components/pagination?page=2' },
-    { name: 3, href: '/components/pagination?page=3' },
-    { name: 4, href: '/components/pagination?page=4' },
-    { name: 5, href: '/components/pagination?page=5' }
-  ];
+ const paginatorJumpPage = '/manage/fleet/drivers';
+ let pages = [
+   { name: 1, href: paginatorJumpPage },
+   { name: 2, href: paginatorJumpPage },
+   { name: 3, href: paginatorJumpPage },
+   { name: 4, href: paginatorJumpPage },
+ ];
 
   $: {
     pages.forEach((page) => {
@@ -47,7 +47,7 @@
       let queryString = splitUrl.slice(1).join('?');
       const hrefParams = new URLSearchParams(queryString);
       let hrefValue = hrefParams.get('page');
-      if (hrefValue === activeUrl) {
+      if (hrefValue === activeUrl && false) { // defeated for WSTA
         page.active = true;
       } else {
         page.active = false;
@@ -57,10 +57,10 @@
   }
 
   const previous = () => {
-    alert('Previous btn clicked. Make a call to your server to fetch data.');
+    console.log('Previous btn clicked. Make a call to your server to fetch data.');
   };
   const next = () => {
-    alert('Next btn clicked. Make a call to your server to fetch data.');
+    console.log('Next btn clicked. Make a call to your server to fetch data.');
   };
 
  function navigateToDriverDetails(driverId) {

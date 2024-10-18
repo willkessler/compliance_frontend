@@ -18,6 +18,8 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
  import { certifications, drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
@@ -56,6 +58,38 @@
       zoomedDriverLicense = false;
     }, 300); // 300ms delay before hiding the zoomed image
   }
+
+ function handleEditClick() {
+   modalStore.open({
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to edit this driver\'s data in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
+
+ function handleCredentialClick(kind:string) {
+   let message;
+   switch (kind) {
+     case 'Notify driver':
+       message = 'Driver notified';
+       break;
+     case 'Auto-file':
+       message = 'Autofile complete';
+       break;
+   }
+       
+   modalStore.open({
+     title: '',
+     isConfirm:false,
+     message: message + '!',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
 
   onMount(() => {
     return () => {
@@ -126,7 +160,12 @@
 	  <p class="text-sm text-muted-foreground">Last updated: {driver.startDate}</p>
         </div>
         <div>
-          <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
+          <Button
+            outline 
+            on:click={handleEditClick}
+            class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300">
+            <PenOutline />&nbsp;Edit
+          </Button>
         </div>
       </div>
     </div>
@@ -305,7 +344,11 @@
               {/if}
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">
+              <Button 
+                href="/manage/fleet/drivers/driver/{driver.id}" 
+                color="light" 
+                on:click={() => handleCredentialClick(certification.action)}
+                class="text-customGray hover:text-customGray p-2 min-w-32">
                 {certification.action} →
               </Button>
             </TableBodyCell>
@@ -356,3 +399,5 @@
   </div>
 
 </ActivityLayout>
+
+<ConfirmModal />

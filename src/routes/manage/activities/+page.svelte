@@ -32,12 +32,12 @@
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
+ const paginatorJumpPage = '/manage/activities';
  let pages = [
-   { name: 1, href: '/components/pagination?page=1' },
-   { name: 2, href: '/components/pagination?page=2' },
-   { name: 3, href: '/components/pagination?page=3' },
-   { name: 4, href: '/components/pagination?page=4' },
-   { name: 5, href: '/components/pagination?page=5' }
+   { name: 1, href: paginatorJumpPage },
+   { name: 2, href: paginatorJumpPage },
+   { name: 3, href: paginatorJumpPage },
+   { name: 4, href: paginatorJumpPage },
  ];
 
  $: {
@@ -46,7 +46,7 @@
      let queryString = splitUrl.slice(1).join('?');
      const hrefParams = new URLSearchParams(queryString);
      let hrefValue = hrefParams.get('page');
-     if (hrefValue === activeUrl) {
+     if (hrefValue === activeUrl && false) { // defeated for demo
        page.active = true;
      } else {
        page.active = false;
@@ -56,10 +56,10 @@
  }
 
  const previous = () => {
-   alert('Previous btn clicked. Make a call to your server to fetch data.');
+   console.log('Previous btn clicked. Make a call to your server to fetch data.');
  };
  const next = () => {
-   alert('Next btn clicked. Make a call to your server to fetch data.');
+   console.log('Next btn clicked. Make a call to your server to fetch data.');
  };
 
  function navigateToActivityDetails(activityId) {
@@ -71,6 +71,9 @@
    showModal = !showModal;
  }
  
+ function closeModal() {
+   showModal = false;
+ }
    
 </script>
 
@@ -112,10 +115,11 @@
 
     <div class="ml-6 min-w-64 mr-4 ">
       <div class="flex gap-x-4">
-        <Input id="search" placeholder="Search">
+        <Input id="search" placeholder="Search" disabled>
           <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
         </Input>
         <Button
+          disabled
           class="bg-gray-300 hover:bg-gray-500 text-white text-md mr-4 min-w-[200px]">
           &nbsp;&nbsp;Filter
           <ChevronDownOutline class="w-6 h-6 ms-2 text-white dark:text-white" />
@@ -201,6 +205,7 @@
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
   <AddActivityModal
     mode={modalMode}
+    closeCb={closeModal}
   />
 </Modal>
 
