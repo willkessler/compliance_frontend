@@ -9,6 +9,20 @@
  import { getStatusColor, displayDueDate, filings } from '$lib/data/filingData';
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
+
+
+ function handleSeeDetailsClick() {
+   modalStore.open({
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to view state filing documents in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
 
 </script>
 
@@ -59,7 +73,12 @@
 	  </TableBodyCell>
 
           <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <Button href="/manage/filings/state" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">See details →</Button>
+            <Button 
+              on:click={handleSeeDetailsClick}
+              color="light" 
+              class="text-customGray hover:text-customGray p-2 min-w-32">
+              See details →
+            </Button>
           </TableBodyCell>
 
 	</TableBodyRow>
@@ -101,3 +120,5 @@
   </div>
 
 </div>
+
+<ConfirmModal />
