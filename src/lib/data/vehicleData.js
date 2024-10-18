@@ -208,7 +208,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'Dallas',
     state: 'TX',
-    description: 'Cherry red paint, attracts CHP. Can we get this redone in white for crying out loud!',
+    description: 'Recently repainted and added tinted windows. Note, keep track of whether or not driver is penalized for the tint.',
     photo: 'new-red-semi-truck-ready-to-go-to-work-CPPEAA.jpg',
   },  
   {
@@ -225,7 +225,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'Los Angeles',
     state: 'CA',
-    description: 'Built Ford tough. Dismal mpg.',
+    description: 'Purchased pre-owned from Mike\s shop.',
     photo: 'red-truck-2986654.webp',
   },  
   {
@@ -242,7 +242,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'San Diego',
     state: 'CA',
-    description: 'Model A. My grandma drove this truck. Still chugging along, at 2mpg.',
+    description: 'Purchased new from dealership. Pending rebate.',
     photo: 'semitrailer-truck-isolated-front-view-260nw-1490601317.webp',
   },  
   {
@@ -275,7 +275,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'Santa Monica',
     state: 'CA',
-    description: 'Fresh tires, fresh lube, looking good as of July 31, 2024.',
+    description: 'New tires, annual check completed, looking good as of July 31, 2024.',
   },  
   {
     id: 9282,
