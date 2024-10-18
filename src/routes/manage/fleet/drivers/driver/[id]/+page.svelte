@@ -59,11 +59,11 @@
     }, 300); // 300ms delay before hiding the zoomed image
   }
 
- function handleConfirmClick() {
+ function handleEditClick() {
    modalStore.open({
      title: '',
      isConfirm:false,
-     message: 'You do not have permission to edit this data.',
+     message: 'You do not have permission to edit this driver\'s data in the demo environment.',
      onConfirm: () => {
        console.log('Confirm modal dismissed');
      },
@@ -162,7 +162,7 @@
         <div>
           <Button
             outline 
-            on:click={handleConfirmClick}
+            on:click={handleEditClick}
             class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300">
             <PenOutline />&nbsp;Edit
           </Button>

@@ -47,7 +47,7 @@
    modalStore.open({
      title: '',
      isConfirm:false,
-     message: 'You do not have permission to edit this data.',
+     message: 'You do not have permission to edit this data in the demo environment.',
      onConfirm: () => {
        console.log('Confirm modal dismissed');
      },

@@ -17,6 +17,8 @@
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
  import TripList from '$lib/components/TripList.svelte';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
@@ -68,6 +70,17 @@
    goto(`/manage/fleet/drivers/driver/${driverId}`, { replaceState: false });
  }
 
+ function handleEditClick() {
+   modalStore.open({
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to edit this vehicle\'s data in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
+
 </script>
 
 <style>
@@ -95,7 +108,12 @@
 	    <p class="text-sm text-muted-foreground">Last updated: {vehicle.acquisitionDate}</p>
           </div>
           <div>
-            <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
+            <Button 
+              outline
+              on:click={handleEditClick}
+              class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300">
+              <PenOutline />&nbsp;Edit
+            </Button>
           </div>
         </div>
       </div>
@@ -265,3 +283,5 @@
   />
 
 </ActivityLayout>
+
+<ConfirmModal />

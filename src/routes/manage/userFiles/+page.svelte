@@ -4,6 +4,8 @@
  import { Pagination, PaginationItem, Label, Select } from 'flowbite-svelte';
  import { page } from '$app/stores';
  import { userFiles, getFileById } from '$lib/data/userFilesData';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
  
  let filters = [
    { value: 'federal', name: 'Federal files' },
@@ -44,6 +46,18 @@
  const next = () => {
    console.log('Next btn clicked. Make a call to your server to fetch data.');
  };
+
+ function handleViewFilesClick() {
+   modalStore.open({
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to view this file in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
+
 </script>
    
 <div class="m-4">
@@ -82,7 +96,12 @@
               </div>
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <Button href="/manage/fleet/files/file/{file.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">View file</Button>
+              <Button
+                color="light" 
+                on:click={handleViewFilesClick}
+                class="text-customGray hover:text-customGray p-2 min-w-32">
+                View file
+              </Button>
             </TableBodyCell>
           </TableBodyRow>
         {/if}
@@ -104,3 +123,5 @@
     </Pagination>
   </div>
 </div>
+
+<ConfirmModal />
