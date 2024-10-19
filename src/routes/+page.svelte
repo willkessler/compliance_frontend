@@ -179,9 +179,6 @@
 </main>
 
 <style>
- .score {
-   font-size: 45px;
- }
  .score-label {
    font-size: 25px;
    font-weight:600;

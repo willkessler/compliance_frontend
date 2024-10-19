@@ -333,28 +333,43 @@ ul li:before {
           <div class="flex justify-start ">
             <div class="cursor-pointer">
               <img 
+                alt="violation"
                 on:mouseenter={() => { zoomedViolationPic = true; }}
                 class="max-w-[180px] min-w-[150px] p-2" 
                 src="/images/violations/{getActionItemById(actionItemId).violationImage}" 
               />
               {#if zoomedViolationPic}
                 <div 
+                  role="button"
+                  tabindex="1"
                   on:mouseleave={() => { zoomedViolationPic = false; }}
                   >
-                  <img class="top-10 right-12 absolute max-w-[500px] border rounded" src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
+                  <img alt="violation" 
+                    class="top-10 right-12 absolute max-w-[500px] border rounded" 
+                    src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
                 </div>
               {/if}
             </div>
             <div class="cursor-pointer">
               <div
+                role="button"
+                tabindex="1"
                 on:mouseenter={() => { zoomedCourtPic = true; }}
                 >
-                <img class=" min-w-[150px] p-2" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+                <img 
+                  alt="court" 
+                  class="min-w-[150px] p-2" 
+                  src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
                 {#if zoomedCourtPic}
                 <div 
+                  role="button"
+                  tabindex="1"
                   on:mouseleave={() => { zoomedCourtPic = false; }}
                   >
-                  <img class="top-10 right-12 absolute max-w-[500px] border rounded" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+                  <img
+                    alt="court" 
+                    class="top-10 right-12 absolute max-w-[500px] border rounded" 
+                    src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
                 </div>
                 {/if}
               </div>
