@@ -346,34 +346,10 @@ ul li:before {
                   on:mouseleave={() => { zoomedViolationPic = false; }}
                   >
                   <img alt="violation" 
-                    class="top-10 right-12 absolute max-w-[500px] border rounded" 
+                    class="top-12 right-12 absolute max-w-[500px] border rounded" 
                     src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
                 </div>
               {/if}
-            </div>
-            <div class="cursor-pointer">
-              <div
-                role="button"
-                tabindex="1"
-                on:mouseenter={() => { zoomedCourtPic = true; }}
-                >
-                <img 
-                  alt="court" 
-                  class="min-w-[150px] p-2" 
-                  src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
-                {#if zoomedCourtPic}
-                <div 
-                  role="button"
-                  tabindex="1"
-                  on:mouseleave={() => { zoomedCourtPic = false; }}
-                  >
-                  <img
-                    alt="court" 
-                    class="top-10 right-12 absolute max-w-[500px] border rounded" 
-                    src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
-                </div>
-                {/if}
-              </div>
             </div>
           </div>
           <div class="font-semibold pt-2">
