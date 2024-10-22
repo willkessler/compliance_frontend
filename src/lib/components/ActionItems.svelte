@@ -1,6 +1,8 @@
 <script lang="ts">
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem,
-        Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+        Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Toast } from 'flowbite-svelte';
+ import { slide } from 'svelte/transition';
+
  import { FileDrop } from 'svelte-droplet';
  import {
         ArrowRightOutline,
@@ -61,6 +63,9 @@
  let selectedActionTypeValue = '';
  let selectedStatusTypeValue = '';
 
+ let toastStatus = false;
+ let toastCounter = 5;
+
  $: if (selectedAction) {
    selectedActionTypeValue = selectedAction.type.toLowerCase();
  }
@@ -115,6 +120,18 @@
     console.log('Selected action type:', selectedStatusTypeValue);
   }
 
+ function triggerActionToast() {
+   toastStatus = true;
+   toastCounter = 6;
+   toastTimeout();
+  }
+
+  function toastTimeout() {
+    if (--toastCounter > 0) return setTimeout(toastTimeout, 1000);
+    toastStatus = false;
+  }
+
+
   function updateAction() {
     // Handle action update logic here
     console.log('Updating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
@@ -122,6 +139,7 @@
     selectedAction = null;
     selectedActionTypeValue = '';
     uploadedFiles = [];
+    triggerActionToast();
   }
 
   function createAction() {
@@ -130,6 +148,7 @@
     showModal = false;
     selectedActionTypeValue = '';
     uploadedFiles = [];
+    triggerActionToast();
   }
 
  //
@@ -230,6 +249,11 @@ ul li:before {
 </style>
 
 
+<Toast class="mt-4 bg-orange-400 text-white-900" dismissable={false} transition={slide} bind:toastStatus>
+  <CheckCircleSolid slot="icon" class="w-5 h-5" />
+  Creating/editing activity data is not possible in the demo environment.
+</Toast>
+
 <div>
   {#if showChrome}
     <div class="flex justify-between items-end mb-4 ml-0 mt-8">
@@ -310,28 +334,43 @@ ul li:before {
           <div class="flex justify-start ">
             <div class="cursor-pointer">
               <img 
+                alt="violation"
                 on:mouseenter={() => { zoomedViolationPic = true; }}
                 class="max-w-[180px] min-w-[150px] p-2" 
                 src="/images/violations/{getActionItemById(actionItemId).violationImage}" 
               />
               {#if zoomedViolationPic}
                 <div 
+                  role="button"
+                  tabindex="1"
                   on:mouseleave={() => { zoomedViolationPic = false; }}
                   >
-                  <img class="top-10 right-12 absolute max-w-[500px] border rounded" src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
+                  <img alt="violation" 
+                    class="top-10 right-12 absolute max-w-[500px] border rounded" 
+                    src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
                 </div>
               {/if}
             </div>
             <div class="cursor-pointer">
               <div
+                role="button"
+                tabindex="1"
                 on:mouseenter={() => { zoomedCourtPic = true; }}
                 >
-                <img class=" min-w-[150px] p-2" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+                <img 
+                  alt="court" 
+                  class="min-w-[150px] p-2" 
+                  src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
                 {#if zoomedCourtPic}
                 <div 
+                  role="button"
+                  tabindex="1"
                   on:mouseleave={() => { zoomedCourtPic = false; }}
                   >
-                  <img class="top-10 right-12 absolute max-w-[500px] border rounded" src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
+                  <img
+                    alt="court" 
+                    class="top-10 right-12 absolute max-w-[500px] border rounded" 
+                    src="/images/violations/{getActionItemById(actionItemId).courtImage}" />
                 </div>
                 {/if}
               </div>

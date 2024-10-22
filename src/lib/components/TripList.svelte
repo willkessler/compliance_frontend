@@ -37,16 +37,20 @@
             </TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
               <div class="flex items-center">
-                <div class="pr-1" on:click={() => { 
-                                                  whichDate = leg.startDate;
-                                                  whichTripId = leg.tripId;
-                                                  whichLegId = leg.id;
-                                                  whichInsp = 'pre';
-                                                  if (getVehicleDvir(vehicleId, whichTripId, whichLegId, 
-                                                    whichInsp) !== null) {
-                                                    showModal = true;
-                                                  }
-                                           }} >
+                <div 
+                  class="pr-1" 
+                  role="button"                  
+                  tabindex="1"
+                  on:click={() => { 
+                           whichDate = leg.startDate;
+                           whichTripId = leg.tripId;
+                           whichLegId = leg.id;
+                           whichInsp = 'pre';
+                           if (getVehicleDvir(vehicleId, whichTripId, whichLegId, 
+                             whichInsp) !== null) {
+                             showModal = true;
+                           }
+                           }} >
                   {leg.preTrip}.pdf
                 </div>
                 <div>
@@ -56,15 +60,19 @@
             </TableBodyCell>
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
               <div class="flex items-center">
-                <div class="pr-1" on:click={() => { 
-                                                  whichTripId = leg.tripId;
-                                                  whichLegId = leg.id;
-                                                  whichInsp = 'post';
-                                                  if (getVehicleDvir(vehicleId, whichTripId, whichLegId, 
-                                                    whichInsp) !== null) {
-                                                    showModal = true;
-                                                  }
-                                           }} >
+                <div 
+                  role="button"
+                  tabindex="1"
+                  class="pr-1" 
+                  on:click={() => { 
+                           whichTripId = leg.tripId;
+                           whichLegId = leg.id;
+                           whichInsp = 'post';
+                           if (getVehicleDvir(vehicleId, whichTripId, whichLegId, 
+                             whichInsp) !== null) {
+                             showModal = true;
+                           }
+                           }} >
                   {leg.postTrip}.pdf
                 </div>
                 <div>

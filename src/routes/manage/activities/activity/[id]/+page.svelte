@@ -13,6 +13,8 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
  import Map from '$lib/components/Map.svelte';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
  import { activities, getActivityTitle, getActivityById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/activityData';
  import { drivers, getDriverById } from '$lib/data/driverData';
@@ -22,6 +24,7 @@
  import { onMount } from 'svelte';
 
  let zoomedDriverPic = false;
+
  let showCourtModal = false;
 
  //
@@ -46,6 +49,17 @@
     formattedDate = formatDate(dueDate);
   }
 
+ function handleConfirmClick() {
+   modalStore.open({
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to edit this data in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
+ 
   onMount(() => {
     formattedDate = formatDate(dueDate);
   });
@@ -110,7 +124,13 @@
 	  <p class="text-sm text-muted-foreground">Last updated: Jan 24, 2024</p>
         </div>
         <div>
-          <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
+          <Button 
+            outline
+            on:click={handleConfirmClick}
+            class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300">
+            <PenOutline />
+            &nbsp;Edit
+          </Button>
         </div>
       </div>
     </div>
@@ -267,9 +287,11 @@
   backdropClass="fixed inset-0 z-40 bg-white/80"
   size="xl"
   bodyClass="p-4 md:p-5 space-y-4 flex-1 overflow:hidden overscroll-contain"
-  class="w-[80vw] h-[80vh] max-w-none max-h-[80vh] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
->
+  class="w-[80vw] h-[80vh] max-w-none max-h-[80vh] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
   <div class="w-full h-full p-6">
     <Map zipcode="86401" preOpenLocation="Kingman Cerbat" />
   </div>
 </Modal>
+
+<ConfirmModal />
+

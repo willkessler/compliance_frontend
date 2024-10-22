@@ -3,7 +3,6 @@
  import { createChart } from './SafetyScoreCore.js';
 
  export let chartTitle = "Score by week";
- export let color = "var(--color-primary)";
  let chartContainer;
  let containerWidth;
  let containerHeight;
