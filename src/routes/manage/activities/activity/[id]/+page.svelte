@@ -1,6 +1,6 @@
 <script lang="ts">
  import { goto } from '$app/navigation';
- import { Badge, Button, Label, Input, Textarea,  Select,
+ import { Badge, Button, Label, Input, Textarea,  Select, Modal,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,
@@ -12,6 +12,7 @@
  import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
+
  import { modalStore } from '$lib/stores/modalStore.ts';
  import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
@@ -23,7 +24,6 @@
  import { onMount } from 'svelte';
 
  let zoomedDriverPic = false;
- let showConfirmModal = false;
 
  //
  // Date handler
@@ -44,7 +44,7 @@
   }
 
  function handleConfirmClick() {
-   modalStore.open({
+   modalStore.open('confirm', {
      title: '',
      isConfirm:false,
      message: 'You do not have permission to edit this data in the demo environment.',
@@ -77,12 +77,12 @@
 
  function setSelectedActionId (actionId) {
    selectedActionId = actionId;
-   console.log(`set current action id to ${selectedActionId}`);
+   //console.log(`set current action id to ${selectedActionId}`);
    showRightPanel = true;
  }
  
  function hideRightPanel () {
-   console.log('inside hideRightPanel');
+   //console.log('inside hideRightPanel');
    showRightPanel = false;
  }
 
@@ -259,7 +259,9 @@
   </div>
 
   <div class="w-full mt-5">
-    <Uploads />
+    <Uploads 
+      previouslyUploadedFiles={activity.uploads}
+    />
   </div>
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
