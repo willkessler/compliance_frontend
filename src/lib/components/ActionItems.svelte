@@ -343,6 +343,12 @@ ul li:before {
           data={getActionItemById(actionItemId)}
           dataField="type"
         />
+
+        {#if getActionItemById(actionItemId).violationType !== undefined}
+          <div class="font-semibold">Violation type:</div>
+          <div class="text-customGray">{getActionItemById(actionItemId).violationType}</div>
+        {/if}
+
       </div>
 
         {#if (getActionItemById(actionItemId).type.toLowerCase() === 'payment') }
