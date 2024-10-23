@@ -25,6 +25,7 @@
  import { onMount } from 'svelte';
  import { actions, getTypeIcon, getActionItems, getActionItemById, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
+ import Map from '$lib/components/Map.svelte';
 
  //
  // Modal related
@@ -38,8 +39,8 @@
  export let actionItemId = null;    // which action item id
  export let setActionItemCb = () => { };  // stub for passed in callback
  export let hideRightPanelCb = () => { }; // stub for passed in callback
- export let showCourtMapCb = () => { }; // stub for passed in callback to show court map
  export let showChrome = true; // whether to show all controls
+ let showCourtModal = false;
 
   onMount(() => {
     formattedDate = formatDate(dueDate);
@@ -65,6 +66,7 @@
 
  let toastStatus = false;
  let toastCounter = 5;
+
 
  $: if (selectedAction) {
    selectedActionTypeValue = selectedAction.type.toLowerCase();
@@ -327,56 +329,6 @@ ul li:before {
       </button>
     </div>
     {#if (actionItemId !== null) }
-        {#if (getActionItemById(actionItemId).type.toLowerCase() === 'payment') }
-          <div class="font-semibold">
-            Related incident images:
-          </div>
-          <div class="flex justify-start ">
-            <div class="cursor-pointer">
-              <img 
-                alt="violation"
-                on:mouseenter={() => { zoomedViolationPic = true; }}
-                class="max-w-[180px] min-w-[150px] p-2" 
-                src="/images/violations/{getActionItemById(actionItemId).violationImage}" 
-              />
-              {#if zoomedViolationPic}
-                <div 
-                  role="button"
-                  tabindex="1"
-                  on:mouseleave={() => { zoomedViolationPic = false; }}
-                  >
-                  <img alt="violation" 
-                    class="top-12 right-12 absolute max-w-[500px] border rounded" 
-                    src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
-                </div>
-              {/if}
-            </div>
-          </div>
-          <div class="font-semibold pt-2">
-            Traffic Court Information :
-          </div>
-          <div class="w-full text-sm">
-            <div class="pt-1">
-              <div class="flex items-center">
-                <div>
-                  {getActionItemById(actionItemId).courtDetails.name}
-                </div>
-                <div on:click={() => showCourtMapCb() } class="cursor-pointer ml-2" outline><MapPinAltOutline /></div>
-              </div>
-              <div>{getActionItemById(actionItemId).courtDetails.street}</div>
-              <div>{getActionItemById(actionItemId).courtDetails.city},
-                {getActionItemById(actionItemId).courtDetails.state}
-                {getActionItemById(actionItemId).courtDetails.zip}
-              </div>
-              <div>
-                {getActionItemById(actionItemId).courtDetails.phone}
-              </div>
-              <div class="flex pt-2 items-center text-customGray">
-                <Button class="hover:text-gray-800" outline size="xs" target="_blank" href={getActionItemById(actionItemId).courtDetails.site}>Jump to traffic court's website</Button>
-              </div>
-            </div>
-          </div>
-        {/if}
       <div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-4">
         <div class="font-semibold">Action:</div>
         <div class="text-customGray">{getActionItemById(actionItemId).name}</div>
@@ -391,6 +343,63 @@ ul li:before {
           dataField="type"
         />
       </div>
+
+        {#if (getActionItemById(actionItemId).type.toLowerCase() === 'payment') }
+          <div class="font-semibold pt-2 pb-2">
+            Court Information :
+          </div>
+          <div class="flex justify-start ">
+            <div class="cursor-pointer">
+              <img 
+                alt="violation"
+                on:mouseenter={() => { zoomedViolationPic = true; }}
+              class="max-w-[180px] min-w-[150px] p-2 border border-customGray" 
+              src="/images/violations/{getActionItemById(actionItemId).violationImage}" 
+              />
+              {#if zoomedViolationPic}
+                <div 
+                  role="button"
+                  tabindex="1"
+                  on:mouseleave={() => { zoomedViolationPic = false; }}
+                  >
+                  <img alt="violation" 
+                    class="top-12 right-12 absolute max-w-[500px] border rounded border border-customGray"
+                    src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
+                </div>
+              {/if}
+            </div>
+            <div class="w-full text-sm pl-4 text-sm">
+              <div class="pt-1">
+                <div>
+                  {getActionItemById(actionItemId).courtDetails.name}
+                </div>
+                <div>{getActionItemById(actionItemId).courtDetails.street1}</div>
+                <div>{getActionItemById(actionItemId).courtDetails.street2}</div>
+                <div>{getActionItemById(actionItemId).courtDetails.city},
+                  {getActionItemById(actionItemId).courtDetails.state}
+                  {getActionItemById(actionItemId).courtDetails.zip}
+                </div>
+                <div>
+                  {getActionItemById(actionItemId).courtDetails.phone}
+                </div>
+                <div class="flex pt-2 cursor-pointer" on:click={() => {showCourtModal = true; }} >
+                  <div class="mr-2" outline><MapPinAltOutline /></div>
+                  <div class="hover:underline text-customGray">View on map</div>
+                </div>
+                <div class="flex ml-4 items-center flex">
+                  <Button 
+                    class="text-sm font-normal text-customGray hover:underline" 
+                    size="xs" 
+                    target="_blank" 
+                    href={getActionItemById(actionItemId).courtDetails.site}>
+                    Court website
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/if}
+
       <div>
         <div class="font-semibold mt-2">Notes:</div>
         <div class="text-customGray rounded-md border p-4 mt-2 italic w-full">{getActionItemById(actionItemId).description}</div>
@@ -534,4 +543,22 @@ ul li:before {
       </Button>
     </div>
   </svelte:fragment>
+</Modal>
+
+<Modal 
+  bind:open={showCourtModal} 
+  outsideclose
+  size="lg"
+  class="w-[80vw] h-[80vh] max-w-none max-h-[80vh] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
+  backdropClass="fixed inset-0 z-40"
+  bodyClass="p-4 md:p-5 space-y-4 flex-1 overflow:hidden overscroll-contain"
+>
+  <div class="w-full h-full p-6">
+    {#if (actionItemId !== null) }
+      <Map 
+        zipcode={getActionItemById(actionItemId).courtDetails?.zip}
+        preOpenLocation={getActionItemById(actionItemId).courtDetails?.name}
+      />
+    {/if}
+  </div>
 </Modal>

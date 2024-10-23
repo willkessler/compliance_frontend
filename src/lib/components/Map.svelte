@@ -2,6 +2,7 @@
   import { onMount, afterUpdate } from "svelte";
   export let zipcode = "10001";
   export let preOpenLocation = ""; // New prop for the location to pre-open
+
   let map;
   let mapElement;
   let markers = [];

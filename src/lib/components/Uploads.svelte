@@ -4,11 +4,21 @@
 
  import { FileSolid } from 'flowbite-svelte-icons';
  import { page } from '$app/stores';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import FilePreviewModal from '$lib/components/FilePreviewModal.svelte';
 
  export let previouslyUploadedFiles = [
-   { filename: "Document_name_incident_report",    date: 'Aug 31, 2024'},
-   { filename: "Picture_of_the_issue.jpg",         date: 'Aug 31, 2024'},
+   { name: "Document_name_incident_report",    date: 'Aug 31, 2024'},
+   { name: "Picture_of_the_issue.jpg",         date: 'Aug 31, 2024'},
  ];
+
+ function handleFilePreviewClick( filePath: string) {
+   modalStore.open('filePreview', {
+     isConfirm:false,
+     filePath: filePath,
+   });
+ }
+ 
 </script>
 
 <h1 class="text-lg font-bold mb-2 mt-5">Uploaded Files</h1>
@@ -23,9 +33,13 @@
       <TableBodyRow>
         <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">
           <a href={$page.url.pathname} >
-            <div class="flex items-top">
-              {uploadedFile.filename} &nbsp;
-              <FileSolid />
+            <div class="flex items-top gap-1">
+              <div><FileSolid /></div>
+              {#if uploadedFile.path !== undefined}
+                <div on:click={() => {handleFilePreviewClick(uploadedFile.path)} }>{uploadedFile.name}</div>
+              {:else}
+                <div>{uploadedFile.name}</div>
+              {/if}
             </div>
           </a>
         </TableBodyCell>
@@ -34,3 +48,6 @@
     {/each}
   </TableBody>
 </Table>
+
+<FilePreviewModal 
+/>

@@ -164,6 +164,7 @@ export const activities = [
     vehicleId: 4396,
     level: 'State',
     description:'Tom called this one in after feeling some rear wobble on Highway 64.',
+    uploads: [],
   },
   {
     id: 1298,
@@ -178,6 +179,7 @@ export const activities = [
     vehicleId: 4396,
     level: 'State',
     description:'Fault codes: 841, 822, 909',
+    uploads: [],
   },
   {
     id: 1299,
@@ -192,6 +194,7 @@ export const activities = [
     vehicleId: 4396,
     level: 'Federal',
     description:'Run the 90 day vehicle inspection report.',
+    uploads: [],
   },
   {
     id: 1294,
@@ -206,6 +209,7 @@ export const activities = [
     vehicleId: 9311,
     level: 'State',
     description:'Make sure we get Tom\'s DOT medical test done.',
+    uploads: [],
   },
   {
     id: 1295,
@@ -220,6 +224,7 @@ export const activities = [
     vehicleId: 9311,
     level: 'State',
     description:'Thomas failed initially and now passed the drug test so we need to start the RTD process.',
+    uploads: [],
   },
   {
     id: 1296,
@@ -234,6 +239,7 @@ export const activities = [
     vehicleId: 9311,
     level: 'State',
     description:'Don\'t forget!',
+    uploads: [],
   },
   {
     id: 292,
@@ -248,6 +254,33 @@ export const activities = [
     vehicleId: 4385,
     level: 'State',
     description:'Mark caught this during a routine pre-trip insp.',
+    uploads: [],
+  },
+  {
+    id: 33829,
+    priority: 'Medium',
+    type: 'Driver issue',
+    category: 'Incidents',
+    status: 'Open',
+    occurrenceDate: 'Feb 23, 2024', 
+    dueDate: 'Jun 20, 2024',
+    title: 'Moving violation',
+    driverId: 1923,
+    vehicleId: 4385,
+    level: 'State',
+    description:'Mark got this violation in the Cascades, Rte 5, OR.',
+    uploads: [
+      {
+        name: 'LetterFromCourt.pdf',
+        path: 'rosa_courtletter.pdf',
+        date: 'Jan 12, 2024',
+      },
+      {
+        name: 'Violations.pdf',
+        path: 'rosa_violation.pdf',
+        date: 'Jan 9, 2024',
+      },
+    ],
   },
   {
     id: 33828,
@@ -262,6 +295,7 @@ export const activities = [
     vehicleId: 4385,
     level: 'State',
     description:'Mark got slapped with this violation on return after freight transfer from shipper Xantive.',
+    uploads: [],
   },
   {
     id: 48482,
@@ -276,6 +310,7 @@ export const activities = [
     vehicleId: 6354,
     level: 'State',
     description:'Joe reported this one.',
+    uploads: [],
   },
   {
     id: 59382,
@@ -290,6 +325,7 @@ export const activities = [
     vehicleId: 9311,
     level: 'State',
     description:' ',
+    uploads: [],
   },
   {
     id: 68292,
@@ -304,6 +340,7 @@ export const activities = [
     vehicleId: 5322,
     level: 'State',
     description:' ',
+    uploads: [],
   },
   {
     id: 79182,
@@ -318,6 +355,7 @@ export const activities = [
     vehicleId: 5331,
     level: 'State',
     description:' ',
+    uploads: [],
   },
   {
     id: 81829,
@@ -332,6 +370,7 @@ export const activities = [
     vehicleId: 9822,
     level: 'State',
     description:' ',
+    uploads: [],
   },
   {
     id: 99928,
@@ -346,6 +385,7 @@ export const activities = [
     vehicleId: 9282,
     level: 'State',
     description:' ',
+    uploads: [],
   },
   {
     id: 10023,
@@ -360,6 +400,7 @@ export const activities = [
     vehicleId: 9283,
     level: 'State',
     description:' ',
+    uploads: [],
   },
   {
     id: 1293,
@@ -374,5 +415,6 @@ export const activities = [
     vehicleId: 4396,
     level: 'State',
     description:'Tom says the weigh station mechanic explained weak power on this vehicle is due to old spark plugs.',
+    uploads: [],
   },
 ];

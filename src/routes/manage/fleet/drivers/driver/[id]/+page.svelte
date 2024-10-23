@@ -364,13 +364,13 @@
 
   <Uploads 
     previouslyUploadedFiles={[
-                            { filename: 'Pre-hire Drug & Alcohol Test -- PASSED (pdf)', date: 'Feb 15, 2024' },
-                            { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
-                            { filename: 'CDL (pdf)', date: 'Feb 12, 2024' },
-                            { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' },
-                            { filename: 'Latest Drug & Alcohol Test -- PASSED (pdf)', date: 'May 15, 2024' },
-                            { filename: 'Driver Qualifications File (DQ) (pdf)', date: 'Jan 8, 2024' },
-                            { filename: 'Driver Records File (zip)', date: 'Mar 23, 2024' },
+                            { name: 'Pre-hire Drug & Alcohol Test -- PASSED (pdf)', date: 'Feb 15, 2024' },
+                            { name: 'Work application (pdf)', date: 'Feb 11, 2024' },
+                            { name: 'CDL (pdf)', date: 'Feb 12, 2024' },
+                            { name: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' },
+                            { name: 'Latest Drug & Alcohol Test -- PASSED (pdf)', date: 'May 15, 2024' },
+                            { name: 'Driver Qualifications File (DQ) (pdf)', date: 'Jan 8, 2024' },
+                            { name: 'Driver Records File (zip)', date: 'Mar 23, 2024' },
                             ]}
   />
 

@@ -28,10 +28,11 @@
 
  let zoomedDriverPic = false;
 
+ // generic default for all vehicles for now
  let previouslyUploadedFiles = [
-   { filename: "90-day-inspection-report.pdf",     date: 'Sep 3, 2024'},
-   { filename: "Insurance-log-and-report-8-31-24.pdf",    date: 'Aug 31, 2024'},
-   { filename: "ManufacturersWarranty.docx",         date: 'Jan 31, 2024'},
+   { name: "90-day-inspection-report.pdf",            date: 'Sep 3, 2024'},
+   { name: "Insurance-log-and-report-8-31-24.pdf",    date: 'Aug 31, 2024'},
+   { name: "ManufacturersWarranty.docx",              date: 'Jan 31, 2024'},
  ];
 
  //
