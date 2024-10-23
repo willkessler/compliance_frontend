@@ -79,7 +79,7 @@
 
 <div class="p-6 space-y-6">
   <div class="flex justify-between items-center">
-    <h2 class="text-xl text-green-600 font-bold">CSA:BASIC score trends</h2>
+    <h2 class="text-xl text-green-600 font-bold">CSA BASIC: Score trends</h2>
     <div class="flex items-center space-x-2">
       <span class="text-sm text-customGray">Latest update: 11/15/2024</span>
     </div>

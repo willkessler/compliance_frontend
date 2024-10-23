@@ -38,7 +38,7 @@
               <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
               <div class="score-label pl-2 text-nowrap">Current Safety Score</div>
               <div class="ml-4">
-                <Badge class="px-2 py-3 rounded rounded-[6px] min-w-32 bg-green-500 text-[#000]} cursor-pointer uppercase">
+                <Badge class="px-2 py-3 rounded rounded-[6px] min-w-32 bg-[#008000] text-[#000]} cursor-pointer uppercase">
                   <span class="font-semibold text-md text-yellow-200">
                     Satisfactory
                   </span>
