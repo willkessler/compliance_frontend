@@ -60,7 +60,7 @@
   }
 
  function handleEditClick() {
-   modalStore.open({
+   modalStore.open('confirm', {
      title: '',
      isConfirm:false,
      message: 'You do not have permission to edit this driver\'s data in the demo environment.',
@@ -81,7 +81,7 @@
        break;
    }
        
-   modalStore.open({
+   modalStore.open('confirm', {
      title: '',
      isConfirm:false,
      message: message + '!',
@@ -306,7 +306,7 @@
   <h1 class="text-lg font-bold mb-0 mt-6">Credentials</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-0 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
@@ -358,10 +358,6 @@
     </Table>
   </div>
   
-  <div class="w-full mt-10 text-gray-100">
-    <hr />
-  </div>
-
   <Uploads 
     previouslyUploadedFiles={[
                             { name: 'Pre-hire Drug & Alcohol Test -- PASSED (pdf)', date: 'Feb 15, 2024' },
@@ -383,10 +379,6 @@
     showMoreFields={true}
   />
 
-
-  <div class="w-full mt-10 text-gray-100">
-    <hr />
-  </div>
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden right-panel">
     <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>

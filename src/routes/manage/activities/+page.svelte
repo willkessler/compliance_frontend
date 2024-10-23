@@ -114,11 +114,10 @@
 
     <div class="ml-6 min-w-64 mr-4 ">
       <div class="flex gap-x-4">
-        <Input id="search" placeholder="Search" disabled>
+        <Input id="search" placeholder="Search">
           <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
         </Input>
         <Button
-          disabled
           class="bg-gray-300 hover:bg-gray-500 text-white text-md mr-4 min-w-[200px]">
           &nbsp;&nbsp;Filter
           <ChevronDownOutline class="w-6 h-6 ms-2 text-white dark:text-white" />

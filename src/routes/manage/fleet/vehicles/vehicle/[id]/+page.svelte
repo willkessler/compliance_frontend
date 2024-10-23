@@ -72,7 +72,7 @@
  }
 
  function handleEditClick() {
-   modalStore.open({
+   modalStore.open('confirm', {
      title: '',
      isConfirm:false,
      message: 'You do not have permission to edit this vehicle\'s data in the demo environment.',
@@ -233,15 +233,11 @@
     </div>
   </div>
 
-  <div class="w-full mt-10">
-    <hr />
-  </div>
-
   <!-- driver details -->
-  <h1 class="text-lg font-bold mb-0 mt-5">All drivers</h1>
+  <h1 class="text-lg font-bold mb-0 mt-5">All drivers of this vehicle</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-3 ml-0 cursor-pointer" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-0 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Start Date</TableHeadCell>
@@ -259,10 +255,6 @@
         {/each}
       </TableBody>
     </Table>
-  </div>
-
-  <div class="w-full mt-10 text-gray-100">
-    <hr />
   </div>
 
   <Uploads 
