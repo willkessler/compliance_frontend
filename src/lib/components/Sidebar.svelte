@@ -36,7 +36,7 @@
 
  const adminItems = [
    { href: '/manage/userFiles',  newTab: false, disabled: false, label: 'Your Files', icon: Database, color: 'text-inherit' },
-   { href: 'https://chat.regulis.ai', newTab: true, disabled: false, label: 'AI-Compliance Check',
+   { href: 'https://chat.regulis.ai', newTab: true, disabled: false, label: 'Regulis AI Chatbot',
      icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
    { href: '/manage/integrations', newTab: false, disabled: false, label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
    { href: '/manage/organization', newTab: false, disabled: false, label: 'Admin', icon: Settings , color: 'text-inherit' },
@@ -73,7 +73,7 @@
 
 <Sidebar {activeUrl} {activeClass} {nonActiveClass} style="border-right:1px solid #e5e7eb;">
   <SidebarWrapper class="flex flex-col h-full text-nowrap">
-    <div class="ml-3 mt-4 text-lg text-gray-600">Trucking Co.</div>
+    <a href="/"><div class="ml-3 mt-0 text-3xl text-[#005600] logo">Regulis</div></a>
     <SidebarGroup class="flex-grow" border>
       {#each menuItems as item}
         {#if item.subItems !== undefined }
@@ -131,7 +131,7 @@
               </svelte:fragment>
               <svelte:fragment slot="subtext">
                 {#if item.sideLabel !== undefined}
-                  <span class="pl-1 text-sm font-bold text-blue-600"> {item.sideLabel} </span>
+                  <span class="pl-1 text-sm font-bold text-[#0e9f6e]"> {item.sideLabel} </span>
                 {/if}
               </svelte:fragment>
             </SidebarItem>
@@ -142,7 +142,7 @@
               </svelte:fragment>
               <svelte:fragment slot="subtext">
                 {#if item.sideLabel !== undefined}
-                  <span class="pl-1 text-sm font-bold text-blue-600"> {item.sideLabel} </span>
+                  <span class="pl-1 text-sm font-bold text-[#43553b]"> {item.sideLabel} </span>
                 {/if}
               </svelte:fragment>
             </SidebarItem>
@@ -153,3 +153,9 @@
   </SidebarWrapper>
 </Sidebar>
 
+<style>
+ .logo {
+   font-family: 'Sansation', system-ui, sans-serif;
+   font-weight: bold;
+ }
+</style>
