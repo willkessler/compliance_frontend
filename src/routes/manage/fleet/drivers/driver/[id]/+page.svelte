@@ -18,6 +18,8 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
  import { certifications, drivers, getDriverById, injectDriverStatus } from '$lib/data/driverData';
  import { vehicles, getVehicleById } from '$lib/data/vehicleData';
@@ -56,6 +58,38 @@
       zoomedDriverLicense = false;
     }, 300); // 300ms delay before hiding the zoomed image
   }
+
+ function handleEditClick() {
+   modalStore.open('confirm', {
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to edit this driver\'s data in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
+
+ function handleCredentialClick(kind:string) {
+   let message;
+   switch (kind) {
+     case 'Notify driver':
+       message = 'Driver notified';
+       break;
+     case 'Auto-file':
+       message = 'Autofile complete';
+       break;
+   }
+       
+   modalStore.open('confirm', {
+     title: '',
+     isConfirm:false,
+     message: message + '!',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
 
   onMount(() => {
     return () => {
@@ -97,7 +131,7 @@
      case 'in progress':
        return 'Check details to learn more';
      case 'blocked':
-       return 'Pending signed paperwork to be turned into to the company by this driver.';
+       return 'Pending';
      default:
        return 'gray';
    }
@@ -126,7 +160,12 @@
 	  <p class="text-sm text-muted-foreground">Last updated: {driver.startDate}</p>
         </div>
         <div>
-          <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
+          <Button
+            outline 
+            on:click={handleEditClick}
+            class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300">
+            <PenOutline />&nbsp;Edit
+          </Button>
         </div>
       </div>
     </div>
@@ -267,12 +306,12 @@
   <h1 class="text-lg font-bold mb-0 mt-6">Credentials</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-5 ml-0 cursor-pointer" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-0 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">item</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">expiration date</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">status</TableHeadCell>
-        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">when notified?</TableHeadCell>
+        <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">last notified</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">action</TableHeadCell>
       </TableHead>
       <TableBody>
@@ -297,15 +336,19 @@
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
               {#if certification.notifyCount > 1}
-                ... {certification.lastNotified} ({certification.notifyCount} times)
+                {certification.lastNotified} ({certification.notifyCount}x times)
               {:else if certification.notifyCount == 0}
                 Never notified
               {:else}
-                {certification.lastNotified} ({certification.notifyCount} time)
+                {certification.lastNotified} ({certification.notifyCount}x time)
               {/if}
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">
-              <Button href="/manage/fleet/drivers/driver/{driver.id}" color="light" class="text-customGray hover:text-customGray p-2 min-w-32">
+              <Button 
+                href="/manage/fleet/drivers/driver/{driver.id}" 
+                color="light" 
+                on:click={() => handleCredentialClick(certification.action)}
+                class="text-customGray hover:text-customGray p-2 min-w-32">
                 {certification.action} →
               </Button>
             </TableBodyCell>
@@ -315,19 +358,15 @@
     </Table>
   </div>
   
-  <div class="w-full mt-10 text-gray-100">
-    <hr />
-  </div>
-
   <Uploads 
     previouslyUploadedFiles={[
-                            { filename: 'Pre-hire Drug & Alcohol Test -- PASSED (pdf)', date: 'Feb 15, 2024' },
-                            { filename: 'Work application (pdf)', date: 'Feb 11, 2024' },
-                            { filename: 'CDL (pdf)', date: 'Feb 12, 2024' },
-                            { filename: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' },
-                            { filename: 'Latest Drug & Alcohol Test -- PASSED (pdf)', date: 'May 15, 2024' },
-                            { filename: 'Driver Qualifications File (DQ) (pdf)', date: 'Jan 8, 2024' },
-                            { filename: 'Driver Records File (zip)', date: 'Mar 23, 2024' },
+                            { name: 'Pre-hire Drug & Alcohol Test -- PASSED (pdf)', date: 'Feb 15, 2024' },
+                            { name: 'Work application (pdf)', date: 'Feb 11, 2024' },
+                            { name: 'CDL (pdf)', date: 'Feb 12, 2024' },
+                            { name: 'Latest pull notice (pdf)', date: 'Sep 18, 2024' },
+                            { name: 'Latest Drug & Alcohol Test -- PASSED (pdf)', date: 'May 15, 2024' },
+                            { name: 'Driver Qualifications File (DQ) (pdf)', date: 'Jan 8, 2024' },
+                            { name: 'Driver Records File (zip)', date: 'Mar 23, 2024' },
                             ]}
   />
 
@@ -341,10 +380,6 @@
   />
 
 
-  <div class="w-full mt-10 text-gray-100">
-    <hr />
-  </div>
-
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden right-panel">
     <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>
     <FilteredActivitiesList
@@ -356,3 +391,5 @@
   </div>
 
 </ActivityLayout>
+
+<ConfirmModal />

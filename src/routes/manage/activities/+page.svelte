@@ -12,6 +12,7 @@
  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import AddActivityModal from '$lib/components/AddActivityModal.svelte';
+ import Map from '$lib/components/Map.svelte';
 
  import { activities, getActivityById, getActivityByCategory, 
         getActivityTitle, getTypeColor, getStatusColor, getPriorityColor } from '$lib/data/activityData';
@@ -30,12 +31,12 @@
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
  $: activeUrl = $page.url.searchParams.get('page');
+ const paginatorJumpPage = '/manage/activities';
  let pages = [
-   { name: 1, href: '/components/pagination?page=1' },
-   { name: 2, href: '/components/pagination?page=2' },
-   { name: 3, href: '/components/pagination?page=3' },
-   { name: 4, href: '/components/pagination?page=4' },
-   { name: 5, href: '/components/pagination?page=5' }
+   { name: 1, href: paginatorJumpPage },
+   { name: 2, href: paginatorJumpPage },
+   { name: 3, href: paginatorJumpPage },
+   { name: 4, href: paginatorJumpPage },
  ];
 
  $: {
@@ -44,7 +45,7 @@
      let queryString = splitUrl.slice(1).join('?');
      const hrefParams = new URLSearchParams(queryString);
      let hrefValue = hrefParams.get('page');
-     if (hrefValue === activeUrl) {
+     if (hrefValue === activeUrl && false) { // defeated for demo
        page.active = true;
      } else {
        page.active = false;
@@ -54,10 +55,10 @@
  }
 
  const previous = () => {
-   alert('Previous btn clicked. Make a call to your server to fetch data.');
+   console.log('Previous btn clicked. Make a call to your server to fetch data.');
  };
  const next = () => {
-   alert('Next btn clicked. Make a call to your server to fetch data.');
+   console.log('Next btn clicked. Make a call to your server to fetch data.');
  };
 
  function navigateToActivityDetails(activityId) {
@@ -69,6 +70,9 @@
    showModal = !showModal;
  }
  
+ function closeModal() {
+   showModal = false;
+ }
    
 </script>
 
@@ -82,7 +86,7 @@
 
   <div class="flex justify-between">
     <div class="flex items-center justify-start">
-      <div class="inline-block bg-white border rounded-lg p-0">
+      <div class="inline-block bg-white border rounded-lg p-0 text-nowrap">
         {#each categories as category}
           <Button
             class="focus:outline-none focus:ring-2 focus:ring-gray-300 right-transparent text-gray-800 hover:bg-gray-200 min-width-xs mr-2 m-1 p-2 border-none {activeCategory.toLowerCase() === category.toLowerCase() ? 'bg-gray-300' : ''}"
@@ -95,7 +99,7 @@
 
       <div class="ml-4">
         <Button
-          class="bg-blue-500 hover:bg-blue-600 text-white text-sm ">
+          class="bg-blue-500 hover:bg-blue-600 text-white text-sm text-nowrap">
           <CirclePlusSolid />
           &nbsp;&nbsp;Add Activity!
         </Button>
@@ -199,5 +203,6 @@
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
   <AddActivityModal
     mode={modalMode}
+    closeCb={closeModal}
   />
 </Modal>

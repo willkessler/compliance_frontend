@@ -35,11 +35,12 @@
  ];
 
  const adminItems = [
-    { href: '/manage/userFiles', label: 'Your Files', icon: Database, color: 'text-inherit' },
-   { href: '/manage/ai', label: 'AI-Compliance Check', icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
-   { href: '/manage/integrations', label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
-   { href: '/help', label: 'Help', icon: QuestionCircleOutline, color: 'text-inherit' },
-   { href: '/manage/organization', label: 'Admin', icon: Settings , color: 'text-inherit' },
+   { href: '/manage/userFiles',  newTab: false, disabled: false, label: 'Your Files', icon: Database, color: 'text-inherit' },
+   { href: 'https://chat.regulis.ai', newTab: true, disabled: false, label: 'Regulis AI Chatbot',
+     icon: WandSparkles, color: 'text-inherit', sideLabel: 'New!' },
+   { href: '/manage/integrations', newTab: false, disabled: false, label: 'Integrations', icon: ShareNodesOutline, color: 'text-inherit' },
+   { href: '/manage/organization', newTab: false, disabled: false, label: 'Admin', icon: Settings , color: 'text-inherit' },
+   { href: '/help', newTab: false, label: 'Help', disabled: true, icon: QuestionCircleOutline, color: 'text-inherit' },
  ];
  
  let activeClass = 'flex items-center p-2 text-base font-normal text-gray-900 bg-gray-200 dark:bg-gray-700  dark:text-white hover:bg-gray-300 dark:hover:bg-gray-300';
@@ -72,7 +73,7 @@
 
 <Sidebar {activeUrl} {activeClass} {nonActiveClass} style="border-right:1px solid #e5e7eb;">
   <SidebarWrapper class="flex flex-col h-full text-nowrap">
-    <div class="ml-3 mt-4 text-lg text-gray-600">Trucking Co.</div>
+    <a href="/"><div class="ml-3 mt-0 text-3xl text-[#005600] logo">Regulis</div></a>
     <SidebarGroup class="flex-grow" border>
       {#each menuItems as item}
         {#if item.subItems !== undefined }
@@ -111,18 +112,50 @@
     </SidebarGroup>
     <SidebarGroup border class="mt-auto mb-2">
       {#each adminItems as item}
-        <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>
-          <svelte:fragment slot="icon">
-            <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-          </svelte:fragment>
-          <svelte:fragment slot="subtext">
-            {#if item.sideLabel !== undefined}
-              <span class="pl-1 text-sm font-bold text-blue-600"> {item.sideLabel} </span>
-            {/if}
-          </svelte:fragment>
-        </SidebarItem>
+        {#if item.disabled === true}
+          <SidebarItem label={item.label} class="whitespace-nowrap text-sm text-gray-400"> <!-- disabled for WSTA -->
+            <svelte:fragment slot="icon">
+              <svelte:component this={item.icon} class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+            </svelte:fragment>
+            <svelte:fragment slot="subtext">
+              {#if item.sideLabel !== undefined}
+                <span class="pl-1 text-sm font-bold text-blue-600"> {item.sideLabel} </span>
+              {/if}
+            </svelte:fragment>
+          </SidebarItem>
+        {:else}
+          {#if item.newTab === true}
+            <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href} target="_blank">
+              <svelte:fragment slot="icon">
+                <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              </svelte:fragment>
+              <svelte:fragment slot="subtext">
+                {#if item.sideLabel !== undefined}
+                  <span class="pl-1 text-sm font-bold text-[#0e9f6e]"> {item.sideLabel} </span>
+                {/if}
+              </svelte:fragment>
+            </SidebarItem>
+          {:else}
+            <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>
+              <svelte:fragment slot="icon">
+                <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              </svelte:fragment>
+              <svelte:fragment slot="subtext">
+                {#if item.sideLabel !== undefined}
+                  <span class="pl-1 text-sm font-bold text-[#43553b]"> {item.sideLabel} </span>
+                {/if}
+              </svelte:fragment>
+            </SidebarItem>
+          {/if}
+        {/if}
       {/each}
     </SidebarGroup>
   </SidebarWrapper>
 </Sidebar>
 
+<style>
+ .logo {
+   font-family: 'Sansation', system-ui, sans-serif;
+   font-weight: bold;
+ }
+</style>

@@ -1,6 +1,8 @@
 <script lang="ts">
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem,
-        Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+        Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Toast } from 'flowbite-svelte';
+ import { slide } from 'svelte/transition';
+
  import { FileDrop } from 'svelte-droplet';
  import {
         ArrowRightOutline,
@@ -23,6 +25,7 @@
  import { onMount } from 'svelte';
  import { actions, getTypeIcon, getActionItems, getActionItemById, getTypeColor, getStatusColor } from '$lib/data/actionItemsData';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
+ import Map from '$lib/components/Map.svelte';
 
  //
  // Modal related
@@ -37,11 +40,15 @@
  export let setActionItemCb = () => { };  // stub for passed in callback
  export let hideRightPanelCb = () => { }; // stub for passed in callback
  export let showChrome = true; // whether to show all controls
+ let showCourtModal = false;
+ let zoomHoverTimer;
 
   onMount(() => {
     formattedDate = formatDate(dueDate);
   });
 
+ let zoomedViolationPic = false;
+ let zoomedCourtPic = false;
  let showModal = false; // whether the modal is visible
  let actionType = '';
  let actionName = '';
@@ -57,6 +64,10 @@
 
  let selectedActionTypeValue = '';
  let selectedStatusTypeValue = '';
+
+ let toastStatus = false;
+ let toastCounter = 5;
+
 
  $: if (selectedAction) {
    selectedActionTypeValue = selectedAction.type.toLowerCase();
@@ -112,6 +123,18 @@
     console.log('Selected action type:', selectedStatusTypeValue);
   }
 
+ function triggerActionToast() {
+   toastStatus = true;
+   toastCounter = 6;
+   toastTimeout();
+  }
+
+  function toastTimeout() {
+    if (--toastCounter > 0) return setTimeout(toastTimeout, 1000);
+    toastStatus = false;
+  }
+
+
   function updateAction() {
     // Handle action update logic here
     console.log('Updating action:', { actionType: selectedActionTypeValue, actionName, actionNotes, uploadedFiles });
@@ -119,6 +142,7 @@
     selectedAction = null;
     selectedActionTypeValue = '';
     uploadedFiles = [];
+    triggerActionToast();
   }
 
   function createAction() {
@@ -127,6 +151,7 @@
     showModal = false;
     selectedActionTypeValue = '';
     uploadedFiles = [];
+    triggerActionToast();
   }
 
  //
@@ -227,12 +252,17 @@ ul li:before {
 </style>
 
 
+<Toast class="mt-4 bg-orange-400 text-white-900" dismissable={false} transition={slide} bind:toastStatus>
+  <CheckCircleSolid slot="icon" class="w-5 h-5" />
+  Creating/editing activity data is not possible in the demo environment.
+</Toast>
+
 <div>
   {#if showChrome}
-    <div class="flex justify-between items-end mb-4 ml-0 mt-8">
-      <h1 class="text-xl font-bold">Actions Taken</h1>
+    <div class="flex justify-between items-end mb-0 ml-0 mt-8">
+      <h1 class="text-lg font-bold">Actions Taken</h1>
       <Button on:click={() => { showModal = true; uploadedFiles = []; }}
-        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
+        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 mb-2">
         <CirclePlusSolid />
         &nbsp;&nbsp;New Action Item
       </Button>
@@ -252,7 +282,7 @@ ul li:before {
       </ul>
     {/if}
   {:else if mode === 'all' }
-    <Table class="mt-4 relative overflow-x-auto ml-0 cursor-pointer" hoverable>
+    <Table class="mt-0 relative overflow-x-auto ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Date</TableHeadCell>
@@ -313,7 +343,80 @@ ul li:before {
           data={getActionItemById(actionItemId)}
           dataField="type"
         />
+
+        {#if getActionItemById(actionItemId).violationType !== undefined}
+          <div class="font-semibold">Violation type:</div>
+          <div class="text-customGray">{getActionItemById(actionItemId).violationType}</div>
+        {/if}
+
       </div>
+
+        {#if (getActionItemById(actionItemId).type.toLowerCase() === 'payment') }
+          <div class="font-semibold pt-2 pb-2">
+            Court Information:
+          </div>
+          <div class="flex justify-start ">
+            <div class="cursor-pointer">
+              <img 
+                alt="violation"
+                on:mouseenter={() => { 
+                                     zoomHoverTimer = setTimeout(() => {
+                                       zoomedViolationPic = true;
+                                     }, 550);
+                              }}
+              on:mouseleave={() => {
+              clearTimeout(zoomHoverTimer);
+              }}
+              class="max-w-[180px] min-w-[150px] p-2 border border-customGray" 
+              src="/images/violations/{getActionItemById(actionItemId).violationImage}" 
+              />
+              {#if zoomedViolationPic}
+                <div 
+                  role="button"
+                  tabindex="1"
+                  on:mouseleave={() => { 
+                                zoomedViolationPic = false;
+                                clearTimeout(zoomHoverTimer);
+                                }}
+                  >
+                  <img alt="violation" 
+                    class="top-12 right-12 absolute max-w-[500px] border rounded border border-customGray"
+                    src="/images/violations/{getActionItemById(actionItemId).violationImage}" />
+                </div>
+              {/if}
+            </div>
+            <div class="w-full text-sm pl-4 text-sm">
+              <div class="pt-1">
+                <div>
+                  {getActionItemById(actionItemId).courtDetails.name}
+                </div>
+                <div>{getActionItemById(actionItemId).courtDetails.street1}</div>
+                <div>{getActionItemById(actionItemId).courtDetails.street2}</div>
+                <div>{getActionItemById(actionItemId).courtDetails.city},
+                  {getActionItemById(actionItemId).courtDetails.state}
+                  {getActionItemById(actionItemId).courtDetails.zip}
+                </div>
+                <div>
+                  {getActionItemById(actionItemId).courtDetails.phone}
+                </div>
+                <div class="flex pt-2 cursor-pointer" on:click={() => {showCourtModal = true; }} >
+                  <div class="mr-2" outline><MapPinAltOutline /></div>
+                  <div class="hover:underline text-customGray">View on map</div>
+                </div>
+                <div class="flex ml-4 items-center flex">
+                  <Button 
+                    class="text-sm font-normal text-customGray hover:underline" 
+                    size="xs" 
+                    target="_blank" 
+                    href={getActionItemById(actionItemId).courtDetails.site}>
+                    Court website
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/if}
+
       <div>
         <div class="font-semibold mt-2">Notes:</div>
         <div class="text-customGray rounded-md border p-4 mt-2 italic w-full">{getActionItemById(actionItemId).description}</div>
@@ -457,4 +560,22 @@ ul li:before {
       </Button>
     </div>
   </svelte:fragment>
+</Modal>
+
+<Modal 
+  bind:open={showCourtModal} 
+  outsideclose
+  size="lg"
+  class="w-[80vw] h-[80vh] max-w-none max-h-[80vh] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
+  backdropClass="fixed inset-0 z-40"
+  bodyClass="p-4 md:p-5 space-y-4 flex-1 overflow:hidden overscroll-contain"
+>
+  <div class="w-full h-full p-6">
+    {#if (actionItemId !== null) }
+      <Map 
+        zipcode={getActionItemById(actionItemId).courtDetails?.zip}
+        preOpenLocation={getActionItemById(actionItemId).courtDetails?.name}
+      />
+    {/if}
+  </div>
 </Modal>

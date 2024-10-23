@@ -122,7 +122,7 @@
 </script>
 
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-4xl font-bold mb-4">Clear and Compliant : Integrations</h1>
+  <h1 class="text-4xl font-bold mb-4">Integrations</h1>
   <p class="text-lg mb-8">
     Our turnkey integrations connect to essential 3rd party applications and unlock the power real-time data for your physical operations.
   </p>

@@ -19,6 +19,44 @@ export function getVehicleDriver (vehicleId) {
   return null;
 }
 
+export function getVehicleTrips (vehicleId) {
+  let legs = [];
+  for (let vehicle of vehicles) {
+    if (vehicle.id === parseInt(vehicleId)) {
+      if (vehicle.trips !== undefined) {
+        for (let trip of vehicle.trips) {
+          for (let leg of trip.legs) {
+            legs.push({ tripId: trip.id, ...leg});
+          }
+        }
+      }
+    }
+  }
+  return legs;
+}
+
+export function getVehicleDvir (vehicleId, tripId, legId, whichInsp) {
+  let legs = [];
+  for (let vehicle of vehicles) {
+    if (vehicle.id === parseInt(vehicleId)) {
+      if (vehicle.trips !== undefined) {
+        for (let trip of vehicle.trips) {
+          if (trip.id === parseInt(tripId)) {
+            for (let leg of trip.legs) {
+              if (leg.id === parseInt(legId)) {
+                if (leg.dvir !== undefined) {
+                  return leg.dvir[whichInsp];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
 export const vehicles = [
   {
     id: 4396,
@@ -36,6 +74,77 @@ export const vehicles = [
     state: 'CA',
     description: 'This truck is a diesel vehicle that Eric puchased second-hand.',
     photo: '360_F_653378267_CEGxV4MvGGTTRpugGVgGzGJij2v0g0YF.jpg',
+    trips: [
+      {
+        id: 193282,
+        legs: [
+          {
+            id: 1,
+            startDate: '9/11/24',
+            endDate: '9/11/24',
+            preTrip: 'XJ18YW_1',
+            postTrip: 'XJ18YW_2',
+            dvir: {
+              pre: {
+                authorName: 'Anthony Rolard',
+                location: 'T-A truckstop, Santa Nella',
+                duration: '1m 19s',
+                trailerId: 'B341',
+                odometer: '110,485',
+                defects: [
+                  'Dome light fail',
+                  'Mill spec light on',
+                ],
+              },
+              post: {
+                authorName: 'Frank Novil',
+                location: 'Pleasant Truckstop, Santa Rosa',
+                duration: '2m 19s',
+                trailerId: 'B341',
+                odometer: '111,201',
+                defects: [
+                  'Rear brake light fail',
+                  'Mill spec light on',
+                ],
+              },
+            },
+          },
+          {
+            id: 2,
+            startDate: '9/12/24',
+            endDate: '9/12/24',
+            preTrip: 'XJ18YW_3',
+            postTrip: 'XJ18YW_4',
+          },
+        ],
+      },
+      {
+        id: 193283,
+        legs: [
+          {
+            id: 1,
+            startDate: '10/01/24',
+            endDate: '10/01/24',
+            preTrip: 'AUEHF_1',
+            postTrip: 'AUEHF_2',
+          },
+          {
+            id: 2,
+            startDate: '10/01/24',
+            endDate: '10/02/24',
+            preTrip: 'AUEHF_3',
+            postTrip: 'AUEHF_4',
+          },
+          {
+            id: 3,
+            startDate: '10/02/24',
+            endDate: '10/03/24',
+            preTrip: 'AUEHF_5',
+            postTrip: 'AUEHF_6',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 4385,
@@ -53,6 +162,20 @@ export const vehicles = [
     state: 'CA',
     description: 'Truck bought new. Ready for rehaul in 2025.',
     photo: 'basic-white-modern-semi-trailer-truck-closeup-shot-135825237.webp',
+    trips: [
+      {
+        id: 193288,
+        legs: [
+          {
+            id: 1,
+            startDate: '2/22/24',
+            endDate: '2/23/24',
+            preTrip: 'UWNDFU_1',
+            postTrip: 'UWNDFU_2',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 2348,
@@ -85,7 +208,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'Dallas',
     state: 'TX',
-    description: 'Cherry red paint, attracts CHP. Can we get this redone in white for crying out loud!',
+    description: 'Recently repainted and added tinted windows. Note, keep track of whether or not driver is penalized for the tint.',
     photo: 'new-red-semi-truck-ready-to-go-to-work-CPPEAA.jpg',
   },  
   {
@@ -102,7 +225,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'Los Angeles',
     state: 'CA',
-    description: 'Built Ford tough. Dismal mpg.',
+    description: 'Purchased pre-owned from Mike\s shop.',
     photo: 'red-truck-2986654.webp',
   },  
   {
@@ -119,7 +242,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'San Diego',
     state: 'CA',
-    description: 'Model A. My grandma drove this truck. Still chugging along, at 2mpg.',
+    description: 'Purchased new from dealership. Pending rebate.',
     photo: 'semitrailer-truck-isolated-front-view-260nw-1490601317.webp',
   },  
   {
@@ -152,7 +275,7 @@ export const vehicles = [
     icon: ThumbsUpSolid,
     city: 'Santa Monica',
     state: 'CA',
-    description: 'Fresh tires, fresh lube, looking good as of July 31, 2024.',
+    description: 'New tires, annual check completed, looking good as of July 31, 2024.',
   },  
   {
     id: 9282,
@@ -185,5 +308,21 @@ export const vehicles = [
     city: 'Houston',
     state: 'TX',
     description: 'This truck is a diesel vehicle that Eric puchased second-hand.',
+  },
+  {
+    id: 9311,
+    name: "9311",
+    acquisitionDate: 'July 31, 2024',
+    operatingTime: "1,929h 49m",
+    vin: '9298032323...',
+    licensePlate: '7YRTY98',
+    mileage: "51,887",
+    milesLeftToEol: '200,923',
+    timeLeftToEol: '1 years, 4 months',
+    status: "Clear",
+    icon: ThumbsUpSolid,
+    city: 'Austin',
+    state: 'TX',
+    description: 'This truck is a sleek diesel vehicle.',
   },
 ];

@@ -5,6 +5,7 @@
         ExclamationCircleSolid, 
         ExclamationCircleOutline,
         ThumbsUpSolid, 
+        CashOutline,
         CheckCircleOutline, 
         CheckCircleSolid,
         PhoneOutline, 
@@ -79,6 +80,7 @@
      'onsite':                     { color: 'gray',   icon: MapPinAltOutline, iconLibrary: 'fb' },
      'email':                      { color: 'gray',   icon: Mail, iconLibrary: 'fb' },
      'sms':                        { color: 'gray',   icon: PhoneOutline, iconLibrary: 'fb' },
+     'payment':                    { color: 'gray',   icon: CashOutline, iconLibrary: 'fb' },
    },
    actionArea: {
      'vehicle':                    { color: 'gray',   icon: Truck, iconLibrary: 'lu' },

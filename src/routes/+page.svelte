@@ -5,9 +5,14 @@
  import { Badge, Button, Modal, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
  import { CircleAlert, Truck, UsersRound } from "lucide-svelte";;
- import { LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
- import ComplianceHistoryChart from '$lib/components/ComplianceHistoryChart.svelte';
+ import { ClipboardListSolid, LandmarkOutline, ShieldCheckSolid } from 'flowbite-svelte-icons';
+
+ import CSAScoreHistoryChart from '$lib/components/CSAScoreHistoryChart.svelte';
+ import CSAActivityHistoryChart from '$lib/components/CSAActivityHistoryChart.svelte';
+ import CSABasicChart from '$lib/components/CSABasicChart.svelte';
+ import SafetyScoreHistoryChart from '$lib/components/SafetyScoreHistoryChart.svelte';
  import ChatBot from  '$lib/components/ChatBot.svelte';
+
  import { filings, reviewItems, getReviewCounts, getSoonestDaysRemaining } from '$lib/data/filingData';
  import { newsItems } from '$lib/data/newsItemsData';
  import { X, WandSparkles } from 'lucide-svelte';
@@ -17,7 +22,7 @@
  const cardStyle = "height: 500px; display: flex; flex-direction: column; overflow: hidden";
  const contentStyle = "flex: 1; overflow-y: auto; padding-right: 1rem;";
  const csaRange = { range:15, buffer:15, today: 15};
- const safetyRange = { range:100, buffer:100, today: 153};
+ const todaysSafetyScore = 'Satisfactory';
 
  function navigateToRelevantActionPage(url) {
    goto(url, { replaceState: false });
@@ -29,22 +34,21 @@
   <div class="grid grid-cols-2 gap-6 mb-6">
       <Card>
 	<CardContent style="padding-top: 1rem;">
-          <div class="flex items-center">
-              <div class="flex items-center csa-score">
-                <div class="ml-4 mr-4" style="scale:2"><LandmarkOutline /></div>
-                <div class="score-label ml-2">Today's CSA Score</div>
-                <div class="score ml-2" style="font-size: 2rem;">{csaRange.today}</div>
+          <div class="safety-score flex items-center mt-4">
+              <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
+              <div class="score-label pl-2 text-nowrap">Current Safety Score</div>
+              <div class="ml-4">
+                <Badge class="px-2 py-3 rounded rounded-[6px] min-w-32 bg-[#008000] text-[#000]} cursor-pointer uppercase">
+                  <span class="font-semibold text-md text-yellow-200">
+                    Satisfactory
+                  </span>
+                </Badge>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
-                <ComplianceHistoryChart
-                  chartTitle="Score by week"
-                  metricType="csaScore"
-                  dataRange={csaRange}
-                  color="green"
-                />
+                <CSABasicChart />
               </div>
             </div>
           </div>
@@ -52,21 +56,18 @@
       </Card>
       <Card>
 	<CardContent style="padding-top: 1rem;">
-          <div class="flex items-center">
-              <div class="flex items-center safety-score">
-                <div class="mr-4" style="scale:2"><ShieldCheckSolid /></div>
-                <div class="score-label pl-2">Today's Safety Score</div>
-                <div class="score ml-2" style="font-size: 2rem;">{safetyRange.today}</div>
+          <div class="flex items-center mt-4 mb-2">
+              <div class="flex items-center csa-score">
+                <div class="ml-4 mr-4" style="scale:2"><ClipboardListSolid /></div>
+                <div class="score-label ml-2">Activities History</div>
               </div>
           </div>
           <div>
             <div class="flex items-center">
               <div class="chart">
-                <ComplianceHistoryChart
-                  chartTitle="Score by week"
-                  metricType="safetyScore"
-                  dataRange={safetyRange}
-                  color="orange"
+                <CSAActivityHistoryChart
+                  chartTitle="Activity counts, by week"
+                  dataRange={csaRange}
                 />
               </div>
             </div>
@@ -178,9 +179,6 @@
 </main>
 
 <style>
- .score {
-   font-size: 60px;
- }
  .score-label {
    font-size: 25px;
    font-weight:600;
@@ -189,7 +187,7 @@
    color: green;
  }
  .safety-score {
-   color: orange;
+   color: green;
  }
 
  .chart {

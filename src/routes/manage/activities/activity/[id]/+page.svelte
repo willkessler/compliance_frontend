@@ -1,6 +1,6 @@
 <script lang="ts">
  import { goto } from '$app/navigation';
- import { Badge, Button, Label, Input, Textarea,  Select, 
+ import { Badge, Button, Label, Input, Textarea,  Select, Modal,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid,
         TruckSolid,
@@ -12,6 +12,9 @@
  import ActivityLayout from '$lib/components/ActivityLayout.svelte';
  import Uploads from '$lib/components/Uploads.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
+
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
  import { activities, getActivityTitle, getActivityById, getStatusColor, getPriorityColor, getTypeColor } from '$lib/data/activityData';
  import { drivers, getDriverById } from '$lib/data/driverData';
@@ -40,6 +43,17 @@
     formattedDate = formatDate(dueDate);
   }
 
+ function handleConfirmClick() {
+   modalStore.open('confirm', {
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to edit this data in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
+ 
   onMount(() => {
     formattedDate = formatDate(dueDate);
   });
@@ -63,12 +77,12 @@
 
  function setSelectedActionId (actionId) {
    selectedActionId = actionId;
-   console.log(`set current action id to ${selectedActionId}`);
+   //console.log(`set current action id to ${selectedActionId}`);
    showRightPanel = true;
  }
  
  function hideRightPanel () {
-   console.log('inside hideRightPanel');
+   //console.log('inside hideRightPanel');
    showRightPanel = false;
  }
 
@@ -104,7 +118,13 @@
 	  <p class="text-sm text-muted-foreground">Last updated: Jan 24, 2024</p>
         </div>
         <div>
-          <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
+          <Button 
+            outline
+            on:click={handleConfirmClick}
+            class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300">
+            <PenOutline />
+            &nbsp;Edit
+          </Button>
         </div>
       </div>
     </div>
@@ -239,7 +259,9 @@
   </div>
 
   <div class="w-full mt-5">
-    <Uploads />
+    <Uploads 
+      previouslyUploadedFiles={activity.uploads}
+    />
   </div>
 
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
@@ -253,3 +275,5 @@
   </div>
 
 </ActivityLayout>
+
+<ConfirmModal />

@@ -16,6 +16,9 @@
  import Uploads from '$lib/components/Uploads.svelte';
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import FilteredActivitiesList from '$lib/components/FilteredActivitiesList.svelte';
+ import TripList from '$lib/components/TripList.svelte';
+ import { modalStore } from '$lib/stores/modalStore.ts';
+ import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
  import { drivers, getDriverById } from '$lib/data/driverData';
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
@@ -25,10 +28,11 @@
 
  let zoomedDriverPic = false;
 
+ // generic default for all vehicles for now
  let previouslyUploadedFiles = [
-   { filename: "90-day-inspection-report.pdf",     date: 'Sep 3, 2024'},
-   { filename: "Insurance-log-and-report-8-31-24.pdf",    date: 'Aug 31, 2024'},
-   { filename: "ManufacturersWarranty.docx",         date: 'Jan 31, 2024'},
+   { name: "90-day-inspection-report.pdf",            date: 'Sep 3, 2024'},
+   { name: "Insurance-log-and-report-8-31-24.pdf",    date: 'Aug 31, 2024'},
+   { name: "ManufacturersWarranty.docx",              date: 'Jan 31, 2024'},
  ];
 
  //
@@ -67,6 +71,17 @@
    goto(`/manage/fleet/drivers/driver/${driverId}`, { replaceState: false });
  }
 
+ function handleEditClick() {
+   modalStore.open('confirm', {
+     title: '',
+     isConfirm:false,
+     message: 'You do not have permission to edit this vehicle\'s data in the demo environment.',
+     onConfirm: () => {
+       console.log('Confirm modal dismissed');
+     },
+   });
+ }
+
 </script>
 
 <style>
@@ -94,7 +109,12 @@
 	    <p class="text-sm text-muted-foreground">Last updated: {vehicle.acquisitionDate}</p>
           </div>
           <div>
-            <Button outline class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300"><PenOutline />&nbsp;Edit</Button>
+            <Button 
+              outline
+              on:click={handleEditClick}
+              class="text-sm bg-gray-200 text-black/60 hover:bg-gray-300">
+              <PenOutline />&nbsp;Edit
+            </Button>
           </div>
         </div>
       </div>
@@ -213,15 +233,11 @@
     </div>
   </div>
 
-  <div class="w-full mt-10">
-    <hr />
-  </div>
-
   <!-- driver details -->
-  <h1 class="text-lg font-bold mb-0 mt-5">All drivers</h1>
+  <h1 class="text-lg font-bold mb-0 mt-5">All drivers of this vehicle</h1>
 
   <div>
-    <Table class="relative overflow-x-auto sm:rounded-lg mt-3 ml-0 cursor-pointer" hoverable>
+    <Table class="relative overflow-x-auto sm:rounded-lg mt-0 ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Name</TableHeadCell>
         <TableHeadCell class="px-6 py-3 text-xs font-medium text-customGray uppercase">Start Date</TableHeadCell>
@@ -229,7 +245,9 @@
       </TableHead>
       <TableBody>
         {#each drivers.slice(0,3) as driver}
-          <TableBodyRow>
+          <TableBodyRow 
+            on:click={() => { navigateToDriverDetails(driver.id) }}
+            >
             <TableBodyCell class="px-2 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.name}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.startDate}</TableBodyCell>
             <TableBodyCell class="px-6 py-4 whitespace-nowrap text-sm font-large text-customGray">{driver.endDate}</TableBodyCell>
@@ -237,10 +255,6 @@
         {/each}
       </TableBody>
     </Table>
-  </div>
-
-  <div class="w-full mt-10 text-gray-100">
-    <hr />
   </div>
 
   <Uploads 
@@ -256,4 +270,11 @@
     showMoreFields={true}
   />
 
+  <h1 class="text-lg font-bold mb-0 mt-6">Trip history</h1>
+  <TripList 
+    vehicleId={vehicle.id}
+  />
+
 </ActivityLayout>
+
+<ConfirmModal />
