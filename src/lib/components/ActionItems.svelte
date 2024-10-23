@@ -259,10 +259,10 @@ ul li:before {
 
 <div>
   {#if showChrome}
-    <div class="flex justify-between items-end mb-4 ml-0 mt-8">
-      <h1 class="text-xl font-bold">Actions Taken</h1>
+    <div class="flex justify-between items-end mb-0 ml-0 mt-8">
+      <h1 class="text-lg font-bold">Actions Taken</h1>
       <Button on:click={() => { showModal = true; uploadedFiles = []; }}
-        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 ">
+        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 mb-2">
         <CirclePlusSolid />
         &nbsp;&nbsp;New Action Item
       </Button>
@@ -282,7 +282,7 @@ ul li:before {
       </ul>
     {/if}
   {:else if mode === 'all' }
-    <Table class="mt-4 relative overflow-x-auto ml-0 cursor-pointer" hoverable>
+    <Table class="mt-0 relative overflow-x-auto ml-0 cursor-pointer" hoverable>
       <TableHead class="bg-customGray/15 whitespace-nowrap">
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Taken</TableHeadCell>
         <TableHeadCell class="px-2 py-3 text-xs font-medium text-customGray uppercase">Action Date</TableHeadCell>

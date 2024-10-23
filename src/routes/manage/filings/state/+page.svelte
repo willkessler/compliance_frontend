@@ -14,7 +14,7 @@
 
 
  function handleSeeDetailsClick() {
-   modalStore.open({
+   modalStore.open('confirm', {
      title: '',
      isConfirm:false,
      message: 'You do not have permission to view state filing documents in the demo environment.',

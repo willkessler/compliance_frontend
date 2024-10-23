@@ -13,7 +13,7 @@
  import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
  function handleSeeDetailsClick() {
-   modalStore.open({
+   modalStore.open('confirm', {
      title: '',
      isConfirm:false,
      message: 'You do not have permission to view federal filing documents in the demo environment.',
