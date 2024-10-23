@@ -41,6 +41,7 @@
  export let hideRightPanelCb = () => { }; // stub for passed in callback
  export let showChrome = true; // whether to show all controls
  let showCourtModal = false;
+ let zoomHoverTimer;
 
   onMount(() => {
     formattedDate = formatDate(dueDate);
@@ -346,13 +347,20 @@ ul li:before {
 
         {#if (getActionItemById(actionItemId).type.toLowerCase() === 'payment') }
           <div class="font-semibold pt-2 pb-2">
-            Court Information :
+            Court Information:
           </div>
           <div class="flex justify-start ">
             <div class="cursor-pointer">
               <img 
                 alt="violation"
-                on:mouseenter={() => { zoomedViolationPic = true; }}
+                on:mouseenter={() => { 
+                                     zoomHoverTimer = setTimeout(() => {
+                                       zoomedViolationPic = true;
+                                     }, 550);
+                              }}
+              on:mouseleave={() => {
+              clearTimeout(zoomHoverTimer);
+              }}
               class="max-w-[180px] min-w-[150px] p-2 border border-customGray" 
               src="/images/violations/{getActionItemById(actionItemId).violationImage}" 
               />
@@ -360,7 +368,10 @@ ul li:before {
                 <div 
                   role="button"
                   tabindex="1"
-                  on:mouseleave={() => { zoomedViolationPic = false; }}
+                  on:mouseleave={() => { 
+                                zoomedViolationPic = false;
+                                clearTimeout(zoomHoverTimer);
+                                }}
                   >
                   <img alt="violation" 
                     class="top-12 right-12 absolute max-w-[500px] border rounded border border-customGray"

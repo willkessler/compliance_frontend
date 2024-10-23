@@ -77,12 +77,12 @@
 
  function setSelectedActionId (actionId) {
    selectedActionId = actionId;
-   console.log(`set current action id to ${selectedActionId}`);
+   //console.log(`set current action id to ${selectedActionId}`);
    showRightPanel = true;
  }
  
  function hideRightPanel () {
-   console.log('inside hideRightPanel');
+   //console.log('inside hideRightPanel');
    showRightPanel = false;
  }
 
