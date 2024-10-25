@@ -1,4 +1,6 @@
 <script>
+  import { run } from 'svelte/legacy';
+
   import { LayerCake, Svg } from 'layercake';
   import { scaleLinear, scaleOrdinal, scaleBand } from 'd3-scale';
   import { tweened } from 'svelte/motion';
@@ -6,13 +8,25 @@
   import { writable, derived } from 'svelte/store';
   import { onMount } from 'svelte';
 
-  export let chartTitle = "Your statistics";
-  export let trucksOutOfCompliance = 0;
-  export let totalTrucks = 0;
-  export let driversOutOfCompliance = 0;
-  export let totalDrivers = 0;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [chartTitle]
+   * @property {number} [trucksOutOfCompliance]
+   * @property {number} [totalTrucks]
+   * @property {number} [driversOutOfCompliance]
+   * @property {number} [totalDrivers]
+   */
 
-  let chart;
+  /** @type {Props} */
+  let {
+    chartTitle = "Your statistics",
+    trucksOutOfCompliance = 0,
+    totalTrucks = 0,
+    driversOutOfCompliance = 0,
+    totalDrivers = 0
+  } = $props();
+
+  let chart = $state();
   let dimensions = writable({ width: 300, height: 80 });
 
   const data = writable([
@@ -20,12 +34,12 @@
     { category: 'Drivers', outOfCompliance: driversOutOfCompliance, total: totalDrivers }
   ]);
 
-  $: {
+  run(() => {
     data.set([
       { category: 'Trucks', outOfCompliance: trucksOutOfCompliance, total: totalTrucks },
       { category: 'Drivers', outOfCompliance: driversOutOfCompliance, total: totalDrivers }
     ]);
-  }
+  });
 
   const xScale = derived([data, dimensions], ([$data, $dimensions]) => 
     scaleLinear()
@@ -49,7 +63,9 @@
     easing: cubicOut
   });
 
-  $: tweenedData.set($data);
+  run(() => {
+    tweenedData.set($data);
+  });
 
   onMount(() => {
     const resizeObserver = new ResizeObserver(entries => {

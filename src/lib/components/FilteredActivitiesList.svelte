@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
  import { goto } from '$app/navigation';
  import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { getActivitiesForVehicle, getActivitiesForDriver } from '$lib/data/activityData';
@@ -7,13 +9,23 @@
  import CustomBadge from '$lib/components/CustomBadge.svelte';
  import ActionItems from '$lib/components/ActionItems.svelte';
 
- export let mode = 'driver'; // driver, vehicle
- export let showMoreFields = true; // whether to show more action item fields in the table
- export let onlyOpen = false; // only open activities
- export let driverId = null;
- export let vehicleId = null;
+  interface Props {
+    mode?: string;
+    showMoreFields?: boolean;
+    onlyOpen?: boolean;
+    driverId?: any;
+    vehicleId?: any;
+  }
 
- let filteredActivities = [];
+  let {
+    mode = 'driver',
+    showMoreFields = true,
+    onlyOpen = false,
+    driverId = null,
+    vehicleId = null
+  }: Props = $props();
+
+ let filteredActivities = $state([]);
 
  function updateFilteredActivities() {
    if (mode === 'driver' && driverId !== null) {
@@ -25,15 +37,15 @@
    }
  }
 
- $: {
+ run(() => {
    updateFilteredActivities();
- }
+ });
  
  function navigateToActivityDetails(activityId) {
    goto(`/manage/activities/activity/${activityId}`, { replaceState: false });
  }
 
- let expandedRows = { };
+ let expandedRows = $state({ });
 
  const toggleRow = (id) => {
    for (let clearId of Object.keys(expandedRows)) {
@@ -93,7 +105,7 @@
           <TableBodyRow class="pb-2">
             <TableBodyCell colspan="5" class="pl-12 pb-2 pt-2 pr-6 w-full">
               <div class="w-1/3 border-b pt-2 pb-2 mb-4">Action Items:</div>
-              <button class="w-1/3 ml-14 mt-2 mb-2" on:click={(e) => { e.preventDefault(); navigateToActivityDetails(activity.id) }} >
+              <button class="w-1/3 ml-14 mt-2 mb-2" onclick={(e) => { e.preventDefault(); navigateToActivityDetails(activity.id) }} >
                 <ActionItems 
                   environment="activity"
                   mode="limited"

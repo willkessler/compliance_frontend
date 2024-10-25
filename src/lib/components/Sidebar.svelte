@@ -15,7 +15,7 @@
 
  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
 
- $: activeUrl = $page.url.pathname;
+ let activeUrl = $derived($page.url.pathname);
 
  const menuItems = [
    { href: '/', label: 'Dashboard', icon: TableColumnOutline, color: 'text-inherit' },
@@ -83,9 +83,11 @@
               isOpen={true}
               class="hover:bg-gray-300"
               >
-              <svelte:fragment slot="icon">
-                <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              </svelte:fragment>
+              {#snippet icon()}
+                          
+                  <item.icon class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                
+                          {/snippet}
               {#each item.subItems as subItem}
                 <SidebarDropdownItem class="pl-10 text-sm hover:bg-gray-300" label={subItem.label} href={subItem.href} active={activeUrl.startsWith(subItem.href)} />
               {/each}
@@ -98,14 +100,18 @@
             href={item.href}
             class={item.label === 'Activity Manager' && activeUrl.startsWith('/manage/activities') ? 'bg-gray-300 hover:bg-gray-300' : ''}
           >
-            <svelte:fragment slot="icon">
-              <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            </svelte:fragment>
-            <svelte:fragment slot="subtext">
-              {#if item.pillCount !== undefined}
-                <span class="inline-flex justify-center items-center p-3 ms-4 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
-              {/if}
-            </svelte:fragment>
+            {#snippet icon()}
+                      
+                <item.icon class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              
+                      {/snippet}
+            {#snippet subtext()}
+                      
+                {#if item.pillCount !== undefined}
+                  <span class="inline-flex justify-center items-center p-3 ms-4 w-3 h-3 text-sm font-medium text-primary-600 bg-red-300 rounded-full dark:bg-primary-900 dark:text-primary-200"> {item.pillCount} </span>
+                {/if}
+              
+                      {/snippet}
           </SidebarItem>
         {/if}
       {/each}
@@ -114,37 +120,49 @@
       {#each adminItems as item}
         {#if item.disabled === true}
           <SidebarItem label={item.label} class="whitespace-nowrap text-sm text-gray-400"> <!-- disabled for WSTA -->
-            <svelte:fragment slot="icon">
-              <svelte:component this={item.icon} class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            </svelte:fragment>
-            <svelte:fragment slot="subtext">
-              {#if item.sideLabel !== undefined}
-                <span class="pl-1 text-sm font-bold text-blue-600"> {item.sideLabel} </span>
-              {/if}
-            </svelte:fragment>
+            {#snippet icon()}
+                      
+                <item.icon class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              
+                      {/snippet}
+            {#snippet subtext()}
+                      
+                {#if item.sideLabel !== undefined}
+                  <span class="pl-1 text-sm font-bold text-blue-600"> {item.sideLabel} </span>
+                {/if}
+              
+                      {/snippet}
           </SidebarItem>
         {:else}
           {#if item.newTab === true}
             <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href} target="_blank">
-              <svelte:fragment slot="icon">
-                <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              </svelte:fragment>
-              <svelte:fragment slot="subtext">
-                {#if item.sideLabel !== undefined}
-                  <span class="pl-1 text-sm font-bold text-[#0e9f6e]"> {item.sideLabel} </span>
-                {/if}
-              </svelte:fragment>
+              {#snippet icon()}
+                          
+                  <item.icon class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                
+                          {/snippet}
+              {#snippet subtext()}
+                          
+                  {#if item.sideLabel !== undefined}
+                    <span class="pl-1 text-sm font-bold text-[#0e9f6e]"> {item.sideLabel} </span>
+                  {/if}
+                
+                          {/snippet}
             </SidebarItem>
           {:else}
             <SidebarItem label={item.label} class="whitespace-nowrap text-sm" href={item.href}>
-              <svelte:fragment slot="icon">
-                <svelte:component this={item.icon} class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              </svelte:fragment>
-              <svelte:fragment slot="subtext">
-                {#if item.sideLabel !== undefined}
-                  <span class="pl-1 text-sm font-bold text-[#43553b]"> {item.sideLabel} </span>
-                {/if}
-              </svelte:fragment>
+              {#snippet icon()}
+                          
+                  <item.icon class="w-6 h-6 text-customGray transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                
+                          {/snippet}
+              {#snippet subtext()}
+                          
+                  {#if item.sideLabel !== undefined}
+                    <span class="pl-1 text-sm font-bold text-[#43553b]"> {item.sideLabel} </span>
+                  {/if}
+                
+                          {/snippet}
             </SidebarItem>
           {/if}
         {/if}

@@ -29,11 +29,21 @@
         UserCheck
         } from 'lucide-svelte';
 
- export let context = null;
- export let secondaryContext = null;
- export let dataField = null;
- export let specialFieldOverride = null;
- export let data = {};
+  interface Props {
+    context?: any;
+    secondaryContext?: any;
+    dataField?: any;
+    specialFieldOverride?: any;
+    data?: any;
+  }
+
+  let {
+    context = null,
+    secondaryContext = null,
+    dataField = null,
+    specialFieldOverride = null,
+    data = {}
+  }: Props = $props();
 
  const fbIconSize = 5;
  const luIconSize = 5;
@@ -116,18 +126,17 @@
    return newData[dataField];
  }
    
- $: colorAndIcon = getColorAndIcon(context, secondaryContext, data[dataField].toLowerCase());
+ let colorAndIcon = $derived(getColorAndIcon(context, secondaryContext, data[dataField].toLowerCase()));
 
- $: badgeClasses = `px-2 py-1.5 rounded-[6px] min-w-32 min-h-9 text-${colorAndIcon.color}-${textSaturation} bg-${colorAndIcon.color}-${bgSaturation} cursor-pointer`;
+ let badgeClasses = $derived(`px-2 py-1.5 rounded-[6px] min-w-32 min-h-9 text-${colorAndIcon.color}-${textSaturation} bg-${colorAndIcon.color}-${bgSaturation} cursor-pointer`);
 
- $: iconClasses = `text-${colorAndIcon.color}-${iconSaturation} mr-1 w-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize} h-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize}`;
+ let iconClasses = $derived(`text-${colorAndIcon.color}-${iconSaturation} mr-1 w-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize} h-${colorAndIcon.iconLibrary === 'fb' ? fbIconSize : luIconSize}`);
 
 </script>
 
 <Badge rounded class={badgeClasses}>
   {#if colorAndIcon.icon}
-    <svelte:component 
-      this={colorAndIcon.icon} 
+    <colorAndIcon.icon 
       class={iconClasses} 
     />
   {/if}

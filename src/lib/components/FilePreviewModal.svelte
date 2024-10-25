@@ -3,8 +3,8 @@
  import { ExclamationCircleOutline, DownloadSolid, } from 'flowbite-svelte-icons';
  import { modalStore, type ModalOptions } from '$lib/stores/modalStore';
 
- let isOpen: boolean;
- let filePath: string;
+ let isOpen: boolean = $state();
+ let filePath: string = $state();
 
  modalStore.subscribe(state => {
    isOpen = state.modals.filePreview.isOpen;
@@ -30,7 +30,7 @@
   <div class="h-full w-full p-6">
     <div class="file-preview-container">
       {#if filePath !== undefined }
-        <iframe id="file-preview" src="/files/{filePath}#toolbar=0&navpanes=0&scrollbar=0" class="w-full h-full" />
+        <iframe id="file-preview" src="/files/{filePath}#toolbar=0&navpanes=0&scrollbar=0" class="w-full h-full"></iframe>
       {:else}
         <div class="italic text-customGray">Currently unavailable</div>
       {/if}

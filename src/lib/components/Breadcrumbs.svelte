@@ -19,8 +19,8 @@
    'state' :     '/manage/filings/state',
  };
  
- $: pathSegments = $page.url.pathname.split('/').filter(Boolean);
- $: breadcrumbs = pathSegments
+ let pathSegments = $derived($page.url.pathname.split('/').filter(Boolean));
+ let breadcrumbs = $derived(pathSegments
    .filter(segment => !filteredSegments.includes(segment.toLowerCase()))
    .map((segment, index, filteredArray) => {
      const lowercaseSegment = segment.toLowerCase();
@@ -38,7 +38,7 @@
            ? customHref 
            : '/' + filteredArray.slice(0, index + 1).join('/')
      };
-   });
+   }));
 
 </script>
 
@@ -48,7 +48,7 @@
       <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
         <div class="flex">
           <div>
-            <svelte:component this={House} class="mr-2" size={20} />
+            <House class="mr-2" size={20} />
           </div>
           <div>
             Home

@@ -7,10 +7,10 @@
  import { modalStore } from '$lib/stores/modalStore.ts';
  import FilePreviewModal from '$lib/components/FilePreviewModal.svelte';
 
- export let previouslyUploadedFiles = [
+  let { previouslyUploadedFiles = [
    { name: "Document_name_incident_report",    date: 'Aug 31, 2024'},
    { name: "Picture_of_the_issue.jpg",         date: 'Aug 31, 2024'},
- ];
+ ] } = $props();
 
  function handleFilePreviewClick( filePath: string) {
    modalStore.open('filePreview', {
@@ -39,7 +39,7 @@
               <div class="flex items-top gap-1">
                 <div><FileSolid /></div>
                 {#if uploadedFile.path !== undefined}
-                  <div on:click={() => {handleFilePreviewClick(uploadedFile.path)} }>{uploadedFile.name}</div>
+                  <div onclick={() => {handleFilePreviewClick(uploadedFile.path)}}>{uploadedFile.name}</div>
                 {:else}
                   <div>{uploadedFile.name}</div>
                 {/if}

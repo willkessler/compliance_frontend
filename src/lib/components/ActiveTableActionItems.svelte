@@ -42,7 +42,7 @@
    isLoaded = true;
  });
 
- let isLoaded = false;
+ let isLoaded = $state(false);
 
  
 </script>
@@ -63,7 +63,7 @@
       isHeaderTextEditable={false}
       data={data}
       headerStyles={{default:{backgroundColor: "#d6d6d630"}}}
-    />
+></active-table>
   {/if}
 
 </div>

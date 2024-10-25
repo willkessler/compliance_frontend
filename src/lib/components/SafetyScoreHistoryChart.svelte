@@ -2,8 +2,14 @@
  import { onMount } from 'svelte';
  import { createChart } from './SafetyScoreCore.js';
 
- export let chartTitle = "Score by week";
- let chartContainer;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [chartTitle]
+   */
+
+  /** @type {Props} */
+  let { chartTitle = "Score by week" } = $props();
+ let chartContainer = $state();
  let containerWidth;
  let containerHeight;
 

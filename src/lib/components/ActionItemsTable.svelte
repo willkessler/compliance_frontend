@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
  import { Button } from "$lib/components/ui/button";
  import { Input } from "$lib/components/ui/input";
  import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "$lib/components/ui/select";
@@ -17,17 +19,17 @@
  });
 
  type ActionItem = z.infer<typeof ActionItemSchema>;   
- let actionItems: ActionItem[] = [
+ let actionItems: ActionItem[] = $state([
    { name: "The first action item", type: "call", area: 'vehicle', totalMiles: 1203 },
    { name: "The second best action item", type: "onsite", area: 'driver', totalMiles: 23492 },
    { name: "The very last pre-existing action item ", type: "email", area: 'document', totalMiles: 98382 },
- ];
+ ]);
 
- let currentActionItem: ActionItem & { totalMiles: string } = { name: "", type: "call", area: 'vehicle', totalMiles: '' };
- let editingIndex: number | null = null;
+ let currentActionItem: ActionItem & { totalMiles: string } = $state({ name: "", type: "call", area: 'vehicle', totalMiles: '' });
+ let editingIndex: number | null = $state(null);
  let originalActionItem: ActionItem | null = null;
- let isEditing = false;
- let hasChanges = false;
+ let isEditing = $state(false);
+ let hasChanges = $state(false);
 
  function formatNumber(num: number): string {
    return num.toLocaleString('en-US');
@@ -130,8 +132,11 @@
    }
  }
 
- $: visibleActionItems = actionItems.filter((_, index) => index !== editingIndex);
- $: isButtonDisabled = isEditing ? !hasChanges : !isFormValid();
+ let visibleActionItems = $derived(actionItems.filter((_, index) => index !== editingIndex));
+ let isButtonDisabled;
+  run(() => {
+    isButtonDisabled = isEditing ? !hasChanges : !isFormValid();
+  });
 
 </script>
 

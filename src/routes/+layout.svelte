@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
  import { fly } from 'svelte/transition';
  import { cubicOut } from 'svelte/easing';
  import { page } from '$app/stores';
@@ -7,21 +9,20 @@
  import Sidebar from '$lib/components/Sidebar.svelte';
  import 'flowbite/dist/flowbite.css';
  import "../app.postcss";
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
  const contentVisible = writable(false);
 
- let previousPath: string | null = null;
+ let previousPath: string | null = $state(null);
  let isTransitioning = false;
- let isDetailsPage = false;
+ let isDetailsPage = $state(false);
  let slideDirection: 1 | -1 | 0 = 0;  // 1 for right, -1 for left, 0 for no transition
  let shouldTransition = false;
 
- $: {
-   isDetailsPage = $page.url.pathname.includes('/activities/activity/') ||
-                   $page.url.pathname.includes('/fleet/drivers/driver/') ||
-                   $page.url.pathname.includes('/fleet/vehicles/vehicle/');
-   //console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
- }
 
  onMount(() => {
    previousPath = $page.url.pathname;
@@ -29,10 +30,6 @@
    //console.log('Initial path:', previousPath);
  });
 
- $: if ($page.url.pathname !== previousPath) {
-   //console.log('Path changed. Previous:', previousPath, 'New:', $page.url.pathname);
-   handleRouteChange();
- }
 
  async function handleRouteChange() {
    isTransitioning = true;
@@ -87,6 +84,18 @@
      }
    };
  }
+ run(() => {
+   isDetailsPage = $page.url.pathname.includes('/activities/activity/') ||
+                   $page.url.pathname.includes('/fleet/drivers/driver/') ||
+                   $page.url.pathname.includes('/fleet/vehicles/vehicle/');
+   //console.log('Path updated:', $page.url.pathname, 'Is details page:', isDetailsPage);
+ });
+ run(() => {
+    if ($page.url.pathname !== previousPath) {
+     //console.log('Path changed. Previous:', previousPath, 'New:', $page.url.pathname);
+     handleRouteChange();
+   }
+  });
 </script>
 
 <div class="flex h-screen bg-background overflow-hidden">
@@ -98,9 +107,9 @@
           class="absolute inset-0 overflow-auto"
           in:transitionFn="{{ duration: 200 }}"
           out:transitionFn="{{ duration: 200 }}"
-          on:outroend={handleTransitionEnd}
+          onoutroend={handleTransitionEnd}
         >
-          <slot />
+          {@render children?.()}
         </div>
       {/if}
     </div>

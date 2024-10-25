@@ -3,38 +3,44 @@
   import { scaleOrdinal } from "d3-scale";
   import { pie, arc } from "d3-shape";
 
-  export let title = "Donut Chart";
-  export let data = [
+  /**
+   * @typedef {Object} Props
+   * @property {string} [title]
+   * @property {any} [data]
+   * @property {boolean} [showPercentages]
+   */
+
+  /** @type {Props} */
+  let { title = "Donut Chart", data = [
     { label: "A", value: 9, color: "#ff6384" },
     { label: "B", value: 20, color: "#36a2eb" },
     { label: "C", value: 30, color: "#ffce56" },
     { label: "D", value: 8, color: "#4bc0c0" }
-  ];
-  export let showPercentages = true;
+  ], showPercentages = true } = $props();
 
   let width = 300;
   let height = 300;
   let margin = 20;
 
-  $: radius = Math.min(width, height) / 2 - margin;
-  $: innerRadius = radius * 0.6; // Increased for thicker donut
-  $: outerRadius = radius * 0.95; // Decreased for smaller overall size
+  let radius = $derived(Math.min(width, height) / 2 - margin);
+  let innerRadius = $derived(radius * 0.6); // Increased for thicker donut
+  let outerRadius = $derived(radius * 0.95); // Decreased for smaller overall size
 
-  $: color = scaleOrdinal()
+  let color = $derived(scaleOrdinal()
     .domain(data.map(d => d.label))
-    .range(data.map(d => d.color));
+    .range(data.map(d => d.color)));
 
-  $: pieGenerator = pie()
+  let pieGenerator = $derived(pie()
     .sort(null)
-    .value(d => d.value);
+    .value(d => d.value));
 
-  $: arcsData = pieGenerator(data);
+  let arcsData = $derived(pieGenerator(data));
 
-  $: arcGenerator = arc()
+  let arcGenerator = $derived(arc()
     .innerRadius(innerRadius)
-    .outerRadius(outerRadius);
+    .outerRadius(outerRadius));
 
-  $: total = data.reduce((sum, d) => sum + d.value, 0);
+  let total = $derived(data.reduce((sum, d) => sum + d.value, 0));
 
   function getPercentage(value) {
     return ((value / total) * 100).toFixed(1) + '%';

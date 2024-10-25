@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Toast } from 'flowbite-svelte';
  import { slide } from 'svelte/transition';
@@ -29,49 +31,66 @@
 
  //
  // Modal related
- //
+ 
 
- export let environment; // where the modal is being used, either 'activity' or 'vehicle'
- export let mode;        // one of: 'all', 'limited' or 'single' (all action items in a table, clickable, just a bulleted short list,
-                         // or a single one whose id is passed in)
- export let activityId = null;  // which activity id was passed in
- export let vehicleId = null;   // which vehicle id was passed in
- export let actionItemId = null;    // which action item id
- export let setActionItemCb = () => { };  // stub for passed in callback
- export let hideRightPanelCb = () => { }; // stub for passed in callback
- export let showChrome = true; // whether to show all controls
- let showCourtModal = false;
- let zoomHoverTimer;
+                         
+  interface Props {
+    //
+    environment: any;
+    mode: any;
+    // or a single one whose id is passed in)
+    activityId?: any;
+    vehicleId?: any;
+    actionItemId?: any;
+    setActionItemCb?: any;
+    hideRightPanelCb?: any;
+    showChrome?: boolean;
+  }
+
+  let {
+    environment,
+    mode,
+    activityId = null,
+    vehicleId = null,
+    actionItemId = null,
+    setActionItemCb = () => { },
+    hideRightPanelCb = () => { },
+    showChrome = true
+  }: Props = $props();
+ let showCourtModal = $state(false);
+ let zoomHoverTimer = $state();
 
   onMount(() => {
     formattedDate = formatDate(dueDate);
   });
 
- let zoomedViolationPic = false;
+ let zoomedViolationPic = $state(false);
  let zoomedCourtPic = false;
- let showModal = false; // whether the modal is visible
+ let showModal = $state(false); // whether the modal is visible
  let actionType = '';
- let actionName = '';
- let actionNotes = '';
+ let actionName = $state('');
+ let actionNotes = $state('');
 
- let selectedAction = null;
- let selectedActionType = null;
+ let selectedAction = $state(null);
+ let selectedActionType = $state(null);
 
  let selectedStatus = null;
  let selectedStatusType = null;
 
- let uploadedFiles = [];
+ let uploadedFiles = $state([]);
 
- let selectedActionTypeValue = '';
- let selectedStatusTypeValue = '';
+ let selectedActionTypeValue = $state('');
+ let selectedStatusTypeValue = $state('');
 
- let toastStatus = false;
+ let toastStatus = $state(false);
  let toastCounter = 5;
 
 
- $: if (selectedAction) {
-   selectedActionTypeValue = selectedAction.type.toLowerCase();
- }
+ run(() => {
+    if (selectedAction) {
+     selectedActionTypeValue = selectedAction.type.toLowerCase();
+   }
+  });
 
  const actionTypes = [
    { value: 'call', name: 'Call' },
@@ -160,14 +179,14 @@
  let currentPage = 1; // Set this to your desired current page
  let totalPages = 10; // Set this to your total number of pages
 
- $: activeUrl = $page.url.searchParams.get('page');
- let pages = [
+ let activeUrl = $derived($page.url.searchParams.get('page'));
+ let pages = $state([
    { name: 1, href: '/components/pagination?page=1' },
    { name: 2, href: '/components/pagination?page=2' },
    { name: 3, href: '/components/pagination?page=3' },
- ];
+ ]);
 
- $: {
+ run(() => {
    pages.forEach((page) => {
      let splitUrl = page.href.split('?');
      let queryString = splitUrl.slice(1).join('?');
@@ -180,7 +199,7 @@
      }
    });
    pages = pages;
- }
+ });
 
   function previous() {
     if (currentPage > 1) currentPage--;
@@ -195,8 +214,8 @@
   }
 
  // date picker stuff
- let dueDate = new Date('2024-08-31');
- let formattedDate;
+ let dueDate = $state(new Date('2024-08-31'));
+ let formattedDate = $state();
 
  function formatDate(date) {
    const d = new Date(date);
@@ -253,7 +272,9 @@ ul li:before {
 
 
 <Toast class="mt-4 bg-orange-400 text-white-900" dismissable={false} transition={slide} bind:toastStatus>
-  <CheckCircleSolid slot="icon" class="w-5 h-5" />
+  {#snippet icon()}
+    <CheckCircleSolid  class="w-5 h-5" />
+  {/snippet}
   Creating/editing activity data is not possible in the demo environment.
 </Toast>
 
@@ -322,7 +343,7 @@ ul li:before {
       <h2 class="text-xl font-bold text-customGray uppercase">Action Details</h2>
       <!-- Lifted from flowbite's drawer, verbatim -->
       <button  
-        on:click={() => { hideRightPanelCb(); }}
+        onclick={() => { hideRightPanelCb(); }}
         class="focus:outline-none whitespace-normal m-0.5 rounded-lg focus:ring-2 p-1.5 focus:ring-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 ms-auto dark:text-white" aria-label="Close">
         <span class="sr-only">Close</span>
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -359,12 +380,12 @@ ul li:before {
             <div class="cursor-pointer">
               <img 
                 alt="violation"
-                on:mouseenter={() => { 
+                onmouseenter={() => { 
                                      zoomHoverTimer = setTimeout(() => {
                                        zoomedViolationPic = true;
                                      }, 550);
                               }}
-              on:mouseleave={() => {
+              onmouseleave={() => {
               clearTimeout(zoomHoverTimer);
               }}
               class="max-w-[180px] min-w-[150px] p-2 border border-customGray" 
@@ -374,7 +395,7 @@ ul li:before {
                 <div 
                   role="button"
                   tabindex="1"
-                  on:mouseleave={() => { 
+                  onmouseleave={() => { 
                                 zoomedViolationPic = false;
                                 clearTimeout(zoomHoverTimer);
                                 }}
@@ -399,7 +420,7 @@ ul li:before {
                 <div>
                   {getActionItemById(actionItemId).courtDetails.phone}
                 </div>
-                <div class="flex pt-2 cursor-pointer" on:click={() => {showCourtModal = true; }} >
+                <div class="flex pt-2 cursor-pointer" onclick={() => {showCourtModal = true; }} >
                   <div class="mr-2" outline><MapPinAltOutline /></div>
                   <div class="hover:underline text-customGray">View on map</div>
                 </div>
@@ -437,9 +458,11 @@ ul li:before {
   backdropClass="fixed inset-0 z-40 bg-white/80"
   class="drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]"
 >
-  <h3 class="text-gray-700 font-bold" slot="header">
-    {selectedAction ? 'Edit Action' : 'Create New Action'}
-  </h3>
+  {#snippet header()}
+    <h3 class="text-gray-700 font-bold" >
+      {selectedAction ? 'Edit Action' : 'Create New Action'}
+    </h3>
+  {/snippet}
   <form class="space-y-6">
     {#if environment === 'activity'}
       <div>
@@ -491,7 +514,7 @@ ul li:before {
               id="dueDate"
               type="date"
               bind:value={dueDate}
-              on:input={handleDateInput}
+              oninput={handleDateInput}
               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
             />
             <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 py-2 w-full">
@@ -512,26 +535,28 @@ ul li:before {
 
     <div>
       <Label class="mb-2">Upload relevant files</Label>
-      <FileDrop {handleFiles} let:droppable>
-        <div class="text-center border p-2 mt-2 mb-4 rounded">
-          <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 48 48">
-            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <p class="mt-1 text-sm text-customGray">
-            Click to upload or drag and drop
-          </p>
-          <p class="mt-1 text-xs text-customGray">
-            Max. File Size: 30MB
-          </p>
-        </div>
-      </FileDrop>
+      <FileDrop {handleFiles} >
+        {#snippet children({ droppable })}
+                <div class="text-center border p-2 mt-2 mb-4 rounded">
+            <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p class="mt-1 text-sm text-customGray">
+              Click to upload or drag and drop
+            </p>
+            <p class="mt-1 text-xs text-customGray">
+              Max. File Size: 30MB
+            </p>
+          </div>
+                      {/snippet}
+            </FileDrop>
       {#if uploadedFiles.length > 0}
         <div class="mt-4">
           {#each uploadedFiles as file, index}
             <div class="flex items-center mt-2">
               <FileSolid class="text-customGray mr-2" />
               <span class="text-sm text-customGray">{file.name}</span>
-              <button class="ml-auto text-red-500 hover:text-red-600" on:click={() => removeFile(index)}>
+              <button class="ml-auto text-red-500 hover:text-red-600" onclick={() => removeFile(index)}>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -543,23 +568,25 @@ ul li:before {
     </div>
   </form>
 
-  <svelte:fragment slot="footer">
-    <div class="w-full flex justify-end">
-      <Button class="bg-white-900 hover:bg-gray-100 text-customGray mr-2"
-        on:click={() => {
-                 showModal = false;
-                 actionName = null;
-                 actionNotes = null;
-                 selectedAction = null;
-                 selectedActionType = null;
-                 selectedActionTypeValue = '';
-                 uploadedFiles = [];
-                 }}>Cancel</Button>
-      <Button class="bg-blue-500 hover:bg-blue-600" on:click={selectedAction ? updateAction : createAction}>
-        {selectedAction ? 'Update action item' : 'Add action item'}
-      </Button>
-    </div>
-  </svelte:fragment>
+  {#snippet footer()}
+  
+      <div class="w-full flex justify-end">
+        <Button class="bg-white-900 hover:bg-gray-100 text-customGray mr-2"
+          on:click={() => {
+                   showModal = false;
+                   actionName = null;
+                   actionNotes = null;
+                   selectedAction = null;
+                   selectedActionType = null;
+                   selectedActionTypeValue = '';
+                   uploadedFiles = [];
+                   }}>Cancel</Button>
+        <Button class="bg-blue-500 hover:bg-blue-600" on:click={selectedAction ? updateAction : createAction}>
+          {selectedAction ? 'Update action item' : 'Add action item'}
+        </Button>
+      </div>
+    
+  {/snippet}
 </Modal>
 
 <Modal 

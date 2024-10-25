@@ -1,4 +1,6 @@
 <script>
+  import { run } from 'svelte/legacy';
+
  import { goto } from '$app/navigation';
  import { Button, Card, Dropdown, DropdownItem, Modal, Input,
           Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
@@ -20,26 +22,26 @@
  import { vehicles, getVehicleById, getVehicleDriver } from '$lib/data/vehicleData';
 
  const categories = ['Incidents', 'Maintenance', 'Records', 'All Types' ];
- let activeCategory = 'All Types';
+ let activeCategory = $state('All Types');
 
  //
  // Modal related
  //
 
- let showModal = false; // whether the modal is visible
- let modalMode = 'accident'; // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
+ let showModal = $state(false); // whether the modal is visible
+ let modalMode = $state('accident'); // one of: 'accident', 'maintenance', 'record', or 'other', see dropdown menu below
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
- $: activeUrl = $page.url.searchParams.get('page');
+ let activeUrl = $derived($page.url.searchParams.get('page'));
  const paginatorJumpPage = '/manage/activities';
- let pages = [
+ let pages = $state([
    { name: 1, href: paginatorJumpPage },
    { name: 2, href: paginatorJumpPage },
    { name: 3, href: paginatorJumpPage },
    { name: 4, href: paginatorJumpPage },
- ];
+ ]);
 
- $: {
+ run(() => {
    pages.forEach((page) => {
      let splitUrl = page.href.split('?');
      let queryString = splitUrl.slice(1).join('?');
@@ -52,7 +54,7 @@
      }
    });
    pages = pages;
- }
+ });
 
  const previous = () => {
    console.log('Previous btn clicked. Make a call to your server to fetch data.');
@@ -115,7 +117,9 @@
     <div class="ml-6 min-w-64 mr-4 ">
       <div class="flex gap-x-4">
         <Input id="search" placeholder="Search">
-          <SearchOutline slot="left" class="w-5 h-5 text-customGray dark:text-customGray" />
+          {#snippet left()}
+                    <SearchOutline  class="w-5 h-5 text-customGray dark:text-customGray" />
+                  {/snippet}
         </Input>
         <Button
           class="bg-gray-300 hover:bg-gray-500 text-white text-md mr-4 min-w-[200px]">
@@ -186,14 +190,18 @@
 
 <div class="w-full flex justify-end pr-4 mb-4">
   <Pagination {pages} on:previous={previous} on:next={next} icon>
-    <svelte:fragment slot="prev">
-      <span class="sr-only">Previous</span>
-      <ChevronLeftOutline class="w-6 h-6" />
-    </svelte:fragment>
-    <svelte:fragment slot="next">
-      <span class="sr-only">Next</span>
-      <ChevronRightOutline class="w-6 h-6" />
-    </svelte:fragment>
+    {#snippet prev()}
+      
+        <span class="sr-only">Previous</span>
+        <ChevronLeftOutline class="w-6 h-6" />
+      
+      {/snippet}
+    {#snippet next()}
+      
+        <span class="sr-only">Next</span>
+        <ChevronRightOutline class="w-6 h-6" />
+      
+      {/snippet}
   </Pagination>
 </div>
 

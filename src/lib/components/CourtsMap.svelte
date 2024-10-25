@@ -1,9 +1,9 @@
 <script>
   import { onMount } from 'svelte';
   
-  export let zipcode;
+  let { zipcode } = $props();
 
-  let mapElement;
+  let mapElement = $state();
 
   onMount(async () => {
     try {

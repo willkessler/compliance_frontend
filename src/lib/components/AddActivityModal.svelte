@@ -7,9 +7,15 @@
  import ActionItemsTable from '$lib/components/ActionItemsTable.svelte';
 
  const activityKinds = [ 'accident', 'maintenance', 'record', 'other' ];
- export let mode = 'accident';
- export let closeCb = () => {};
- export let submitForm = () => { console.log('form submitted'); };
+  /**
+   * @typedef {Object} Props
+   * @property {string} [mode]
+   * @property {any} [closeCb]
+   * @property {any} [submitForm]
+   */
+
+  /** @type {Props} */
+  let { mode = 'accident', closeCb = () => {}, submitForm = () => { console.log('form submitted'); } } = $props();
 
  const detailsProps = {
    accident: {
@@ -42,18 +48,18 @@
    }
  }
 
- let selectedDriver;
- let selectedVehicle;
+ let selectedDriver = $state();
+ let selectedVehicle = $state();
  let driverSelections = drivers.map((driver) => ({ value: driver.id, name: driver.name }));
  let vehicleSelections = vehicles.map((vehicle) => ({ value: vehicle.id, name: vehicle.name }));
  
  // date picker stuff
- let eventDates = {
+ let eventDates = $state({
    accident: new Date('2024-08-31'),
    maintenance: new Date('2024-09-3'),
    record: new Date('2024-10-18'),
    other: new Date('2024-5-28'),
- }
+ })
 
  function formatDate(date) {
    const d = new Date(date);
@@ -66,7 +72,7 @@
     formattedDates[kind] = formatDate(theDate);
   }
 
- let formattedDates = {};
+ let formattedDates = $state({});
   onMount(() => {
     activityKinds.map((kind) => {
       formattedDates[kind] = formatDate(eventDates[kind]);
@@ -98,7 +104,7 @@
           id="accidentDate"
           type="date"
           bind:value={eventDates.accident}
-          on:input={() => handleDateInput(mode)}
+          oninput={() => handleDateInput(mode)}
           class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
         />
         <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 py-2 w-full">
@@ -158,7 +164,7 @@
           id="maintenanceDate"
           type="date"
           bind:value={eventDates.maintenance}
-          on:input={() => handleDateInput(mode)}
+          oninput={() => handleDateInput(mode)}
           class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
         />
         <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 py-2 w-full">
@@ -217,7 +223,7 @@
           id="recordDate"
           type="date"
           bind:value={eventDates.record}
-          on:input={() => handleDateInput(mode)}
+          oninput={() => handleDateInput(mode)}
           class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
         />
         <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 py-2 w-full">
@@ -276,7 +282,7 @@
           id="otherDate"
           type="date"
           bind:value={eventDates.other}
-          on:input={() => handleDateInput(mode)}
+          oninput={() => handleDateInput(mode)}
           class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
         />
         <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 py-2 w-full">

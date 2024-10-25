@@ -107,14 +107,14 @@
     "Navigation", "Routing & Dispatch", "Safety & Coaching"
   ];
 
-  let selectedCategory = "Compliance";
-  let searchQuery = "";
+  let selectedCategory = $state("Compliance");
+  let searchQuery = $state("");
 
-  $: filteredApps = apps.filter(app => 
+  let filteredApps = $derived(apps.filter(app => 
     (selectedCategory === "View All" || app.categories.includes(selectedCategory)) &&
     (app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
      app.description.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  ));
 
   function selectCategory(category: string) {
     selectedCategory = category;

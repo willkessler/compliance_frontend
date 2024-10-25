@@ -3,8 +3,8 @@
   import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
   import { modalStore, type ConfirmModalOptions } from '$lib/stores/modalStore';
 
-  let isOpen: boolean;
-  let options: ModalOptions | null;
+  let isOpen: boolean = $state();
+  let options: ModalOptions | null = $state();
 
   modalStore.subscribe(state => {
     isOpen = state.modals.confirm.isOpen;

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
  import { Badge, Button, Card,  Modal, Label, Input, Textarea,  Select, Pagination, PaginationItem, 
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Tooltip } from 'flowbite-svelte';
  import { FileSolid, FileImageSolid, CirclePlusSolid, 
@@ -28,7 +30,7 @@
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
 
- let zoomedDriverLicense = false;
+ let zoomedDriverLicense = $state(false);
  let zoomTimeout;
  
  //
@@ -98,12 +100,14 @@
     }
   });
 
- let driverId, driver;
- $: if ($page.params.id) {
-   driverId = parseInt($page.params.id);
-   driver = getDriverById(driverId);
-   //console.log(`got driver ${driver} for ${driverId}` );
- }
+ let driverId = $state(), driver = $state();
+ run(() => {
+    if ($page.params.id) {
+     driverId = parseInt($page.params.id);
+     driver = getDriverById(driverId);
+     //console.log(`got driver ${driver} for ${driverId}` );
+   }
+  });
 
  function getStatusColor(status) {
    switch (status.toLowerCase()) {
@@ -184,8 +188,8 @@
               role="button"
               aria-label="reveal_drivers_license"
               tabindex=0
-              on:mouseenter={handleDLMouseEnter}
-              on:mouseleave={handleDLMouseLeave}
+              onmouseenter={handleDLMouseEnter}
+              onmouseleave={handleDLMouseLeave}
               class="absolute bottom-4 right-4 w-1/2 h-1/3"
             >
               <img
@@ -224,7 +228,7 @@
 
                   </div>
                   <button
-                    on:click={() => { console.log('download cdl') }}
+                    onclick={() => { console.log('download cdl') }}
                     class="absolute right-2 bottom-2 text-gray-400 bg-gray-200 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                     >
 
@@ -380,6 +384,7 @@
   />
 
 
+  <!-- @migration-task: migrate this slot by hand, `right-panel` is an invalid identifier -->
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden right-panel">
     <h2 class="text-xl font-bold text-customGray uppercase text-nowrap">Open Activities</h2>
     <FilteredActivitiesList

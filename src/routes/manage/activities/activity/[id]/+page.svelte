@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
  import { goto } from '$app/navigation';
  import { Badge, Button, Label, Input, Textarea,  Select, Modal,
         Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
@@ -23,14 +25,14 @@
  import { page } from '$app/stores';
  import { onMount } from 'svelte';
 
- let zoomedDriverPic = false;
+ let zoomedDriverPic = $state(false);
 
  //
  // Date handler
  //
- let dueDate = new Date('2024-08-31');
- let formattedDate;
- let showRightPanel = false;
+ let dueDate = $state(new Date('2024-08-31'));
+ let formattedDate = $state();
+ let showRightPanel = $state(false);
 
  function formatDate(date) {
    const d = new Date(date);
@@ -59,21 +61,23 @@
   });
 
  // Table data
- $: id = parseInt($page.params.id); // get the page id from the url
+ let id = $derived(parseInt($page.params.id)); // get the page id from the url
 
- let activityId, activity, vehicle, driver;
- let selectedActionId = null;
+ let activityId = $state(), activity = $state(), vehicle = $state(), driver = $state();
+ let selectedActionId = $state(null);
 
- $: if ($page.params.id) {
-   activityId = parseInt($page.params.id);
-   //console.log(`activityId: ${activityId}`);
-   activity = getActivityById(activityId);
-   //console.log(`activity: ${JSON.stringify(activity)}`);
-   vehicle = getVehicleById(activity.vehicleId);
-   //console.log(`vehicle: ${JSON.stringify(vehicle)}`);
-   driver =  getVehicleDriver(vehicle.id);
-   //console.log(`got driver ${driver.id} for activity ${activity.id}` );
- }
+ run(() => {
+    if ($page.params.id) {
+     activityId = parseInt($page.params.id);
+     //console.log(`activityId: ${activityId}`);
+     activity = getActivityById(activityId);
+     //console.log(`activity: ${JSON.stringify(activity)}`);
+     vehicle = getVehicleById(activity.vehicleId);
+     //console.log(`vehicle: ${JSON.stringify(vehicle)}`);
+     driver =  getVehicleDriver(vehicle.id);
+     //console.log(`got driver ${driver.id} for activity ${activity.id}` );
+   }
+  });
 
  function setSelectedActionId (actionId) {
    selectedActionId = actionId;
@@ -149,15 +153,15 @@
                 class="w-full h-full object-cover object-top border"
               />
               <img
-                on:mouseenter={() => { zoomedDriverPic = true; }}
+                onmouseenter={() => { zoomedDriverPic = true; }}
               src="{driver.photo ? '/images/drivers/' + driver.photo : '/images/drivers/default.jpg'}"
               alt="driver.name"
               class="absolute bottom-2 right-2 w-1/4 h-1/4 object-cover border-4 border-gray-300 rounded-lg"
               />
               {#if zoomedDriverPic}
                 <button
-                  on:mouseleave={() => { zoomedDriverPic = false; }}
-                  on:click={() => { navigateToDriverDetails(driver.id) }}
+                  onmouseleave={() => { zoomedDriverPic = false; }}
+                  onclick={() => { navigateToDriverDetails(driver.id) }}
                   aria-label="driver_photo_reveal"
                   tabindex=0
                   >
@@ -217,7 +221,7 @@
                     <input
                       type="date"
                       bind:value={dueDate}
-                      on:input={handleInput}
+                      oninput={handleInput}
                       class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
                     />
                     <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-2 py-1">
@@ -264,6 +268,7 @@
     />
   </div>
 
+  <!-- @migration-task: migrate this slot by hand, `right-panel` is an invalid identifier -->
   <div slot="right-panel" class="p-4 space-y-4 bg-white h-full min-w-80 overflow-hidden rounded-none right-panel">
     <ActionItems
       environment="activity"

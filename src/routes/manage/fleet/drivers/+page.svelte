@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
  import { goto } from '$app/navigation';
  import { Accordion, AccordionItem, Badge, Button, Card, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
  import { ClockSolid, ThumbsUpSolid, ExclamationCircleSolid, ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
@@ -15,7 +17,7 @@
    { value: 'filter1', name: 'Local' },
    { value: 'filter2', name: 'All' },
  ];
- let selectedFilter;
+ let selectedFilter = $state();
  
  function getStatusColor(status) {
    switch (status.toLowerCase()) {
@@ -32,16 +34,16 @@
  }
 
  // boilerplate from https://flowbite-svelte.com/docs/components/pagination
- $: activeUrl = $page.url.searchParams.get('page');
+ let activeUrl = $derived($page.url.searchParams.get('page'));
  const paginatorJumpPage = '/manage/fleet/drivers';
- let pages = [
+ let pages = $state([
    { name: 1, href: paginatorJumpPage },
    { name: 2, href: paginatorJumpPage },
    { name: 3, href: paginatorJumpPage },
    { name: 4, href: paginatorJumpPage },
- ];
+ ]);
 
-  $: {
+  run(() => {
     pages.forEach((page) => {
       let splitUrl = page.href.split('?');
       let queryString = splitUrl.slice(1).join('?');
@@ -54,7 +56,7 @@
       }
     });
     pages = pages;
-  }
+  });
 
   const previous = () => {
     console.log('Previous btn clicked. Make a call to your server to fetch data.');
@@ -179,13 +181,17 @@ ul li:before {
 
 <div class="w-full flex justify-end pr-4 mt-4">
   <Pagination {pages} on:previous={previous} on:next={next} icon>
-    <svelte:fragment slot="prev">
-      <span class="sr-only">Previous</span>
-      <ChevronLeftOutline class="w-6 h-6" />
-    </svelte:fragment>
-    <svelte:fragment slot="next">
-      <span class="sr-only">Next</span>
-      <ChevronRightOutline class="w-6 h-6" />
-    </svelte:fragment>
+    {#snippet prev()}
+      
+        <span class="sr-only">Previous</span>
+        <ChevronLeftOutline class="w-6 h-6" />
+      
+      {/snippet}
+    {#snippet next()}
+      
+        <span class="sr-only">Next</span>
+        <ChevronRightOutline class="w-6 h-6" />
+      
+      {/snippet}
   </Pagination>
 </div>

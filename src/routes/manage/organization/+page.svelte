@@ -17,8 +17,8 @@
    disabled: boolean;
  }
 
- let isEditing = false;
- let companyInfo = {
+ let isEditing = $state(false);
+ let companyInfo = $state({
    name: "Trucking Co.",
    address: "123 Main St",
    city: "Oakland",
@@ -30,15 +30,15 @@
    dotPin: '****',
    mcNumber: '1234567',
    iftaNumber: '1234567',
- };
+ });
 
- let editingInfo: typeof companyInfo & { state: StateOption } = { ...companyInfo, state: { value: companyInfo.state, label: "", disabled: false } };
+ let editingInfo: typeof companyInfo & { state: StateOption } = $state({ ...companyInfo, state: { value: companyInfo.state, label: "", disabled: false } });
 
- let errors = {
+ let errors = $state({
    name: "",
    zipcode: "",
    phone: "",
- };
+ });
 
  const schema = z.object({
    name: z.string().min(5, "Company name is required"),
@@ -48,7 +48,7 @@
    phone: z.string().min(1, "Phone number is required"),
  });
 
- $: isFormValid = !errors.name && !errors.zipcode && !errors.phone && editingInfo.name && editingInfo.zipcode && editingInfo.phone;
+ let isFormValid = $derived(!errors.name && !errors.zipcode && !errors.phone && editingInfo.name && editingInfo.zipcode && editingInfo.phone);
 
  function validateField(field: string, value: string) {
    try {

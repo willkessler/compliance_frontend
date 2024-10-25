@@ -4,7 +4,11 @@
  import { timeFormat, timeParse } from "d3-time-format";
  import { mean } from "d3-array";
 
- export let chartTitle = "Activities Over Time";
+  interface Props {
+    chartTitle?: string;
+  }
+
+  let { chartTitle = "Activities Over Time" }: Props = $props();
 
  const parseDate = timeParse('%Y-%m-%d');
  const formatDate = timeFormat('%b %d');
@@ -40,7 +44,7 @@
  let dataKeys: ['accident', 'maintenance', 'driverIssue', 'recordKeeping', 'other'];
 
 
- $: chartData = data.map(d => ({
+ let chartData = $derived(data.map(d => ({
    date: parseDate(d.date),
    values: [ d.accident, d.maintenance, d.driverIssue, d.recordKeeping, d.other ],
    labels: ['Accidents', 'Maintenance', 'Driver Issues', 'Record Keeping', 'Other'],
@@ -49,7 +53,7 @@
    driverIssue: d.driverIssue,
    recordKeeping: d.recordKeeping,
    other: d.other
- }));
+ })));
 
  const colors = {
    accident: "#ccffcc",
@@ -77,39 +81,43 @@
       yDomain={[0, null]}
       yNice={5}
       padding={{ left: 40, bottom: 30, right: 60, top: 0 }}
-      let:width
-      let:yScale
+      
+      
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
-        <Axis placement="left" grid={{ class: "stroke-gray-200" }} ticks={5} />
-        <Axis
-          placement="bottom"
-          format={format}
-          ticks={chartData.map(d => d.date)}
-          />
-          {#each Object.keys(colors) as category}
-            <Bars 
-              y={category}
-              fill={colors[category]}
-              strokeWidth={0}
-              rounded="top"
+      {#snippet children({ width, yScale })}
+            <Svg>
+          <Axis placement="left" grid={{ class: "stroke-gray-200" }} ticks={5} />
+          <Axis
+            placement="bottom"
+            format={format}
+            ticks={chartData.map(d => d.date)}
             />
-          {/each}
-      </Svg>
+            {#each Object.keys(colors) as category}
+              <Bars 
+                y={category}
+                fill={colors[category]}
+                strokeWidth={0}
+                rounded="top"
+              />
+            {/each}
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, "eee, MMMM do")}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="Accidents" value={data.accident} color={colors.accident} />
-          <Tooltip.Item label="Maintenance" value={data.maintenance} color={colors.maintenance} />
-          <Tooltip.Item label="Driver Issues" value={data.driverIssue} color={colors.driverIssue} />
-          <Tooltip.Item label="Record Keeping" value={data.recordKeeping} color={colors.recordKeeping} />
-          <Tooltip.Item label="Other" value={data.other} color={colors.other} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root >
+          {#snippet children({ data })}
+                <Tooltip.Header>{format(data.date, "eee, MMMM do")}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Accidents" value={data.accident} color={colors.accident} />
+              <Tooltip.Item label="Maintenance" value={data.maintenance} color={colors.maintenance} />
+              <Tooltip.Item label="Driver Issues" value={data.driverIssue} color={colors.driverIssue} />
+              <Tooltip.Item label="Record Keeping" value={data.recordKeeping} color={colors.recordKeeping} />
+              <Tooltip.Item label="Other" value={data.other} color={colors.other} />
+            </Tooltip.List>
+                        {/snippet}
+            </Tooltip.Root>
 
-    </Chart>
+                {/snippet}
+        </Chart>
     <div class="font-semibold ml-4 text-center text-green-700">{chartTitle}</div>
   </div>
 </div>

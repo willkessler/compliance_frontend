@@ -4,9 +4,13 @@
  import { FileSolid } from 'flowbite-svelte-icons';
  import { getVehicleById, getVehicleTrips, getVehicleDvir } from '$lib/data/vehicleData';
 
- export let vehicleId = 1;
- let showModal = false; // whether the modal is visible
- let whichTripId, whichLegId, whichInsp, whichDate;
+  interface Props {
+    vehicleId?: number;
+  }
+
+  let { vehicleId = 1 }: Props = $props();
+ let showModal = $state(false); // whether the modal is visible
+ let whichTripId = $state(), whichLegId = $state(), whichInsp = $state(), whichDate = $state();
 
 </script>
 
@@ -41,7 +45,7 @@
                   class="pr-1" 
                   role="button"                  
                   tabindex="1"
-                  on:click={() => { 
+                  onclick={() => { 
                            whichDate = leg.startDate;
                            whichTripId = leg.tripId;
                            whichLegId = leg.id;
@@ -64,7 +68,7 @@
                   role="button"
                   tabindex="1"
                   class="pr-1" 
-                  on:click={() => { 
+                  onclick={() => { 
                            whichTripId = leg.tripId;
                            whichLegId = leg.id;
                            whichInsp = 'post';
